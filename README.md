@@ -124,6 +124,7 @@ The AZ-900 exam is divided into three domain areas:
 - [01 - Azure CLI Setup](./guides/01-azure-cli-setup.md)
 
 ### Concept Guides
+- [00 - Exam Overview](./guides/concepts/00-exam-overview.md) — domains, weights, what's tested in each module, study strategy
 - [01 - Cloud Concepts](./guides/concepts/01-cloud-concepts.md) — IaaS/PaaS/SaaS, deployment models, CapEx vs OpEx, cloud benefits
 - [02 - Azure Architecture](./guides/concepts/02-azure-architecture.md) — Regions, availability zones, resource groups, subscriptions, ARM
 - [03 - Compute](./guides/concepts/03-compute.md) — VMs, Scale Sets, App Service, Functions, ACI, AKS
