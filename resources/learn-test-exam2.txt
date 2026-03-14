@@ -1,0 +1,585 @@
+
+Question 1 of 50
+
+What is an Azure Storage account named storage001 an example of?
+
+Select only one answer.
+
+a resource
+a resource group
+a resource manager
+a subscription
+
+
+Question 2 of 50
+
+For which resource does Azure generate separate billing reports and invoices by default?
+
+Select only one answer.
+
+accounts
+management groups
+resource groups
+subscriptions
+
+
+Question 3 of 50
+
+Which Azure resource is a software emulation of a physical computer that includes a virtual processor, memory, storage, and networking resources?
+
+Select only one answer.
+
+a container
+a function
+a virtual machine
+an App Service
+
+Question 4 of 50
+
+Which Azure compute service can you use to deploy and manage a set of identical virtual machines?
+
+Select only one answer.
+
+availability sets
+availability zones
+Azure Container Instances
+Azure Virtual Machine Scale Sets
+
+Question 5 of 50
+
+Which scenario is a use case for a VPN gateway?
+
+Select only one answer.
+
+communicating between Azure resources
+connecting an on-premises datacenter to an Azure virtual network
+filtering outbound network traffic
+partitioning a virtual network's address space
+
+Question 6 of 50
+
+You need to allow resources on two different Azure virtual networks to communicate with each other.
+
+What should you configure?
+
+Select only one answer.
+
+a network security group (NSG)
+a point-to-site VPN
+peering
+service endpoints
+
+
+Question 7 of 50
+
+What can you use to connect Azure resources, such as Azure SQL databases, to an Azure virtual network?
+
+Select only one answer.
+
+ExpressRoute
+network security groups (NSGs)
+peering
+service endpoints
+
+Question 8 of 50
+
+Which two services can you use to establish network connectivity between an on-premises network and Azure resources? Each correct answer presents a complete solution.
+
+Select all answers that apply.
+
+Azure Bastion
+Azure Firewall
+Azure VPN Gateway
+ExpressRoute
+
+
+Question 9 of 50
+
+What can you use to provide Mac and Android users with access to a Windows environment that will run Windows-based applications?
+
+Select only one answer.
+
+Azure Container Instances
+Azure Functions
+Azure Logic Apps
+Azure Virtual Desktop
+
+Question 10 of 50
+
+What are two services that allow you to run applications in containers? Each correct answer presents a complete solution.
+
+Select all answers that apply.
+
+Azure Container Instances
+Azure Functions
+Azure Logic Apps
+Azure Kubernetes Service (AKS)
+
+
+Question 11 of 50
+
+Which storage service should you use to store thousands of files containing text and images?
+
+Select only one answer.
+
+Azure Blob storage
+Azure Disk Storage
+Azure Queue Storage
+Azure Table storage
+
+
+Question 12 of 50
+
+Which Azure Blob storage tier stores data offline and offers the lowest storage costs and the highest costs to access data?
+
+Select only one answer.
+
+Archive
+Cool
+Hot
+Cold
+
+
+Question 13 of 50
+
+Which Azure Blob storage service tier has the highest storage costs and the fastest access times for reading and writing data?
+
+Select only one answer.
+
+Archive
+Cool
+Hot
+Cold
+
+
+Question 14 of 50
+
+Which Azure Storage service should you use to store unstructured files, such as images, that will be served on webpages?
+
+Select only one answer.
+
+Azure Blob storage
+Azure Disk Storage
+Azure Queue Storage
+Azure Table storage
+
+
+Question 15 of 50
+
+What is the purpose of defense in depth?
+
+Select only one answer.
+
+to enable you to locate and act on resources that are associated with specific workloads, environments, business units, and owners
+to evaluate resources and make recommendations to help improve reliability and performance
+to manage policies that control or audit resources so that the configurations stay compliant with corporate standards
+to use several layers of protection to prevent information from being accessed by unauthorized users
+
+What enables a user to sign in one time and use that credential to access multiple resources and applications from different providers?
+
+Select only one answer.
+
+Conditional Access
+device management
+multifactor authentication (MFA)
+single sign-on (SSO)
+
+
+Question 17 of 50
+
+Which type of strategy uses a series of mechanisms to slow the advancement of an attack that aims to gain unauthorized access to data?
+
+Select only one answer.
+
+defense in depth
+distributed denial-of-service (DDoS)
+least privileged access
+perimeter
+
+
+Question 18 of 50
+
+Which two services are provided by Microsoft Entra? Each correct answer presents a complete solution.
+
+Select all answers that apply.
+
+authentication
+data encryption
+name resolution
+single sign-on (SSO)
+
+Question 19 of 50
+
+What must you use to create hybrid identities in a Microsoft Entra tenant?
+
+Select only one answer.
+
+Microsoft Entra Connect Sync
+Azure Key Vault
+Azure Resource Manager (ARM)
+Conditional Access
+
+Question 20 of 50
+
+Which two attributes are characteristics of the private cloud deployment model? Each correct answer presents a complete solution.
+
+Select all answers that apply.
+
+Applications can be provisioned and deprovisioned quickly.
+Hardware must be purchased.
+Organizations only pay for what they use.
+The company has complete control over physical resources and security.
+
+Question 21 of 50
+
+What are two basic services provided by all cloud providers? Each correct answer presents a complete solution.
+
+Select all answers that apply.
+
+application development
+colocation
+compute
+storage
+
+
+Question 22 of 50
+
+What are two characteristics of a consumption-based model? Each correct answer presents a complete solution.
+
+Select all answers that apply.
+
+high capital expenditures
+no upfront costs
+requires the purchase and management of the physical infrastructure
+the ability to stop paying for resources that are no longer used
+
+Question 23 of 50
+
+Which two characteristics are common advantages of cloud computing? Each correct answer presents a complete solution.
+
+Select all answers that apply.
+
+elimination of horizontal scaling
+geo-distribution
+high availability
+physical access to servers
+
+Question 24 of 50
+
+Select the answer that correctly completes the sentence.
+
+Increasing compute capacity for an app by adding RAM or CPUs to a virtual machine is called [answer choice].
+
+Select only one answer.
+
+disaster recovery
+high availability
+horizontal scaling
+vertical scaling
+
+
+Question 25 of 50
+
+Select the answer that correctly completes the sentence.
+
+Deploying and configuring cloud-based resources quickly as business requirements change is called [answer choice].
+
+Select only one answer.
+
+agility
+elasticity
+high availability
+scalability
+
+
+Question 26 of 50
+
+Select the answer that correctly completes the sentence.
+
+Increasing compute capacity for an app by adding instances of resources such as virtual machines is called [answer choice].
+
+Select only one answer.
+
+disaster recovery
+high availability
+horizontal scaling
+vertical scaling
+
+
+Question 27 of 50
+
+What is high availability in a public cloud environment dependent on?
+
+Select only one answer.
+
+capital expenditures
+cloud-based backup retention limits
+the service-level agreement (SLA)
+the vertical scalability of an app
+
+
+Question 28 of 50
+
+Select the answer that correctly completes the sentence.
+
+In cloud computing, [answer choice] allows you to deploy applications to regional datacenters around the world.
+
+Select only one answer.
+
+disaster recovery
+elasticity
+geo-location
+high availability
+
+Question 29 of 50
+
+Which cloud service model provides you with the most control?
+
+Select only one answer.
+
+infrastructure as a service (IaaS)
+platform as a service (PaaS)
+software as a service (SaaS)
+In which cloud service model is the customer responsible for managing the operating system?
+
+Select only one answer.
+
+Infrastructure as a service (IaaS)
+platform as a service (PaaS)
+software as a service (SaaS)
+
+
+Question 31 of 50
+
+Your organization is building a custom application.
+
+You need to focus on application development rather than configuration and management of servers.
+
+Which cloud service model should you use?
+
+Select only one answer.
+
+infrastructure as a service (IaaS)
+platform as a service (PaaS)
+software as a service (SaaS)
+
+
+Question 32 of 50
+
+Which cloud service model is used by Microsoft 365?
+
+Select only one answer.
+
+infrastructure as a service (IaaS)
+platform as a service (PaaS)
+software as a service (SaaS)
+
+Question 33 of 50
+
+What uses the infrastructure as a service (IaaS) cloud service model?
+
+Select only one answer.
+
+Azure App Services
+Azure Cosmos DB
+Azure virtual machines
+Microsoft 365
+
+Question 34 of 50
+
+Which two factors affect Azure costs? Each correct answer presents a complete solution.
+
+Select all answers that apply.
+
+availability zone selection
+date and time of use
+resource location
+resource usage
+
+Question 35 of 50
+
+Which are two common scenarios for using resource tags? Each correct answer presents a complete solution.
+
+Select all answers that apply.
+
+associating costs with different environments
+categorizing costs by department
+identifying lower cost regions
+resizing underutilized virtual machines
+
+
+Question 36 of 50
+
+Which two features are available by using Azure Cost Management + Billing? Each correct answer presents a complete solution.
+
+Select all answers that apply.
+
+Create and manage budgets.
+Estimate the total cost of ownership before resources are deployed.
+Generate historical reports and forecast future usage.
+Provide discounted prices when you pay in advance.
+
+Question 37 of 50
+
+You need to associate the costs of resources to different groups within an organization without changing the location of the resources.
+
+What should you use?
+
+Select only one answer.
+
+administrative units
+resource groups
+resource tags
+subscriptions
+
+
+Question 38 of 50
+
+What can be applied to a resource to prevent accidental deletion?
+
+Select only one answer.
+
+a resource lock
+a resource tag
+a policy
+an Azure Reservation
+
+Question 39 of 50
+
+You need to recommend a solution for Azure virtual machine deployments. The solution must enforce company standards on the virtual machines.
+
+What should you include in the recommendation?
+
+Select only one answer.
+
+Microsoft Intune compliance policy
+Azure Cost Management
+Azure Lock
+Azure Policy
+
+
+Question 40 of 50
+
+What can you use to restrict the deployment of a virtual machine to a specific location?
+
+Select only one answer.
+
+Microsoft Defender for Cloud
+Azure Policy
+resource groups
+resource locks
+
+Question 41 of 50
+
+What can you use to ensure that a development team can only create virtual machines of a certain size?
+
+Select only one answer.
+
+Resource locks
+Azure Policy
+Cloud Adoption Framework
+Conditional Access
+
+Question 42 of 50
+
+What can you use to define the resources you want to provision in a declarative JSON format?
+
+Select only one answer.
+
+Azure CLI
+Azure PowerShell
+Azure Repos
+Azure Resource Manager (ARM) templates
+
+Question 43 of 50
+
+Which two tools are accessible via Azure Cloud Shell to manage an Azure environment?
+
+Select all answers that apply.
+
+Azure CLI
+Azure PowerShell
+Azure Repos
+Azure Resource Manager (ARM) templates
+
+Question 44 of 50
+
+What should you use to access Azure Cloud Shell?
+
+Select only one answer.
+
+a web browser
+Azure Resource Manager (ARM)
+Microsoft Visual Studio Code
+the command-line on a local computer
+
+Question 45 of 50
+
+What can you use to create resources in Azure and includes a validation step to ensure all resources are created in a specific order based on dependencies, in parallel and idempotent?
+
+Select only one answer.
+
+Azure CLI
+Azure PowerShell
+Azure Resource Manager (ARM) templates
+Azure REST API
+
+Question 46 of 50
+
+What provides recommendations to reduce the cost of Azure resources?
+
+Select only one answer.
+
+Azure Advisor
+Azure Dashboard
+Azure Service Health
+Microsoft Defender for Cloud
+
+Question 47 of 50
+
+You need to be notified when there are new recommendations for reducing Azure costs.
+
+Which tool should you use?
+
+Select only one answer.
+
+Azure Advisor
+Azure Monitor
+Azure Service Health
+Log Analytics
+
+
+Question 48 of 50
+
+What can you use to automatically detect performance anomalies for web apps?
+
+Select only one answer.
+
+Azure Advisor
+Azure Application Insights
+Azure Cognitive Services
+Azure DevOps
+
+
+Question 49 of 50
+
+Which Azure service can generate an alert if virtual machine utilization is over 80% for five minutes?
+
+Select only one answer.
+
+Azure Advisor
+Azure Monitor
+Azure Policy
+Azure Service Health
+
+Question 50 of 50
+
+What can you use to find information about planned maintenance for Azure services that are critical to your organization?
+
+Select only one answer.
+
+Azure Advisor
+Azure Monitor
+Azure Service Health
+Log Analytics
+

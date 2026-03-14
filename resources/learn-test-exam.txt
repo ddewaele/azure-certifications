@@ -1,0 +1,362 @@
+Question 1 of 50
+What are two basic services provided by all cloud providers? Each correct answer presents a complete solution.
+Select all answers that apply.
+application development
+colocation
+compute
+storage
+Question 2 of 50
+What are two characteristics of a consumption-based model? Each correct answer presents a complete solution.
+Select all answers that apply.
+high capital expenditures
+no upfront costs
+requires the purchase and management of the physical infrastructure
+the ability to stop paying for resources that are no longer used
+Question 3 of 50
+Which two characteristics are common advantages of cloud computing? Each correct answer presents a complete solution.
+Select all answers that apply.
+elimination of horizontal scaling
+geo-distribution
+high availability
+physical access to servers
+Question 4 of 50
+Why is cloud computing often less expensive than on-premises datacenters?
+Select only one answer.
+Cloud service offerings have limited functionality.
+Network bandwidth is free.
+Services are only offered in a single geographic location.
+You are only billed for what you use.
+Question 5 of 50
+What is an advantage of cloud computing compared to on-premises deployments?
+Select only one answer.
+You can scale more quickly.
+You can work from multiple workstations.
+You have full access in case of internet outage.
+You own your CPUs.
+Question 6 of 50
+Select the answer that correctly completes the sentence.
+[Answer choice] refers to upfront costs incurred one time, such as hardware purchases.
+Select only one answer.
+A consumption-based model
+Capital expenditures
+Elasticity
+Operational expenditures
+Question 7 of 50
+Select the answer that correctly completes the sentence.
+Increasing compute capacity for an app by adding RAM or CPUs to a virtual machine is called [answer choice].
+Select only one answer.
+disaster recovery
+high availability
+horizontal scaling
+vertical scaling
+Question 8 of 50
+Select the answer that correctly completes the sentence.
+An example of [answer choice] is automatically scaling an application to ensure that the application has the resources needed to meet customer demands.
+Select only one answer.
+agility
+elasticity
+geo-distribution
+high availability
+Question 9 of 50
+Select the answer that correctly completes the sentence.
+In cloud computing, [answer choice] allows you to deploy applications to regional datacenters around the world.
+Select only one answer.
+disaster recovery
+elasticity
+geo-location
+high availability
+Question 10 of 50
+In which two deployment models are customers responsible for managing operating systems that host applications? Each correct answer presents a complete solution.
+Select all answers that apply.
+infrastructure as a service (IaaS)
+on-premises
+platform as a service (PaaS)
+software as a service (SaaS)
+Question 11 of 50
+In which cloud service model is the customer responsible for managing the operating system?
+Select only one answer.
+Infrastructure as a service (IaaS)
+platform as a service (PaaS)
+software as a service (SaaS)
+Question 12 of 50
+What is the customer responsible for in a software as a service (SaaS) model?
+Select only one answer.
+data and access
+storage
+runtime
+virtual machines
+Question 13 of 50
+Your organization is building a custom application.
+You need to focus on application development rather than configuration and management of servers.
+Which cloud service model should you use?
+Select only one answer.
+infrastructure as a service (IaaS)
+platform as a service (PaaS)
+software as a service (SaaS)
+Question 14 of 50
+Which cloud service model is used by Microsoft 365?
+Select only one answer.
+infrastructure as a service (IaaS)
+platform as a service (PaaS)
+software as a service (SaaS)
+Question 15 of 50
+Which two factors affect Azure costs? Each correct answer presents a complete solution.
+Select all answers that apply.
+availability zone selection
+date and time of use
+resource location
+resource usage
+Question 16 of 50
+You need to compare the costs of running an application in an on-premises datacenter with the costs of running the application in Azure.
+What should you use to assist you?
+Select only one answer.
+Azure Advisor
+Azure Cost Management
+Azure Pricing calculator
+Total Cost of Ownership (TCO) Calculator
+Question 17 of 50
+Which are two common scenarios for using resource tags? Each correct answer presents a complete solution.
+Select all answers that apply.
+associating costs with different environments
+categorizing costs by department
+identifying lower cost regions
+resizing underutilized virtual machines
+Question 18 of 50
+Which two features are available by using Azure Cost Management + Billing? Each correct answer presents a complete solution.
+Select all answers that apply.
+Create and manage budgets.
+Estimate the total cost of ownership before resources are deployed.
+Generate historical reports and forecast future usage.
+Provide discounted prices when you pay in advance.
+Question 19 of 50
+Your organization plans to deploy several production virtual machines that will have consistent resource usage throughout the year.
+What can you use to minimize the costs of the virtual machines without reducing the functionality of the virtual machines?
+Select only one answer.
+Azure Monitor alerts
+Azure Reservations
+spending limits
+Question 20 of 50
+What can be applied to a resource to prevent accidental deletion?
+Select only one answer.
+a resource lock
+a resource tag
+a policy
+an Azure Reservation
+Question 21 of 50
+What can you apply to an Azure virtual machine to ensure that users cannot delete the resource?
+Select only one answer.
+a lock
+a tag
+a user-assigned managed identity
+Conditional Access
+Question 22 of 50
+What can you use to restrict the deployment of a virtual machine to a specific location?
+Select only one answer.
+Microsoft Defender for Cloud
+Azure Policy
+resource groups
+resource locks
+Question 23 of 50
+Which two actions can be performed by using Azure portal? Each correct answer presents a complete solution.
+Select all answers that apply.
+Change the availability zone of a virtual machine.
+Create new resources.
+Assign deny permission on a resource group
+Create Microsoft Entra user
+Question 24 of 50
+What can you use to define the resources you want to provision in a declarative JSON format?
+Select only one answer.
+Azure CLI
+Azure PowerShell
+Azure Repos
+Azure Resource Manager (ARM) templates
+Question 25 of 50
+What should you use to access Azure Cloud Shell?
+Select only one answer.
+a web browser
+Azure Resource Manager (ARM)
+Microsoft Visual Studio Code
+the command-line on a local computer
+Question 26 of 50
+Which two tools can you use to create a new Azure virtual machine from a mobile device that runs Android? Each correct answer presents complete solution.
+Select all answers that apply.
+PowerShell in Azure Cloud Shell
+Remote Desktop
+SSH
+the Azure portal
+Question 27 of 50
+What provides recommendations to reduce the cost of Azure resources?
+Select only one answer.
+Azure Advisor
+Azure Dashboard
+Azure Service Health
+Microsoft Defender for Cloud
+Question 28 of 50
+You need to review the root cause analysis (RCA) report for a service outage that occurred last week.
+Where should you look for the report?
+Select only one answer.
+Azure Advisor
+Azure Monitor
+Azure Service Health
+Log Analytics
+Question 29 of 50
+You need to create a custom solution that uses thresholds to trigger autoscaling functionality to scale an app up or down to meet user demand.
+What should you include in the solution?
+Select only one answer.
+Application insights
+Azure Advisor
+Azure Monitor
+Azure Service Health
+Question 30 of 50
+What can you use to get notification about an outage in a specific Azure region?
+Select only one answer.
+Azure Advisor
+Azure Monitor
+Azure Support + Troubleshooting
+Azure Service Health
+Question 31 of 50
+What can you use to find information about planned maintenance for Azure services that are critical to your organization?
+Select only one answer.
+Azure Advisor
+Azure Monitor
+Azure Service Health
+Log Analytics
+Question 32 of 50
+Select the answer that correctly completes the sentence.
+[Answer choice] is the logical container used to combine and organize Azure resources.
+Select only one answer.
+a management group
+a resource group
+Azure Resource Manager (ARM)
+an Azure region
+Question 33 of 50
+Select the answer that correctly completes the sentence.
+In a region pair, a region is paired with another region in the same [answer choice].
+Select only one answer.
+availability zone
+datacenter
+geography
+resource group
+Question 34 of 50
+For which resource does Azure generate separate billing reports and invoices by default?
+Select only one answer.
+accounts
+management groups
+resource groups
+subscriptions
+Question 35 of 50
+Which Azure component allows you to replicate resources across a geography to ensure business continuity during a natural disaster at the primary site?
+Select only one answer.
+availability sets
+availability zones
+Azure Virtual Machine Scale Sets
+region pairs
+Question 36 of 50
+Which two Azure resources can make use of availability zones? Each correct answer presents a complete solution.
+Select all answers that apply.
+Azure SQL databases
+Azure subscriptions
+resource groups
+virtual machines
+Question 37 of 50
+Which Azure compute service can you use to deploy and manage a set of identical virtual machines?
+Select only one answer.
+availability sets
+availability zones
+Azure Container Instances
+Azure Virtual Machine Scale Sets
+Question 38 of 50
+You need to allow resources on two different Azure virtual networks to communicate with each other.
+What should you configure?
+Select only one answer.
+a network security group (NSG)
+a point-to-site VPN
+peering
+service endpoints
+Question 39 of 50
+What can you use to connect Azure resources, such as Azure SQL databases, to an Azure virtual network?
+Select only one answer.
+ExpressRoute
+network security groups (NSGs)
+peering
+service endpoints
+Question 40 of 50
+Which two services can you use to establish network connectivity between an on-premises network and Azure resources? Each correct answer presents a complete solution.
+Select all answers that apply.
+Azure Bastion
+Azure Firewall
+Azure VPN Gateway
+ExpressRoute
+Question 41 of 50
+What can you use to provide Mac and Android users with access to a Windows environment that will run Windows-based applications?
+Select only one answer.
+Azure Container Instances
+Azure Functions
+Azure Logic Apps
+Azure Virtual Desktop
+Question 42 of 50
+Which storage service offers fully managed file shares in the cloud that are accessible by using Server Message Block (SMB) protocol?
+Select only one answer.
+Azure Disk Storage
+Azure Files
+Azure Queue Storage
+Azure Table storage
+Question 43 of 50
+Which two scenarios are common use cases for Azure Blob storage? Each correct answer presents a complete solution.
+Select all answers that apply.
+hosting ASPX files for a website
+mounting a file storage share to be accessed as a virtual drive on multiple virtual machines
+serving images or documents directly to a browser
+storing data for backup and restore
+Question 44 of 50
+What is the purpose of defense in depth?
+Select only one answer.
+to enable you to locate and act on resources that are associated with specific workloads, environments, business units, and owners
+to evaluate resources and make recommendations to help improve reliability and performance
+to manage policies that control or audit resources so that the configurations stay compliant with corporate standards
+to use several layers of protection to prevent information from being accessed by unauthorized users
+Question 45 of 50
+What enables a user to sign in one time and use that credential to access multiple resources and applications from different providers?
+Select only one answer.
+Conditional Access
+device management
+multifactor authentication (MFA)
+single sign-on (SSO)
+Question 46 of 50
+What can you use to ensure that a user can only access applications from compliant devices?
+Select only one answer.
+Conditional Access
+hybrid identity
+multifactor authentication (MFA)
+single sign-on (SSO)
+Question 47 of 50
+What can you use to allow a user to manage all the resources in a resource group?
+Select only one answer.
+Azure Key Vault
+Azure role-based access control (RBAC)
+resource locks
+resource tags
+Question 48 of 50
+To which object or level is an Azure role-based access control (RBAC) role applied?
+Select only one answer.
+policy
+resource lock
+resource tag
+scope
+Question 49 of 50
+Which type of strategy uses a series of mechanisms to slow the advancement of an attack that aims to gain unauthorized access to data?
+Select only one answer.
+defense in depth
+distributed denial-of-service (DDoS)
+least privileged access
+perimeter
+Question 50 of 50
+Which two services are provided by Microsoft Entra? Each correct answer presents a complete solution.
+Select all answers that apply.
+authentication
+data encryption
+name resolution
+single sign-on (SSO)
+Region pairs
+Peering
+Geo-location

@@ -1,0 +1,218 @@
+[
+  {
+    "question_id": 1,
+    "question_text": "You run `az vm stop` on an Azure virtual machine. What happens to billing for that VM?",
+    "options": {
+      "a": {
+        "text": "Billing stops completely because the VM is turned off",
+        "is_true": false,
+        "explanation": "Incorrect. `az vm stop` (or stopping the OS) halts the operating system but Azure still holds the hardware allocated. You continue to be billed for compute."
+      },
+      "b": {
+        "text": "Billing continues because Azure still holds the hardware allocated to the VM",
+        "is_true": true,
+        "explanation": "Correct. `az vm stop` stops the OS but puts the VM in a 'Stopped' state, not 'Deallocated'. The hardware remains reserved for your VM and Azure continues to charge for it. To stop billing, you must use `az vm deallocate`."
+      },
+      "c": {
+        "text": "Only storage costs continue; compute billing stops",
+        "is_true": false,
+        "explanation": "Incorrect. In the Stopped (not deallocated) state, compute charges continue. Storage charges always continue regardless of VM state."
+      },
+      "d": {
+        "text": "The VM is automatically deleted after 24 hours to stop charges",
+        "is_true": false,
+        "explanation": "Incorrect. Azure never automatically deletes a stopped VM. It continues to incur charges until explicitly deallocated or deleted."
+      }
+    },
+    "correct_answer": "b"
+  },
+  {
+    "question_id": 2,
+    "question_text": "Which Azure compute service best suits a workload that needs to run containerized jobs that complete in minutes, with no infrastructure management, billed per second?",
+    "options": {
+      "a": {
+        "text": "Azure Virtual Machines",
+        "is_true": false,
+        "explanation": "Incorrect. VMs require OS management, take minutes to start, and are billed per hour even when idle. They are not optimized for short-lived containerized jobs."
+      },
+      "b": {
+        "text": "Azure App Service",
+        "is_true": false,
+        "explanation": "Incorrect. App Service is designed for long-running web applications and APIs, not short-lived containerized batch jobs."
+      },
+      "c": {
+        "text": "Azure Container Instances (ACI)",
+        "is_true": true,
+        "explanation": "Correct. ACI is specifically designed for running containers without managing any infrastructure. It starts in seconds, bills per second of execution, and is ideal for short-lived or batch containerized workloads."
+      },
+      "d": {
+        "text": "Azure Kubernetes Service (AKS)",
+        "is_true": false,
+        "explanation": "Incorrect. AKS is for complex, long-running container orchestration scenarios. It requires cluster management and has more overhead than ACI for simple short-lived jobs."
+      }
+    },
+    "correct_answer": "c"
+  },
+  {
+    "question_id": 3,
+    "question_text": "A company needs to handle unpredictable spikes in web traffic by automatically adding and removing identical web server instances. Which Azure service is designed for this?",
+    "options": {
+      "a": {
+        "text": "Azure Virtual Desktop",
+        "is_true": false,
+        "explanation": "Incorrect. Azure Virtual Desktop is for delivering Windows desktop experiences to end users, not for scaling web server workloads."
+      },
+      "b": {
+        "text": "VM Scale Sets",
+        "is_true": true,
+        "explanation": "Correct. VM Scale Sets allow you to deploy and manage a group of identical, load-balanced VMs that automatically scale in or out based on demand metrics like CPU utilization. This is designed exactly for handling unpredictable traffic spikes."
+      },
+      "c": {
+        "text": "Azure App Service Free tier",
+        "is_true": false,
+        "explanation": "Incorrect. The App Service Free tier does not support autoscaling. Additionally, App Service is PaaS — it abstracts away VM management."
+      },
+      "d": {
+        "text": "A single large Azure VM",
+        "is_true": false,
+        "explanation": "Incorrect. A single VM can only be scaled vertically (resized), not horizontally. It does not automatically adjust capacity and is a single point of failure."
+      }
+    },
+    "correct_answer": "b"
+  },
+  {
+    "question_id": 4,
+    "question_text": "What is the key difference between Azure App Service and Azure Virtual Machines from a management perspective?",
+    "options": {
+      "a": {
+        "text": "App Service can only run Windows applications; VMs support both Windows and Linux",
+        "is_true": false,
+        "explanation": "Incorrect. Azure App Service supports both Windows and Linux runtimes. This is not the key management difference."
+      },
+      "b": {
+        "text": "With App Service (PaaS), Microsoft manages the OS, runtime, and platform; with VMs (IaaS), the customer manages the OS and everything above it",
+        "is_true": true,
+        "explanation": "Correct. This is the fundamental IaaS vs PaaS distinction. With VMs, you must manage OS patching, runtime installation, and web server configuration. With App Service, Microsoft handles all of that — you only manage your application code."
+      },
+      "c": {
+        "text": "VMs are cheaper than App Service for all workloads",
+        "is_true": false,
+        "explanation": "Incorrect. Cost depends on many factors. App Service has a Free tier and often works out cheaper when factoring in operational overhead. VMs are not always cheaper."
+      },
+      "d": {
+        "text": "App Service does not support custom code; it only hosts static websites",
+        "is_true": false,
+        "explanation": "Incorrect. App Service supports full application code in .NET, Java, Node.js, Python, PHP, Ruby, and custom containers. It is not limited to static sites."
+      }
+    },
+    "correct_answer": "b"
+  },
+  {
+    "question_id": 5,
+    "question_text": "Which Azure Functions hosting plan scales to zero instances when there is no traffic, and bills you only per execution?",
+    "options": {
+      "a": {
+        "text": "Dedicated (App Service) plan",
+        "is_true": false,
+        "explanation": "Incorrect. The Dedicated plan runs on existing App Service infrastructure. You are billed for the App Service Plan continuously, even when no functions are executing."
+      },
+      "b": {
+        "text": "Premium plan",
+        "is_true": false,
+        "explanation": "Incorrect. The Premium plan keeps pre-warmed instances running to eliminate cold starts. It does not scale to zero and bills for reserved capacity."
+      },
+      "c": {
+        "text": "Consumption plan",
+        "is_true": true,
+        "explanation": "Correct. The Consumption plan (also called serverless plan) scales to zero when there are no requests. You pay only per execution count and execution duration. The first 1 million executions per month are free."
+      },
+      "d": {
+        "text": "Elastic Premium plan",
+        "is_true": false,
+        "explanation": "Incorrect. The Elastic Premium plan provides premium features without cold starts by maintaining pre-warmed instances. It does not scale fully to zero."
+      }
+    },
+    "correct_answer": "c"
+  },
+  {
+    "question_id": 6,
+    "question_text": "You need to choose between using a Virtual Machine or Azure App Service for a legacy enterprise application that requires custom OS-level configuration and a specific version of a system library. Which should you choose?",
+    "options": {
+      "a": {
+        "text": "Azure App Service, because it automatically handles OS configuration",
+        "is_true": false,
+        "explanation": "Incorrect. App Service abstracts away OS management entirely — you cannot access or configure the underlying OS or install custom system libraries on it."
+      },
+      "b": {
+        "text": "Azure Virtual Machine, because it provides OS-level access required for custom configuration",
+        "is_true": true,
+        "explanation": "Correct. VMs are IaaS — you get a full operating system that you can configure exactly as needed. This is the right choice when an application requires specific OS-level settings, custom system libraries, or other infrastructure-level control that PaaS cannot provide."
+      },
+      "c": {
+        "text": "Azure Functions, because it is serverless and requires no configuration",
+        "is_true": false,
+        "explanation": "Incorrect. Azure Functions is for event-driven, short-lived code. It does not support OS-level configuration and is not appropriate for full legacy enterprise applications."
+      },
+      "d": {
+        "text": "Azure Container Instances, because containers are more flexible than VMs",
+        "is_true": false,
+        "explanation": "Incorrect. Containers share a host OS kernel — you cannot customize the underlying OS. Additionally, ACI is designed for stateless short-lived workloads, not complex legacy applications requiring specific OS configurations."
+      }
+    },
+    "correct_answer": "b"
+  },
+  {
+    "question_id": 7,
+    "question_text": "What is a 'cold start' in the context of Azure Functions?",
+    "options": {
+      "a": {
+        "text": "When a function fails and needs to be restarted from scratch",
+        "is_true": false,
+        "explanation": "Incorrect. A cold start is not related to function failures — it is about the latency of starting up a new instance from an idle state."
+      },
+      "b": {
+        "text": "The additional latency experienced on the first invocation after a period of inactivity when a new instance must be initialized",
+        "is_true": true,
+        "explanation": "Correct. On the Consumption plan, when no requests have come in for a while, Azure scales the function app to zero. The next request triggers a cold start — Azure must allocate compute, load the runtime, and initialize the function before it can execute. This adds latency to that first request."
+      },
+      "c": {
+        "text": "When a function is deployed in a cold region with lower temperatures",
+        "is_true": false,
+        "explanation": "Incorrect. Cold start has nothing to do with geographic temperature — it refers to the startup latency after a period of inactivity."
+      },
+      "d": {
+        "text": "The process of pre-loading all function code into memory on startup",
+        "is_true": false,
+        "explanation": "Incorrect. Pre-loading is what the Premium plan does to avoid cold starts. A cold start is the latency you experience on the Consumption plan when that pre-loading hasn't happened yet."
+      }
+    },
+    "correct_answer": "b"
+  },
+  {
+    "question_id": 8,
+    "question_text": "Which Azure service allows you to deliver a full Windows desktop experience to users accessing it from any device, including a web browser?",
+    "options": {
+      "a": {
+        "text": "Azure App Service",
+        "is_true": false,
+        "explanation": "Incorrect. App Service hosts web applications and APIs. It does not provide a full Windows desktop environment to users."
+      },
+      "b": {
+        "text": "Azure Virtual Desktop",
+        "is_true": true,
+        "explanation": "Correct. Azure Virtual Desktop (AVD) is a cloud-based virtual desktop infrastructure (VDI) service. It streams a full Windows 10/11 desktop experience to any device via a web browser or remote desktop client."
+      },
+      "c": {
+        "text": "Azure Functions",
+        "is_true": false,
+        "explanation": "Incorrect. Azure Functions runs event-driven code in the cloud. It has no user interface or desktop delivery capability."
+      },
+      "d": {
+        "text": "Azure Container Instances",
+        "is_true": false,
+        "explanation": "Incorrect. ACI runs containerized applications. Containers do not provide a graphical desktop experience to end users."
+      }
+    },
+    "correct_answer": "b"
+  }
+]

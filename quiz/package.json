@@ -1,0 +1,12 @@
+{
+  "name": "az900-quiz",
+  "version": "1.0.0",
+  "description": "Interactive CLI quiz for AZ-900 exam prep",
+  "main": "cli.js",
+  "scripts": {
+    "start": "node cli.js"
+  },
+  "engines": {
+    "node": ">=16"
+  }
+}

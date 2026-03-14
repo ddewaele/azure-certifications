@@ -1,0 +1,218 @@
+[
+  {
+    "question_id": 1,
+    "question_text": "What is the purpose of Azure availability zones?",
+    "options": {
+      "a": {
+        "text": "To replicate data to a different country for disaster recovery",
+        "is_true": false,
+        "explanation": "Incorrect. Replicating data to a different country describes geo-redundancy, which is achieved with region pairs and geo-redundant storage, not availability zones."
+      },
+      "b": {
+        "text": "To provide physically separate datacenters within a single region, each with independent power, cooling, and networking",
+        "is_true": true,
+        "explanation": "Correct. Availability zones are physically separate datacenter facilities within the same Azure region. Each zone has its own power, cooling, and network infrastructure, so a failure in one zone does not affect the others."
+      },
+      "c": {
+        "text": "To group related resources that share the same lifecycle",
+        "is_true": false,
+        "explanation": "Incorrect. Grouping related resources by lifecycle is the purpose of resource groups, not availability zones."
+      },
+      "d": {
+        "text": "To allow Azure to be accessed from different network locations",
+        "is_true": false,
+        "explanation": "Incorrect. Azure accessibility from different network locations is handled by Azure's global network and content delivery, not availability zones."
+      }
+    },
+    "correct_answer": "b"
+  },
+  {
+    "question_id": 2,
+    "question_text": "A company deploys two identical VMs across two different availability zones in the same region. What SLA can they expect for those VMs?",
+    "options": {
+      "a": {
+        "text": "99.9%",
+        "is_true": false,
+        "explanation": "Incorrect. 99.9% is the SLA for a single VM using Premium SSD. Spreading across availability zones increases this significantly."
+      },
+      "b": {
+        "text": "99.95%",
+        "is_true": false,
+        "explanation": "Incorrect. 99.95% is the SLA for VMs deployed in an Availability Set (rack-level redundancy within a single datacenter), not availability zones."
+      },
+      "c": {
+        "text": "99.99%",
+        "is_true": true,
+        "explanation": "Correct. When VMs are deployed across two or more availability zones in the same region, Azure guarantees a 99.99% uptime SLA. This is the highest VM SLA tier, protecting against datacenter-level failures."
+      },
+      "d": {
+        "text": "100%",
+        "is_true": false,
+        "explanation": "Incorrect. Azure does not offer a 100% SLA for any service. Even with availability zones, a small window of downtime is still within the SLA."
+      }
+    },
+    "correct_answer": "c"
+  },
+  {
+    "question_id": 3,
+    "question_text": "Which of the following statements about resource groups is correct?",
+    "options": {
+      "a": {
+        "text": "A resource can belong to more than one resource group",
+        "is_true": false,
+        "explanation": "Incorrect. Every Azure resource must belong to exactly one resource group. A resource cannot be in multiple resource groups simultaneously."
+      },
+      "b": {
+        "text": "All resources in a resource group must be in the same Azure region",
+        "is_true": false,
+        "explanation": "Incorrect. The resource group itself has a region (for metadata storage), but resources within the group can be located in different regions."
+      },
+      "c": {
+        "text": "Deleting a resource group deletes all resources contained within it",
+        "is_true": true,
+        "explanation": "Correct. When you delete a resource group, all the resources inside it are also deleted. This makes resource groups a convenient unit for lifecycle management — create together, delete together."
+      },
+      "d": {
+        "text": "Resource groups can be nested inside other resource groups",
+        "is_true": false,
+        "explanation": "Incorrect. Resource groups cannot be nested. The scope hierarchy is: Management Groups → Subscriptions → Resource Groups → Resources."
+      }
+    },
+    "correct_answer": "c"
+  },
+  {
+    "question_id": 4,
+    "question_text": "An organization wants to apply a single Azure Policy that enforces compliance rules across all 20 of their Azure subscriptions. What is the most efficient approach?",
+    "options": {
+      "a": {
+        "text": "Assign the policy to each of the 20 subscriptions individually",
+        "is_true": false,
+        "explanation": "Incorrect. Assigning to each subscription individually is inefficient and error-prone. Any new subscriptions added later would also need manual policy assignment."
+      },
+      "b": {
+        "text": "Assign the policy at the resource group level in every resource group",
+        "is_true": false,
+        "explanation": "Incorrect. Assigning at the resource group level would require even more individual assignments across hundreds of resource groups, and would not catch resources in new groups."
+      },
+      "c": {
+        "text": "Assign the policy to a management group that contains all 20 subscriptions",
+        "is_true": true,
+        "explanation": "Correct. Management groups allow you to apply policies, RBAC, and governance at a level above subscriptions. A policy assigned to a management group automatically applies to all subscriptions (and their resource groups and resources) within it — including new ones added later."
+      },
+      "d": {
+        "text": "Use Azure Blueprints on each subscription",
+        "is_true": false,
+        "explanation": "Incorrect. While Blueprints can include policies, applying them to each subscription individually is still less efficient than using a management group for a single assignment."
+      }
+    },
+    "correct_answer": "c"
+  },
+  {
+    "question_id": 5,
+    "question_text": "What is Azure Resource Manager (ARM)?",
+    "options": {
+      "a": {
+        "text": "A virtual machine management service for automating VM tasks",
+        "is_true": false,
+        "explanation": "Incorrect. ARM is not specific to virtual machines. It is the management layer for all Azure resources."
+      },
+      "b": {
+        "text": "The deployment and management layer that processes all Azure resource operations from any tool or API",
+        "is_true": true,
+        "explanation": "Correct. ARM is the control plane for Azure. Whether you use the portal, CLI, PowerShell, or REST APIs, all requests go through ARM. It provides consistent authentication, RBAC enforcement, resource locking, tagging, and deployment management."
+      },
+      "c": {
+        "text": "A monitoring service that tracks the health of Azure resources",
+        "is_true": false,
+        "explanation": "Incorrect. Monitoring resource health is the role of Azure Monitor and Azure Service Health, not ARM."
+      },
+      "d": {
+        "text": "A billing service that calculates the cost of deployed resources",
+        "is_true": false,
+        "explanation": "Incorrect. Billing and cost management is handled by Azure Cost Management + Billing, not ARM."
+      }
+    },
+    "correct_answer": "b"
+  },
+  {
+    "question_id": 6,
+    "question_text": "Which of the following correctly describes the Azure scope hierarchy from broadest to narrowest?",
+    "options": {
+      "a": {
+        "text": "Subscription → Management Group → Resource Group → Resource",
+        "is_true": false,
+        "explanation": "Incorrect. Subscriptions are below management groups in the hierarchy, not above them."
+      },
+      "b": {
+        "text": "Resource Group → Subscription → Management Group → Resource",
+        "is_true": false,
+        "explanation": "Incorrect. This is the hierarchy in reverse order. Management Groups are the broadest scope, not resource groups."
+      },
+      "c": {
+        "text": "Management Group → Subscription → Resource Group → Resource",
+        "is_true": true,
+        "explanation": "Correct. The Azure scope hierarchy from broadest to narrowest is: Management Groups (top) → Subscriptions → Resource Groups → Individual Resources. Policies, RBAC, and budgets applied at a broader scope inherit down to all narrower scopes."
+      },
+      "d": {
+        "text": "Tenant → Region → Resource Group → Resource",
+        "is_true": false,
+        "explanation": "Incorrect. 'Region' is not a level in the Azure management scope hierarchy. The hierarchy is Management Groups → Subscriptions → Resource Groups → Resources."
+      }
+    },
+    "correct_answer": "c"
+  },
+  {
+    "question_id": 7,
+    "question_text": "What is the purpose of Azure region pairs?",
+    "options": {
+      "a": {
+        "text": "To allow two VMs to share the same IP address for load balancing",
+        "is_true": false,
+        "explanation": "Incorrect. IP sharing for load balancing is a function of Azure Load Balancer, not region pairs."
+      },
+      "b": {
+        "text": "To pair a production subscription with a development subscription",
+        "is_true": false,
+        "explanation": "Incorrect. Region pairs are geographic pairings of Azure regions, not subscription pairings."
+      },
+      "c": {
+        "text": "To provide geo-redundancy where planned maintenance is staggered and data can be replicated across regions at least 300 miles apart",
+        "is_true": true,
+        "explanation": "Correct. Azure region pairs are two regions within the same geography, at least 300 miles apart. They are used for geo-redundant storage replication, staggered platform updates (only one region in a pair is updated at a time), and prioritized recovery during outages."
+      },
+      "d": {
+        "text": "To connect two VNets across different regions using private connectivity",
+        "is_true": false,
+        "explanation": "Incorrect. Connecting VNets across regions is done via global VNet peering, not region pairs."
+      }
+    },
+    "correct_answer": "c"
+  },
+  {
+    "question_id": 8,
+    "question_text": "A subscription acts as which type of boundary in Azure?",
+    "options": {
+      "a": {
+        "text": "A security boundary only",
+        "is_true": false,
+        "explanation": "Incorrect. While subscriptions have access control, they are not only a security boundary."
+      },
+      "b": {
+        "text": "A billing and access management boundary",
+        "is_true": true,
+        "explanation": "Correct. An Azure subscription serves as both a billing boundary (each subscription has its own invoice and cost tracking) and an access management boundary (RBAC assignments at the subscription level control who can manage resources within it)."
+      },
+      "c": {
+        "text": "A network isolation boundary",
+        "is_true": false,
+        "explanation": "Incorrect. Network isolation in Azure is achieved through Virtual Networks (VNets), not subscriptions. Resources in the same VNet can communicate regardless of subscription."
+      },
+      "d": {
+        "text": "A physical datacenter boundary",
+        "is_true": false,
+        "explanation": "Incorrect. Subscriptions are a logical and billing construct. Physical datacenter boundaries correspond to Azure regions and availability zones."
+      }
+    },
+    "correct_answer": "b"
+  }
+]
