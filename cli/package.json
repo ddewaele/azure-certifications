@@ -1,7 +1,7 @@
 {
-  "name": "az900-quiz",
+  "name": "azure-cert-quiz",
   "version": "1.0.0",
-  "description": "Interactive CLI quiz for AZ-900 exam prep",
+  "description": "Interactive CLI quiz for Azure certification exam prep",
   "main": "cli.js",
   "scripts": {
     "start": "node cli.js"

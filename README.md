@@ -12,6 +12,21 @@ A hands-on study repo for Microsoft Azure certifications. Each certification has
 
 ---
 
+## Quiz CLI
+
+An interactive terminal quiz app for any certification's JSON question bank. Requires Node.js 16+.
+
+```bash
+node cli/cli.js <path-to-quiz-folder>
+
+# Example — AZ-900:
+node cli/cli.js az-900/quiz
+```
+
+See [cli/](./cli/) for details.
+
+---
+
 ## Shared Resources
 
 These guides apply across all certifications.

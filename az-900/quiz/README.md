@@ -32,11 +32,17 @@ Each file is a JSON array of question objects:
 
 ## Interactive CLI
 
-A full interactive quiz CLI is included. No dependencies — requires Node.js 16+.
+A full interactive quiz CLI lives in the top-level `cli/` folder. No dependencies — requires Node.js 16+.
 
 ```bash
-cd quiz
-node cli.js
+node cli/cli.js az-900/quiz
+```
+
+Or from inside the `cli/` directory:
+
+```bash
+cd cli
+node cli.js ../az-900/quiz
 ```
 
 ### Controls

@@ -151,7 +151,7 @@ The AZ-900 exam is divided into three domain areas:
 
 69 multiple-choice questions covering all AZ-900 exam domains.
 
-- [Quiz README + how to run](./quiz/README.md)
+- [Quiz README + how to run](./quiz/README.md) — `node cli/cli.js az-900/quiz` from the repo root
 - [01 - Cloud Concepts](./quiz/01-cloud-concepts.json) (10 questions)
 - [02 - Azure Architecture](./quiz/02-azure-architecture.json) (8 questions)
 - [03 - Compute](./quiz/03-compute.json) (8 questions)

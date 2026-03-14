@@ -46,6 +46,7 @@ function wrap(text, indent = '  ', width = W - 2) {
 
 const state = {
   screen:      'FILE_SELECT',  // FILE_SELECT | QUIZ | BOOKMARKS | RESULTS
+  quizDir:     '',             // resolved path to the folder containing quiz JSON files
   files:       [],
   questions:   [],
   quizName:    '',
@@ -67,12 +68,12 @@ function isMultiSelect(q) {
 // ─── Load quiz files ──────────────────────────────────────────────────────────
 
 function loadFiles() {
-  return fs.readdirSync(__dirname)
+  return fs.readdirSync(state.quizDir)
     .filter(f => /^\d+.*\.json$/.test(f))
     .sort()
     .map(f => {
       try {
-        const data = JSON.parse(fs.readFileSync(path.join(__dirname, f), 'utf8'));
+        const data = JSON.parse(fs.readFileSync(path.join(state.quizDir, f), 'utf8'));
         if (Array.isArray(data) && data[0]?.question_id != null) {
           const name = f
             .replace(/^\d+-/, '')
@@ -605,7 +606,7 @@ function startQuiz(fileIndex) {
 function cleanup() {
   try { if (process.stdin.isTTY) process.stdin.setRawMode(false); } catch {}
   clear();
-  ln(c.dim + '\n  Goodbye! Good luck with AZ-900.\n' + c.reset);
+  ln(c.dim + '\n  Goodbye! Good luck with your exam.\n' + c.reset);
 }
 
 // ─── Entry point ──────────────────────────────────────────────────────────────
@@ -615,10 +616,24 @@ if (!process.stdin.isTTY) {
   process.exit(1);
 }
 
+const argDir = process.argv[2];
+if (!argDir) {
+  console.error('Usage: node cli.js <path-to-quiz-folder>');
+  console.error('Example: node cli.js ../az-900/quiz');
+  process.exit(1);
+}
+
+state.quizDir = path.resolve(argDir);
+
+if (!fs.existsSync(state.quizDir)) {
+  console.error(`Folder not found: ${state.quizDir}`);
+  process.exit(1);
+}
+
 state.files = loadFiles();
 
 if (state.files.length === 0) {
-  console.error('No quiz JSON files found. Run from the quiz/ directory.');
+  console.error(`No quiz JSON files found in: ${state.quizDir}`);
   process.exit(1);
 }
 
