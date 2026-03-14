@@ -55,6 +55,15 @@ Sizes are grouped into families:
 - **Availability Sets** — spread VMs across fault domains (different racks) and update domains. SLA 99.95%
 - **Availability Zones** — spread VMs across physically separate datacenters. SLA 99.99%
 
+
+### Availability Sets
+
+- A logical grouping of VMs to ensure they are distributed across fault and update domains
+- Fault domain: group of VMs that share a common power source and network switch (like a rack)
+- Update domain: group of VMs that are updated together during planned maintenance
+- At least 2 VMs required for availability set
+
+
 ---
 
 ## VM Scale Sets (VMSS)

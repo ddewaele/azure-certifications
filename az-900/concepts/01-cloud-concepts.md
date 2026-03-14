@@ -34,6 +34,13 @@ The cloud provider and the customer each own a piece of security and operations.
 
 **Key exam point:** The customer is *always* responsible for data, identities, and access management — regardless of service model.
 
+So this means
+
+- The information and data stored in the cloud
+- Devices that are allowed to connect to your cloud (cell phones, computers, and so on)
+- The accounts and identities of the people, services, and devices within your organization
+
+
 ---
 
 ## Cloud Service Models
@@ -42,13 +49,13 @@ The cloud provider and the customer each own a piece of security and operations.
 You rent virtualized hardware (VMs, storage, networking). You manage the OS and everything above it.
 
 - Examples: Azure Virtual Machines, Azure Disk Storage
-- Use when: you need OS-level control, running legacy applications, custom configurations
+- Use when: you need OS-level control, running legacy applications, custom configurations, lift and shift migrations, testing adn deployment
 
 ### PaaS — Platform as a Service
 You rent a managed platform for running applications. The provider manages the OS, runtime, and middleware.
 
 - Examples: Azure App Service, Azure SQL Database, Azure Functions
-- Use when: you want to focus on code and not infrastructure
+- Use when: you want to focus on code and not infrastructure, use development frameworks, built-in software components, analytics and business intelligence, microservices and serverless architectures
 
 ### SaaS — Software as a Service
 You use a fully managed application delivered over the internet.
@@ -82,6 +89,12 @@ Combination of public and private clouds, connected together.
 ### Multi-cloud
 Using services from more than one public cloud provider simultaneously.
 
+![alt text](image-1.png)
+
+**Azure Arc** allows you to manage resources across on-premises, multi-cloud, and edge environments from a single control plane. This is an example of a hybrid/multi-cloud management tool.
+
+**Azure VMWare Solution** allows you to run VMware workloads natively on Azure, enabling a hybrid cloud approach for organizations with existing VMware investments. This is another example of a hybrid cloud solution that helps bridge on-premises and cloud environments.
+
 ---
 
 ## CapEx vs OpEx
@@ -112,6 +125,22 @@ Cloud shifts IT spending from CapEx to OpEx. This is one of the primary financia
 | **Security** | Broad security tooling and compliance certifications |
 | **Governance** | Policy enforcement and auditability across your estate |
 | **Manageability** | Monitor and manage resources from a single portal, CLI, or API |
+
+
+## SLAs
+
+number of nines = 100% - SLA
+| SLA | Downtime per year | Downtime per month |
+|---|---|---|
+| 99.0% | 3.65 days | 7.2 hours |
+| 99.9% | 8.77 hours | 43.2 minutes |
+| 99.95% | 4.38 hours | 21.6 minutes |
+| 99.99% | 52.56 minutes | 4.32 minutes |
+| 99.999% | 5.26 minutes | 25.9 seconds |
+| 99.9999% | 31.5 seconds | 2.59 seconds |
+| 99.99999% | 3.15 seconds | 0.315 seconds |
+
+---
 
 ---
 

@@ -2,6 +2,17 @@
 
 Azure networking connects your resources to each other, to on-premises environments, and to the internet.
 
+Key features include :
+
+- Isolation and segmentation (Virtual Networks, subnets, NSGs)
+- Internet communications (public IPs, load balancers, Azure Firewall)
+- Communicate between Azure resources (VNet, peering, service endpoints)
+- Communicate with on-premises resources (point-to-site, site-to-site, ExpressRoute)
+- Route network traffic (UDRs, Azure Firewall, Azure Front Door)
+- Filter network traffic (NSGs, Azure Firewall, WAF)
+- Connect virtual networks (VNet peering)
+
+
 ---
 
 ## Azure Virtual Network (VNet)

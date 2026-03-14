@@ -21,6 +21,24 @@ az storage account create \
 - The SKU controls redundancy (see below)
 - `StorageV2` (general-purpose v2) is the recommended type — supports all storage services
 
+### Types
+
+- Standard general-purpose v2
+- Premium block blobs (high-performance SSD for block blobs)
+- Premium file shares (high-performance SSD for file shares)
+- Premium page blobs (high-performance SSD for page blobs, used for VM disks)
+
+
+
+### Redundancy Options
+
+- **LRS** : Locally redundant storage
+- **GRS** : Geo-redundant storage
+- **RA-GRS** : Read-access geo-redundant storage
+- **ZRS** : Zone-redundant storage
+- **GZRS** : Geo-zone-redundant storage
+- **RA-GZRS** : Read-access geo-zone-redundant storage
+
 ---
 
 ## Storage Services
@@ -127,6 +145,10 @@ Redundancy protects your data against hardware failures. More redundancy = highe
 | **LRS** | Locally Redundant Storage | 3 synchronous copies within a single datacenter |
 | **ZRS** | Zone-Redundant Storage | 3 synchronous copies across 3 availability zones in one region |
 
+![alt text](image-8.png)
+![alt text](image-9.png)
+
+
 ### Cross-region (geo-redundant)
 
 | Option | Full name | Description |
@@ -136,7 +158,14 @@ Redundancy protects your data against hardware failures. More redundancy = highe
 | **RA-GRS** | Read-Access GRS | GRS + read access to secondary region |
 | **RA-GZRS** | Read-Access GZRS | GZRS + read access to secondary region |
 
+![alt text](image-10.png)
+![alt text](image-11.png)
+
+
 Durability: all options provide at least **11 nines** (99.999999999%) of durability.
+
+Because data is replicated to the secondary region asynchronously, a failure that affects the primary region may result in data loss if the primary region can't be recovered. The interval between the most recent writes to the primary region and the last write to the secondary region is known as the recovery point objective (RPO). The RPO indicates the point in time to which data can be recovered. Azure Storage typically has an RPO of less than 15 minutes, although there's currently no SLA on how long it takes to replicate data to the secondary region.
+
 
 **Key exam point:** secondary region data is read-only unless a failover is initiated (unless using RA-GRS/RA-GZRS).
 

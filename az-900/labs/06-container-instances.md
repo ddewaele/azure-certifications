@@ -43,6 +43,26 @@ az container create \
   --os-type Linux \
   --cpu 1 \
   --memory 1
+```
+
+or
+
+```
+```bash
+az container create \
+  --resource-group $RESOURCE_GROUP \
+  --name lab06-nginx \
+  --image mcr.microsoft.com/mirror/docker/library/nginx:latest \
+  --ports 80 \
+  --dns-name-label "az900-lab06-$(openssl rand -hex 4)" \
+  --os-type Linux \
+  --cpu 1 \
+  --memory 1
+
+```
+
+
+
 
 # Check status
 az container show \

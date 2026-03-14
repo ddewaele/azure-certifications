@@ -7,7 +7,8 @@ Understanding how Azure is physically and logically organized is fundamental for
 ## Physical Infrastructure
 
 ### Datacenters
-Azure runs on thousands of physical datacenters around the world — each with its own power, cooling, and networking. You don't interact with datacenters directly; they're abstracted into regions and availability zones.
+Azure runs on thousands of physical datacenters around the world — each with its own power, cooling, and networking.
+You don't interact with datacenters directly; they're abstracted into regions and availability zones.
 
 ### Regions
 A region is a geographic area containing one or more datacenters that are close together and connected via a low-latency network.
@@ -20,13 +21,29 @@ A region is a geographic area containing one or more datacenters that are close 
 List available regions:
 ```bash
 az account list-locations --output table
+
+DisplayName               Name                 RegionalDisplayName
+------------------------  -------------------  -------------------------------------
+East US                   eastus               (US) East US
+West US 2                 westus2              (US) West US 2
+Australia East            australiaeast        (Asia Pacific) Australia East
+Southeast Asia            southeastasia        (Asia Pacific) Southeast Asia
+North Europe              northeurope          (Europe) North Europe
+Sweden Central            swedencentral        (Europe) Sweden Central
+West Europe               westeurope           (Europe) West Europe
+UK South                  uksouth              (UK) UK South
+Central US                centralus            (US) Central US
 ```
+
+![alt text](image-3.png)
 
 ### Region Pairs
 Most Azure regions are paired with another region at least 300 miles away in the same geography. Region pairs are used for:
 - Geo-redundant storage replication
 - Planned maintenance is staggered (one in the pair at a time)
 - Recovery priority during outages
+
+![alt text](image-4.png)
 
 Example pairs: `East US` ↔ `West US`, `West Europe` ↔ `North Europe`
 
@@ -50,7 +67,21 @@ Region: West Europe
 
 - Not all regions support availability zones
 - Deploying across zones protects against datacenter-level failures
-- Services are either **zonal** (pinned to a zone) or **zone-redundant** (automatically spread)
+- Services are either
+      - **zonal** (VMs , disks , ... pinned to a zone)
+      - **zone-redundant** (sql, storage, ... automatically spread)
+      - **non-regional** (not tied to a zone)
+
+
+Example zonal services: Azure Virtual Machines. You can choose which zone to deploy in for higher availability. If one zone goes down, VMs in other zones are unaffected.
+
+![alt text](image-6.png)
+
+Example zone-redundant services: Azure SQL Database, Azure Storage, Azure App Service. These services automatically replicate across zones within the region for high availability. You don't choose a zone for these — you just get zone-level redundancy.
+
+![alt text](image-5.png)
+
+
 
 SLA impact:
 | Deployment | VM SLA |
@@ -63,6 +94,10 @@ Check which regions support zones:
 ```bash
 az account list-locations --query "[?availabilityZoneMappings != null].name" --output table
 ```
+
+No all regions have availability zones, but all regions have multiple datacenters. You can still achieve high availability by deploying across multiple regions if zones aren't available.
+If a region has an availability zone, there are at least 3 zones in that region. You can deploy resources across those zones for higher availability. If a region doesn't have zones, you can still achieve high availability by deploying across multiple regions.
+
 
 ---
 
@@ -121,9 +156,17 @@ Root Management Group
 │   └── Subscription: Dev
 ```
 
+![alt text](image-7.png)
+
 - Azure Policy and RBAC applied to a management group inherits down to all subscriptions within it
 - Up to 6 levels deep (not counting root)
 - Each Azure AD tenant has a single root management group
+
+Example usage :
+
+- Apply a security policy to all production subscriptions by applying it to the "Production" management group
+- Grant read-only access to all development subscriptions by assigning a role at the "Development" management group level
+- Organize subscriptions by department, project, or environment using management groups for better governance and cost management
 
 ---
 
