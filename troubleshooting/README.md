@@ -9,6 +9,7 @@ Common errors encountered when working through the Azure CLI labs.
 | Error code | Description | Guide |
 |---|---|---|
 | `MissingSubscriptionRegistration` | Resource provider not enabled on subscription | [missing-subscription-registration.md](./missing-subscription-registration.md) |
+| `RegistryErrorResponse` | ACI can't pull from Docker Hub due to rate limiting | [aci-docker-hub-registry-error.md](./aci-docker-hub-registry-error.md) |
 
 ---
 
