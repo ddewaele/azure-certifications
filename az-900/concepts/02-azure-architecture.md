@@ -68,6 +68,10 @@ az account list-locations --query "[?availabilityZoneMappings != null].name" --o
 
 ## Logical Infrastructure
 
+### Overview
+
+![alt text](image-2.png)
+
 ### Resources
 A resource is any manageable item in Azure — a VM, a storage account, a virtual network, a database, etc.
 
@@ -142,6 +146,103 @@ ARM provides:
 - **RBAC** — access control integrated at every level
 - **Tagging** — metadata on resources for organization and cost tracking
 - **Locking** — prevent accidental deletion or modification
+
+---
+
+## Interacting with Azure
+
+Azure exposes everything through ARM, which means you can manage resources using any of these interfaces interchangeably — they all call the same underlying API.
+
+### Azure Portal
+
+A web-based GUI at [portal.azure.com](https://portal.azure.com). Good for exploration, one-off tasks, and learning what options exist.
+
+- Point-and-click interface for creating and managing resources
+- Built-in dashboards, cost views, monitoring charts
+- Not suitable for repeatable deployments or automation
+- Useful for validating what the CLI or templates create
+
+### Azure Cloud Shell
+
+A browser-based shell built directly into the portal (click the `>_` icon in the top bar). No local installation needed.
+
+- Choose **Bash** (runs Azure CLI) or **PowerShell** (runs Az PowerShell module)
+- Your home directory persists between sessions via an Azure Files share
+- Pre-authenticated — no need to run `az login`
+- Useful when you're on a machine where you haven't installed the CLI
+
+```bash
+# Switch between Bash and PowerShell using the dropdown in Cloud Shell
+# Files stored in ~/clouddrive persist across sessions
+```
+
+### Azure CLI
+
+A cross-platform command-line tool (`az`) for managing Azure resources from your local terminal. Install once, works on macOS, Linux, and Windows.
+
+```bash
+# Authenticate
+az login
+
+# Set a default subscription
+az account set --subscription "<name-or-id>"
+
+# Set default resource group and location (avoids repeating them in every command)
+az configure --defaults group=my-rg location=westeurope
+
+# General command structure:
+# az <service> <action> [options]
+az vm create ...
+az group list ...
+az storage account show ...
+```
+
+Common patterns:
+
+```bash
+# Output as table (readable), json (scriptable), or tsv (parseable)
+az resource list --output table
+az resource list --output json
+
+# Query with JMESPath to filter output
+az vm list --query "[].{Name:name, RG:resourceGroup}" --output table
+
+# Use --no-wait to kick off long-running operations without blocking
+az vm start --name my-vm --resource-group my-rg --no-wait
+```
+
+### Azure PowerShell
+
+A PowerShell module (`Az`) that wraps the same ARM API. Preferred in Windows-heavy or enterprise environments where PowerShell is already the scripting standard.
+
+```powershell
+# Install the module
+Install-Module -Name Az -Scope CurrentUser
+
+# Authenticate
+Connect-AzAccount
+
+# List resource groups
+Get-AzResourceGroup | Format-Table
+
+# General command structure:
+# <Verb>-Az<Service> [parameters]
+Get-AzVM
+New-AzResourceGroup -Name my-rg -Location westeurope
+Remove-AzVM -Name my-vm -ResourceGroupName my-rg
+```
+
+### Choosing the right tool
+
+| Tool | Best for |
+|---|---|
+| **Azure Portal** | Exploration, one-off tasks, learning the UI, dashboards |
+| **Cloud Shell** | Quick CLI/PowerShell tasks without a local install, always authenticated |
+| **Azure CLI** | Scripting, automation, CI/CD pipelines, cross-platform teams |
+| **Azure PowerShell** | Windows/enterprise environments, existing PowerShell workflows |
+| **ARM templates / Bicep** | Repeatable, version-controlled infrastructure deployments |
+
+> **Exam tip:** The portal, CLI, PowerShell, and REST API all go through ARM — they are different *interfaces* to the same underlying service. Any resource you create in the portal can also be created with the CLI using the same parameters.
 
 ---
 
