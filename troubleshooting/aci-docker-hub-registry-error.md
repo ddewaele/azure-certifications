@@ -1,6 +1,6 @@
-# Error: RegistryErrorResponse (Docker Hub rate limit)
+# Error: RegistryErrorResponse / InaccessibleImage (Docker Hub rate limit)
 
-## Symptom
+## Symptoms
 
 ```
 (RegistryErrorResponse) An error response is received from the docker registry 'index.docker.io'. Please retry later.
@@ -8,7 +8,13 @@ Code: RegistryErrorResponse
 Message: An error response is received from the docker registry 'index.docker.io'. Please retry later.
 ```
 
-Occurs when running `az container create` with a public Docker Hub image such as `nginx:latest`.
+```
+(InaccessibleImage) The image 'mcr.microsoft.com/mirror/docker/library/nginx:latest' in container group 'lab06-nginx' is not accessible.
+Code: InaccessibleImage
+Message: The image '...' in container group '...' is not accessible. Please check the image and registry credential.
+```
+
+Occurs when running `az container create` with a public Docker Hub image such as `nginx:latest`, or when using an MCR image path that does not exist.
 
 ## Why This Happens
 
@@ -19,36 +25,19 @@ Docker Hub enforces **pull rate limits** on anonymous requests:
 
 Azure Container Instances pulls images from a **shared pool of outbound IPs**. Many ACI deployments across all Azure customers share those IPs, so the pull quota is exhausted quickly. Your container creation hits the rate limit even though you personally haven't pulled anything.
 
-This is not an Azure bug — it is Docker Hub's rate limiting policy applied to Azure's shared egress addresses.
+The `InaccessibleImage` error occurs when the image path itself is wrong — for example, `mcr.microsoft.com/mirror/docker/library/nginx` does **not** exist on MCR despite being widely referenced online.
 
 ## Fixes
 
-### Option 1 — Use an MCR-hosted image (quickest)
+### Option 1 — Use Microsoft's ACI demo image (quickest for labs)
 
-Microsoft mirrors common Docker Hub images on the Microsoft Container Registry (MCR), which has no pull rate limits for Azure resources. Swap the image name:
+Microsoft publishes a purpose-built demo image on MCR that runs a small HTTP server on port 80 and is designed specifically for ACI labs. It has no rate limits.
 
-```bash
-# Instead of:
---image nginx:latest
-
-# Use the MCR mirror:
---image mcr.microsoft.com/mirror/docker/library/nginx:latest
-```
-
-Other useful MCR mirrors:
-```bash
-mcr.microsoft.com/mirror/docker/library/alpine:latest
-mcr.microsoft.com/mirror/docker/library/ubuntu:22.04
-mcr.microsoft.com/mirror/docker/library/python:3.11-slim
-mcr.microsoft.com/mirror/docker/library/node:20-alpine
-```
-
-Full example:
 ```bash
 az container create \
   --resource-group $RESOURCE_GROUP \
   --name lab06-nginx \
-  --image mcr.microsoft.com/mirror/docker/library/nginx:latest \
+  --image mcr.microsoft.com/azuredocs/aci-helloworld:latest \
   --ports 80 \
   --dns-name-label "az900-lab06-$(openssl rand -hex 4)" \
   --os-type Linux \
@@ -56,11 +45,54 @@ az container create \
   --memory 1
 ```
 
+This is not nginx, but it demonstrates the same ACI concepts (container creation, public IP, DNS label, port mapping). Use this when the goal is to learn ACI, not to run nginx specifically.
+
 ---
 
-### Option 2 — Authenticate with a Docker Hub account
+### Option 2 — Import into Azure Container Registry (ACR) and pull from there
 
-A free Docker Hub account gets 200 authenticated pulls per 6 hours from its own account IP — bypassing the shared IP problem. Pass your credentials to ACI at container creation time.
+`az acr import` fetches the image server-side from within Azure's network and stores it in your own ACR. ACI then pulls from ACR with no rate limits and no Docker Hub dependency.
+
+```bash
+# 1. Create an ACR (if you don't have one)
+az acr create \
+  --resource-group $RESOURCE_GROUP \
+  --name myregistry \
+  --sku Basic
+
+# 2. Import nginx from Docker Hub directly into ACR — no local Docker install needed
+az acr import \
+  --name myregistry \
+  --source docker.io/library/nginx:latest \
+  --image nginx:latest
+
+# 3. Get the ACR login server and credentials
+ACR_SERVER=$(az acr show --name myregistry --query loginServer --output tsv)
+az acr update --name myregistry --admin-enabled true
+ACR_PASS=$(az acr credential show --name myregistry --query passwords[0].value --output tsv)
+
+# 4. Create the container from your ACR image
+az container create \
+  --resource-group $RESOURCE_GROUP \
+  --name lab06-nginx \
+  --image $ACR_SERVER/nginx:latest \
+  --ports 80 \
+  --dns-name-label "az900-lab06-$(openssl rand -hex 4)" \
+  --os-type Linux \
+  --cpu 1 \
+  --memory 1 \
+  --registry-login-server $ACR_SERVER \
+  --registry-username myregistry \
+  --registry-password $ACR_PASS
+```
+
+> `az acr import` is server-side — Azure fetches the image directly from Docker Hub without going through your machine. This is also more reliable than a local `docker pull` + `docker push`.
+
+---
+
+### Option 3 — Authenticate with a Docker Hub account
+
+Pass your Docker Hub credentials directly to ACI. Authenticated pulls are tied to your account rather than the shared ACI IP pool, so you get your own rate limit (200 pulls/6h on a free account).
 
 ```bash
 az container create \
@@ -77,50 +109,7 @@ az container create \
   --registry-password <your-docker-hub-access-token>
 ```
 
-> Use a Docker Hub **access token** (not your password): log into hub.docker.com → Account Settings → Security → New Access Token.
-
----
-
-### Option 3 — Push the image to Azure Container Registry (ACR)
-
-Pull the image locally and push it to your own ACR instance. ACI can then pull from ACR without any rate limits, and the transfer stays within the Azure network.
-
-```bash
-# 1. Create an ACR (if you don't have one)
-az acr create \
-  --resource-group $RESOURCE_GROUP \
-  --name myregistry \
-  --sku Basic
-
-# 2. Import the Docker Hub image directly into ACR (no local docker needed)
-az acr import \
-  --name myregistry \
-  --source docker.io/library/nginx:latest \
-  --image nginx:latest
-
-# 3. Get the ACR login server
-ACR_SERVER=$(az acr show --name myregistry --query loginServer --output tsv)
-
-# 4. Enable admin credentials on the ACR
-az acr update --name myregistry --admin-enabled true
-ACR_PASS=$(az acr credential show --name myregistry --query passwords[0].value --output tsv)
-
-# 5. Create the container using your ACR image
-az container create \
-  --resource-group $RESOURCE_GROUP \
-  --name lab06-nginx \
-  --image $ACR_SERVER/nginx:latest \
-  --ports 80 \
-  --dns-name-label "az900-lab06-$(openssl rand -hex 4)" \
-  --os-type Linux \
-  --cpu 1 \
-  --memory 1 \
-  --registry-login-server $ACR_SERVER \
-  --registry-username myregistry \
-  --registry-password $ACR_PASS
-```
-
-> `az acr import` does the Docker Hub pull server-side from within Azure's network, which is more reliable than pulling from your laptop and re-pushing.
+> Use a Docker Hub **access token**, not your password: hub.docker.com → Account Settings → Security → New Access Token.
 
 ---
 
@@ -128,12 +117,20 @@ az container create \
 
 | Situation | Best option |
 |---|---|
-| Just want it to work quickly for a lab | Option 1 — MCR mirror |
-| Need a specific Docker Hub image with no MCR mirror | Option 2 — Docker Hub credentials |
-| Production workload / want full control over images | Option 3 — ACR |
+| Lab / learning ACI concepts, any web container will do | Option 1 — `aci-helloworld` |
+| Need actual nginx (or any specific image) reliably | Option 2 — ACR import |
+| Have a Docker Hub account and need a quick fix | Option 3 — Docker Hub credentials |
+| Production workload | Option 2 — ACR (gives you versioning, scanning, geo-replication) |
+
+## What Does NOT Work
+
+| Path | Status |
+|---|---|
+| `mcr.microsoft.com/mirror/docker/library/nginx:latest` | ❌ Does not exist on MCR |
+| `mcr.microsoft.com/azurelinux/base/nginx:1.28` | ⚠️ Exists, but is a base build image — does not start nginx automatically |
+| `nginx:latest` without credentials from ACI | ❌ Fails due to Docker Hub rate limiting on shared ACI IPs |
 
 ## Notes
 
-- The MCR mirror (`mcr.microsoft.com/mirror/docker/library/`) only covers official Docker Hub library images (nginx, alpine, ubuntu, python, node, etc.). Third-party images (e.g. `bitnami/nginx`) are not mirrored and require option 2 or 3.
-- Rate limit errors can also occur intermittently even for authenticated users if Docker Hub itself is experiencing issues. If option 2 fails, wait a few minutes and retry.
-- ACR (option 3) is the recommended approach for any real workload — it gives you control over image versions, scanning (Defender for Containers), and geo-replication.
+- Rate limit errors can be intermittent — if you hit them occasionally, retrying after a few minutes sometimes works, but it is not a reliable workaround.
+- ACR (option 2) is the right approach for any real workload. It removes the Docker Hub dependency entirely.
