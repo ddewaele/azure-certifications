@@ -18,102 +18,103 @@ The AZ-900 exam is divided into three domain areas:
 
 | Topic | Notes | Lab |
 |-------|-------|-----|
-| What is cloud computing? | | |
-| Shared responsibility model | | |
-| Cloud service types: IaaS, PaaS, SaaS | | |
-| Cloud deployment models: public, private, hybrid | | |
-| CapEx vs OpEx | | |
-| Benefits: high availability, scalability, elasticity, agility, geo-distribution, disaster recovery | | |
+| What is cloud computing? | [Cloud Concepts](./guides/concepts/01-cloud-concepts.md) | — |
+| Shared responsibility model | [Cloud Concepts](./guides/concepts/01-cloud-concepts.md) | — |
+| Cloud service types: IaaS, PaaS, SaaS | [Cloud Concepts](./guides/concepts/01-cloud-concepts.md) | — |
+| Cloud deployment models: public, private, hybrid | [Cloud Concepts](./guides/concepts/01-cloud-concepts.md) | — |
+| CapEx vs OpEx | [Cloud Concepts](./guides/concepts/01-cloud-concepts.md) | — |
+| Benefits: high availability, scalability, elasticity, agility, geo-distribution, disaster recovery | [Cloud Concepts](./guides/concepts/01-cloud-concepts.md) | — |
 
 ### 2. Azure Architecture and Services (35–40%)
 
 #### Core Architecture
 | Topic | Notes | Lab |
 |-------|-------|-----|
-| Azure regions and region pairs | | |
-| Availability zones | | |
-| Azure datacenters | | |
-| Azure resources and resource groups | | |
-| Subscriptions | | |
-| Management groups | | |
-| Azure Resource Manager (ARM) | | |
+| Azure regions and region pairs | [Azure Architecture](./guides/concepts/02-azure-architecture.md) | — |
+| Availability zones | [Azure Architecture](./guides/concepts/02-azure-architecture.md) | [Lab 05](./guides/labs/05-availability-zones.md) |
+| Azure datacenters | [Azure Architecture](./guides/concepts/02-azure-architecture.md) | — |
+| Azure resources and resource groups | [Azure Architecture](./guides/concepts/02-azure-architecture.md) | — |
+| Subscriptions | [Azure Architecture](./guides/concepts/02-azure-architecture.md) | — |
+| Management groups | [Azure Architecture](./guides/concepts/02-azure-architecture.md) | — |
+| Azure Resource Manager (ARM) | [Azure Architecture](./guides/concepts/02-azure-architecture.md) | — |
 
 #### Compute
 | Topic | Notes | Lab |
 |-------|-------|-----|
-| Virtual Machines (VMs) | | |
-| VM Scale Sets | | |
-| Azure App Service | | |
-| Azure Container Instances (ACI) | | |
-| Azure Kubernetes Service (AKS) | | |
-| Azure Functions | | |
-| Azure Virtual Desktop | | |
+| Virtual Machines (VMs) | [Compute](./guides/concepts/03-compute.md) | [Lab 01](./guides/labs/01-vm-lifecycle.md) |
+| VM Scale Sets | [Compute](./guides/concepts/03-compute.md) | [Lab 04](./guides/labs/04-vm-scale-sets.md) |
+| Azure App Service | [Compute](./guides/concepts/03-compute.md) | [Lab 02](./guides/labs/02-app-service.md) |
+| Azure Container Instances (ACI) | [Compute](./guides/concepts/03-compute.md) | [Lab 06](./guides/labs/06-container-instances.md) |
+| Azure Kubernetes Service (AKS) | [Compute](./guides/concepts/03-compute.md) | — |
+| Azure Functions | [Compute](./guides/concepts/03-compute.md) | [Lab 03](./guides/labs/03-azure-functions.md) |
+| Azure Virtual Desktop | [Compute](./guides/concepts/03-compute.md) | — |
 
 #### Networking
 | Topic | Notes | Lab |
 |-------|-------|-----|
-| Azure Virtual Network (VNet) | | |
-| VNet peering | | |
-| Azure VPN Gateway | | |
-| Azure ExpressRoute | | |
-| Azure DNS | | |
-| Azure Load Balancer | | |
-| Azure Application Gateway | | |
-| Azure Content Delivery Network (CDN) | | |
+| Azure Virtual Network (VNet) | [Networking](./guides/concepts/04-networking.md) | [Lab 09](./guides/labs/09-vnet-subnets-nsg.md) |
+| VNet peering | [Networking](./guides/concepts/04-networking.md) | [Lab 09](./guides/labs/09-vnet-subnets-nsg.md) |
+| Azure VPN Gateway | [Networking](./guides/concepts/04-networking.md) | — |
+| Azure ExpressRoute | [Networking](./guides/concepts/04-networking.md) | — |
+| Azure DNS | [Networking](./guides/concepts/04-networking.md) | [Lab 11](./guides/labs/11-dns.md) |
+| Azure Load Balancer | [Networking](./guides/concepts/04-networking.md) | [Lab 04](./guides/labs/04-vm-scale-sets.md) |
+| Azure Application Gateway | [Networking](./guides/concepts/04-networking.md) | — |
+| Azure Content Delivery Network (CDN) | [Networking](./guides/concepts/04-networking.md) | — |
 
 #### Storage
 | Topic | Notes | Lab |
 |-------|-------|-----|
-| Azure Blob Storage | | |
-| Azure File Storage | | |
-| Azure Queue Storage | | |
-| Azure Table Storage | | |
-| Azure Disk Storage | | |
-| Storage redundancy options (LRS, ZRS, GRS, GZRS) | | |
-| Storage tiers (Hot, Cool, Cold, Archive) | | |
+| Azure Blob Storage | [Storage](./guides/concepts/05-storage.md) | [Lab 07](./guides/labs/07-blob-storage.md) |
+| Azure File Storage | [Storage](./guides/concepts/05-storage.md) | [Lab 07](./guides/labs/07-blob-storage.md) |
+| Azure Queue Storage | [Storage](./guides/concepts/05-storage.md) | [Lab 07](./guides/labs/07-blob-storage.md) |
+| Azure Table Storage | [Storage](./guides/concepts/05-storage.md) | [Lab 07](./guides/labs/07-blob-storage.md) |
+| Azure Disk Storage | [Storage](./guides/concepts/05-storage.md) | [Lab 01](./guides/labs/01-vm-lifecycle.md) |
+| Storage redundancy options (LRS, ZRS, GRS, GZRS) | [Storage](./guides/concepts/05-storage.md) | [Lab 07](./guides/labs/07-blob-storage.md) |
+| Storage tiers (Hot, Cool, Cold, Archive) | [Storage](./guides/concepts/05-storage.md) | [Lab 07](./guides/labs/07-blob-storage.md) |
 
 #### Identity, Access, and Security
 | Topic | Notes | Lab |
 |-------|-------|-----|
-| Microsoft Entra ID (Azure AD) | | |
-| Authentication vs Authorization | | |
-| Azure RBAC (Role-Based Access Control) | | |
-| Zero Trust model | | |
-| Defense-in-depth | | |
-| Microsoft Defender for Cloud | | |
+| Microsoft Entra ID (Azure AD) | [Identity & Security](./guides/concepts/06-identity-security.md) | — |
+| Authentication vs Authorization | [Identity & Security](./guides/concepts/06-identity-security.md) | — |
+| Azure RBAC (Role-Based Access Control) | [Identity & Security](./guides/concepts/06-identity-security.md) | — |
+| Zero Trust model | [Identity & Security](./guides/concepts/06-identity-security.md) | — |
+| Defense-in-depth | [Identity & Security](./guides/concepts/06-identity-security.md) | — |
+| Microsoft Defender for Cloud | [Identity & Security](./guides/concepts/06-identity-security.md) | — |
 
 ### 3. Azure Management and Governance (30–35%)
 
 #### Cost Management
 | Topic | Notes | Lab |
 |-------|-------|-----|
-| Factors affecting cost | | |
-| Azure Pricing Calculator | | |
-| Total Cost of Ownership (TCO) Calculator | | |
-| Azure Cost Management + Billing | | |
-| Tags for cost allocation | | |
+| Factors affecting cost | [Cost Management](./guides/concepts/07-cost-management.md) | — |
+| Azure Pricing Calculator | [Cost Management](./guides/concepts/07-cost-management.md) | — |
+| Total Cost of Ownership (TCO) Calculator | [Cost Management](./guides/concepts/07-cost-management.md) | — |
+| Azure Cost Management + Billing | [Cost Management](./guides/concepts/07-cost-management.md) | — |
+| Tags for cost allocation | [Cost Management](./guides/concepts/07-cost-management.md) | — |
+| Azure support plans | [Cost Management](./guides/concepts/07-cost-management.md) | — |
 
 #### Governance
 | Topic | Notes | Lab |
 |-------|-------|-----|
-| Azure Blueprints | | |
-| Azure Policy | | |
-| Resource locks | | |
-| Microsoft Purview | | |
+| Azure Blueprints | [Governance & Monitoring](./guides/concepts/08-governance-monitoring.md) | — |
+| Azure Policy | [Governance & Monitoring](./guides/concepts/08-governance-monitoring.md) | — |
+| Resource locks | [Governance & Monitoring](./guides/concepts/08-governance-monitoring.md) | — |
+| Microsoft Purview | [Governance & Monitoring](./guides/concepts/08-governance-monitoring.md) | — |
 
 #### Monitoring and Management Tools
 | Topic | Notes | Lab |
 |-------|-------|-----|
-| Azure Portal | | |
-| Azure CLI | | |
-| Azure PowerShell | | |
-| Azure Cloud Shell | | |
-| Azure Arc | | |
-| Azure Resource Manager (ARM) templates | | |
-| Bicep | | |
-| Azure Monitor | | |
-| Azure Service Health | | |
-| Azure Advisor | | |
+| Azure Portal | [Governance & Monitoring](./guides/concepts/08-governance-monitoring.md) | — |
+| Azure CLI | [CLI Setup](./guides/01-azure-cli-setup.md) | — |
+| Azure PowerShell | [Governance & Monitoring](./guides/concepts/08-governance-monitoring.md) | — |
+| Azure Cloud Shell | [Governance & Monitoring](./guides/concepts/08-governance-monitoring.md) | — |
+| Azure Arc | [Governance & Monitoring](./guides/concepts/08-governance-monitoring.md) | — |
+| Azure Resource Manager (ARM) templates | [Governance & Monitoring](./guides/concepts/08-governance-monitoring.md) | — |
+| Bicep | [Governance & Monitoring](./guides/concepts/08-governance-monitoring.md) | — |
+| Azure Monitor | [Governance & Monitoring](./guides/concepts/08-governance-monitoring.md) | — |
+| Azure Service Health | [Governance & Monitoring](./guides/concepts/08-governance-monitoring.md) | — |
+| Azure Advisor | [Governance & Monitoring](./guides/concepts/08-governance-monitoring.md) | — |
 
 ---
 
@@ -129,7 +130,7 @@ The AZ-900 exam is divided into three domain areas:
 - [04 - Networking](./guides/concepts/04-networking.md) — VNet, NSGs, VPN Gateway, ExpressRoute, Load Balancer
 - [05 - Storage](./guides/concepts/05-storage.md) — Blob, Files, Queue, Table, Disk, redundancy tiers
 - [06 - Identity and Security](./guides/concepts/06-identity-security.md) — Entra ID, RBAC, Zero Trust, Defender for Cloud
-- [07 - Cost Management](./guides/concepts/07-cost-management.md) — Pricing, TCO, budgets, reserved instances, tags
+- [07 - Cost Management](./guides/concepts/07-cost-management.md) — Pricing, TCO, budgets, reserved instances, tags, support plans
 - [08 - Governance and Monitoring](./guides/concepts/08-governance-monitoring.md) — Policy, locks, Purview, Monitor, Advisor
 
 ### Hands-On Labs
@@ -154,7 +155,7 @@ The AZ-900 exam is divided into three domain areas:
 
 ## Quiz Bank
 
-65 multiple-choice questions covering all AZ-900 exam domains, in structured JSON format.
+69 multiple-choice questions covering all AZ-900 exam domains, in structured JSON format.
 
 - [Quiz README + how to run](./quiz/README.md)
 - [01 - Cloud Concepts](./quiz/01-cloud-concepts.json) (10 questions)
@@ -163,7 +164,7 @@ The AZ-900 exam is divided into three domain areas:
 - [04 - Networking](./quiz/04-networking.json) (8 questions)
 - [05 - Storage](./quiz/05-storage.json) (8 questions)
 - [06 - Identity and Security](./quiz/06-identity-security.json) (8 questions)
-- [07 - Cost Management](./quiz/07-cost-management.json) (7 questions)
+- [07 - Cost Management](./quiz/07-cost-management.json) (11 questions)
 - [08 - Governance and Monitoring](./quiz/08-governance-monitoring.json) (8 questions)
 
 ---
