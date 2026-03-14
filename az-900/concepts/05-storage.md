@@ -183,6 +183,114 @@ Because data is replicated to the secondary region asynchronously, a failure tha
 
 ---
 
+## Data Migration
+
+Moving large amounts of data to Azure is not always practical over the internet. Azure provides two tools depending on the size of the data and the available network bandwidth.
+
+---
+
+### Azure Migrate
+
+A centralised hub for **discovering, assessing, and migrating** on-premises workloads to Azure. It covers servers, databases, web apps, and virtual desktops — not just storage.
+
+**What it does:**
+- **Discovery & assessment** — scans your on-premises environment, maps dependencies, and estimates Azure costs and sizing
+- **Server migration** — replicates on-premises VMs (VMware, Hyper-V, physical) to Azure VMs
+- **Database migration** — assesses and migrates SQL Server, MySQL, PostgreSQL to Azure managed services
+- **Web app migration** — assesses and migrates ASP.NET web apps to Azure App Service
+
+**How it works:**
+1. Set up the Azure Migrate project in the portal
+2. Deploy a lightweight **discovery appliance** (a VM) in your on-premises environment
+3. The appliance scans servers and sends metadata to Azure
+4. Review the assessment (recommended VM sizes, monthly cost estimate, readiness)
+5. Start replication and cut over when ready
+
+```bash
+# Create an Azure Migrate project
+az migrate project create \
+  --resource-group my-rg \
+  --name my-migrate-project \
+  --location westeurope
+```
+
+**Key exam points:**
+- Azure Migrate is the answer for **lift-and-shift server migrations** to Azure
+- It provides a **readiness report** showing which workloads are ready, need remediation, or are not suitable for Azure
+- It is free to use — you only pay for the Azure resources you migrate into
+
+---
+
+### Azure Data Box
+
+A family of **physical devices** Microsoft ships to you for transferring large volumes of data to Azure when uploading over the internet is too slow, too expensive, or not feasible.
+
+You copy data onto the device, ship it back to Microsoft, and Microsoft uploads it to your Azure Storage account.
+
+**Why use it instead of uploading over the network?**
+
+| Data size | Time to upload at 1 Gbps | Recommendation |
+|---|---|---|
+| 1 TB | ~2.5 hours | Upload over the network |
+| 10 TB | ~1 day | Borderline — Data Box worth considering |
+| 100 TB | ~11 days | Use Data Box |
+| 1 PB | ~3 months | Use Data Box Heavy |
+
+**Data Box product family:**
+
+| Product | Capacity | Use case |
+|---|---|---|
+| **Data Box Disk** | Up to 35 TB (set of SSDs) | Small migrations, fast turnaround |
+| **Data Box** | 80 TB usable | Standard large migrations |
+| **Data Box Heavy** | ~800 TB | Very large datacenter migrations |
+| **Data Box Gateway** | Virtual appliance (no physical device) | Continuous online data transfer to Azure |
+
+**Typical workflow:**
+
+1. Order a Data Box from the Azure portal
+2. Microsoft ships the device to you (preconfigured, encrypted)
+3. Connect the device to your network and copy data to it (via SMB, NFS, or REST)
+4. Ship the device back to Microsoft
+5. Microsoft uploads the data to your nominated Azure Storage account and securely wipes the device
+6. You receive a confirmation once the upload is complete
+
+```bash
+# Order a Data Box (done via the portal or this CLI command)
+az databox job create \
+  --resource-group my-rg \
+  --name my-databox-job \
+  --location westeurope \
+  --sku DataBox \
+  --contact-name "Your Name" \
+  --phone "0123456789" \
+  --email-list "you@example.com" \
+  --street-address1 "123 Main St" \
+  --city "Amsterdam" \
+  --postal-code "1234AB" \
+  --country "NL" \
+  --storage-account mystorageacct123
+```
+
+**Key exam points:**
+- Data Box is the answer when the question mentions **large data volumes**, **slow or limited internet**, or **offline transfer**
+- Data is **encrypted at rest** on the device (AES 256-bit) — if the device is lost or stolen, data cannot be read
+- After upload, Microsoft performs a **secure wipe** of the device following NIST 800-88r1 standards
+- Data Box is a **one-time or infrequent** migration tool; for continuous data transfer use **Data Box Gateway** (virtual) or **Azure File Sync** (for file shares)
+
+---
+
+### Choosing Between Azure Migrate and Data Box
+
+| Scenario | Tool |
+|---|---|
+| Moving servers, databases, or web apps to Azure | Azure Migrate |
+| Transferring large volumes of files/blobs to Azure Storage | Azure Data Box |
+| Network bandwidth is limited or transfer would take weeks | Azure Data Box |
+| You need an assessment of your on-premises estate before migrating | Azure Migrate |
+| Continuous ongoing sync of on-premises files to Azure Files | Azure File Sync |
+
+---
+
 ## Shared Access Signatures (SAS)
 
 A SAS provides delegated, time-limited, permission-scoped access to storage resources without sharing account keys.
