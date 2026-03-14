@@ -60,11 +60,15 @@ az acr create \
   --name myregistry \
   --sku Basic
 
-# 2. Import nginx from Docker Hub directly into ACR — no local Docker install needed
+# 2. Import nginx from Docker Hub into ACR
+#    --username and --password are required — acr import also uses Azure's shared IPs
+#    and will hit the same Docker Hub rate limit if you omit credentials
 az acr import \
   --name myregistry \
   --source docker.io/library/nginx:latest \
-  --image nginx:latest
+  --image nginx:latest \
+  --username <your-docker-hub-username> \
+  --password <your-docker-hub-access-token>
 
 # 3. Get the ACR login server and credentials
 ACR_SERVER=$(az acr show --name myregistry --query loginServer --output tsv)
@@ -128,7 +132,8 @@ az container create \
 |---|---|
 | `mcr.microsoft.com/mirror/docker/library/nginx:latest` | ❌ Does not exist on MCR |
 | `mcr.microsoft.com/azurelinux/base/nginx:1.28` | ⚠️ Exists, but is a base build image — does not start nginx automatically |
-| `nginx:latest` without credentials from ACI | ❌ Fails due to Docker Hub rate limiting on shared ACI IPs |
+| `nginx:latest` without credentials from ACI | ❌ Rate limited on shared ACI IPs |
+| `az acr import --source docker.io/...` without credentials | ❌ Also rate limited — ACR import uses the same shared Azure IPs |
 
 ## Notes
 
