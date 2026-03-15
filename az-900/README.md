@@ -123,6 +123,7 @@ The AZ-900 exam is divided into three domain areas:
 - [06 - Identity and Security](./concepts/06-identity-security.md) — Entra ID, RBAC, Zero Trust, Defender for Cloud
 - [07 - Cost Management](./concepts/07-cost-management.md) — Pricing, TCO, budgets, reserved instances, tags, support plans
 - [08 - Governance and Monitoring](./concepts/08-governance-monitoring.md) — Policy, locks, Purview, Monitor, Advisor
+- [09 - Cloud Adoption Framework](./concepts/09-cloud-adoption-framework.md) — CAF lifecycle, 5 Rs, landing zones, Well-Architected Framework
 
 ---
 
