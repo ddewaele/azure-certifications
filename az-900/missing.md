@@ -1,0 +1,4 @@
+- Azure Support Plan
+- List of Azure Advisor / Purview / Security Hub / ....
+- Different price / cost tools
+-

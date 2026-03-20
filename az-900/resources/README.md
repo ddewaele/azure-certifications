@@ -85,3 +85,16 @@ Curated and verified external resources for passing the Microsoft Azure Fundamen
 4. **Practise** — use the [quiz CLI](../quiz/README.md) in this repo, then move to [Tutorials Dojo](https://portal.tutorialsdojo.com/courses/free-az-900-microsoft-azure-fundamentals-practice-exams-sampler/) and [ExamTopics](https://www.examtopics.com/exams/microsoft/az-900/view/) for variety
 5. **Hands-on** — work through the [labs in this repo](../guides/labs/) against a real [Azure free account](https://azure.microsoft.com/en-us/free/)
 6. **Final check** — re-run the practice assessment and aim for 80%+ before booking the real exam
+
+
+## Github Repos
+
+- https://github.com/fdicarlo/AZ-900
+
+
+## Learning platforms
+
+- SkillCertPro
+- MeasureUp
+- Udemy
+

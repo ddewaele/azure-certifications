@@ -6,6 +6,13 @@ Understanding how Azure charges you and how to control costs is a core AZ-900 to
 
 ## What Affects Your Azure Bill
 
+- Resource type
+- Consumption
+- Maintenance
+- Geography
+- Subscription type
+- Azure Marketplace
+
 ### 1. Resource Type
 Every resource has its own pricing model. VMs charge per hour of compute. Storage charges per GB stored. Functions charge per execution.
 

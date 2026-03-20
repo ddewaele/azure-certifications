@@ -150,7 +150,7 @@ The AZ-900 exam is divided into three domain areas:
 
 ## Quiz Bank
 
-69 multiple-choice questions covering all AZ-900 exam domains.
+130 multiple-choice questions covering all AZ-900 exam domains.
 
 - [Quiz README + how to run](./quiz/README.md) — `node cli/cli.js az-900/quiz` from the repo root
 - [01 - Cloud Concepts](./quiz/01-cloud-concepts.json) (10 questions)
@@ -161,6 +161,7 @@ The AZ-900 exam is divided into three domain areas:
 - [06 - Identity and Security](./quiz/06-identity-security.json) (8 questions)
 - [07 - Cost Management](./quiz/07-cost-management.json) (11 questions)
 - [08 - Governance and Monitoring](./quiz/08-governance-monitoring.json) (8 questions)
+- [09 - MeasureUp Practice Exam](./quiz/09-measureup.json) (61 questions)
 
 ---
 

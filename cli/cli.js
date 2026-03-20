@@ -231,11 +231,15 @@ function renderQuestion() {
       ln(c.bold + c.red   + '  ✗ Incorrect.' + c.reset);
     }
     ln();
-    const correctKeys = isMultiSelect(q) ? q.correct_answer : [q.correct_answer];
-    for (const ck of correctKeys) {
-      ln(c.dim + wrap(q.options[ck].explanation) + c.reset);
+    for (const [key, opt] of Object.entries(q.options)) {
+      const correctKeys = isMultiSelect(q) ? q.correct_answer : [q.correct_answer];
+      const isCorrect   = correctKeys.includes(key);
+      const label = isCorrect
+        ? c.green + `  ${key}) ` + c.reset
+        : c.red   + `  ${key}) ` + c.reset;
+      ln(label + c.dim + wrap(opt.explanation, '     ') + c.reset);
+      ln();
     }
-    ln();
   }
 
   ln(hr());
@@ -349,15 +353,19 @@ function renderResults() {
         const correctKeys = q.correct_answer;
         ln(`      Your answer:    ${c.red}${chosenKeys.join(', ')}${c.reset}`);
         ln(`      Correct answer: ${c.green}${correctKeys.join(', ')}${c.reset}`);
-        ln();
-        for (const ck of correctKeys) {
-          ln(c.dim + wrap(q.options[ck].explanation, '      ') + c.reset);
-        }
       } else {
         ln(`      Your answer:    ${c.red}${ans.choice})  ${q.options[ans.choice].text}${c.reset}`);
         ln(`      Correct answer: ${c.green}${q.correct_answer})  ${q.options[q.correct_answer].text}${c.reset}`);
+      }
+      ln();
+      const correctKeys = multi ? q.correct_answer : [q.correct_answer];
+      for (const [key, opt] of Object.entries(q.options)) {
+        const isCorrect = correctKeys.includes(key);
+        const label = isCorrect
+          ? c.green + `      ${key}) ` + c.reset
+          : c.red   + `      ${key}) ` + c.reset;
+        ln(label + c.dim + wrap(opt.explanation, '         ') + c.reset);
         ln();
-        ln(c.dim + wrap(q.options[q.correct_answer].explanation, '      ') + c.reset);
       }
       ln();
     }
