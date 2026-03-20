@@ -9,6 +9,7 @@ A hands-on study repo for Microsoft Azure certifications. Each certification has
 | Certification | Level | Status |
 |---|---|---|
 | [AZ-900 — Azure Fundamentals](./az-900/README.md) | Foundational | In progress |
+| [AI-900 — Azure AI Fundamentals](./ai-900/README.md) | Foundational | In progress |
 
 ---
 
@@ -21,6 +22,9 @@ node cli/cli.js <path-to-quiz-folder>
 
 # Example — AZ-900:
 node cli/cli.js az-900/quiz
+
+# Example — AI-900:
+node cli/cli.js ai-900/quiz
 ```
 
 See [cli/](./cli/) for details.
