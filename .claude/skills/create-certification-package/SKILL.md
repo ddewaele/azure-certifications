@@ -13,13 +13,17 @@ You are creating a comprehensive certification study package for: **$ARGUMENTS**
 ## Step 0: Research
 
 1. **Identify the certification or subject.** Parse `$ARGUMENTS` for a certification code (e.g., `az-104`, `dp-900`, `sc-200`) and/or a Microsoft Learn URL.
-2. **Search for official content.** Use WebSearch and WebFetch to find:
-   - The official Microsoft Learn study guide / exam page (e.g., `https://learn.microsoft.com/en-us/credentials/certifications/...`)
-   - The exam skills outline (domains, weights, objectives)
-   - The associated Microsoft Learn learning path(s)
-   - Any free practice assessments or sandbox links
-3. **Gather supplementary material.** Search for high-quality third-party study resources (blogs, YouTube channels, practice tests) that cover this certification.
-4. **Determine the folder name.** Use the lowercase exam code (e.g., `az-104`, `dp-900`). If this is not a Microsoft certification, derive a short kebab-case slug from the subject name.
+2. **Find and fetch the official exam study guide (CRITICAL).** Every Microsoft certification has an official "Study guide for Exam XX-NNN" document that lists the **exact skills measured** with percentage weights and detailed sub-topics. This is the **authoritative source** for what the exam tests — all content you create must be grounded in this document.
+   - The study guide URL typically follows the pattern: `https://learn.microsoft.com/en-us/credentials/certifications/resources/study-guides/<exam-code>` (e.g., `ai-900`, `ai-102`, `ab-900`)
+   - Shortcut URLs often exist: `https://aka.ms/<exam-code>-StudyGuide`
+   - Fetch this document and extract: domains, percentage weights, every sub-topic and bullet point
+   - **The skills measured document is your primary source.** The Microsoft Learn training modules cover broader educational content but may include topics not directly tested on the exam. Concept guides, quizzes, and labs should focus on what the study guide lists.
+3. **Fetch the certification overview page.** Find exam details (duration, passing score, cost, prerequisites, languages) from `https://learn.microsoft.com/en-us/credentials/certifications/<cert-name>/`
+4. **Fetch the learning paths.** Find the associated Microsoft Learn learning path(s) and extract the module list. Note that the course code may differ from the exam code (e.g., course AI-901T00 prepares for exam AI-900).
+5. **Gather supplementary material.** Search for high-quality third-party study resources (blogs, YouTube channels, practice tests) that cover this certification.
+6. **Determine the folder name.** Use the lowercase exam code (e.g., `az-104`, `dp-900`). If this is not a Microsoft certification, derive a short kebab-case slug from the subject name.
+
+**Important:** If the study guide lists specific skills (e.g., "image classification, object detection, OCR, facial detection") but the training modules cover additional concepts (e.g., "semantic segmentation"), prioritise the study guide skills in your concept files. You may include additional training content but clearly indicate it is supplementary to the exam-tested skills.
 
 ## Step 1: Create the folder structure
 
@@ -59,8 +63,20 @@ Based on the exam domains / major topic areas identified in Step 0:
    - Use **tables** extensively for structured information (concept/description pairs, feature comparisons, service breakdowns)
    - Use **subsections** (H2/H3) to organize by sub-topic
    - Include practical details: what you configure, where you configure it, key distinctions the exam tests
+   - Include an **Exam Tips** section (H2) just before the References section with 4-8 bullet points highlighting what's most important for the exam. Tips should cover: key facts to memorize, common exam traps, how to distinguish similar concepts, and scenario-matching advice. Example:
+     ```markdown
+     ## Exam Tips
+
+     - Know all **six responsible AI principles** by name and be able to match each to a scenario
+     - **Fairness** is about equitable treatment and avoiding bias — not about equal outcomes
+     - **Transparency** is about understanding how AI makes decisions — not about open-sourcing code
+     - **Reliability and safety** is the principle most relevant to life-critical systems (medical, automotive)
+     - Be able to identify which AI workload type matches a given scenario (computer vision vs NLP vs generative AI vs document processing)
+     - Responsible AI is not just a set of guidelines — Microsoft embeds it into Azure AI services through content filters, fairness dashboards, and transparency notes
+     ```
    - Include a **References** section at the bottom with links to official documentation, Microsoft Learn modules, and any supplementary sources used
-3. Write content that is **exam-focused**: emphasize what candidates need to know, common exam traps, and key differentiators between similar services/concepts.
+3. Write content that is **exam-focused**: cover every bullet point from the study guide's skills measured list. Emphasize what candidates need to know, common exam traps, and key differentiators between similar services/concepts.
+4. **Ground all content in the official study guide.** If a topic appears in the study guide, it must be covered. If a topic only appears in the training modules but not the study guide, you may include it as supplementary context but do not give it equal weight to exam-tested skills.
 
 Follow the style of existing concept files (e.g., `ab-900/concepts/01-m365-core-features-and-objects.md`) — heavy use of tables, concise descriptions, practical focus.
 
