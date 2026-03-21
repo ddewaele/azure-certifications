@@ -1,0 +1,224 @@
+[
+  {
+    "question_id": 1,
+    "question_text": "What is required before a user can be assigned a Microsoft 365 Copilot license?",
+    "options": {
+      "a": { "text": "The user must have a qualifying base Microsoft 365 license (e.g., E3, E5, Business Premium).", "is_true": true, "explanation": "Correct. Microsoft 365 Copilot is an add-on license that requires a qualifying base license such as M365 E3, E5, Business Standard, or Business Premium." },
+      "b": { "text": "The user must complete Microsoft AI training certification.", "is_true": false, "explanation": "Incorrect. No training or certification is required to receive a Copilot license." },
+      "c": { "text": "The user must be a Global Administrator.", "is_true": false, "explanation": "Incorrect. Any licensed user can use Copilot — admin roles are not required." },
+      "d": { "text": "The user must have an Azure subscription.", "is_true": false, "explanation": "Incorrect. Copilot licenses are managed through Microsoft 365, not Azure subscriptions." }
+    },
+    "correct_answer": "a"
+  },
+  {
+    "question_id": 2,
+    "question_text": "Which licensing model allows organisations to use Copilot features in SharePoint without assigning per-user Copilot licenses?",
+    "options": {
+      "a": { "text": "Microsoft 365 E5 license", "is_true": false, "explanation": "Incorrect. E5 is a base license that provides advanced security and compliance, but Copilot still requires an additional per-user add-on or pay-as-you-go." },
+      "b": { "text": "Pay-as-you-go (consumption-based billing)", "is_true": true, "explanation": "Correct. Pay-as-you-go allows organisations to use Copilot features (including Copilot in SharePoint) with consumption-based billing linked to an Azure subscription, without per-user Copilot licenses." },
+      "c": { "text": "Free tier with limited usage", "is_true": false, "explanation": "Incorrect. There is no free tier for Microsoft 365 Copilot." },
+      "d": { "text": "Volume licensing agreement", "is_true": false, "explanation": "Incorrect. Volume licensing provides per-user licenses at a discount, but pay-as-you-go is the consumption-based model." }
+    },
+    "correct_answer": "b"
+  },
+  {
+    "question_id": 3,
+    "question_text": "Which Copilot feature is specifically designed to search the web and internal data to find information and generate research summaries?",
+    "options": {
+      "a": { "text": "Analyst", "is_true": false, "explanation": "Incorrect. Analyst works with data in Excel and other sources to provide analysis and insights, not web research." },
+      "b": { "text": "Researcher", "is_true": true, "explanation": "Correct. Researcher searches the web and internal organisational data to find information and generate comprehensive summaries for research tasks." },
+      "c": { "text": "Copilot Pages", "is_true": false, "explanation": "Incorrect. Copilot Pages is a collaborative canvas for editing AI-generated content, not a research tool." },
+      "d": { "text": "Business Chat", "is_true": false, "explanation": "Incorrect. Business Chat is a cross-app chat interface, not specifically a research tool." }
+    },
+    "correct_answer": "b"
+  },
+  {
+    "question_id": 4,
+    "question_text": "What is the main difference between Microsoft 365 Copilot and custom agents?",
+    "options": {
+      "a": { "text": "Copilot is free; agents require a paid license.", "is_true": false, "explanation": "Incorrect. Both Copilot and agents require licensing (per-user or pay-as-you-go). Copilot is not free." },
+      "b": { "text": "Copilot is a general-purpose assistant across M365 apps; agents are task-specific or domain-specific solutions.", "is_true": true, "explanation": "Correct. Copilot works across all M365 apps as a general assistant. Agents are built for specific tasks or domains and can be scoped to particular data sources and actions." },
+      "c": { "text": "Copilot works offline; agents require internet.", "is_true": false, "explanation": "Incorrect. Both Copilot and agents require internet connectivity to function." },
+      "d": { "text": "Agents can access more data than Copilot.", "is_true": false, "explanation": "Incorrect. Copilot accesses all data the user can see via Microsoft Graph. Agents are typically scoped to specific data sources." }
+    },
+    "correct_answer": "b"
+  },
+  {
+    "question_id": 5,
+    "question_text": "Where should an admin go to assign Microsoft 365 Copilot licenses to users?",
+    "options": {
+      "a": { "text": "Azure portal > Azure Active Directory", "is_true": false, "explanation": "Incorrect. While Entra ID (formerly Azure AD) manages identities, Copilot license assignment is done in the M365 admin center." },
+      "b": { "text": "Microsoft 365 admin center > Billing > Licenses", "is_true": true, "explanation": "Correct. Copilot licenses are assigned in the Microsoft 365 admin center under Billing > Licenses, either to individual users or groups." },
+      "c": { "text": "Microsoft Purview compliance portal", "is_true": false, "explanation": "Incorrect. Purview manages compliance and data governance, not license assignments." },
+      "d": { "text": "Power Platform admin center", "is_true": false, "explanation": "Incorrect. Power Platform admin center manages Power Apps, Power Automate, and Copilot Studio — not M365 Copilot licensing." }
+    },
+    "correct_answer": "b"
+  },
+  {
+    "question_id": 6,
+    "question_type": "multiple_select",
+    "question_text": "Which TWO tools can an admin use to monitor Microsoft 365 Copilot usage and adoption?",
+    "options": {
+      "a": { "text": "Copilot Analytics", "is_true": true, "explanation": "Correct. Copilot Analytics provides detailed usage metrics, adoption trends, active users, and feature-level usage statistics for Copilot." },
+      "b": { "text": "Microsoft 365 admin center usage reports", "is_true": true, "explanation": "Correct. The M365 admin center provides usage reports including Copilot activity alongside other M365 service usage." },
+      "c": { "text": "Azure Cost Management", "is_true": false, "explanation": "Incorrect. Azure Cost Management tracks Azure resource spending, not M365 Copilot usage and adoption." },
+      "d": { "text": "Exchange Online mail flow dashboard", "is_true": false, "explanation": "Incorrect. The mail flow dashboard shows email delivery metrics, not Copilot usage." }
+    },
+    "correct_answer": ["a", "b"]
+  },
+  {
+    "question_id": 7,
+    "question_text": "A user wants to save a frequently used prompt and share it with their team. Which actions are available for prompt management?",
+    "options": {
+      "a": { "text": "Save, share, schedule, and delete prompts.", "is_true": true, "explanation": "Correct. Users can save prompts as favourites, share them with team members or the organisation, schedule them to run at specific times, and delete prompts they no longer need." },
+      "b": { "text": "Only save and delete prompts — sharing is not supported.", "is_true": false, "explanation": "Incorrect. Prompt sharing is a supported feature in Microsoft 365 Copilot." },
+      "c": { "text": "Prompts cannot be saved or managed — they are ephemeral.", "is_true": false, "explanation": "Incorrect. Microsoft 365 Copilot supports saving, sharing, scheduling, and deleting prompts." },
+      "d": { "text": "Only Global Administrators can manage prompts.", "is_true": false, "explanation": "Incorrect. All licensed Copilot users can manage their own prompts." }
+    },
+    "correct_answer": "a"
+  },
+  {
+    "question_id": 8,
+    "question_text": "An admin needs to control which users in the organisation can create custom agents. Where should they configure this?",
+    "options": {
+      "a": { "text": "Microsoft 365 admin center user settings", "is_true": false, "explanation": "Incorrect. User settings in M365 admin center manage general user properties, not agent creation permissions." },
+      "b": { "text": "Copilot Studio access policies in the Power Platform admin center", "is_true": true, "explanation": "Correct. Agent creation permissions are managed through Copilot Studio access policies in the Power Platform admin center, controlling which users can build and publish agents." },
+      "c": { "text": "SharePoint admin center site settings", "is_true": false, "explanation": "Incorrect. SharePoint admin center manages sites and content, not agent creation permissions." },
+      "d": { "text": "Exchange Online admin center", "is_true": false, "explanation": "Incorrect. Exchange Online manages email services, not agent creation policies." }
+    },
+    "correct_answer": "b"
+  },
+  {
+    "question_id": 9,
+    "question_text": "What happens when a user creates a custom agent that needs to be published to the organisation?",
+    "options": {
+      "a": { "text": "The agent is immediately available to all users without review.", "is_true": false, "explanation": "Incorrect. Agents typically require admin approval before being published to the organisation to ensure security and compliance." },
+      "b": { "text": "The agent may require admin approval before it is published, depending on the organisation's policies.", "is_true": true, "explanation": "Correct. Organisations can configure approval workflows in the Power Platform admin center. Admins review the agent's data sources, capabilities, and permissions before approving publication." },
+      "c": { "text": "The agent is automatically deleted after 30 days.", "is_true": false, "explanation": "Incorrect. Agents are not automatically deleted. They remain available until manually removed or deprecated." },
+      "d": { "text": "Only Microsoft can approve and publish custom agents.", "is_true": false, "explanation": "Incorrect. Agent approval is managed by the organisation's admins, not Microsoft." }
+    },
+    "correct_answer": "b"
+  },
+  {
+    "question_id": 10,
+    "question_text": "Which admin center should you use to monitor agent operational insights, including performance, errors, and conversation logs?",
+    "options": {
+      "a": { "text": "Microsoft 365 admin center", "is_true": false, "explanation": "Incorrect. The M365 admin center shows agent usage reports but not detailed operational insights like errors and conversation logs." },
+      "b": { "text": "Microsoft Power Platform admin center", "is_true": true, "explanation": "Correct. The Power Platform admin center provides detailed operational insights for agents, including performance metrics, error logs, conversation analytics, and lifecycle management." },
+      "c": { "text": "Microsoft Entra admin center", "is_true": false, "explanation": "Incorrect. Entra admin center manages identities and access, not agent operations." },
+      "d": { "text": "Microsoft Purview compliance portal", "is_true": false, "explanation": "Incorrect. Purview manages compliance and data governance, not agent operational performance." }
+    },
+    "correct_answer": "b"
+  },
+  {
+    "question_id": 11,
+    "question_text": "A site owner wants to create an agent grounded in their department's SharePoint content. Which type of agent should they create?",
+    "options": {
+      "a": { "text": "A built-in Copilot agent", "is_true": false, "explanation": "Incorrect. Built-in agents are pre-built by Microsoft and cannot be scoped to specific SharePoint content." },
+      "b": { "text": "A SharePoint agent", "is_true": true, "explanation": "Correct. SharePoint agents are grounded in specific SharePoint site content, making them ideal for department-specific knowledge bases and Q&A." },
+      "c": { "text": "A Power Automate flow", "is_true": false, "explanation": "Incorrect. Power Automate creates automated workflows, not conversational agents grounded in content." },
+      "d": { "text": "A Teams bot", "is_true": false, "explanation": "Incorrect. While agents can be deployed in Teams, a SharePoint agent specifically grounded in site content is the right choice here." }
+    },
+    "correct_answer": "b"
+  },
+  {
+    "question_id": 12,
+    "question_text": "Which Copilot feature works with data in Excel and other sources to provide insights, identify trends, and perform analysis?",
+    "options": {
+      "a": { "text": "Researcher", "is_true": false, "explanation": "Incorrect. Researcher searches the web and internal data for information gathering, not data analysis." },
+      "b": { "text": "Analyst", "is_true": true, "explanation": "Correct. Analyst works with data in Excel and other sources to provide insights, identify trends, create visualisations, and perform analytical tasks." },
+      "c": { "text": "Copilot Pages", "is_true": false, "explanation": "Incorrect. Copilot Pages is a collaborative canvas for content creation, not data analysis." },
+      "d": { "text": "Copilot in PowerPoint", "is_true": false, "explanation": "Incorrect. Copilot in PowerPoint helps create and design presentations, not analyse data." }
+    },
+    "correct_answer": "b"
+  },
+  {
+    "question_id": 13,
+    "question_text": "An admin wants to prevent Copilot from searching the web for additional context when generating responses. What should they do?",
+    "options": {
+      "a": { "text": "Remove the user's Copilot license.", "is_true": false, "explanation": "Incorrect. Removing the license disables all Copilot functionality, not just web search." },
+      "b": { "text": "Disable the web content setting for Copilot in the admin center.", "is_true": true, "explanation": "Correct. Admins can disable the web content/web search setting in the M365 admin center to prevent Copilot from searching the web, limiting it to organisational data only." },
+      "c": { "text": "Block all internet access for the user's device.", "is_true": false, "explanation": "Incorrect. Blocking internet access would prevent all M365 services from working, not just Copilot web search." },
+      "d": { "text": "This setting cannot be changed — web search is always enabled.", "is_true": false, "explanation": "Incorrect. Web search is a configurable setting that admins can enable or disable." }
+    },
+    "correct_answer": "b"
+  },
+  {
+    "question_id": 14,
+    "question_text": "Which Microsoft 365 service does Copilot use as its underlying API to discover and retrieve data across emails, files, calendars, and people?",
+    "options": {
+      "a": { "text": "Microsoft Purview", "is_true": false, "explanation": "Incorrect. Purview provides compliance and governance capabilities, not data discovery for Copilot." },
+      "b": { "text": "Microsoft Graph", "is_true": true, "explanation": "Correct. Microsoft Graph is the unified API that connects all Microsoft 365 data. Copilot uses Graph to discover and retrieve relevant content (mail, files, calendar, people) using the user's permissions." },
+      "c": { "text": "Microsoft Defender XDR", "is_true": false, "explanation": "Incorrect. Defender XDR provides threat detection, not data access for Copilot." },
+      "d": { "text": "Microsoft Intune", "is_true": false, "explanation": "Incorrect. Intune manages devices and apps, not data access for Copilot." }
+    },
+    "correct_answer": "b"
+  },
+  {
+    "question_id": 15,
+    "question_text": "You need to configure Teams so that users can only install apps that have been approved by your organisation. Which Teams admin center setting should you configure?",
+    "options": {
+      "a": { "text": "Meeting policies", "is_true": false, "explanation": "Incorrect. Meeting policies control meeting features (recording, transcription, lobby), not app installations." },
+      "b": { "text": "App permission policies", "is_true": true, "explanation": "Correct. App permission policies in the Teams admin center control which apps users can install and use, allowing admins to block, allow, or restrict apps by publisher or category." },
+      "c": { "text": "Messaging policies", "is_true": false, "explanation": "Incorrect. Messaging policies control chat features (editing, deleting messages, giphy), not app installations." },
+      "d": { "text": "Channel policies", "is_true": false, "explanation": "Incorrect. Channel policies manage channel types and settings, not app permissions." }
+    },
+    "correct_answer": "b"
+  },
+  {
+    "question_id": 16,
+    "question_type": "multiple_select",
+    "question_text": "Which TWO admin centers are used to monitor and manage agents?",
+    "options": {
+      "a": { "text": "Microsoft 365 admin center", "is_true": true, "explanation": "Correct. The M365 admin center provides agent usage reports and high-level monitoring of agent activity across the organisation." },
+      "b": { "text": "Microsoft Power Platform admin center", "is_true": true, "explanation": "Correct. The Power Platform admin center provides detailed agent management including operational insights, error logs, approval workflows, and lifecycle management." },
+      "c": { "text": "Microsoft Entra admin center", "is_true": false, "explanation": "Incorrect. Entra admin center manages identities and access controls, not agent monitoring." },
+      "d": { "text": "Exchange Online admin center", "is_true": false, "explanation": "Incorrect. Exchange admin center manages email services, not agents." }
+    },
+    "correct_answer": ["a", "b"]
+  },
+  {
+    "question_id": 17,
+    "question_text": "Which of the following correctly describes how Microsoft 365 Copilot handles organisational data?",
+    "options": {
+      "a": { "text": "Copilot sends organisational data to external AI providers for processing.", "is_true": false, "explanation": "Incorrect. Copilot processes data within the Microsoft 365 trust boundary. Data is not sent to external providers." },
+      "b": { "text": "Copilot stores conversation data to train Microsoft's foundation models.", "is_true": false, "explanation": "Incorrect. Microsoft does not use customer data from Copilot interactions to train its foundation models." },
+      "c": { "text": "Copilot processes data within the Microsoft 365 trust boundary and does not use customer data to train models.", "is_true": true, "explanation": "Correct. Copilot processes organisational data within the M365 trust boundary, respects data residency, and does not use customer data to train Microsoft's AI models." },
+      "d": { "text": "Copilot requires data to be exported to Azure Blob Storage before processing.", "is_true": false, "explanation": "Incorrect. Copilot accesses M365 data in place via Microsoft Graph — no export is required." }
+    },
+    "correct_answer": "c"
+  },
+  {
+    "question_id": 18,
+    "question_text": "An admin notices that Copilot is surfacing sensitive HR documents to managers who should not have access. What is the root cause?",
+    "options": {
+      "a": { "text": "Copilot has a bug that ignores permissions.", "is_true": false, "explanation": "Incorrect. Copilot strictly respects M365 permissions. If it surfaces content, the user has access to it." },
+      "b": { "text": "The HR SharePoint site has overly broad permissions, and Copilot surfaces everything the user can access.", "is_true": true, "explanation": "Correct. Copilot surfaces content based on the user's existing permissions. If the HR site permissions are too broad (e.g., 'Everyone except external users'), Copilot will include that content in responses. The fix is to tighten SharePoint permissions." },
+      "c": { "text": "Copilot needs a separate DLP policy to exclude HR content.", "is_true": false, "explanation": "Incorrect. The root cause is overly broad SharePoint permissions, not a missing DLP policy. Fixing permissions is the correct approach." },
+      "d": { "text": "The HR documents need sensitivity labels before Copilot will respect access controls.", "is_true": false, "explanation": "Incorrect. Copilot respects SharePoint permissions regardless of sensitivity labels. The issue is the permissions themselves." }
+    },
+    "correct_answer": "b"
+  },
+  {
+    "question_id": 19,
+    "question_text": "Which method can agents be created for deployment within Microsoft 365?",
+    "options": {
+      "a": { "text": "Only through the Azure portal using Azure Functions.", "is_true": false, "explanation": "Incorrect. Azure Functions create serverless code, not M365 agents. Agents are built using Copilot Studio, SharePoint, or declarative manifests." },
+      "b": { "text": "Through Copilot Studio, SharePoint, or declarative agent manifests.", "is_true": true, "explanation": "Correct. Agents can be created via Copilot Studio (full-featured builder), directly in SharePoint (grounded in site content), or by developers using declarative agent manifests and plugins." },
+      "c": { "text": "Only by Microsoft as part of the M365 platform updates.", "is_true": false, "explanation": "Incorrect. While Microsoft provides built-in agents, organisations can create their own custom agents." },
+      "d": { "text": "Only through Power Automate flows.", "is_true": false, "explanation": "Incorrect. Power Automate creates automated workflows, not conversational agents (though agents can trigger flows)." }
+    },
+    "correct_answer": "b"
+  },
+  {
+    "question_id": 20,
+    "question_text": "Which Copilot feature should you use to work with data across all Microsoft 365 apps in a single conversational interface?",
+    "options": {
+      "a": { "text": "Copilot in Excel", "is_true": false, "explanation": "Incorrect. Copilot in Excel is limited to Excel data, not cross-app data." },
+      "b": { "text": "Copilot in Business Chat", "is_true": true, "explanation": "Correct. Business Chat (available at microsoft365.com/chat and in Teams) provides a cross-app conversational interface that accesses data from all M365 apps via Microsoft Graph." },
+      "c": { "text": "Copilot in SharePoint", "is_true": false, "explanation": "Incorrect. Copilot in SharePoint works with SharePoint content, not cross-app data." },
+      "d": { "text": "Copilot Pages", "is_true": false, "explanation": "Incorrect. Copilot Pages is a collaborative canvas for editing AI-generated content, not a cross-app data interface." }
+    },
+    "correct_answer": "b"
+  }
+]

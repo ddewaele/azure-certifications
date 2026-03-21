@@ -1,0 +1,224 @@
+[
+  {
+    "question_id": 1,
+    "question_text": "Which Zero Trust principle states that you should always authenticate and authorise based on all available data points such as user identity, location, and device health?",
+    "options": {
+      "a": { "text": "Assume breach", "is_true": false, "explanation": "Incorrect. Assume breach means minimise blast radius and segment access — it is about limiting damage, not about authentication." },
+      "b": { "text": "Verify explicitly", "is_true": true, "explanation": "Correct. Verify explicitly requires that every access request is fully authenticated and authorised using all available signals (identity, location, device, service, data classification, anomalies)." },
+      "c": { "text": "Use least privilege access", "is_true": false, "explanation": "Incorrect. Least privilege limits access to only what is needed — it is about minimising permissions, not about verifying identity." },
+      "d": { "text": "Defense in depth", "is_true": false, "explanation": "Incorrect. Defense in depth is a general security concept (layered defenses) but not one of the three core Zero Trust principles." }
+    },
+    "correct_answer": "b"
+  },
+  {
+    "question_id": 2,
+    "question_text": "A user needs to access a SharePoint site but should only be able to view content, not edit or delete it. Which SharePoint role should they be assigned?",
+    "options": {
+      "a": { "text": "Site Owner", "is_true": false, "explanation": "Incorrect. Site Owner grants full control including managing permissions and settings." },
+      "b": { "text": "Site Member", "is_true": false, "explanation": "Incorrect. Site Member grants edit permissions — the user could add, edit, and delete content." },
+      "c": { "text": "Site Visitor", "is_true": true, "explanation": "Correct. Site Visitor grants read-only access — the user can view content but cannot modify or delete it." },
+      "d": { "text": "Global Administrator", "is_true": false, "explanation": "Incorrect. Global Administrator is a tenant-wide role with full access to all admin centers — far exceeding what is needed for read-only site access." }
+    },
+    "correct_answer": "c"
+  },
+  {
+    "question_id": 3,
+    "question_text": "Which Microsoft 365 admin center would you use to manage mailboxes and distribution lists?",
+    "options": {
+      "a": { "text": "Microsoft 365 admin center", "is_true": false, "explanation": "Incorrect. The M365 admin center manages users, licenses, and org settings. Mailbox-specific management is done in Exchange." },
+      "b": { "text": "Exchange Online admin center", "is_true": true, "explanation": "Correct. The Exchange Online admin center is where you manage mailboxes (user, shared, resource), distribution lists, mail flow rules, and connectors." },
+      "c": { "text": "SharePoint admin center", "is_true": false, "explanation": "Incorrect. The SharePoint admin center manages sites, libraries, and sharing settings — not email." },
+      "d": { "text": "Teams admin center", "is_true": false, "explanation": "Incorrect. The Teams admin center manages teams, channels, and policies — not mailboxes." }
+    },
+    "correct_answer": "b"
+  },
+  {
+    "question_id": 4,
+    "question_type": "multiple_select",
+    "question_text": "Which TWO of the following are components of Microsoft Defender XDR?",
+    "options": {
+      "a": { "text": "Defender for Endpoint", "is_true": true, "explanation": "Correct. Defender for Endpoint provides endpoint detection and response (EDR) for devices, and is a core component of the Defender XDR suite." },
+      "b": { "text": "Defender for Office 365", "is_true": true, "explanation": "Correct. Defender for Office 365 protects against phishing, malware, and business email compromise in email and collaboration tools." },
+      "c": { "text": "Microsoft Purview DLP", "is_true": false, "explanation": "Incorrect. Purview DLP is a data protection service, not part of the Defender XDR threat detection suite." },
+      "d": { "text": "Microsoft Intune", "is_true": false, "explanation": "Incorrect. Intune is a device management service (MDM/MAM), not a threat detection component of Defender XDR." }
+    },
+    "correct_answer": ["a", "b"]
+  },
+  {
+    "question_id": 5,
+    "question_text": "What does the Identity Secure Score in Microsoft Entra ID measure?",
+    "options": {
+      "a": { "text": "The number of users with Copilot licenses assigned.", "is_true": false, "explanation": "Incorrect. Identity Secure Score measures security posture, not license assignments." },
+      "b": { "text": "The organisation's identity security posture with recommendations for improvement.", "is_true": true, "explanation": "Correct. Identity Secure Score is a percentage-based metric that assesses how well your identity configuration aligns with Microsoft security best practices, with specific improvement actions." },
+      "c": { "text": "The compliance score against regulatory standards.", "is_true": false, "explanation": "Incorrect. Compliance scoring is done by Microsoft Purview Compliance Manager, not Identity Secure Score." },
+      "d": { "text": "The number of successful vs failed sign-in attempts.", "is_true": false, "explanation": "Incorrect. Sign-in success/failure counts are shown in sign-in logs, not Identity Secure Score." }
+    },
+    "correct_answer": "b"
+  },
+  {
+    "question_id": 6,
+    "question_text": "Which Microsoft Entra feature provides just-in-time privileged access that requires activation and approval before an admin can use elevated permissions?",
+    "options": {
+      "a": { "text": "Conditional Access", "is_true": false, "explanation": "Incorrect. Conditional Access enforces access policies based on signals but does not manage just-in-time role activation." },
+      "b": { "text": "Single Sign-On (SSO)", "is_true": false, "explanation": "Incorrect. SSO allows one set of credentials to access multiple apps — it does not manage privileged role activation." },
+      "c": { "text": "Privileged Identity Management (PIM)", "is_true": true, "explanation": "Correct. PIM provides just-in-time privileged access — admins must activate roles (with optional approval and time limits) rather than having permanent elevated permissions." },
+      "d": { "text": "App registrations", "is_true": false, "explanation": "Incorrect. App registrations register applications for Entra ID authentication — they do not manage admin role activation." }
+    },
+    "correct_answer": "c"
+  },
+  {
+    "question_id": 7,
+    "question_text": "An admin wants to understand why a user is being blocked from accessing a specific application. Which tool should they use to simulate which Conditional Access policies would apply?",
+    "options": {
+      "a": { "text": "Audit logs", "is_true": false, "explanation": "Incorrect. Audit logs show past changes but do not simulate policy application." },
+      "b": { "text": "Conditional Access 'What If' tool", "is_true": true, "explanation": "Correct. The 'What If' tool in Conditional Access lets admins simulate a sign-in scenario and see exactly which policies would apply, helping troubleshoot blocked access." },
+      "c": { "text": "Identity Secure Score", "is_true": false, "explanation": "Incorrect. Identity Secure Score measures overall security posture, not individual sign-in policy behavior." },
+      "d": { "text": "Compliance Manager", "is_true": false, "explanation": "Incorrect. Compliance Manager assesses regulatory compliance, not Conditional Access policy behavior." }
+    },
+    "correct_answer": "b"
+  },
+  {
+    "question_id": 8,
+    "question_text": "How does Microsoft 365 Copilot access organisational data to generate responses?",
+    "options": {
+      "a": { "text": "Copilot has its own admin-level access to all tenant data regardless of user permissions.", "is_true": false, "explanation": "Incorrect. Copilot does not have elevated access. It strictly respects the user's existing permissions." },
+      "b": { "text": "Copilot uses Microsoft Graph to access only the data the user already has permission to see.", "is_true": true, "explanation": "Correct. Copilot accesses data through Microsoft Graph using the user's own permissions. It cannot see any data the user does not already have access to." },
+      "c": { "text": "Copilot downloads all organisational data to a local cache for processing.", "is_true": false, "explanation": "Incorrect. Copilot processes data in the cloud within the Microsoft 365 trust boundary. It does not download data locally." },
+      "d": { "text": "Copilot requires a separate data access permission granted by the Global Administrator.", "is_true": false, "explanation": "Incorrect. Copilot uses the user's existing M365 permissions via Microsoft Graph — no separate data permission is needed." }
+    },
+    "correct_answer": "b"
+  },
+  {
+    "question_id": 9,
+    "question_text": "Which Microsoft Purview service detects and prevents accidental sharing of sensitive information such as credit card numbers in emails and documents?",
+    "options": {
+      "a": { "text": "Microsoft Purview Information Protection", "is_true": false, "explanation": "Incorrect. Information Protection classifies and labels data but does not block sharing. DLP enforces the blocking/notification actions." },
+      "b": { "text": "Microsoft Purview Data Loss Prevention (DLP)", "is_true": true, "explanation": "Correct. DLP policies detect sensitive content (like credit card numbers) in emails, documents, and chats, and can block sharing, notify users, or alert admins." },
+      "c": { "text": "Microsoft Purview Insider Risk Management", "is_true": false, "explanation": "Incorrect. Insider Risk Management detects risky user behavior patterns, not specific content patterns like credit card numbers." },
+      "d": { "text": "Microsoft Purview Communication Compliance", "is_true": false, "explanation": "Incorrect. Communication Compliance monitors for policy violations in messages (harassment, regulatory), not for sensitive data patterns." }
+    },
+    "correct_answer": "b"
+  },
+  {
+    "question_id": 10,
+    "question_type": "multiple_select",
+    "question_text": "Which TWO actions can sensitivity labels apply to documents in Microsoft Purview?",
+    "options": {
+      "a": { "text": "Encrypt the document so only authorised users can open it", "is_true": true, "explanation": "Correct. Sensitivity labels can apply encryption that restricts who can open, read, and edit the document based on the label's protection settings." },
+      "b": { "text": "Automatically translate the document to another language", "is_true": false, "explanation": "Incorrect. Translation is not a sensitivity label action. Labels apply classification and protection, not content transformation." },
+      "c": { "text": "Add visual markings such as headers, footers, and watermarks", "is_true": true, "explanation": "Correct. Sensitivity labels can add visual markings (headers, footers, watermarks) to clearly indicate the classification level of the document." },
+      "d": { "text": "Move the document to a different SharePoint site", "is_true": false, "explanation": "Incorrect. Sensitivity labels do not move documents. They classify and protect content in place." }
+    },
+    "correct_answer": ["a", "c"]
+  },
+  {
+    "question_id": 11,
+    "question_text": "Why is oversharing in SharePoint a particular concern when Microsoft 365 Copilot is deployed?",
+    "options": {
+      "a": { "text": "Copilot ignores SharePoint permissions and can access all files.", "is_true": false, "explanation": "Incorrect. Copilot strictly respects SharePoint permissions. It cannot access files the user cannot access." },
+      "b": { "text": "Copilot surfaces everything the user can access, so overly broad permissions mean Copilot may reveal sensitive content the user should not have seen.", "is_true": true, "explanation": "Correct. If users have overly broad permissions (e.g., access to sites they don't need), Copilot will surface that content in responses. Fixing oversharing is critical before deploying Copilot." },
+      "c": { "text": "Copilot creates copies of shared files in the user's OneDrive.", "is_true": false, "explanation": "Incorrect. Copilot does not copy files. It generates responses based on content but does not duplicate documents." },
+      "d": { "text": "SharePoint does not support access controls when Copilot is enabled.", "is_true": false, "explanation": "Incorrect. SharePoint access controls work exactly the same with or without Copilot." }
+    },
+    "correct_answer": "b"
+  },
+  {
+    "question_id": 12,
+    "question_text": "Which Microsoft Purview tool provides a percentage-based score showing your organisation's compliance posture against regulatory standards?",
+    "options": {
+      "a": { "text": "Data Explorer", "is_true": false, "explanation": "Incorrect. Data Explorer (Content explorer and Activity explorer) lets you browse classified content and activities, not assess overall compliance." },
+      "b": { "text": "Compliance Manager", "is_true": true, "explanation": "Correct. Compliance Manager provides a compliance score, assessments against standards (GDPR, ISO 27001), and specific improvement actions to improve your posture." },
+      "c": { "text": "DLP alerts dashboard", "is_true": false, "explanation": "Incorrect. DLP alerts show data loss prevention incidents, not overall regulatory compliance scoring." },
+      "d": { "text": "Identity Secure Score", "is_true": false, "explanation": "Incorrect. Identity Secure Score measures identity security posture in Entra ID, not regulatory compliance in Purview." }
+    },
+    "correct_answer": "b"
+  },
+  {
+    "question_id": 13,
+    "question_text": "Which Microsoft Purview feature specifically helps organisations discover and manage AI-related data security risks across Microsoft 365 and Copilot?",
+    "options": {
+      "a": { "text": "Data Lifecycle Management", "is_true": false, "explanation": "Incorrect. Data Lifecycle Management handles retention and deletion policies, not AI-specific data security." },
+      "b": { "text": "Data Security Posture Management (DSPM) for AI", "is_true": true, "explanation": "Correct. DSPM for AI is specifically designed to discover AI usage, monitor data flow to AI services, and manage policies to control AI data access across the organisation." },
+      "c": { "text": "Communication Compliance", "is_true": false, "explanation": "Incorrect. Communication Compliance monitors messages for policy violations, not AI-specific data security." },
+      "d": { "text": "Information Protection", "is_true": false, "explanation": "Incorrect. Information Protection classifies and protects data with sensitivity labels but is not specifically focused on AI-related risks." }
+    },
+    "correct_answer": "b"
+  },
+  {
+    "question_id": 14,
+    "question_text": "A user needs to search for emails and files across the entire Microsoft 365 tenant as part of a legal investigation. Which Purview feature should they use?",
+    "options": {
+      "a": { "text": "Activity explorer", "is_true": false, "explanation": "Incorrect. Activity explorer shows labeling and protection activities, not content search for legal investigations." },
+      "b": { "text": "Content search in Microsoft Purview eDiscovery", "is_true": true, "explanation": "Correct. Content search in eDiscovery allows searching for files and emails across Exchange, SharePoint, and OneDrive for litigation and compliance investigations." },
+      "c": { "text": "DLP alerts", "is_true": false, "explanation": "Incorrect. DLP alerts show data loss prevention incidents, not general content search for legal purposes." },
+      "d": { "text": "Compliance Manager", "is_true": false, "explanation": "Incorrect. Compliance Manager assesses regulatory compliance posture, not content search." }
+    },
+    "correct_answer": "b"
+  },
+  {
+    "question_id": 15,
+    "question_text": "Which tool should an admin use to run a report showing sharing activity and external access across all SharePoint sites?",
+    "options": {
+      "a": { "text": "Microsoft Entra sign-in logs", "is_true": false, "explanation": "Incorrect. Sign-in logs show authentication events, not SharePoint sharing activity." },
+      "b": { "text": "Data access governance report in SharePoint", "is_true": true, "explanation": "Correct. Data access governance reports in the SharePoint admin center show sharing activity, permissions, external access, and oversharing risks across sites." },
+      "c": { "text": "Copilot Analytics", "is_true": false, "explanation": "Incorrect. Copilot Analytics tracks Copilot usage and adoption, not SharePoint sharing." },
+      "d": { "text": "Microsoft Defender XDR", "is_true": false, "explanation": "Incorrect. Defender XDR detects security threats, not SharePoint sharing patterns." }
+    },
+    "correct_answer": "b"
+  },
+  {
+    "question_id": 16,
+    "question_text": "What is the difference between authentication and authorisation?",
+    "options": {
+      "a": { "text": "Authentication determines what you can access; authorisation verifies who you are.", "is_true": false, "explanation": "Incorrect. This is reversed. Authentication verifies identity; authorisation determines access." },
+      "b": { "text": "Authentication verifies your identity (who you are); authorisation determines what you can access (permissions).", "is_true": true, "explanation": "Correct. Authentication answers 'Who are you?' using credentials (password, MFA, biometrics). Authorisation answers 'What can you do?' using roles and permissions." },
+      "c": { "text": "They are the same thing — both verify user identity.", "is_true": false, "explanation": "Incorrect. Authentication and authorisation are distinct processes. Authentication verifies identity; authorisation verifies permissions." },
+      "d": { "text": "Authentication is for admins only; authorisation is for all users.", "is_true": false, "explanation": "Incorrect. Both authentication and authorisation apply to all users and services, not just admins." }
+    },
+    "correct_answer": "b"
+  },
+  {
+    "question_id": 17,
+    "question_text": "Which Microsoft Purview service monitors Teams messages, emails, and Viva Engage for harassment, threats, and regulatory policy violations?",
+    "options": {
+      "a": { "text": "Data Loss Prevention (DLP)", "is_true": false, "explanation": "Incorrect. DLP detects sensitive data patterns (credit cards, SSNs), not communication behavior violations." },
+      "b": { "text": "Communication Compliance", "is_true": true, "explanation": "Correct. Communication Compliance monitors messages across Teams, Exchange, and Viva Engage for policy violations including harassment, threats, regulatory non-compliance, and conflicts of interest." },
+      "c": { "text": "Insider Risk Management", "is_true": false, "explanation": "Incorrect. Insider Risk Management detects broader risky behavior patterns (data theft, security violations), not specific message content violations." },
+      "d": { "text": "Information Protection", "is_true": false, "explanation": "Incorrect. Information Protection classifies and protects data with labels, not monitors communications for policy violations." }
+    },
+    "correct_answer": "b"
+  },
+  {
+    "question_id": 18,
+    "question_text": "A Conditional Access policy should require MFA when a user signs in from an untrusted network location. Which signal should the policy evaluate?",
+    "options": {
+      "a": { "text": "Device compliance status", "is_true": false, "explanation": "Incorrect. Device compliance checks whether the device meets Intune policies, not the network location." },
+      "b": { "text": "Named location (IP range or country)", "is_true": true, "explanation": "Correct. Conditional Access can evaluate named locations (defined by IP ranges or countries). The policy can require MFA when the sign-in originates from outside trusted/named locations." },
+      "c": { "text": "User group membership", "is_true": false, "explanation": "Incorrect. Group membership determines who the policy applies to, but is not the signal for detecting untrusted network location." },
+      "d": { "text": "Application being accessed", "is_true": false, "explanation": "Incorrect. The application signal determines which app triggered the policy, not the user's network location." }
+    },
+    "correct_answer": "b"
+  },
+  {
+    "question_id": 19,
+    "question_text": "Which retention action keeps content for a specified period and then automatically removes it?",
+    "options": {
+      "a": { "text": "Retain only", "is_true": false, "explanation": "Incorrect. Retain only keeps content for the specified period but does not delete it afterwards." },
+      "b": { "text": "Delete only", "is_true": false, "explanation": "Incorrect. Delete only removes content after a period but does not ensure it is retained during that time." },
+      "c": { "text": "Retain then delete", "is_true": true, "explanation": "Correct. Retain then delete keeps content for the specified retention period and then automatically deletes it — meeting both preservation and cleanup requirements." },
+      "d": { "text": "Legal hold", "is_true": false, "explanation": "Incorrect. Legal hold preserves content indefinitely for litigation purposes — it does not have an automatic delete phase." }
+    },
+    "correct_answer": "c"
+  },
+  {
+    "question_id": 20,
+    "question_text": "What is the purpose of SharePoint Advanced Management's restricted site access feature?",
+    "options": {
+      "a": { "text": "It encrypts all documents on the site with a sensitivity label.", "is_true": false, "explanation": "Incorrect. Encryption is applied by sensitivity labels, not by restricted site access." },
+      "b": { "text": "It limits site access to members of a specific security group only, preventing broader access.", "is_true": true, "explanation": "Correct. Restricted site access limits access to members of a designated security group, blocking access from anyone outside that group — even if they have other SharePoint permissions. This helps prevent oversharing." },
+      "c": { "text": "It disables external sharing for the entire tenant.", "is_true": false, "explanation": "Incorrect. Restricted site access applies per-site, not tenant-wide, and does not disable external sharing globally." },
+      "d": { "text": "It moves the site to a private Azure storage account.", "is_true": false, "explanation": "Incorrect. Restricted site access controls who can access the site — it does not move data to different storage." }
+    },
+    "correct_answer": "b"
+  }
+]

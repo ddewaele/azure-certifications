@@ -11,6 +11,7 @@ A hands-on study repo for Microsoft Azure certifications. Each certification has
 | [AZ-900 — Azure Fundamentals](./az-900/README.md) | Foundational | In progress |
 | [AI-900 — Azure AI Fundamentals](./ai-900/README.md) | Foundational | In progress |
 | [AI-102 — Azure AI Engineer Associate](./ai-102/README.md) | Associate | In progress |
+| [AB-900 — M365 Copilot and Agent Admin Fundamentals](./ab-900/README.md) | Foundational | In progress |
 
 ---
 
@@ -29,6 +30,9 @@ node cli/cli.js ai-900/quiz
 
 # Example — AI-102:
 node cli/cli.js ai-102/quiz
+
+# Example — AB-900:
+node cli/cli.js ab-900/quiz
 ```
 
 See [cli/](./cli/) for details.
