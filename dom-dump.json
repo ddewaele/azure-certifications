@@ -1,0 +1,143 @@
+{
+  "url": "https://learn.microsoft.com/en-us/credentials/certifications/azure-ai-fundamentals/practice/assessment?assessment-type=practice&assessmentId=26&practice-assessment-type=certification",
+  "title": "Practice Assessment | Microsoft Learn",
+  "elementCount": 519,
+  "interesting": [
+    {
+      "tag": "html",
+      "class": "layout layout-single practiceassessment show-breadcrumb default-focus theme-light",
+      "role": "",
+      "dataBi": "",
+      "ariaLabel": "",
+      "text": "Skip to main content \tWe use optional cookies to improve your experience on our "
+    },
+    {
+      "tag": "ul",
+      "class": "autocomplete-suggestions is-vertically-scrollable padding-xxs ",
+      "role": "listbox",
+      "dataBi": "",
+      "ariaLabel": "Suggestions",
+      "text": " \t\t\t\t \t\t\t\t \t\t\t"
+    },
+    {
+      "tag": "a",
+      "class": "button button-clear button-sm button-block text-align-left font-weight-normal justify-content-flex-start inner-focus bor",
+      "role": "",
+      "dataBi": "panel-link-1-ask-a-question",
+      "ariaLabel": "",
+      "text": " \t\t\t\t\t\tAsk a question \t\t\t\t\t"
+    },
+    {
+      "tag": "a",
+      "class": "button button-clear button-sm button-block text-align-left font-weight-normal justify-content-flex-start inner-focus bor",
+      "role": "",
+      "dataBi": "panel-link-2-azure-questions",
+      "ariaLabel": "",
+      "text": " \t\t\t\t\t\tAzure questions \t\t\t\t\t"
+    },
+    {
+      "tag": "a",
+      "class": "button button-clear button-sm button-block text-align-left font-weight-normal justify-content-flex-start inner-focus bor",
+      "role": "",
+      "dataBi": "panel-link-3-windows-questions",
+      "ariaLabel": "",
+      "text": " \t\t\t\t\t\tWindows questions \t\t\t\t\t"
+    },
+    {
+      "tag": "a",
+      "class": "button button-clear button-sm button-block text-align-left font-weight-normal justify-content-flex-start inner-focus bor",
+      "role": "",
+      "dataBi": "panel-link-4-m365-questions",
+      "ariaLabel": "",
+      "text": " \t\t\t\t\t\tMicrosoft 365 questions \t\t\t\t\t"
+    },
+    {
+      "tag": "a",
+      "class": "button button-clear button-sm button-block text-align-left font-weight-normal justify-content-flex-start inner-focus bor",
+      "role": "",
+      "dataBi": "panel-link-5-microsoft-outlook-questions",
+      "ariaLabel": "",
+      "text": " \t\t\t\t\t\tMicrosoft Outlook questions \t\t\t\t\t"
+    },
+    {
+      "tag": "a",
+      "class": "button button-clear button-sm button-block text-align-left font-weight-normal justify-content-flex-start inner-focus bor",
+      "role": "",
+      "dataBi": "panel-link-6-microsoft-teams-questions",
+      "ariaLabel": "",
+      "text": " \t\t\t\t\t\tMicrosoft Teams questions \t\t\t\t\t"
+    },
+    {
+      "tag": "a",
+      "class": "button button-clear button-sm button-block text-align-left font-weight-normal justify-content-flex-start inner-focus bor",
+      "role": "",
+      "dataBi": "panel-link-8-all-questions",
+      "ariaLabel": "",
+      "text": " \t\t\t\t\t\tAll questions \t\t\t\t\t"
+    },
+    {
+      "tag": "ul",
+      "class": "autocomplete-suggestions is-vertically-scrollable padding-xxs ",
+      "role": "listbox",
+      "dataBi": "",
+      "ariaLabel": "Suggestions",
+      "text": " \t\t\t\t \t\t\t\t \t\t\t"
+    },
+    {
+      "tag": "label",
+      "class": "radio margin-bottom-xxs padding-xxs quiz-choice ",
+      "role": "",
+      "dataBi": "",
+      "ariaLabel": "",
+      "text": "classification"
+    },
+    {
+      "tag": "label",
+      "class": "radio margin-bottom-xxs padding-xxs quiz-choice ",
+      "role": "",
+      "dataBi": "",
+      "ariaLabel": "",
+      "text": "clustering"
+    },
+    {
+      "tag": "label",
+      "class": "radio margin-bottom-xxs padding-xxs quiz-choice ",
+      "role": "",
+      "dataBi": "",
+      "ariaLabel": "",
+      "text": "regression"
+    },
+    {
+      "tag": "label",
+      "class": "radio margin-bottom-xxs padding-xxs quiz-choice ",
+      "role": "",
+      "dataBi": "",
+      "ariaLabel": "",
+      "text": "supervised"
+    },
+    {
+      "tag": "button",
+      "class": "button button-primary button-filled margin-block-lg",
+      "role": "",
+      "dataBi": "",
+      "ariaLabel": "",
+      "text": "Next"
+    },
+    {
+      "tag": "button",
+      "class": "button link-button margin-sm margin-block-lg",
+      "role": "",
+      "dataBi": "",
+      "ariaLabel": "",
+      "text": "Check Your Answer"
+    },
+    {
+      "tag": "a",
+      "class": "button button-sm button-clear flex-shrink-0 external-link-indicator",
+      "role": "",
+      "dataBi": "your-privacy-choices",
+      "ariaLabel": "",
+      "text": "Your Privacy Choices"
+    }
+  ]
+}

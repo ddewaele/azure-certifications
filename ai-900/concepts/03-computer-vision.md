@@ -32,6 +32,20 @@ Object detection identifies **multiple objects** within an image and locates eac
 
 **Use cases:** Autonomous vehicles, retail shelf analysis, security surveillance, manufacturing defect detection.
 
+### Semantic Segmentation
+
+Semantic segmentation classifies **every pixel** in an image into a category, producing a color-coded mask that shows which areas belong to which class.
+
+| Aspect | Image Classification | Object Detection | Semantic Segmentation |
+|--------|---------------------|-----------------|----------------------|
+| **Output** | Label for whole image | Labels + bounding boxes | Per-pixel class labels |
+| **Granularity** | Image-level | Object-level (rectangles) | Pixel-level (exact shape) |
+| **Example** | "Street scene" | "Car at [x,y,w,h]" | Every pixel labeled as road, car, pedestrian, sky, etc. |
+
+**Use cases:** Autonomous driving (road vs sidewalk vs obstacle), medical imaging (tumour boundaries), satellite imagery (land use mapping), industrial inspection.
+
+Unlike object detection which draws rectangular bounding boxes, semantic segmentation produces a precise pixel-level mask showing the exact shape and boundary of each region.
+
 ### Optical Character Recognition (OCR)
 
 OCR extracts **printed or handwritten text** from images, scanned documents, and photos.

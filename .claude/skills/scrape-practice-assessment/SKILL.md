@@ -14,7 +14,7 @@ Arguments provided: **$ARGUMENTS**
 
 ## Overview
 
-The scraper (`scripts/scrape-practice-assessment.js`) opens a real browser window. The user manually answers each question and clicks "Check answer" — the script watches the DOM and captures questions automatically in the background.
+The scraper (`.claude/skills/scrape-practice-assessment/scrape-practice-assessment.js`) opens a real browser window. The user manually answers each question and clicks "Check answer" — the script watches the DOM and captures questions automatically in the background.
 
 ## Step 0: Collect required inputs
 
@@ -41,7 +41,7 @@ Once you have all three values, confirm them back to the user in a single short 
 
 1. **Verify Node.js** — run `node --version`. Must be >= 16.
 2. **Verify Playwright is installed** — run `node -e "require('playwright')"`. If it fails, run `npm install playwright` in the repo root.
-3. **Verify the scraper script exists** — check `scripts/scrape-practice-assessment.js` exists. If it doesn't, stop and tell the user.
+3. **Verify the scraper script exists** — check `.claude/skills/scrape-practice-assessment/scrape-practice-assessment.js` exists. If it doesn't, stop and tell the user.
 
 ## Step 2: Clean up stale browser processes
 
@@ -63,14 +63,14 @@ Wait 1–2 seconds after killing processes before continuing.
 The script accepts the URL as `process.argv[2]` and writes output to a hardcoded path. Before launching:
 
 1. Pass the **url** as a command-line argument — no script edits needed for the URL.
-2. For the **output** path: the script's `outputFile` constant defaults to `practice-assessment-questions.txt` in `process.cwd()`. If the user specified a different output path, temporarily edit line ~32 in `scripts/scrape-practice-assessment.js` to set `outputFile` to the absolute resolved path. Restore it after capture, or leave it if it's a sensible permanent default.
+2. For the **output** path: the script's `outputFile` constant defaults to `practice-assessment-questions.txt` in `process.cwd()`. If the user specified a different output path, temporarily edit line ~32 in `.claude/skills/scrape-practice-assessment/scrape-practice-assessment.js` to set `outputFile` to the absolute resolved path. Restore it after capture, or leave it if it's a sensible permanent default.
 
 ## Step 4: Launch the scraper
 
 Run the script in the background so the user can interact with the browser:
 
 ```bash
-node scripts/scrape-practice-assessment.js "<url>" &
+node .claude/skills/scrape-practice-assessment/scrape-practice-assessment.js "<url>" &
 ```
 
 The browser window will open automatically.
@@ -122,4 +122,4 @@ If fewer questions were captured than expected (the assessment typically has 50 
 → The persistent profile is stored in `~/.playwright-ms-learn`. If this directory was deleted or is corrupt, you'll need to log in again once.
 
 **Script file not found**
-→ The script lives at `scripts/scrape-practice-assessment.js` relative to the repo root. Run the command from the repo root directory.
+→ The script lives at `.claude/skills/scrape-practice-assessment/scrape-practice-assessment.js` relative to the repo root. Run the command from the repo root directory.
