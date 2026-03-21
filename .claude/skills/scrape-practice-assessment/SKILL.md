@@ -1,7 +1,7 @@
 ---
 name: scrape-practice-assessment
 description: Launch a browser to a Microsoft Learn practice assessment and capture all questions and answer choices to a text file using the Playwright scraper script
-argument-hint: <microsoft-learn-practice-assessment-url> [output-filename]
+argument-hint: [url="..."] [description="..."] [output="..."]
 user-invocable: true
 allowed-tools: Read, Write, Edit, Glob, Grep, Bash
 ---
@@ -10,18 +10,32 @@ allowed-tools: Read, Write, Edit, Glob, Grep, Bash
 
 You are capturing practice assessment questions from Microsoft Learn using Playwright.
 
-Arguments: **$ARGUMENTS**
+Arguments provided: **$ARGUMENTS**
 
 ## Overview
 
 The scraper (`scripts/scrape-practice-assessment.js`) opens a real browser window. The user manually answers each question and clicks "Check answer" — the script watches the DOM and captures questions automatically in the background.
 
-## Step 0: Parse arguments
+## Step 0: Collect required inputs
 
-Parse `$ARGUMENTS`:
-- **URL** — a Microsoft Learn practice assessment URL (required). If not provided, ask the user for it. The URL typically looks like:
-  `https://learn.microsoft.com/en-us/credentials/certifications/<cert>/practice/assessment?assessment-type=practice&assessmentId=<id>&practice-assessment-type=certification`
-- **Output filename** — optional. Defaults to `practice-assessment-questions.txt` in the repo root. If provided, use it as the output path.
+You need three pieces of information before proceeding. Parse them from `$ARGUMENTS` first (accept any reasonable format — quoted key=value pairs, plain URL, plain description, plain filename). For any that are missing or unclear, use the `AskUserQuestion` tool to ask — collect all missing fields in a **single question** rather than asking one at a time.
+
+| Field | Description | Default |
+|-------|-------------|---------|
+| **url** | Full Microsoft Learn practice assessment URL | *(required — no default)* |
+| **description** | Short human-readable label, e.g. `"AI-900 practice assessment"` | Derived from the URL cert code if possible |
+| **output** | File path to write captured questions to | `practice-assessment-questions.txt` in repo root |
+
+Example of a well-formed invocation:
+```
+/scrape-practice-assessment url="https://learn.microsoft.com/..." description="AI-900 practice" output="ai-900/practice-assessment-questions.txt"
+```
+
+Once you have all three values, confirm them back to the user in a single short message before proceeding:
+> **Ready to scrape**
+> - URL: `<url>`
+> - Description: `<description>`
+> - Output: `<output>`
 
 ## Step 1: Check prerequisites
 
@@ -44,26 +58,19 @@ rm -f ~/.playwright-ms-learn/lockfile
 
 Wait 1–2 seconds after killing processes before continuing.
 
-## Step 3: Update the script for the target URL (if needed)
+## Step 3: Configure the script
 
-Open `scripts/scrape-practice-assessment.js` and check the `DEFAULT_URL` constant (line ~28). If the user provided a URL that differs from the current default:
-- Update `DEFAULT_URL` to the user's URL, OR
-- Pass the URL as a command-line argument (the script accepts `process.argv[2]`)
+The script accepts the URL as `process.argv[2]` and writes output to a hardcoded path. Before launching:
 
-If the user specified a custom output filename, note that the script currently writes to `practice-assessment-questions.txt` in `process.cwd()`. You may need to update the `outputFile` path in the script, or advise the user to rename the file after capture.
+1. Pass the **url** as a command-line argument — no script edits needed for the URL.
+2. For the **output** path: the script's `outputFile` constant defaults to `practice-assessment-questions.txt` in `process.cwd()`. If the user specified a different output path, temporarily edit line ~32 in `scripts/scrape-practice-assessment.js` to set `outputFile` to the absolute resolved path. Restore it after capture, or leave it if it's a sensible permanent default.
 
 ## Step 4: Launch the scraper
 
 Run the script in the background so the user can interact with the browser:
 
 ```bash
-node scripts/scrape-practice-assessment.js "<URL>" &
-```
-
-Or if using the default URL:
-
-```bash
-node scripts/scrape-practice-assessment.js &
+node scripts/scrape-practice-assessment.js "<url>" &
 ```
 
 The browser window will open automatically.
@@ -93,9 +100,10 @@ Questions are saved incrementally — if the browser crashes, you won't lose alr
 ## Step 6: Confirm output
 
 After the browser is closed, confirm the output file exists and report:
-- Path to the output file
-- Number of questions captured
-- A brief summary of the first few questions to confirm the capture was successful
+- Description: `<description>`
+- Output file: `<output>` (show absolute path)
+- Number of questions captured (read from the "Total questions:" line in the file header)
+- First 3 question texts to confirm the capture looks correct
 
 If fewer questions were captured than expected (the assessment typically has 50 questions), advise the user to re-run and continue from where they left off — the script deduplicates by question content so re-capturing already-seen questions is safe.
 
