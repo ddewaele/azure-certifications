@@ -1,0 +1,432 @@
+================================================================================
+MICROSOFT LEARN PRACTICE ASSESSMENT — CAPTURED QUESTIONS
+Source: https://learn.microsoft.com/en-us/credentials/certifications/azure-ai-fundamentals/practice/assessment?assessment-type=practice&assessmentId=26&practice-assessment-type=certification
+Captured: 2026-03-21T23:53:44.814Z
+Total questions: 49
+================================================================================
+
+────────────────────────────────────────────────────────────────────────────────
+Q1: Which natural language processing (NLP) technique normalizes words before counting them?
+
+    a) frequency analysis
+    b) N-grams
+    c) stemming
+    d) vectorization
+
+────────────────────────────────────────────────────────────────────────────────
+Q2: What is the confidence score returned by the Azure Language in Foundry Tools detection service of natural language processing (NLP) for an unknown language name?
+
+    a) 1
+    b) -1
+    c) NaN
+    d) Unknown
+
+────────────────────────────────────────────────────────────────────────────────
+Q3: Which two Azure AI Services features can be used to enable both text-to-text and speech-to-text between multiple languages? Each correct answer presents part of the solution.
+Select all answers that apply.
+
+    a) Conversational Language Understanding
+    b) key phrase extraction
+    c) language detection
+    d) the Azure Speech in Foundry Tools
+    e) the Translator service
+
+────────────────────────────────────────────────────────────────────────────────
+Q4: For which two scenarios is the Universal Language Model used by the speech-to-text API optimized? Each correct answer presents a complete solution.
+Select all answers that apply.
+
+    a) acoustic
+    b) conversational
+    c) dictation
+    d) language
+    e) pronunciation
+
+────────────────────────────────────────────────────────────────────────────────
+Q5: Which Azure resource provides direct access to both Azure Translator in Foundry Tools and Azure AI Speech services through a single endpoint and authentication key?
+
+    a) Azure AI Bot Service
+    b) Microsoft Foundry
+    c) Azure Machine Learning
+    d) Azure Language in Foundry Tools service
+
+────────────────────────────────────────────────────────────────────────────────
+Q6: Which three features are elements of the Azure Language in Foundry Tools Service? Each correct answer presents a complete solution.
+Select all answers that apply.
+
+    a) Azure Vision in Foundry Tools
+    b) Azure AI Content Moderator
+    c) Entity Linking
+    d) Personally Identifiable Information (PII) detection
+    e) Sentiment analysis
+
+────────────────────────────────────────────────────────────────────────────────
+Q7: Which feature of the Azure Translator in Foundry Tools service is available only to Custom Translator?
+
+    a) document translation
+    b) model training with a dictionary
+    c) speaker recognition
+    d) text translation
+
+────────────────────────────────────────────────────────────────────────────────
+Q8: When using the Azure AI Service for Language, what should you use to provide further information online about entities extracted from a text?
+
+    a) entity linking
+    b) key phrase extraction
+    c) named entity recognition
+    d) text translation
+
+────────────────────────────────────────────────────────────────────────────────
+Q9: What are the two main schema components of a Language Understanding app model? Each correct answer presents part of the solution.
+Select all answers that apply.
+
+    a) entities
+    b) entity linking
+    c) intents
+    d) utterances
+
+────────────────────────────────────────────────────────────────────────────────
+Q10: As per the NIST AI Risk Management Framework, what is the first stage to consider when developing a responsible generative AI solution?
+
+    a) Identify potential harms.
+    b) Measure the presence of potential harms.
+    c) Mitigate potential harms.
+    d) Operate the solution.
+
+────────────────────────────────────────────────────────────────────────────────
+Q11: The four-step process to apply responsible AI principles to generative AI includes [Answer choice].
+
+    a) identifying potential harms, measuring harms, mitigating risks, and planning for deployments
+    b) identifying potential harms, monitoring system performance, retraining models, and deploying updates
+    c) identifying potential harms, securing infrastructure, encrypting data, and monitoring access
+    d) identifying potential harms, training models, tuning hyperparameters, and validating accuracy
+
+────────────────────────────────────────────────────────────────────────────────
+Q12: A key feature of a generative AI model is that it can [Answer choice].
+
+    a) assign labels to data by using classification logic
+    b) follow predefined rules to make deterministic decisions
+    c) identify anomalies in large volumes of structured data
+    d) produce original outputs based on patterns learned from training data
+
+────────────────────────────────────────────────────────────────────────────────
+Q13: You are reviewing the key features of generative AI models.
+Which statement best describes a capability of a generative AI model?
+
+    a) classifies data into predefined categories
+    b) detects patterns in data to predict future outcomes
+    c) generates new content based on learned patterns
+    d) uses rule-based logic to automate decisions
+
+────────────────────────────────────────────────────────────────────────────────
+Q14: You need to identify which scenarios benefit from using generative AI.
+Which two scenarios are common use cases for generative AI? Each correct answer presents a complete solution.
+Select all answers that apply.
+
+    a) anomaly detection
+    b) image generation
+    c) summarization
+    d) translation
+
+────────────────────────────────────────────────────────────────────────────────
+Q15: Which two capabilities are examples of a GPT model? Each correct answer presents a complete solution.
+Select all answers that apply.
+
+    a) Create natural language.
+    b) Detect specific dialects of a language.
+    c) Generate closed captions in real-time from a video.
+    d) Synthesize speech.
+    e) Understand natural language.
+
+────────────────────────────────────────────────────────────────────────────────
+Q16: Which generative AI model is used to generate images based on natural language prompts?
+
+    a) DALL-E
+    b) Embeddings
+    c) GPT-3.5
+    d) GPT-4
+    e) Whisper
+
+────────────────────────────────────────────────────────────────────────────────
+Q17: Which part of speech synthesis in natural language processing (NLP) involves breaking text into individual words such that each word can be assigned phonetic sounds?
+
+    a) lemmatization
+    b) key phrase extraction
+    c) tokenization
+    d) transcribing
+
+────────────────────────────────────────────────────────────────────────────────
+Q18: Which statement accurately describes Microsoft Foundry?
+
+    a) Microsoft Foundry is a centralized hub for discovering and comparing generative AI models available in Azure.
+    b) Microsoft Foundry is a centralized platform that brings together tools and services for building, testing, and deploying generative AI solutions.
+    c) Microsoft Foundry is a marketplace that allows developers to purchase from and sell generative AI models from multiple providers.
+    d) Microsoft Foundry is a platform that enables developers to directly customize and train large language models (LLMs) from scratch.
+
+────────────────────────────────────────────────────────────────────────────────
+Q19: You plan to use Azure OpenAI in Microsoft Foundry for a generative AI solution.
+Which security capability is supported by using Azure OpenAI in Foundry Models?
+
+    a) Azure role-based access control (RBAC)
+    b) client-side encryption keys
+    c) custom firewall rules
+    d) operating system-level permissions
+
+────────────────────────────────────────────────────────────────────────────────
+Q20: You are evaluating Microsoft Foundry to identify whether it is appropriate for your organization’s generative AI initiatives.
+For which audience is Microsoft Foundry primarily intended?
+
+    a) AI developers and technical decision-makers that build generative AI apps and custom copilots
+    b) business users who want to build machine learning models without writing code
+    c) data scientists focused on training and managing large-scale custom machine learning models
+    d) Windows application developers that integrate pretrained machine learning models
+
+────────────────────────────────────────────────────────────────────────────────
+Q21: You plan to build a generative AI chatbot that will provide medical information.
+You need to select an Azure service that ensures access to the latest generative AI models, along with built-in safety systems and responsible AI controls.
+Which service should you use?
+
+    a) Azure Language in Foundry Tools
+    b) Azure Machine Learning
+    c) Azure OpenAI in Foundry Models
+    d) Azure Vision in Foundry Tools
+
+────────────────────────────────────────────────────────────────────────────────
+Q22: Which artificial intelligence (AI) technique should be used to extract the name of a store from a photograph displaying the store front?
+
+    a) image classification
+    b) natural language processing (NLP)
+    c) optical character recognition (OCR)
+    d) semantic segmentation
+
+────────────────────────────────────────────────────────────────────────────────
+Q23: Which computer vision solution provides the ability to identify a person's age based on a photograph?
+
+    a) facial detection
+    b) image classification
+    c) object detection
+    d) semantic segmentation
+
+────────────────────────────────────────────────────────────────────────────────
+Q24: Which two specialized domain models are supported by Azure Vision in Foundry Tools when categorizing an image? Each correct answer presents a complete solution.
+Select all answers that apply.
+
+    a) celebrities
+    b) image types
+    c) landmarks
+    d) people_
+    e) people_group
+
+────────────────────────────────────────────────────────────────────────────────
+Q25: Which process allows you to use object detection?
+
+    a) analyzing sentiment around news articles
+    b) extracting text from manuscripts
+    c) granting employee access to a secure building
+    d) tracking livestock in a field
+
+────────────────────────────────────────────────────────────────────────────────
+Q26: What allows you to identify different types of bone fractures in X-ray images?
+
+    a) conversational artificial intelligence (AI)
+    b) facial detection
+    c) image classification
+    d) object detection
+
+────────────────────────────────────────────────────────────────────────────────
+Q27: What can be used for an attendance system that can scan handwritten signatures?
+
+    a) face detection
+    b) image classification
+    c) object detection
+    d) optical character recognition (OCR)
+
+────────────────────────────────────────────────────────────────────────────────
+Q28: Which analytical task of the Azure Vision in Foundry Tools service returns bounding box coordinates?
+
+    a) image categorization
+    b) object detection
+    c) optical character recognition (OCR)
+    d) tagging
+
+────────────────────────────────────────────────────────────────────────────────
+Q29: Which additional piece of information is included with each phrase returned by an image description task of the Azure Vision in Foundry Tools?
+
+    a) bounding box coordinates
+    b) confidence score
+    c) endpoint
+    d) key
+
+────────────────────────────────────────────────────────────────────────────────
+Q30: Which service can you use to train an image classification model?
+
+    a) Azure Vision in Foundry Tools
+    b) Azure AI Custom Vision
+    c) Azure Face in Foundry Tools
+    d) Azure Language in Foundry Tools
+
+────────────────────────────────────────────────────────────────────────────────
+Q31: What can you use to analyze images of people to identify whether specific human-related visual features are present?
+
+    a) Azure AI Face in Foundry Tools
+    b) Azure AI Video Indexer in Foundry Tools
+    c) Azure Document Intelligence in Foundry Tools
+    d) Azure Vision in Foundry Tools
+
+────────────────────────────────────────────────────────────────────────────────
+Q32: Which type of machine learning algorithm finds the optimal way to split a dataset into groups without relying on training and validating label predictions?
+
+    a) classification
+    b) clustering
+    c) regression
+    d) supervised
+
+────────────────────────────────────────────────────────────────────────────────
+Q33: A healthcare organization has a dataset consisting of bone fracture scans that are categorized by using predefined fracture types. The organization wants to use machine learning to detect the different types of bone fractures for new scans before the scans are sent to a medical practitioner.
+Which type of machine learning is this?
+
+    a) classification
+    b) clustering
+    c) featurization
+    d) regression
+
+────────────────────────────────────────────────────────────────────────────────
+Q34: A retailer wants to group together online shoppers that have similar attributes to enable its marketing team to create targeted marketing campaigns for new product launches.
+Which type of machine learning is this?
+
+    a) classification
+    b) clustering
+    c) multiclass classification
+    d) regression
+
+────────────────────────────────────────────────────────────────────────────────
+Q35: In a regression machine learning algorithm, what are the characteristics of features and labels in a validation dataset?
+
+    a) known feature and label values
+    b) known feature values and unknown label values
+    c) unknown feature and label values
+    d) unknown feature values and known label values
+
+────────────────────────────────────────────────────────────────────────────────
+Q36: You need to use Azure Machine Learning to train a regression model.
+What should you create in Machine Learning studio?
+
+    a) a job
+    b) a workspace
+    c) an Azure container instance
+    d) an Azure Kubernetes Service (AKS) cluster
+
+────────────────────────────────────────────────────────────────────────────────
+Q37: You need to use the Azure Machine Learning designer to train a machine learning model.
+What should you do first in the Machine Learning designer?
+
+    a) Add a dataset.
+    b) Add training modules.
+    c) Create a pipeline.
+    d) Deploy a service.
+
+────────────────────────────────────────────────────────────────────────────────
+Q38: You train a regression model by using automated machine learning (automated ML) in the Azure Machine Learning studio. You review the best model summary.
+You need to publish the model for others to use from the internet.
+What should you do next?
+
+    a) Create a compute cluster.
+    b) Deploy the model to an endpoint.
+    c) Split the data into training and validation datasets.
+    d) Test the deployed service.
+
+────────────────────────────────────────────────────────────────────────────────
+Q39: Which three supervised machine learning models can you train by using automated machine learning (automated ML) in the Azure Machine Learning studio? Each correct answer presents a complete solution.
+Select all answers that apply.
+
+    a) Classification
+    b) Clustering
+    c) inference pipeline
+    d) regression
+    e) time-series forecasting
+
+────────────────────────────────────────────────────────────────────────────────
+Q40: What is an unsupervised machine learning algorithm module for training models in the Azure Machine Learning designer?
+
+    a) Classification
+    b) K-Means Clustering
+    c) Linear Regression
+    d) Normalize Data
+
+────────────────────────────────────────────────────────────────────────────────
+Q41: Which type of artificial intelligence (AI) workload provides the ability to generate bounding boxes that identify the locations of different types of vehicles in an image?
+
+    a) image analysis
+    b) image classification
+    c) optical character recognition (OCR)
+    d) object detection
+
+────────────────────────────────────────────────────────────────────────────────
+Q42: Which type of service provides a platform for conversational artificial intelligence (AI)?
+
+    a) Azure AI Bot Service
+    b) Azure Document Intelligence in Foundry Tools
+    c) Azure Vision in Foundry Tools
+    d) Azure Translator in Foundry Tools
+
+────────────────────────────────────────────────────────────────────────────────
+Q43: Which type of artificial intelligence (AI) workload has the primary purpose of making large amounts of data searchable?
+
+    a) image analysis
+    b) knowledge mining
+    c) object detection
+    d) semantic segmentation
+
+────────────────────────────────────────────────────────────────────────────────
+Q44: You are exploring solutions to improve the document search and indexing service for employees.
+You need an artificial intelligence (AI) search solution that will include searching text in various types of documents, such as images.
+Which type of AI workload is this?
+
+    a) semantic segmentation
+    b) computer vision
+    c) conversational AI
+    d) data mining
+
+────────────────────────────────────────────────────────────────────────────────
+Q45: Which two artificial intelligence (AI) workload features are part of the Azure Vision in Foundry Tools service? Each correct answer presents a complete solution.
+Select all answers that apply.
+
+    a) entity recognition
+    b) key phrase extraction
+    c) optical character recognition (OCR)
+    d) sentiment analysis
+    e) spatial analysis
+
+────────────────────────────────────────────────────────────────────────────────
+Q46: Which two artificial intelligence (AI) workload scenarios are examples of natural language processing (NLP)? Each correct answer presents a complete solution.
+Select all answers that apply.
+
+    a) extracting handwritten text from online images
+    b) generating tags and descriptions for images
+    c) monitoring network traffic for sudden spikes
+    d) performing sentiment analysis on social media data
+    e) translating text between different languages from product reviews
+
+────────────────────────────────────────────────────────────────────────────────
+Q47: Which principle of responsible artificial intelligence (AI) plays the primary role when implementing an AI solution that meet qualifications for business loan approvals?
+
+    a) accountability
+    b) fairness
+    c) inclusiveness
+    d) safety
+
+────────────────────────────────────────────────────────────────────────────────
+Q48: Which principle of responsible artificial intelligence (AI) is applied in the design of an AI system to ensure that users understand constraints and limitations of AI?
+
+    a) fairness
+    b) inclusiveness
+    c) privacy and security
+    d) transparency
+
+────────────────────────────────────────────────────────────────────────────────
+Q49: A company is currently developing driverless agriculture vehicles to help harvest crops. The vehicles will be deployed alongside people working in the crop fields, and as such, the company will need to carry out robust testing.
+Which principle of responsible artificial intelligence (AI) is most important in this case?
+
+    a) accountability
+    b) inclusiveness
+    c) reliability and safety
+    d) transparency

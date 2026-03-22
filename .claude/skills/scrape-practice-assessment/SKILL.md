@@ -70,7 +70,7 @@ The script accepts the URL as `process.argv[2]` and writes output to a hardcoded
 Run the script in the background so the user can interact with the browser:
 
 ```bash
-node .claude/skills/scrape-practice-assessment/scrape-practice-assessment.js "<url>" &
+OUTPUT_FILE="<output>" node .claude/skills/scrape-practice-assessment/scrape-practice-assessment.js "<url>" &
 ```
 
 The browser window will open automatically.

@@ -29,7 +29,7 @@ const DEFAULT_URL = 'https://learn.microsoft.com/en-us/credentials/certification
 
 const url = process.argv[2] || DEFAULT_URL;
 const userDataDir = path.join(require('os').homedir(), '.playwright-ms-learn');
-const outputFile = path.join(process.cwd(), 'practice-assessment-questions.txt');
+const outputFile = process.env.OUTPUT_FILE || process.argv[3] || path.join(process.cwd(), 'practice-assessment-questions.txt');
 
 const questions = new Map(); // questionText -> { text, options, answer, explanation }
 let pollInterval = null;

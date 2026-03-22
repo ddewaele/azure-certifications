@@ -1,7 +1,7 @@
 {
   "url": "https://learn.microsoft.com/en-us/credentials/certifications/azure-ai-fundamentals/practice/assessment?assessment-type=practice&assessmentId=26&practice-assessment-type=certification",
   "title": "Practice Assessment | Microsoft Learn",
-  "elementCount": 519,
+  "elementCount": 518,
   "interesting": [
     {
       "tag": "html",
@@ -89,7 +89,7 @@
       "role": "",
       "dataBi": "",
       "ariaLabel": "",
-      "text": "classification"
+      "text": "frequency analysis"
     },
     {
       "tag": "label",
@@ -97,7 +97,7 @@
       "role": "",
       "dataBi": "",
       "ariaLabel": "",
-      "text": "clustering"
+      "text": "N-grams"
     },
     {
       "tag": "label",
@@ -105,7 +105,7 @@
       "role": "",
       "dataBi": "",
       "ariaLabel": "",
-      "text": "regression"
+      "text": "stemming"
     },
     {
       "tag": "label",
@@ -113,7 +113,7 @@
       "role": "",
       "dataBi": "",
       "ariaLabel": "",
-      "text": "supervised"
+      "text": "vectorization"
     },
     {
       "tag": "button",
