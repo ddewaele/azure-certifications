@@ -1,218 +1,242 @@
-[
-  {
-    "question_id": 1,
-    "question_text": "Which Azure Blob Storage access tier should be used for data that is accessed frequently and where low access latency is critical?",
-    "options": {
-      "a": {
-        "text": "Archive",
-        "is_true": false,
-        "explanation": "Incorrect. The Archive tier is for data that is rarely accessed. Archived blobs must be rehydrated before they can be read, which can take hours. It has the lowest storage cost but the highest access cost."
-      },
-      "b": {
-        "text": "Cool",
-        "is_true": false,
-        "explanation": "Incorrect. The Cool tier is optimized for data that is infrequently accessed and stored for at least 30 days. It has higher access costs than Hot."
-      },
-      "c": {
-        "text": "Hot",
-        "is_true": true,
-        "explanation": "Correct. The Hot tier is optimized for data that is accessed frequently. It has the highest storage cost per GB but the lowest access cost per operation. It is the right choice when data needs to be immediately accessible with low latency."
-      },
-      "d": {
-        "text": "Cold",
-        "is_true": false,
-        "explanation": "Incorrect. The Cold tier is for data stored for at least 90 days with infrequent access. It has lower storage costs than Cool but higher access costs."
-      }
-    },
-    "correct_answer": "c"
+{
+  "meta": {
+    "title": "Azure Fundamentals – Storage",
+    "subject": "AZ-900",
+    "version": "1.0.0",
+    "created": "2026-03-22"
   },
-  {
-    "question_id": 2,
-    "question_text": "Which storage redundancy option replicates data synchronously across three availability zones within a single Azure region?",
-    "options": {
-      "a": {
-        "text": "Locally Redundant Storage (LRS)",
-        "is_true": false,
-        "explanation": "Incorrect. LRS replicates data three times within a single datacenter (same availability zone). It does not protect against a datacenter-level failure."
+  "questions": [
+    {
+      "question_id": 1,
+      "question_text": "Which Azure Blob Storage access tier should be used for data that is accessed frequently and where low access latency is critical?",
+      "options": {
+        "a": {
+          "text": "Archive",
+          "is_true": false,
+          "explanation": "Incorrect. The Archive tier is for data that is rarely accessed. Archived blobs must be rehydrated before they can be read, which can take hours. It has the lowest storage cost but the highest access cost."
+        },
+        "b": {
+          "text": "Cool",
+          "is_true": false,
+          "explanation": "Incorrect. The Cool tier is optimized for data that is infrequently accessed and stored for at least 30 days. It has higher access costs than Hot."
+        },
+        "c": {
+          "text": "Hot",
+          "is_true": true,
+          "explanation": "Correct. The Hot tier is optimized for data that is accessed frequently. It has the highest storage cost per GB but the lowest access cost per operation. It is the right choice when data needs to be immediately accessible with low latency."
+        },
+        "d": {
+          "text": "Cold",
+          "is_true": false,
+          "explanation": "Incorrect. The Cold tier is for data stored for at least 90 days with infrequent access. It has lower storage costs than Cool but higher access costs."
+        }
       },
-      "b": {
-        "text": "Zone-Redundant Storage (ZRS)",
-        "is_true": true,
-        "explanation": "Correct. ZRS replicates data synchronously across three availability zones within a single region. This means your data survives a datacenter failure within the region. It provides higher durability than LRS without requiring geo-replication."
-      },
-      "c": {
-        "text": "Geo-Redundant Storage (GRS)",
-        "is_true": false,
-        "explanation": "Incorrect. GRS replicates data to a secondary region (LRS in primary + async copy to secondary). It does not replicate across availability zones within one region."
-      },
-      "d": {
-        "text": "Geo-Zone-Redundant Storage (GZRS)",
-        "is_true": false,
-        "explanation": "Incorrect. GZRS combines ZRS in the primary region with async replication to a secondary region. While it includes zone redundancy, it is more than just zone-redundant — it also adds cross-region replication."
-      }
+      "correct_answer": [
+        "c"
+      ]
     },
-    "correct_answer": "b"
-  },
-  {
-    "question_id": 3,
-    "question_text": "A development team wants to use Azure storage to share files between multiple VMs and mount it as a drive on Windows and Linux servers. Which Azure Storage service should they use?",
-    "options": {
-      "a": {
-        "text": "Azure Blob Storage",
-        "is_true": false,
-        "explanation": "Incorrect. Blob storage is object storage accessed via HTTP/S APIs. It cannot be mounted as a network drive using SMB or NFS protocols."
+    {
+      "question_id": 2,
+      "question_text": "Which storage redundancy option replicates data synchronously across three availability zones within a single Azure region?",
+      "options": {
+        "a": {
+          "text": "Locally Redundant Storage (LRS)",
+          "is_true": false,
+          "explanation": "Incorrect. LRS replicates data three times within a single datacenter (same availability zone). It does not protect against a datacenter-level failure."
+        },
+        "b": {
+          "text": "Zone-Redundant Storage (ZRS)",
+          "is_true": true,
+          "explanation": "Correct. ZRS replicates data synchronously across three availability zones within a single region. This means your data survives a datacenter failure within the region. It provides higher durability than LRS without requiring geo-replication."
+        },
+        "c": {
+          "text": "Geo-Redundant Storage (GRS)",
+          "is_true": false,
+          "explanation": "Incorrect. GRS replicates data to a secondary region (LRS in primary + async copy to secondary). It does not replicate across availability zones within one region."
+        },
+        "d": {
+          "text": "Geo-Zone-Redundant Storage (GZRS)",
+          "is_true": false,
+          "explanation": "Incorrect. GZRS combines ZRS in the primary region with async replication to a secondary region. While it includes zone redundancy, it is more than just zone-redundant — it also adds cross-region replication."
+        }
       },
-      "b": {
-        "text": "Azure Table Storage",
-        "is_true": false,
-        "explanation": "Incorrect. Table storage is a NoSQL key-value store for structured data. It does not support file system mounting."
-      },
-      "c": {
-        "text": "Azure File Storage",
-        "is_true": true,
-        "explanation": "Correct. Azure File Storage provides fully managed file shares that can be mounted on Windows (SMB), Linux (SMB/NFS), and macOS. Multiple VMs can mount the same share simultaneously, making it ideal for shared file storage."
-      },
-      "d": {
-        "text": "Azure Disk Storage",
-        "is_true": false,
-        "explanation": "Incorrect. Azure Disk Storage provides block storage for individual VMs (like a hard drive). A managed disk can only be attached to one VM at a time (unless using shared disks), and cannot be mounted across multiple VMs as a shared network drive."
-      }
+      "correct_answer": [
+        "b"
+      ]
     },
-    "correct_answer": "c"
-  },
-  {
-    "question_id": 4,
-    "question_text": "What is the purpose of a Shared Access Signature (SAS) in Azure Storage?",
-    "options": {
-      "a": {
-        "text": "To encrypt data stored in Azure Blob Storage",
-        "is_true": false,
-        "explanation": "Incorrect. Azure Storage encrypts data at rest by default. A SAS is not related to encryption — it is an authorization mechanism."
+    {
+      "question_id": 3,
+      "question_text": "A development team wants to use Azure storage to share files between multiple VMs and mount it as a drive on Windows and Linux servers. Which Azure Storage service should they use?",
+      "options": {
+        "a": {
+          "text": "Azure Blob Storage",
+          "is_true": false,
+          "explanation": "Incorrect. Blob storage is object storage accessed via HTTP/S APIs. It cannot be mounted as a network drive using SMB or NFS protocols."
+        },
+        "b": {
+          "text": "Azure Table Storage",
+          "is_true": false,
+          "explanation": "Incorrect. Table storage is a NoSQL key-value store for structured data. It does not support file system mounting."
+        },
+        "c": {
+          "text": "Azure File Storage",
+          "is_true": true,
+          "explanation": "Correct. Azure File Storage provides fully managed file shares that can be mounted on Windows (SMB), Linux (SMB/NFS), and macOS. Multiple VMs can mount the same share simultaneously, making it ideal for shared file storage."
+        },
+        "d": {
+          "text": "Azure Disk Storage",
+          "is_true": false,
+          "explanation": "Incorrect. Azure Disk Storage provides block storage for individual VMs (like a hard drive). A managed disk can only be attached to one VM at a time (unless using shared disks), and cannot be mounted across multiple VMs as a shared network drive."
+        }
       },
-      "b": {
-        "text": "To grant time-limited, permission-scoped access to storage resources without sharing the account key",
-        "is_true": true,
-        "explanation": "Correct. A SAS token is a URI that grants limited access to Azure Storage resources. You specify which resources can be accessed, what permissions are granted (read, write, delete, etc.), and when the access expires. This is far safer than sharing the account key, which grants full access."
-      },
-      "c": {
-        "text": "To create a digital signature that verifies the identity of the person who uploaded a blob",
-        "is_true": false,
-        "explanation": "Incorrect. SAS does not verify uploader identity. It is a token that grants access rights for a limited time period."
-      },
-      "d": {
-        "text": "To replicate storage data across regions for disaster recovery",
-        "is_true": false,
-        "explanation": "Incorrect. Cross-region replication is handled by Geo-Redundant Storage (GRS or GZRS) redundancy options. SAS is an access control mechanism."
-      }
+      "correct_answer": [
+        "c"
+      ]
     },
-    "correct_answer": "b"
-  },
-  {
-    "question_id": 5,
-    "question_text": "Which type of blob is used for Azure VM virtual hard disks (VHDs) because it supports random read/write operations?",
-    "options": {
-      "a": {
-        "text": "Block blob",
-        "is_true": false,
-        "explanation": "Incorrect. Block blobs are optimized for sequential upload of large files (text, binary, media). They do not support the random read/write access pattern needed for VM disks."
+    {
+      "question_id": 4,
+      "question_text": "What is the purpose of a Shared Access Signature (SAS) in Azure Storage?",
+      "options": {
+        "a": {
+          "text": "To encrypt data stored in Azure Blob Storage",
+          "is_true": false,
+          "explanation": "Incorrect. Azure Storage encrypts data at rest by default. A SAS is not related to encryption — it is an authorization mechanism."
+        },
+        "b": {
+          "text": "To grant time-limited, permission-scoped access to storage resources without sharing the account key",
+          "is_true": true,
+          "explanation": "Correct. A SAS token is a URI that grants limited access to Azure Storage resources. You specify which resources can be accessed, what permissions are granted (read, write, delete, etc.), and when the access expires. This is far safer than sharing the account key, which grants full access."
+        },
+        "c": {
+          "text": "To create a digital signature that verifies the identity of the person who uploaded a blob",
+          "is_true": false,
+          "explanation": "Incorrect. SAS does not verify uploader identity. It is a token that grants access rights for a limited time period."
+        },
+        "d": {
+          "text": "To replicate storage data across regions for disaster recovery",
+          "is_true": false,
+          "explanation": "Incorrect. Cross-region replication is handled by Geo-Redundant Storage (GRS or GZRS) redundancy options. SAS is an access control mechanism."
+        }
       },
-      "b": {
-        "text": "Append blob",
-        "is_true": false,
-        "explanation": "Incorrect. Append blobs are optimized for append-only operations like logging. They do not support random read/write access."
-      },
-      "c": {
-        "text": "Page blob",
-        "is_true": true,
-        "explanation": "Correct. Page blobs support random read and write access in 512-byte pages, which is exactly what virtual hard disks require. Azure managed disk storage and unmanaged VM disk VHDs are stored as page blobs."
-      },
-      "d": {
-        "text": "Archive blob",
-        "is_true": false,
-        "explanation": "Incorrect. Archive is an access tier, not a blob type. An archived blob must be rehydrated before reading and is certainly not suitable for VM disk storage."
-      }
+      "correct_answer": [
+        "b"
+      ]
     },
-    "correct_answer": "c"
-  },
-  {
-    "question_id": 6,
-    "question_text": "Which storage redundancy option provides both zone redundancy within the primary region AND asynchronous replication to a secondary region?",
-    "options": {
-      "a": {
-        "text": "LRS (Locally Redundant Storage)",
-        "is_true": false,
-        "explanation": "Incorrect. LRS only replicates within a single datacenter. It provides no zone redundancy and no geo-replication."
+    {
+      "question_id": 5,
+      "question_text": "Which type of blob is used for Azure VM virtual hard disks (VHDs) because it supports random read/write operations?",
+      "options": {
+        "a": {
+          "text": "Block blob",
+          "is_true": false,
+          "explanation": "Incorrect. Block blobs are optimized for sequential upload of large files (text, binary, media). They do not support the random read/write access pattern needed for VM disks."
+        },
+        "b": {
+          "text": "Append blob",
+          "is_true": false,
+          "explanation": "Incorrect. Append blobs are optimized for append-only operations like logging. They do not support random read/write access."
+        },
+        "c": {
+          "text": "Page blob",
+          "is_true": true,
+          "explanation": "Correct. Page blobs support random read and write access in 512-byte pages, which is exactly what virtual hard disks require. Azure managed disk storage and unmanaged VM disk VHDs are stored as page blobs."
+        },
+        "d": {
+          "text": "Archive blob",
+          "is_true": false,
+          "explanation": "Incorrect. Archive is an access tier, not a blob type. An archived blob must be rehydrated before reading and is certainly not suitable for VM disk storage."
+        }
       },
-      "b": {
-        "text": "ZRS (Zone-Redundant Storage)",
-        "is_true": false,
-        "explanation": "Incorrect. ZRS provides zone redundancy within a single region but does not replicate to a secondary region."
-      },
-      "c": {
-        "text": "GRS (Geo-Redundant Storage)",
-        "is_true": false,
-        "explanation": "Incorrect. GRS replicates to a secondary region, but uses LRS (not ZRS) in the primary region. It does not provide zone redundancy in the primary region."
-      },
-      "d": {
-        "text": "GZRS (Geo-Zone-Redundant Storage)",
-        "is_true": true,
-        "explanation": "Correct. GZRS combines ZRS in the primary region (synchronous replication across 3 availability zones) with asynchronous geo-replication to a secondary region. This is the highest durability option, protecting against both zone failures in the primary region and entire region failures."
-      }
+      "correct_answer": [
+        "c"
+      ]
     },
-    "correct_answer": "d"
-  },
-  {
-    "question_id": 7,
-    "question_text": "You have archived a large blob to reduce storage costs. A user now urgently needs to read that blob. What must happen first?",
-    "options": {
-      "a": {
-        "text": "The user can read it immediately — archived blobs are just stored at a lower priority",
-        "is_true": false,
-        "explanation": "Incorrect. Archived blobs are taken offline and cannot be read directly. They must be rehydrated (brought back online) first."
+    {
+      "question_id": 6,
+      "question_text": "Which storage redundancy option provides both zone redundancy within the primary region AND asynchronous replication to a secondary region?",
+      "options": {
+        "a": {
+          "text": "LRS (Locally Redundant Storage)",
+          "is_true": false,
+          "explanation": "Incorrect. LRS only replicates within a single datacenter. It provides no zone redundancy and no geo-replication."
+        },
+        "b": {
+          "text": "ZRS (Zone-Redundant Storage)",
+          "is_true": false,
+          "explanation": "Incorrect. ZRS provides zone redundancy within a single region but does not replicate to a secondary region."
+        },
+        "c": {
+          "text": "GRS (Geo-Redundant Storage)",
+          "is_true": false,
+          "explanation": "Incorrect. GRS replicates to a secondary region, but uses LRS (not ZRS) in the primary region. It does not provide zone redundancy in the primary region."
+        },
+        "d": {
+          "text": "GZRS (Geo-Zone-Redundant Storage)",
+          "is_true": true,
+          "explanation": "Correct. GZRS combines ZRS in the primary region (synchronous replication across 3 availability zones) with asynchronous geo-replication to a secondary region. This is the highest durability option, protecting against both zone failures in the primary region and entire region failures."
+        }
       },
-      "b": {
-        "text": "The blob must be copied to a new storage account before it can be accessed",
-        "is_true": false,
-        "explanation": "Incorrect. Copying to a new account is not required. The blob can be rehydrated in place by changing its tier back to Hot or Cool."
-      },
-      "c": {
-        "text": "The blob must be rehydrated by changing its tier to Hot or Cool, which can take hours",
-        "is_true": true,
-        "explanation": "Correct. Archived blobs are stored offline. To read them, you must rehydrate the blob by setting its tier to Hot or Cool. Standard priority rehydration can take up to 15 hours; High priority rehydration targets under 1 hour for blobs under 10 GB."
-      },
-      "d": {
-        "text": "The user must request access through Azure Support",
-        "is_true": false,
-        "explanation": "Incorrect. No support request is needed. You initiate rehydration yourself by changing the access tier programmatically via the CLI, SDK, or portal."
-      }
+      "correct_answer": [
+        "d"
+      ]
     },
-    "correct_answer": "c"
-  },
-  {
-    "question_id": 8,
-    "question_text": "Which Azure Storage service is best suited for storing messages that will be processed asynchronously by a worker service?",
-    "options": {
-      "a": {
-        "text": "Azure Blob Storage",
-        "is_true": false,
-        "explanation": "Incorrect. Blob storage is for unstructured files and objects. While you could store messages as blobs, it does not provide queue semantics like message visibility timeouts, delivery guarantees, or consumer patterns."
+    {
+      "question_id": 7,
+      "question_text": "You have archived a large blob to reduce storage costs. A user now urgently needs to read that blob. What must happen first?",
+      "options": {
+        "a": {
+          "text": "The user can read it immediately — archived blobs are just stored at a lower priority",
+          "is_true": false,
+          "explanation": "Incorrect. Archived blobs are taken offline and cannot be read directly. They must be rehydrated (brought back online) first."
+        },
+        "b": {
+          "text": "The blob must be copied to a new storage account before it can be accessed",
+          "is_true": false,
+          "explanation": "Incorrect. Copying to a new account is not required. The blob can be rehydrated in place by changing its tier back to Hot or Cool."
+        },
+        "c": {
+          "text": "The blob must be rehydrated by changing its tier to Hot or Cool, which can take hours",
+          "is_true": true,
+          "explanation": "Correct. Archived blobs are stored offline. To read them, you must rehydrate the blob by setting its tier to Hot or Cool. Standard priority rehydration can take up to 15 hours; High priority rehydration targets under 1 hour for blobs under 10 GB."
+        },
+        "d": {
+          "text": "The user must request access through Azure Support",
+          "is_true": false,
+          "explanation": "Incorrect. No support request is needed. You initiate rehydration yourself by changing the access tier programmatically via the CLI, SDK, or portal."
+        }
       },
-      "b": {
-        "text": "Azure Table Storage",
-        "is_true": false,
-        "explanation": "Incorrect. Table storage is a structured NoSQL store for key-value data. It is not designed for message queue patterns."
-      },
-      "c": {
-        "text": "Azure Queue Storage",
-        "is_true": true,
-        "explanation": "Correct. Azure Queue Storage is specifically designed for reliable messaging between application components. It supports large numbers of messages, visibility timeouts (message becomes invisible to other consumers while being processed), and poison message handling — all key requirements for async worker patterns."
-      },
-      "d": {
-        "text": "Azure File Storage",
-        "is_true": false,
-        "explanation": "Incorrect. Azure File Storage is a managed file share accessed via SMB/NFS. It is designed for shared file system access, not message queue patterns."
-      }
+      "correct_answer": [
+        "c"
+      ]
     },
-    "correct_answer": "c"
-  }
-]
+    {
+      "question_id": 8,
+      "question_text": "Which Azure Storage service is best suited for storing messages that will be processed asynchronously by a worker service?",
+      "options": {
+        "a": {
+          "text": "Azure Blob Storage",
+          "is_true": false,
+          "explanation": "Incorrect. Blob storage is for unstructured files and objects. While you could store messages as blobs, it does not provide queue semantics like message visibility timeouts, delivery guarantees, or consumer patterns."
+        },
+        "b": {
+          "text": "Azure Table Storage",
+          "is_true": false,
+          "explanation": "Incorrect. Table storage is a structured NoSQL store for key-value data. It is not designed for message queue patterns."
+        },
+        "c": {
+          "text": "Azure Queue Storage",
+          "is_true": true,
+          "explanation": "Correct. Azure Queue Storage is specifically designed for reliable messaging between application components. It supports large numbers of messages, visibility timeouts (message becomes invisible to other consumers while being processed), and poison message handling — all key requirements for async worker patterns."
+        },
+        "d": {
+          "text": "Azure File Storage",
+          "is_true": false,
+          "explanation": "Incorrect. Azure File Storage is a managed file share accessed via SMB/NFS. It is designed for shared file system access, not message queue patterns."
+        }
+      },
+      "correct_answer": [
+        "c"
+      ]
+    }
+  ]
+}

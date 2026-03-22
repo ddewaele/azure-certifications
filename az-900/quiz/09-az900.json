@@ -1,812 +1,880 @@
-[
-  {
-    "question_id": 1,
-    "question_text": "Which statement best defines cloud computing in the AZ-900 context?",
-    "options": {
-      "a": {
-        "text": "Owning physical servers in your own datacenter only",
-        "is_true": false,
-        "explanation": "Incorrect because cloud computing is not limited to on-premises ownership; it involves delivering computing services over the internet."
-      },
-      "b": {
-        "text": "Delivering computing services such as compute, storage, and networking over the internet",
-        "is_true": true,
-        "explanation": "Correct because cloud computing is the delivery of computing services over the internet rather than relying only on locally owned infrastructure."
-      },
-      "c": {
-        "text": "A licensing model for desktop software",
-        "is_true": false,
-        "explanation": "Incorrect because this describes software licensing, not cloud computing as a service model."
-      },
-      "d": {
-        "text": "A method for compressing application files",
-        "is_true": false,
-        "explanation": "Incorrect because file compression is unrelated to the core definition of cloud computing."
-      }
-    },
-    "correct_answer": "b"
+{
+  "meta": {
+    "title": "Azure Fundamentals – Practice Questions",
+    "subject": "AZ-900",
+    "version": "1.0.0",
+    "created": "2026-03-22"
   },
-  {
-    "question_id": 2,
-    "question_text": "In the shared responsibility model, which task is typically the customer's responsibility in an IaaS deployment?",
-    "options": {
-      "a": {
-        "text": "Maintaining the physical datacenter building",
-        "is_true": false,
-        "explanation": "Incorrect because the cloud provider is responsible for the physical facilities."
+  "questions": [
+    {
+      "question_id": 1,
+      "question_text": "Which statement best defines cloud computing in the AZ-900 context?",
+      "options": {
+        "a": {
+          "text": "Owning physical servers in your own datacenter only",
+          "is_true": false,
+          "explanation": "Incorrect because cloud computing is not limited to on-premises ownership; it involves delivering computing services over the internet."
+        },
+        "b": {
+          "text": "Delivering computing services such as compute, storage, and networking over the internet",
+          "is_true": true,
+          "explanation": "Correct because cloud computing is the delivery of computing services over the internet rather than relying only on locally owned infrastructure."
+        },
+        "c": {
+          "text": "A licensing model for desktop software",
+          "is_true": false,
+          "explanation": "Incorrect because this describes software licensing, not cloud computing as a service model."
+        },
+        "d": {
+          "text": "A method for compressing application files",
+          "is_true": false,
+          "explanation": "Incorrect because file compression is unrelated to the core definition of cloud computing."
+        }
       },
-      "b": {
-        "text": "Replacing failed disks in Azure datacenters",
-        "is_true": false,
-        "explanation": "Incorrect because hardware maintenance in the datacenter is handled by Microsoft."
-      },
-      "c": {
-        "text": "Configuring the guest operating system and installed applications",
-        "is_true": true,
-        "explanation": "Correct because in IaaS the customer typically manages the OS, patches, and applications running on the virtual machine."
-      },
-      "d": {
-        "text": "Managing Azure region power and cooling systems",
-        "is_true": false,
-        "explanation": "Incorrect because those are provider-managed infrastructure responsibilities."
-      }
+      "correct_answer": [
+        "b"
+      ]
     },
-    "correct_answer": "c"
-  },
-  {
-    "question_id": 3,
-    "question_text": "Which cloud model is the best fit for an organization that wants some resources on-premises and some in Azure with integration between both environments?",
-    "options": {
-      "a": {
-        "text": "Public cloud",
-        "is_true": false,
-        "explanation": "Incorrect because public cloud alone does not imply a mix with on-premises resources."
+    {
+      "question_id": 2,
+      "question_text": "In the shared responsibility model, which task is typically the customer's responsibility in an IaaS deployment?",
+      "options": {
+        "a": {
+          "text": "Maintaining the physical datacenter building",
+          "is_true": false,
+          "explanation": "Incorrect because the cloud provider is responsible for the physical facilities."
+        },
+        "b": {
+          "text": "Replacing failed disks in Azure datacenters",
+          "is_true": false,
+          "explanation": "Incorrect because hardware maintenance in the datacenter is handled by Microsoft."
+        },
+        "c": {
+          "text": "Configuring the guest operating system and installed applications",
+          "is_true": true,
+          "explanation": "Correct because in IaaS the customer typically manages the OS, patches, and applications running on the virtual machine."
+        },
+        "d": {
+          "text": "Managing Azure region power and cooling systems",
+          "is_true": false,
+          "explanation": "Incorrect because those are provider-managed infrastructure responsibilities."
+        }
       },
-      "b": {
-        "text": "Private cloud",
-        "is_true": false,
-        "explanation": "Incorrect because private cloud focuses on dedicated environments, not a blended on-premises plus public-cloud approach."
-      },
-      "c": {
-        "text": "Hybrid cloud",
-        "is_true": true,
-        "explanation": "Correct because hybrid cloud combines on-premises resources with cloud services and allows workloads to span both."
-      },
-      "d": {
-        "text": "SaaS cloud",
-        "is_true": false,
-        "explanation": "Incorrect because SaaS is a service type, not a deployment model describing mixed environments."
-      }
+      "correct_answer": [
+        "c"
+      ]
     },
-    "correct_answer": "c"
-  },
-  {
-    "question_id": 4,
-    "question_text": "What is a key characteristic of the consumption-based model in Azure?",
-    "options": {
-      "a": {
-        "text": "You always pay a fixed amount regardless of usage",
-        "is_true": false,
-        "explanation": "Incorrect because consumption-based pricing is tied to usage, not a flat fee in all cases."
+    {
+      "question_id": 3,
+      "question_text": "Which cloud model is the best fit for an organization that wants some resources on-premises and some in Azure with integration between both environments?",
+      "options": {
+        "a": {
+          "text": "Public cloud",
+          "is_true": false,
+          "explanation": "Incorrect because public cloud alone does not imply a mix with on-premises resources."
+        },
+        "b": {
+          "text": "Private cloud",
+          "is_true": false,
+          "explanation": "Incorrect because private cloud focuses on dedicated environments, not a blended on-premises plus public-cloud approach."
+        },
+        "c": {
+          "text": "Hybrid cloud",
+          "is_true": true,
+          "explanation": "Correct because hybrid cloud combines on-premises resources with cloud services and allows workloads to span both."
+        },
+        "d": {
+          "text": "SaaS cloud",
+          "is_true": false,
+          "explanation": "Incorrect because SaaS is a service type, not a deployment model describing mixed environments."
+        }
       },
-      "b": {
-        "text": "You pay only for the resources or services you use",
-        "is_true": true,
-        "explanation": "Correct because the consumption-based model charges based on actual usage, which is a core cloud concept."
-      },
-      "c": {
-        "text": "You must buy hardware before deploying workloads",
-        "is_true": false,
-        "explanation": "Incorrect because buying hardware upfront is not required in the cloud consumption model."
-      },
-      "d": {
-        "text": "You can use Azure only during business hours",
-        "is_true": false,
-        "explanation": "Incorrect because service availability is not limited in that way."
-      }
+      "correct_answer": [
+        "c"
+      ]
     },
-    "correct_answer": "b"
-  },
-  {
-    "question_id": 5,
-    "question_text": "Which scenario is the best example of serverless computing?",
-    "options": {
-      "a": {
-        "text": "Running a long-lived virtual machine that you patch manually",
-        "is_true": false,
-        "explanation": "Incorrect because managing a VM yourself is not serverless."
+    {
+      "question_id": 4,
+      "question_text": "What is a key characteristic of the consumption-based model in Azure?",
+      "options": {
+        "a": {
+          "text": "You always pay a fixed amount regardless of usage",
+          "is_true": false,
+          "explanation": "Incorrect because consumption-based pricing is tied to usage, not a flat fee in all cases."
+        },
+        "b": {
+          "text": "You pay only for the resources or services you use",
+          "is_true": true,
+          "explanation": "Correct because the consumption-based model charges based on actual usage, which is a core cloud concept."
+        },
+        "c": {
+          "text": "You must buy hardware before deploying workloads",
+          "is_true": false,
+          "explanation": "Incorrect because buying hardware upfront is not required in the cloud consumption model."
+        },
+        "d": {
+          "text": "You can use Azure only during business hours",
+          "is_true": false,
+          "explanation": "Incorrect because service availability is not limited in that way."
+        }
       },
-      "b": {
-        "text": "Deploying code that runs in response to events without managing servers directly",
-        "is_true": true,
-        "explanation": "Correct because serverless focuses on event-driven execution where the cloud platform manages the underlying infrastructure."
-      },
-      "c": {
-        "text": "Buying physical rack servers for a datacenter",
-        "is_true": false,
-        "explanation": "Incorrect because that is traditional infrastructure ownership, not serverless."
-      },
-      "d": {
-        "text": "Installing desktop applications through Microsoft 365",
-        "is_true": false,
-        "explanation": "Incorrect because desktop application deployment is unrelated to serverless compute."
-      }
+      "correct_answer": [
+        "b"
+      ]
     },
-    "correct_answer": "b"
-  },
-  {
-    "question_id": 6,
-    "question_text": "Which benefit of cloud computing allows resources to grow or shrink to meet demand?",
-    "options": {
-      "a": {
-        "text": "Scalability",
-        "is_true": true,
-        "explanation": "Correct because scalability refers to the ability to adjust resources to changing workload demands."
+    {
+      "question_id": 5,
+      "question_text": "Which scenario is the best example of serverless computing?",
+      "options": {
+        "a": {
+          "text": "Running a long-lived virtual machine that you patch manually",
+          "is_true": false,
+          "explanation": "Incorrect because managing a VM yourself is not serverless."
+        },
+        "b": {
+          "text": "Deploying code that runs in response to events without managing servers directly",
+          "is_true": true,
+          "explanation": "Correct because serverless focuses on event-driven execution where the cloud platform manages the underlying infrastructure."
+        },
+        "c": {
+          "text": "Buying physical rack servers for a datacenter",
+          "is_true": false,
+          "explanation": "Incorrect because that is traditional infrastructure ownership, not serverless."
+        },
+        "d": {
+          "text": "Installing desktop applications through Microsoft 365",
+          "is_true": false,
+          "explanation": "Incorrect because desktop application deployment is unrelated to serverless compute."
+        }
       },
-      "b": {
-        "text": "Capital expenditure",
-        "is_true": false,
-        "explanation": "Incorrect because capital expenditure is a spending model, not a cloud benefit related to resource adjustment."
-      },
-      "c": {
-        "text": "Datacenter ownership",
-        "is_true": false,
-        "explanation": "Incorrect because owning datacenters does not describe the cloud benefit of handling demand changes."
-      },
-      "d": {
-        "text": "Manual provisioning only",
-        "is_true": false,
-        "explanation": "Incorrect because manual provisioning is not a cloud benefit and often slows scaling."
-      }
+      "correct_answer": [
+        "b"
+      ]
     },
-    "correct_answer": "a"
-  },
-  {
-    "question_id": 7,
-    "question_text": "Which service type is most appropriate when a company wants to use a complete email and collaboration application without managing the underlying platform or infrastructure?",
-    "options": {
-      "a": {
-        "text": "IaaS",
-        "is_true": false,
-        "explanation": "Incorrect because IaaS still leaves operating systems and applications to the customer."
+    {
+      "question_id": 6,
+      "question_text": "Which benefit of cloud computing allows resources to grow or shrink to meet demand?",
+      "options": {
+        "a": {
+          "text": "Scalability",
+          "is_true": true,
+          "explanation": "Correct because scalability refers to the ability to adjust resources to changing workload demands."
+        },
+        "b": {
+          "text": "Capital expenditure",
+          "is_true": false,
+          "explanation": "Incorrect because capital expenditure is a spending model, not a cloud benefit related to resource adjustment."
+        },
+        "c": {
+          "text": "Datacenter ownership",
+          "is_true": false,
+          "explanation": "Incorrect because owning datacenters does not describe the cloud benefit of handling demand changes."
+        },
+        "d": {
+          "text": "Manual provisioning only",
+          "is_true": false,
+          "explanation": "Incorrect because manual provisioning is not a cloud benefit and often slows scaling."
+        }
       },
-      "b": {
-        "text": "PaaS",
-        "is_true": false,
-        "explanation": "Incorrect because PaaS is for building and running applications, not primarily for consuming a finished business application."
-      },
-      "c": {
-        "text": "SaaS",
-        "is_true": true,
-        "explanation": "Correct because SaaS provides complete software applications that users consume without managing the infrastructure or platform."
-      },
-      "d": {
-        "text": "Hybrid cloud",
-        "is_true": false,
-        "explanation": "Incorrect because hybrid cloud is a deployment model, not a service type for consuming finished software."
-      }
+      "correct_answer": [
+        "a"
+      ]
     },
-    "correct_answer": "c"
-  },
-  {
-    "question_id": 8,
-    "question_text": "Which Azure construct is used to logically group related resources such as virtual machines, storage accounts, and networking components?",
-    "options": {
-      "a": {
-        "text": "Management group",
-        "is_true": false,
-        "explanation": "Incorrect because management groups organize subscriptions rather than directly grouping individual resources for deployment."
+    {
+      "question_id": 7,
+      "question_text": "Which service type is most appropriate when a company wants to use a complete email and collaboration application without managing the underlying platform or infrastructure?",
+      "options": {
+        "a": {
+          "text": "IaaS",
+          "is_true": false,
+          "explanation": "Incorrect because IaaS still leaves operating systems and applications to the customer."
+        },
+        "b": {
+          "text": "PaaS",
+          "is_true": false,
+          "explanation": "Incorrect because PaaS is for building and running applications, not primarily for consuming a finished business application."
+        },
+        "c": {
+          "text": "SaaS",
+          "is_true": true,
+          "explanation": "Correct because SaaS provides complete software applications that users consume without managing the infrastructure or platform."
+        },
+        "d": {
+          "text": "Hybrid cloud",
+          "is_true": false,
+          "explanation": "Incorrect because hybrid cloud is a deployment model, not a service type for consuming finished software."
+        }
       },
-      "b": {
-        "text": "Region",
-        "is_true": false,
-        "explanation": "Incorrect because a region is a geographic area containing datacenters, not a logical container for related resources."
-      },
-      "c": {
-        "text": "Resource group",
-        "is_true": true,
-        "explanation": "Correct because a resource group is designed to hold related Azure resources for lifecycle and management purposes."
-      },
-      "d": {
-        "text": "Availability zone",
-        "is_true": false,
-        "explanation": "Incorrect because an availability zone is a resiliency concept within a region, not a logical grouping container."
-      }
+      "correct_answer": [
+        "c"
+      ]
     },
-    "correct_answer": "c"
-  },
-  {
-    "question_id": 9,
-    "question_text": "What is the main purpose of an Azure subscription?",
-    "options": {
-      "a": {
-        "text": "To provide physical rack space in a datacenter",
-        "is_true": false,
-        "explanation": "Incorrect because subscriptions are billing and management boundaries, not physical hosting arrangements."
+    {
+      "question_id": 8,
+      "question_text": "Which Azure construct is used to logically group related resources such as virtual machines, storage accounts, and networking components?",
+      "options": {
+        "a": {
+          "text": "Management group",
+          "is_true": false,
+          "explanation": "Incorrect because management groups organize subscriptions rather than directly grouping individual resources for deployment."
+        },
+        "b": {
+          "text": "Region",
+          "is_true": false,
+          "explanation": "Incorrect because a region is a geographic area containing datacenters, not a logical container for related resources."
+        },
+        "c": {
+          "text": "Resource group",
+          "is_true": true,
+          "explanation": "Correct because a resource group is designed to hold related Azure resources for lifecycle and management purposes."
+        },
+        "d": {
+          "text": "Availability zone",
+          "is_true": false,
+          "explanation": "Incorrect because an availability zone is a resiliency concept within a region, not a logical grouping container."
+        }
       },
-      "b": {
-        "text": "To organize billing and access to Azure services",
-        "is_true": true,
-        "explanation": "Correct because subscriptions act as a boundary for billing, access control, and service usage in Azure."
-      },
-      "c": {
-        "text": "To replace Azure regions",
-        "is_true": false,
-        "explanation": "Incorrect because subscriptions do not replace geographic deployment regions."
-      },
-      "d": {
-        "text": "To create backup copies of storage accounts automatically",
-        "is_true": false,
-        "explanation": "Incorrect because subscriptions do not inherently perform backup functions."
-      }
+      "correct_answer": [
+        "c"
+      ]
     },
-    "correct_answer": "b"
-  },
-  {
-    "question_id": 10,
-    "question_text": "How do management groups fit into the Azure hierarchy?",
-    "options": {
-      "a": {
-        "text": "They are below resource groups and hold resources directly",
-        "is_true": false,
-        "explanation": "Incorrect because management groups sit higher in the hierarchy and do not directly contain resources in the same way resource groups do."
+    {
+      "question_id": 9,
+      "question_text": "What is the main purpose of an Azure subscription?",
+      "options": {
+        "a": {
+          "text": "To provide physical rack space in a datacenter",
+          "is_true": false,
+          "explanation": "Incorrect because subscriptions are billing and management boundaries, not physical hosting arrangements."
+        },
+        "b": {
+          "text": "To organize billing and access to Azure services",
+          "is_true": true,
+          "explanation": "Correct because subscriptions act as a boundary for billing, access control, and service usage in Azure."
+        },
+        "c": {
+          "text": "To replace Azure regions",
+          "is_true": false,
+          "explanation": "Incorrect because subscriptions do not replace geographic deployment regions."
+        },
+        "d": {
+          "text": "To create backup copies of storage accounts automatically",
+          "is_true": false,
+          "explanation": "Incorrect because subscriptions do not inherently perform backup functions."
+        }
       },
-      "b": {
-        "text": "They are used to group subscriptions for governance and policy application",
-        "is_true": true,
-        "explanation": "Correct because management groups help organize multiple subscriptions so governance controls can be applied at scale."
-      },
-      "c": {
-        "text": "They are another name for availability sets",
-        "is_true": false,
-        "explanation": "Incorrect because availability sets are a resiliency feature for virtual machines, not a governance hierarchy level."
-      },
-      "d": {
-        "text": "They are required before you can create a resource group",
-        "is_true": false,
-        "explanation": "Incorrect because resource groups can exist without placing subscriptions into custom management groups."
-      }
+      "correct_answer": [
+        "b"
+      ]
     },
-    "correct_answer": "b"
-  },
-  {
-    "question_id": 11,
-    "question_text": "Which Azure compute option is best described as event-driven code execution with automatic scaling and no need to manage virtual machines?",
-    "options": {
-      "a": {
-        "text": "Azure Virtual Machines",
-        "is_true": false,
-        "explanation": "Incorrect because Azure Virtual Machines require VM management and are not inherently event-driven serverless compute."
+    {
+      "question_id": 10,
+      "question_text": "How do management groups fit into the Azure hierarchy?",
+      "options": {
+        "a": {
+          "text": "They are below resource groups and hold resources directly",
+          "is_true": false,
+          "explanation": "Incorrect because management groups sit higher in the hierarchy and do not directly contain resources in the same way resource groups do."
+        },
+        "b": {
+          "text": "They are used to group subscriptions for governance and policy application",
+          "is_true": true,
+          "explanation": "Correct because management groups help organize multiple subscriptions so governance controls can be applied at scale."
+        },
+        "c": {
+          "text": "They are another name for availability sets",
+          "is_true": false,
+          "explanation": "Incorrect because availability sets are a resiliency feature for virtual machines, not a governance hierarchy level."
+        },
+        "d": {
+          "text": "They are required before you can create a resource group",
+          "is_true": false,
+          "explanation": "Incorrect because resource groups can exist without placing subscriptions into custom management groups."
+        }
       },
-      "b": {
-        "text": "Azure Functions",
-        "is_true": true,
-        "explanation": "Correct because Azure Functions is designed for event-driven, serverless code execution with automatic scaling."
-      },
-      "c": {
-        "text": "Azure Virtual Desktop",
-        "is_true": false,
-        "explanation": "Incorrect because Azure Virtual Desktop provides desktop and app virtualization, not event-driven code execution."
-      },
-      "d": {
-        "text": "Azure ExpressRoute",
-        "is_true": false,
-        "explanation": "Incorrect because ExpressRoute is a networking service, not a compute service."
-      }
+      "correct_answer": [
+        "b"
+      ]
     },
-    "correct_answer": "b"
-  },
-  {
-    "question_id": 12,
-    "question_text": "Which option is specifically intended to distribute virtual machines across fault domains and update domains within a datacenter?",
-    "options": {
-      "a": {
-        "text": "Availability set",
-        "is_true": true,
-        "explanation": "Correct because availability sets are used to improve VM resiliency by distributing instances across fault and update domains."
+    {
+      "question_id": 11,
+      "question_text": "Which Azure compute option is best described as event-driven code execution with automatic scaling and no need to manage virtual machines?",
+      "options": {
+        "a": {
+          "text": "Azure Virtual Machines",
+          "is_true": false,
+          "explanation": "Incorrect because Azure Virtual Machines require VM management and are not inherently event-driven serverless compute."
+        },
+        "b": {
+          "text": "Azure Functions",
+          "is_true": true,
+          "explanation": "Correct because Azure Functions is designed for event-driven, serverless code execution with automatic scaling."
+        },
+        "c": {
+          "text": "Azure Virtual Desktop",
+          "is_true": false,
+          "explanation": "Incorrect because Azure Virtual Desktop provides desktop and app virtualization, not event-driven code execution."
+        },
+        "d": {
+          "text": "Azure ExpressRoute",
+          "is_true": false,
+          "explanation": "Incorrect because ExpressRoute is a networking service, not a compute service."
+        }
       },
-      "b": {
-        "text": "Resource lock",
-        "is_true": false,
-        "explanation": "Incorrect because a resource lock protects against accidental deletion or modification; it is not a VM resiliency distribution feature."
-      },
-      "c": {
-        "text": "Azure Policy",
-        "is_true": false,
-        "explanation": "Incorrect because Azure Policy evaluates compliance and governance, not VM placement across domains."
-      },
-      "d": {
-        "text": "Management group",
-        "is_true": false,
-        "explanation": "Incorrect because management groups are for governance across subscriptions, not VM resiliency."
-      }
+      "correct_answer": [
+        "b"
+      ]
     },
-    "correct_answer": "a"
-  },
-  {
-    "question_id": 13,
-    "question_text": "Which Azure service is most suitable for hosting a traditional website without managing the full operating system of a server?",
-    "options": {
-      "a": {
-        "text": "Azure Virtual Machines",
-        "is_true": false,
-        "explanation": "Incorrect because VMs require more infrastructure management than necessary for a standard managed web hosting scenario."
+    {
+      "question_id": 12,
+      "question_text": "Which option is specifically intended to distribute virtual machines across fault domains and update domains within a datacenter?",
+      "options": {
+        "a": {
+          "text": "Availability set",
+          "is_true": true,
+          "explanation": "Correct because availability sets are used to improve VM resiliency by distributing instances across fault and update domains."
+        },
+        "b": {
+          "text": "Resource lock",
+          "is_true": false,
+          "explanation": "Incorrect because a resource lock protects against accidental deletion or modification; it is not a VM resiliency distribution feature."
+        },
+        "c": {
+          "text": "Azure Policy",
+          "is_true": false,
+          "explanation": "Incorrect because Azure Policy evaluates compliance and governance, not VM placement across domains."
+        },
+        "d": {
+          "text": "Management group",
+          "is_true": false,
+          "explanation": "Incorrect because management groups are for governance across subscriptions, not VM resiliency."
+        }
       },
-      "b": {
-        "text": "Azure App Service Web Apps",
-        "is_true": true,
-        "explanation": "Correct because Web Apps provide a managed application hosting option that reduces the need to manage the underlying OS."
-      },
-      "c": {
-        "text": "Azure Data Box",
-        "is_true": false,
-        "explanation": "Incorrect because Azure Data Box is a migration appliance, not a web hosting platform."
-      },
-      "d": {
-        "text": "Azure Policy",
-        "is_true": false,
-        "explanation": "Incorrect because Azure Policy governs resources but does not host websites."
-      }
+      "correct_answer": [
+        "a"
+      ]
     },
-    "correct_answer": "b"
-  },
-  {
-    "question_id": 14,
-    "question_text": "What is the primary purpose of an Azure virtual network (VNet)?",
-    "options": {
-      "a": {
-        "text": "To provide logical network isolation for Azure resources",
-        "is_true": true,
-        "explanation": "Correct because a VNet enables Azure resources to communicate securely in an isolated virtual network environment."
+    {
+      "question_id": 13,
+      "question_text": "Which Azure service is most suitable for hosting a traditional website without managing the full operating system of a server?",
+      "options": {
+        "a": {
+          "text": "Azure Virtual Machines",
+          "is_true": false,
+          "explanation": "Incorrect because VMs require more infrastructure management than necessary for a standard managed web hosting scenario."
+        },
+        "b": {
+          "text": "Azure App Service Web Apps",
+          "is_true": true,
+          "explanation": "Correct because Web Apps provide a managed application hosting option that reduces the need to manage the underlying OS."
+        },
+        "c": {
+          "text": "Azure Data Box",
+          "is_true": false,
+          "explanation": "Incorrect because Azure Data Box is a migration appliance, not a web hosting platform."
+        },
+        "d": {
+          "text": "Azure Policy",
+          "is_true": false,
+          "explanation": "Incorrect because Azure Policy governs resources but does not host websites."
+        }
       },
-      "b": {
-        "text": "To enforce subscription billing limits",
-        "is_true": false,
-        "explanation": "Incorrect because VNets are networking constructs, not billing controls."
-      },
-      "c": {
-        "text": "To scan code repositories for vulnerabilities",
-        "is_true": false,
-        "explanation": "Incorrect because that is not the purpose of Azure networking."
-      },
-      "d": {
-        "text": "To convert virtual machines into containers",
-        "is_true": false,
-        "explanation": "Incorrect because a VNet does not transform compute types."
-      }
+      "correct_answer": [
+        "b"
+      ]
     },
-    "correct_answer": "a"
-  },
-  {
-    "question_id": 15,
-    "question_text": "Which connectivity option provides a private dedicated connection between an on-premises network and Microsoft cloud services, bypassing the public internet?",
-    "options": {
-      "a": {
-        "text": "Azure DNS",
-        "is_true": false,
-        "explanation": "Incorrect because Azure DNS provides domain name hosting and resolution, not private dedicated connectivity."
+    {
+      "question_id": 14,
+      "question_text": "What is the primary purpose of an Azure virtual network (VNet)?",
+      "options": {
+        "a": {
+          "text": "To provide logical network isolation for Azure resources",
+          "is_true": true,
+          "explanation": "Correct because a VNet enables Azure resources to communicate securely in an isolated virtual network environment."
+        },
+        "b": {
+          "text": "To enforce subscription billing limits",
+          "is_true": false,
+          "explanation": "Incorrect because VNets are networking constructs, not billing controls."
+        },
+        "c": {
+          "text": "To scan code repositories for vulnerabilities",
+          "is_true": false,
+          "explanation": "Incorrect because that is not the purpose of Azure networking."
+        },
+        "d": {
+          "text": "To convert virtual machines into containers",
+          "is_true": false,
+          "explanation": "Incorrect because a VNet does not transform compute types."
+        }
       },
-      "b": {
-        "text": "Azure VPN Gateway",
-        "is_true": false,
-        "explanation": "Incorrect because VPN Gateway typically uses encrypted tunnels over the public internet rather than a dedicated private connection."
-      },
-      "c": {
-        "text": "ExpressRoute",
-        "is_true": true,
-        "explanation": "Correct because ExpressRoute provides private connectivity to Microsoft cloud services without traversing the public internet."
-      },
-      "d": {
-        "text": "Peering",
-        "is_true": false,
-        "explanation": "Incorrect because peering connects VNets to each other rather than directly providing on-premises dedicated connectivity."
-      }
+      "correct_answer": [
+        "a"
+      ]
     },
-    "correct_answer": "c"
-  },
-  {
-    "question_id": 16,
-    "question_text": "Which storage redundancy option keeps copies of data across multiple Azure availability zones in the same region?",
-    "options": {
-      "a": {
-        "text": "LRS",
-        "is_true": false,
-        "explanation": "Incorrect because locally redundant storage keeps copies within a single datacenter in one region, not across multiple availability zones."
+    {
+      "question_id": 15,
+      "question_text": "Which connectivity option provides a private dedicated connection between an on-premises network and Microsoft cloud services, bypassing the public internet?",
+      "options": {
+        "a": {
+          "text": "Azure DNS",
+          "is_true": false,
+          "explanation": "Incorrect because Azure DNS provides domain name hosting and resolution, not private dedicated connectivity."
+        },
+        "b": {
+          "text": "Azure VPN Gateway",
+          "is_true": false,
+          "explanation": "Incorrect because VPN Gateway typically uses encrypted tunnels over the public internet rather than a dedicated private connection."
+        },
+        "c": {
+          "text": "ExpressRoute",
+          "is_true": true,
+          "explanation": "Correct because ExpressRoute provides private connectivity to Microsoft cloud services without traversing the public internet."
+        },
+        "d": {
+          "text": "Peering",
+          "is_true": false,
+          "explanation": "Incorrect because peering connects VNets to each other rather than directly providing on-premises dedicated connectivity."
+        }
       },
-      "b": {
-        "text": "ZRS",
-        "is_true": true,
-        "explanation": "Correct because zone-redundant storage replicates data across availability zones in the same region."
-      },
-      "c": {
-        "text": "GRS",
-        "is_true": false,
-        "explanation": "Incorrect because geo-redundant storage focuses on replication to a secondary region, not specifically across zones in the same region."
-      },
-      "d": {
-        "text": "Archive",
-        "is_true": false,
-        "explanation": "Incorrect because archive is a storage access tier, not a redundancy option."
-      }
+      "correct_answer": [
+        "c"
+      ]
     },
-    "correct_answer": "b"
-  },
-  {
-    "question_id": 17,
-    "question_text": "Which Azure tool is designed for large-scale offline data transfer into Azure when network transfer would be too slow or impractical?",
-    "options": {
-      "a": {
-        "text": "Azure Data Box",
-        "is_true": true,
-        "explanation": "Correct because Azure Data Box is used to move large amounts of data to Azure using a physical appliance."
+    {
+      "question_id": 16,
+      "question_text": "Which storage redundancy option keeps copies of data across multiple Azure availability zones in the same region?",
+      "options": {
+        "a": {
+          "text": "LRS",
+          "is_true": false,
+          "explanation": "Incorrect because locally redundant storage keeps copies within a single datacenter in one region, not across multiple availability zones."
+        },
+        "b": {
+          "text": "ZRS",
+          "is_true": true,
+          "explanation": "Correct because zone-redundant storage replicates data across availability zones in the same region."
+        },
+        "c": {
+          "text": "GRS",
+          "is_true": false,
+          "explanation": "Incorrect because geo-redundant storage focuses on replication to a secondary region, not specifically across zones in the same region."
+        },
+        "d": {
+          "text": "Archive",
+          "is_true": false,
+          "explanation": "Incorrect because archive is a storage access tier, not a redundancy option."
+        }
       },
-      "b": {
-        "text": "Azure Advisor",
-        "is_true": false,
-        "explanation": "Incorrect because Azure Advisor gives recommendations; it does not perform bulk offline data transfer."
-      },
-      "c": {
-        "text": "Azure Policy",
-        "is_true": false,
-        "explanation": "Incorrect because Azure Policy is for governance and compliance, not data migration."
-      },
-      "d": {
-        "text": "Application Insights",
-        "is_true": false,
-        "explanation": "Incorrect because Application Insights monitors applications rather than transferring data."
-      }
+      "correct_answer": [
+        "b"
+      ]
     },
-    "correct_answer": "a"
-  },
-  {
-    "question_id": 18,
-    "question_text": "What is Microsoft Entra ID primarily used for in Azure?",
-    "options": {
-      "a": {
-        "text": "File archiving for blob storage",
-        "is_true": false,
-        "explanation": "Incorrect because Microsoft Entra ID is not a storage tiering service."
+    {
+      "question_id": 17,
+      "question_text": "Which Azure tool is designed for large-scale offline data transfer into Azure when network transfer would be too slow or impractical?",
+      "options": {
+        "a": {
+          "text": "Azure Data Box",
+          "is_true": true,
+          "explanation": "Correct because Azure Data Box is used to move large amounts of data to Azure using a physical appliance."
+        },
+        "b": {
+          "text": "Azure Advisor",
+          "is_true": false,
+          "explanation": "Incorrect because Azure Advisor gives recommendations; it does not perform bulk offline data transfer."
+        },
+        "c": {
+          "text": "Azure Policy",
+          "is_true": false,
+          "explanation": "Incorrect because Azure Policy is for governance and compliance, not data migration."
+        },
+        "d": {
+          "text": "Application Insights",
+          "is_true": false,
+          "explanation": "Incorrect because Application Insights monitors applications rather than transferring data."
+        }
       },
-      "b": {
-        "text": "Identity and access management for users, groups, and applications",
-        "is_true": true,
-        "explanation": "Correct because Microsoft Entra ID provides directory, identity, and access capabilities in Azure."
-      },
-      "c": {
-        "text": "Dedicated private networking between datacenters",
-        "is_true": false,
-        "explanation": "Incorrect because that describes networking services, not identity services."
-      },
-      "d": {
-        "text": "Physical hardware lifecycle management",
-        "is_true": false,
-        "explanation": "Incorrect because hardware lifecycle tasks are handled by the cloud provider, not by Entra ID."
-      }
+      "correct_answer": [
+        "a"
+      ]
     },
-    "correct_answer": "b"
-  },
-  {
-    "question_id": 19,
-    "question_text": "Which security capability requires users to provide an additional verification factor beyond a password?",
-    "options": {
-      "a": {
-        "text": "Single sign-on",
-        "is_true": false,
-        "explanation": "Incorrect because single sign-on reduces repeated sign-ins but does not by itself require an extra verification factor."
+    {
+      "question_id": 18,
+      "question_text": "What is Microsoft Entra ID primarily used for in Azure?",
+      "options": {
+        "a": {
+          "text": "File archiving for blob storage",
+          "is_true": false,
+          "explanation": "Incorrect because Microsoft Entra ID is not a storage tiering service."
+        },
+        "b": {
+          "text": "Identity and access management for users, groups, and applications",
+          "is_true": true,
+          "explanation": "Correct because Microsoft Entra ID provides directory, identity, and access capabilities in Azure."
+        },
+        "c": {
+          "text": "Dedicated private networking between datacenters",
+          "is_true": false,
+          "explanation": "Incorrect because that describes networking services, not identity services."
+        },
+        "d": {
+          "text": "Physical hardware lifecycle management",
+          "is_true": false,
+          "explanation": "Incorrect because hardware lifecycle tasks are handled by the cloud provider, not by Entra ID."
+        }
       },
-      "b": {
-        "text": "Multifactor authentication",
-        "is_true": true,
-        "explanation": "Correct because MFA requires an additional authentication factor beyond just a password."
-      },
-      "c": {
-        "text": "Resource tagging",
-        "is_true": false,
-        "explanation": "Incorrect because tagging is for organization and cost tracking, not user verification."
-      },
-      "d": {
-        "text": "Availability zoning",
-        "is_true": false,
-        "explanation": "Incorrect because availability zones are a resiliency feature, not an authentication method."
-      }
+      "correct_answer": [
+        "b"
+      ]
     },
-    "correct_answer": "b"
-  },
-  {
-    "question_id": 20,
-    "question_text": "What is the purpose of Azure role-based access control (RBAC)?",
-    "options": {
-      "a": {
-        "text": "To assign permissions to users, groups, or identities at different scopes",
-        "is_true": true,
-        "explanation": "Correct because RBAC controls who can do what on Azure resources at scopes such as management group, subscription, resource group, or resource."
+    {
+      "question_id": 19,
+      "question_text": "Which security capability requires users to provide an additional verification factor beyond a password?",
+      "options": {
+        "a": {
+          "text": "Single sign-on",
+          "is_true": false,
+          "explanation": "Incorrect because single sign-on reduces repeated sign-ins but does not by itself require an extra verification factor."
+        },
+        "b": {
+          "text": "Multifactor authentication",
+          "is_true": true,
+          "explanation": "Correct because MFA requires an additional authentication factor beyond just a password."
+        },
+        "c": {
+          "text": "Resource tagging",
+          "is_true": false,
+          "explanation": "Incorrect because tagging is for organization and cost tracking, not user verification."
+        },
+        "d": {
+          "text": "Availability zoning",
+          "is_true": false,
+          "explanation": "Incorrect because availability zones are a resiliency feature, not an authentication method."
+        }
       },
-      "b": {
-        "text": "To replicate blobs between storage accounts",
-        "is_true": false,
-        "explanation": "Incorrect because RBAC is not a storage replication feature."
-      },
-      "c": {
-        "text": "To compress log data for Azure Monitor",
-        "is_true": false,
-        "explanation": "Incorrect because RBAC is about authorization, not log compression."
-      },
-      "d": {
-        "text": "To create a dedicated leased network circuit",
-        "is_true": false,
-        "explanation": "Incorrect because that describes ExpressRoute, not RBAC."
-      }
+      "correct_answer": [
+        "b"
+      ]
     },
-    "correct_answer": "a"
-  },
-  {
-    "question_id": 21,
-    "question_text": "Which statement best reflects the Zero Trust approach covered in AZ-900?",
-    "options": {
-      "a": {
-        "text": "Trust all internal network traffic by default",
-        "is_true": false,
-        "explanation": "Incorrect because Zero Trust assumes no implicit trust, even inside the network perimeter."
+    {
+      "question_id": 20,
+      "question_text": "What is the purpose of Azure role-based access control (RBAC)?",
+      "options": {
+        "a": {
+          "text": "To assign permissions to users, groups, or identities at different scopes",
+          "is_true": true,
+          "explanation": "Correct because RBAC controls who can do what on Azure resources at scopes such as management group, subscription, resource group, or resource."
+        },
+        "b": {
+          "text": "To replicate blobs between storage accounts",
+          "is_true": false,
+          "explanation": "Incorrect because RBAC is not a storage replication feature."
+        },
+        "c": {
+          "text": "To compress log data for Azure Monitor",
+          "is_true": false,
+          "explanation": "Incorrect because RBAC is about authorization, not log compression."
+        },
+        "d": {
+          "text": "To create a dedicated leased network circuit",
+          "is_true": false,
+          "explanation": "Incorrect because that describes ExpressRoute, not RBAC."
+        }
       },
-      "b": {
-        "text": "Verify explicitly and use least-privilege access",
-        "is_true": true,
-        "explanation": "Correct because Zero Trust emphasizes explicit verification, least privilege, and assuming breach."
-      },
-      "c": {
-        "text": "Disable multifactor authentication for convenience",
-        "is_true": false,
-        "explanation": "Incorrect because MFA is commonly aligned with Zero Trust principles rather than opposed to them."
-      },
-      "d": {
-        "text": "Rely only on physical datacenter security",
-        "is_true": false,
-        "explanation": "Incorrect because Zero Trust is a broader security model that goes far beyond physical controls."
-      }
+      "correct_answer": [
+        "a"
+      ]
     },
-    "correct_answer": "b"
-  },
-  {
-    "question_id": 22,
-    "question_text": "Which Azure service helps evaluate and enforce standards across resources, such as requiring specific configurations or denying noncompliant deployments?",
-    "options": {
-      "a": {
-        "text": "Azure Policy",
-        "is_true": true,
-        "explanation": "Correct because Azure Policy is used to assess compliance and enforce governance rules across Azure resources."
+    {
+      "question_id": 21,
+      "question_text": "Which statement best reflects the Zero Trust approach covered in AZ-900?",
+      "options": {
+        "a": {
+          "text": "Trust all internal network traffic by default",
+          "is_true": false,
+          "explanation": "Incorrect because Zero Trust assumes no implicit trust, even inside the network perimeter."
+        },
+        "b": {
+          "text": "Verify explicitly and use least-privilege access",
+          "is_true": true,
+          "explanation": "Correct because Zero Trust emphasizes explicit verification, least privilege, and assuming breach."
+        },
+        "c": {
+          "text": "Disable multifactor authentication for convenience",
+          "is_true": false,
+          "explanation": "Incorrect because MFA is commonly aligned with Zero Trust principles rather than opposed to them."
+        },
+        "d": {
+          "text": "Rely only on physical datacenter security",
+          "is_true": false,
+          "explanation": "Incorrect because Zero Trust is a broader security model that goes far beyond physical controls."
+        }
       },
-      "b": {
-        "text": "Azure DNS",
-        "is_true": false,
-        "explanation": "Incorrect because Azure DNS handles domain name resolution, not governance enforcement."
-      },
-      "c": {
-        "text": "AzCopy",
-        "is_true": false,
-        "explanation": "Incorrect because AzCopy is a data transfer utility, not a governance service."
-      },
-      "d": {
-        "text": "Azure Virtual Desktop",
-        "is_true": false,
-        "explanation": "Incorrect because Azure Virtual Desktop provides virtual desktop experiences, not compliance enforcement."
-      }
+      "correct_answer": [
+        "b"
+      ]
     },
-    "correct_answer": "a"
-  },
-  {
-    "question_id": 23,
-    "question_text": "What is the purpose of a resource lock in Azure?",
-    "options": {
-      "a": {
-        "text": "To increase CPU performance of virtual machines",
-        "is_true": false,
-        "explanation": "Incorrect because resource locks do not affect workload performance."
+    {
+      "question_id": 22,
+      "question_text": "Which Azure service helps evaluate and enforce standards across resources, such as requiring specific configurations or denying noncompliant deployments?",
+      "options": {
+        "a": {
+          "text": "Azure Policy",
+          "is_true": true,
+          "explanation": "Correct because Azure Policy is used to assess compliance and enforce governance rules across Azure resources."
+        },
+        "b": {
+          "text": "Azure DNS",
+          "is_true": false,
+          "explanation": "Incorrect because Azure DNS handles domain name resolution, not governance enforcement."
+        },
+        "c": {
+          "text": "AzCopy",
+          "is_true": false,
+          "explanation": "Incorrect because AzCopy is a data transfer utility, not a governance service."
+        },
+        "d": {
+          "text": "Azure Virtual Desktop",
+          "is_true": false,
+          "explanation": "Incorrect because Azure Virtual Desktop provides virtual desktop experiences, not compliance enforcement."
+        }
       },
-      "b": {
-        "text": "To prevent accidental deletion or modification of important resources",
-        "is_true": true,
-        "explanation": "Correct because resource locks are used to protect resources from unintended delete or update actions."
-      },
-      "c": {
-        "text": "To automate application code deployment",
-        "is_true": false,
-        "explanation": "Incorrect because deployment automation is not the purpose of a resource lock."
-      },
-      "d": {
-        "text": "To encrypt internet traffic between regions",
-        "is_true": false,
-        "explanation": "Incorrect because locks are management safeguards, not network encryption mechanisms."
-      }
+      "correct_answer": [
+        "a"
+      ]
     },
-    "correct_answer": "b"
-  },
-  {
-    "question_id": 24,
-    "question_text": "Which Azure tool is primarily used to estimate the cost of planned Azure solutions before deployment?",
-    "options": {
-      "a": {
-        "text": "Pricing calculator",
-        "is_true": true,
-        "explanation": "Correct because the Azure pricing calculator is used to estimate costs for planned services and configurations."
+    {
+      "question_id": 23,
+      "question_text": "What is the purpose of a resource lock in Azure?",
+      "options": {
+        "a": {
+          "text": "To increase CPU performance of virtual machines",
+          "is_true": false,
+          "explanation": "Incorrect because resource locks do not affect workload performance."
+        },
+        "b": {
+          "text": "To prevent accidental deletion or modification of important resources",
+          "is_true": true,
+          "explanation": "Correct because resource locks are used to protect resources from unintended delete or update actions."
+        },
+        "c": {
+          "text": "To automate application code deployment",
+          "is_true": false,
+          "explanation": "Incorrect because deployment automation is not the purpose of a resource lock."
+        },
+        "d": {
+          "text": "To encrypt internet traffic between regions",
+          "is_true": false,
+          "explanation": "Incorrect because locks are management safeguards, not network encryption mechanisms."
+        }
       },
-      "b": {
-        "text": "Application Insights",
-        "is_true": false,
-        "explanation": "Incorrect because Application Insights monitors running applications rather than estimating planned solution costs."
-      },
-      "c": {
-        "text": "Azure Service Health",
-        "is_true": false,
-        "explanation": "Incorrect because Service Health provides information about Azure service issues and maintenance, not pricing estimates."
-      },
-      "d": {
-        "text": "Microsoft Entra ID",
-        "is_true": false,
-        "explanation": "Incorrect because Entra ID is an identity platform, not a cost estimation tool."
-      }
+      "correct_answer": [
+        "b"
+      ]
     },
-    "correct_answer": "a"
-  },
-  {
-    "question_id": 25,
-    "question_text": "Which statement about Azure tags is correct?",
-    "options": {
-      "a": {
-        "text": "Tags are used only for network routing",
-        "is_true": false,
-        "explanation": "Incorrect because tags are metadata labels, not networking routes."
+    {
+      "question_id": 24,
+      "question_text": "Which Azure tool is primarily used to estimate the cost of planned Azure solutions before deployment?",
+      "options": {
+        "a": {
+          "text": "Pricing calculator",
+          "is_true": true,
+          "explanation": "Correct because the Azure pricing calculator is used to estimate costs for planned services and configurations."
+        },
+        "b": {
+          "text": "Application Insights",
+          "is_true": false,
+          "explanation": "Incorrect because Application Insights monitors running applications rather than estimating planned solution costs."
+        },
+        "c": {
+          "text": "Azure Service Health",
+          "is_true": false,
+          "explanation": "Incorrect because Service Health provides information about Azure service issues and maintenance, not pricing estimates."
+        },
+        "d": {
+          "text": "Microsoft Entra ID",
+          "is_true": false,
+          "explanation": "Incorrect because Entra ID is an identity platform, not a cost estimation tool."
+        }
       },
-      "b": {
-        "text": "Tags help organize resources and can support cost management and reporting",
-        "is_true": true,
-        "explanation": "Correct because tags add metadata that helps with organization, filtering, governance, and cost analysis."
-      },
-      "c": {
-        "text": "Tags automatically encrypt resources",
-        "is_true": false,
-        "explanation": "Incorrect because tags do not provide encryption."
-      },
-      "d": {
-        "text": "Tags replace subscriptions in the Azure hierarchy",
-        "is_true": false,
-        "explanation": "Incorrect because tags are metadata labels and do not replace hierarchy constructs such as subscriptions."
-      }
+      "correct_answer": [
+        "a"
+      ]
     },
-    "correct_answer": "b"
-  },
-  {
-    "question_id": 26,
-    "question_text": "Which Azure capability is most closely associated with infrastructure as code in AZ-900?",
-    "options": {
-      "a": {
-        "text": "Writing declarative templates to deploy Azure resources consistently",
-        "is_true": true,
-        "explanation": "Correct because infrastructure as code in Azure commonly involves declarative definitions such as ARM templates to deploy resources consistently."
+    {
+      "question_id": 25,
+      "question_text": "Which statement about Azure tags is correct?",
+      "options": {
+        "a": {
+          "text": "Tags are used only for network routing",
+          "is_true": false,
+          "explanation": "Incorrect because tags are metadata labels, not networking routes."
+        },
+        "b": {
+          "text": "Tags help organize resources and can support cost management and reporting",
+          "is_true": true,
+          "explanation": "Correct because tags add metadata that helps with organization, filtering, governance, and cost analysis."
+        },
+        "c": {
+          "text": "Tags automatically encrypt resources",
+          "is_true": false,
+          "explanation": "Incorrect because tags do not provide encryption."
+        },
+        "d": {
+          "text": "Tags replace subscriptions in the Azure hierarchy",
+          "is_true": false,
+          "explanation": "Incorrect because tags are metadata labels and do not replace hierarchy constructs such as subscriptions."
+        }
       },
-      "b": {
-        "text": "Manually clicking through each deployment in the portal every time",
-        "is_true": false,
-        "explanation": "Incorrect because manual portal configuration is the opposite of infrastructure as code."
-      },
-      "c": {
-        "text": "Using MFA during sign-in",
-        "is_true": false,
-        "explanation": "Incorrect because MFA is an authentication control, not infrastructure as code."
-      },
-      "d": {
-        "text": "Replicating data to a secondary region",
-        "is_true": false,
-        "explanation": "Incorrect because replication is a resiliency/storage concept, not IaC."
-      }
+      "correct_answer": [
+        "b"
+      ]
     },
-    "correct_answer": "a"
-  },
-  {
-    "question_id": 27,
-    "question_text": "Which Azure management tool lets you run Azure CLI or Azure PowerShell commands from a browser-based shell?",
-    "options": {
-      "a": {
-        "text": "Azure Cloud Shell",
-        "is_true": true,
-        "explanation": "Correct because Azure Cloud Shell provides a browser-based command environment supporting Azure CLI and Azure PowerShell."
+    {
+      "question_id": 26,
+      "question_text": "Which Azure capability is most closely associated with infrastructure as code in AZ-900?",
+      "options": {
+        "a": {
+          "text": "Writing declarative templates to deploy Azure resources consistently",
+          "is_true": true,
+          "explanation": "Correct because infrastructure as code in Azure commonly involves declarative definitions such as ARM templates to deploy resources consistently."
+        },
+        "b": {
+          "text": "Manually clicking through each deployment in the portal every time",
+          "is_true": false,
+          "explanation": "Incorrect because manual portal configuration is the opposite of infrastructure as code."
+        },
+        "c": {
+          "text": "Using MFA during sign-in",
+          "is_true": false,
+          "explanation": "Incorrect because MFA is an authentication control, not infrastructure as code."
+        },
+        "d": {
+          "text": "Replicating data to a secondary region",
+          "is_true": false,
+          "explanation": "Incorrect because replication is a resiliency/storage concept, not IaC."
+        }
       },
-      "b": {
-        "text": "Azure Policy",
-        "is_true": false,
-        "explanation": "Incorrect because Azure Policy enforces governance rules rather than providing a command shell."
-      },
-      "c": {
-        "text": "Azure Advisor",
-        "is_true": false,
-        "explanation": "Incorrect because Azure Advisor gives recommendations, not an interactive shell environment."
-      },
-      "d": {
-        "text": "Azure Data Box",
-        "is_true": false,
-        "explanation": "Incorrect because Azure Data Box is for data transfer, not command-line management."
-      }
+      "correct_answer": [
+        "a"
+      ]
     },
-    "correct_answer": "a"
-  },
-  {
-    "question_id": 28,
-    "question_text": "Which Azure service provides personalized best-practice recommendations to improve reliability, security, performance, operational excellence, and cost?",
-    "options": {
-      "a": {
-        "text": "Azure Advisor",
-        "is_true": true,
-        "explanation": "Correct because Azure Advisor analyzes deployed resources and provides recommendations across key operational categories."
+    {
+      "question_id": 27,
+      "question_text": "Which Azure management tool lets you run Azure CLI or Azure PowerShell commands from a browser-based shell?",
+      "options": {
+        "a": {
+          "text": "Azure Cloud Shell",
+          "is_true": true,
+          "explanation": "Correct because Azure Cloud Shell provides a browser-based command environment supporting Azure CLI and Azure PowerShell."
+        },
+        "b": {
+          "text": "Azure Policy",
+          "is_true": false,
+          "explanation": "Incorrect because Azure Policy enforces governance rules rather than providing a command shell."
+        },
+        "c": {
+          "text": "Azure Advisor",
+          "is_true": false,
+          "explanation": "Incorrect because Azure Advisor gives recommendations, not an interactive shell environment."
+        },
+        "d": {
+          "text": "Azure Data Box",
+          "is_true": false,
+          "explanation": "Incorrect because Azure Data Box is for data transfer, not command-line management."
+        }
       },
-      "b": {
-        "text": "Azure Monitor",
-        "is_true": false,
-        "explanation": "Incorrect because Azure Monitor focuses on telemetry, metrics, logs, and alerting rather than curated best-practice recommendations."
-      },
-      "c": {
-        "text": "Microsoft Purview",
-        "is_true": false,
-        "explanation": "Incorrect because Microsoft Purview is focused on governance, compliance, and data-related capabilities rather than general resource recommendations."
-      },
-      "d": {
-        "text": "Azure VPN Gateway",
-        "is_true": false,
-        "explanation": "Incorrect because VPN Gateway provides connectivity, not advisory recommendations."
-      }
+      "correct_answer": [
+        "a"
+      ]
     },
-    "correct_answer": "a"
-  },
-  {
-    "question_id": 29,
-    "question_text": "Which service is used to view information about Azure service incidents, planned maintenance, and service health events that may affect your subscriptions?",
-    "options": {
-      "a": {
-        "text": "Azure Service Health",
-        "is_true": true,
-        "explanation": "Correct because Azure Service Health communicates service issues, maintenance, and advisories that affect Azure resources."
+    {
+      "question_id": 28,
+      "question_text": "Which Azure service provides personalized best-practice recommendations to improve reliability, security, performance, operational excellence, and cost?",
+      "options": {
+        "a": {
+          "text": "Azure Advisor",
+          "is_true": true,
+          "explanation": "Correct because Azure Advisor analyzes deployed resources and provides recommendations across key operational categories."
+        },
+        "b": {
+          "text": "Azure Monitor",
+          "is_true": false,
+          "explanation": "Incorrect because Azure Monitor focuses on telemetry, metrics, logs, and alerting rather than curated best-practice recommendations."
+        },
+        "c": {
+          "text": "Microsoft Purview",
+          "is_true": false,
+          "explanation": "Incorrect because Microsoft Purview is focused on governance, compliance, and data-related capabilities rather than general resource recommendations."
+        },
+        "d": {
+          "text": "Azure VPN Gateway",
+          "is_true": false,
+          "explanation": "Incorrect because VPN Gateway provides connectivity, not advisory recommendations."
+        }
       },
-      "b": {
-        "text": "Azure Arc",
-        "is_true": false,
-        "explanation": "Incorrect because Azure Arc extends Azure management to other environments; it is not the primary service health dashboard."
-      },
-      "c": {
-        "text": "Microsoft Entra Domain Services",
-        "is_true": false,
-        "explanation": "Incorrect because Entra Domain Services provides managed domain services, not incident visibility for Azure services."
-      },
-      "d": {
-        "text": "Azure Files",
-        "is_true": false,
-        "explanation": "Incorrect because Azure Files is a storage service, not a service health information tool."
-      }
+      "correct_answer": [
+        "a"
+      ]
     },
-    "correct_answer": "a"
-  },
-  {
-    "question_id": 30,
-    "question_text": "Which Azure monitoring feature is specifically aimed at collecting telemetry from applications to help analyze availability, performance, and usage?",
-    "options": {
-      "a": {
-        "text": "Application Insights",
-        "is_true": true,
-        "explanation": "Correct because Application Insights is designed for application performance monitoring and telemetry analysis."
+    {
+      "question_id": 29,
+      "question_text": "Which service is used to view information about Azure service incidents, planned maintenance, and service health events that may affect your subscriptions?",
+      "options": {
+        "a": {
+          "text": "Azure Service Health",
+          "is_true": true,
+          "explanation": "Correct because Azure Service Health communicates service issues, maintenance, and advisories that affect Azure resources."
+        },
+        "b": {
+          "text": "Azure Arc",
+          "is_true": false,
+          "explanation": "Incorrect because Azure Arc extends Azure management to other environments; it is not the primary service health dashboard."
+        },
+        "c": {
+          "text": "Microsoft Entra Domain Services",
+          "is_true": false,
+          "explanation": "Incorrect because Entra Domain Services provides managed domain services, not incident visibility for Azure services."
+        },
+        "d": {
+          "text": "Azure Files",
+          "is_true": false,
+          "explanation": "Incorrect because Azure Files is a storage service, not a service health information tool."
+        }
       },
-      "b": {
-        "text": "Resource lock",
-        "is_true": false,
-        "explanation": "Incorrect because a resource lock protects resources from accidental changes, not application telemetry collection."
-      },
-      "c": {
-        "text": "Availability set",
-        "is_true": false,
-        "explanation": "Incorrect because availability sets improve VM resiliency, not application monitoring."
-      },
-      "d": {
-        "text": "Azure Data Box",
-        "is_true": false,
-        "explanation": "Incorrect because Azure Data Box is for large-scale data transfer, not monitoring."
-      }
+      "correct_answer": [
+        "a"
+      ]
     },
-    "correct_answer": "a"
-  }
-]
+    {
+      "question_id": 30,
+      "question_text": "Which Azure monitoring feature is specifically aimed at collecting telemetry from applications to help analyze availability, performance, and usage?",
+      "options": {
+        "a": {
+          "text": "Application Insights",
+          "is_true": true,
+          "explanation": "Correct because Application Insights is designed for application performance monitoring and telemetry analysis."
+        },
+        "b": {
+          "text": "Resource lock",
+          "is_true": false,
+          "explanation": "Incorrect because a resource lock protects resources from accidental changes, not application telemetry collection."
+        },
+        "c": {
+          "text": "Availability set",
+          "is_true": false,
+          "explanation": "Incorrect because availability sets improve VM resiliency, not application monitoring."
+        },
+        "d": {
+          "text": "Azure Data Box",
+          "is_true": false,
+          "explanation": "Incorrect because Azure Data Box is for large-scale data transfer, not monitoring."
+        }
+      },
+      "correct_answer": [
+        "a"
+      ]
+    }
+  ]
+}

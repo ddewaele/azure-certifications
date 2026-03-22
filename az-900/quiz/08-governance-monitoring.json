@@ -1,218 +1,242 @@
-[
-  {
-    "question_id": 1,
-    "question_text": "An administrator has the Owner role on a resource group. They try to delete a storage account inside it but receive an error. What is the most likely cause?",
-    "options": {
-      "a": {
-        "text": "The administrator's account has expired",
-        "is_true": false,
-        "explanation": "Incorrect. An expired account would prevent all access, not just delete operations on a specific resource."
-      },
-      "b": {
-        "text": "A resource lock (CanNotDelete or ReadOnly) has been applied to the storage account or its resource group",
-        "is_true": true,
-        "explanation": "Correct. Resource locks override RBAC permissions. Even an Owner cannot delete a resource that has a CanNotDelete lock applied. The lock must first be removed before the resource can be deleted."
-      },
-      "c": {
-        "text": "The storage account has active data that must be emptied first",
-        "is_true": false,
-        "explanation": "Incorrect. Azure does not prevent deletion of storage accounts due to data content. The data is deleted along with the account. A resource lock is a much more likely cause of the error described."
-      },
-      "d": {
-        "text": "The administrator needs a separate 'Delete' role in addition to Owner",
-        "is_true": false,
-        "explanation": "Incorrect. The Owner role already includes all permissions including delete. There is no separate 'Delete' role required."
-      }
-    },
-    "correct_answer": "b"
+{
+  "meta": {
+    "title": "Azure Fundamentals – Governance & Monitoring",
+    "subject": "AZ-900",
+    "version": "1.0.0",
+    "created": "2026-03-22"
   },
-  {
-    "question_id": 2,
-    "question_text": "What is the difference between a CanNotDelete lock and a ReadOnly lock?",
-    "options": {
-      "a": {
-        "text": "CanNotDelete prevents all changes including reads; ReadOnly only prevents deletions",
-        "is_true": false,
-        "explanation": "Incorrect. This is reversed. CanNotDelete allows reads and modifications but blocks deletion. ReadOnly is more restrictive — it blocks all modifications and deletions."
+  "questions": [
+    {
+      "question_id": 1,
+      "question_text": "An administrator has the Owner role on a resource group. They try to delete a storage account inside it but receive an error. What is the most likely cause?",
+      "options": {
+        "a": {
+          "text": "The administrator's account has expired",
+          "is_true": false,
+          "explanation": "Incorrect. An expired account would prevent all access, not just delete operations on a specific resource."
+        },
+        "b": {
+          "text": "A resource lock (CanNotDelete or ReadOnly) has been applied to the storage account or its resource group",
+          "is_true": true,
+          "explanation": "Correct. Resource locks override RBAC permissions. Even an Owner cannot delete a resource that has a CanNotDelete lock applied. The lock must first be removed before the resource can be deleted."
+        },
+        "c": {
+          "text": "The storage account has active data that must be emptied first",
+          "is_true": false,
+          "explanation": "Incorrect. Azure does not prevent deletion of storage accounts due to data content. The data is deleted along with the account. A resource lock is a much more likely cause of the error described."
+        },
+        "d": {
+          "text": "The administrator needs a separate 'Delete' role in addition to Owner",
+          "is_true": false,
+          "explanation": "Incorrect. The Owner role already includes all permissions including delete. There is no separate 'Delete' role required."
+        }
       },
-      "b": {
-        "text": "CanNotDelete allows reads and modifications but prevents deletion; ReadOnly allows only read operations, blocking all modifications and deletions",
-        "is_true": true,
-        "explanation": "Correct. CanNotDelete: you can read and modify the resource, but you cannot delete it. ReadOnly: you can only read the resource — all modifications (including seemingly minor changes like adding tags) and deletions are blocked."
-      },
-      "c": {
-        "text": "Both lock types have the same effect — they both prevent all changes",
-        "is_true": false,
-        "explanation": "Incorrect. The two lock types have different levels of restriction. CanNotDelete still allows modifications; ReadOnly does not."
-      },
-      "d": {
-        "text": "CanNotDelete only applies to resource groups; ReadOnly only applies to individual resources",
-        "is_true": false,
-        "explanation": "Incorrect. Both lock types can be applied at the resource, resource group, or subscription level and inherit down to child resources."
-      }
+      "correct_answer": [
+        "b"
+      ]
     },
-    "correct_answer": "b"
-  },
-  {
-    "question_id": 3,
-    "question_text": "An organization wants to ensure that all newly created Azure resources automatically have a 'CostCenter' tag. Which Azure tool enforces this?",
-    "options": {
-      "a": {
-        "text": "Azure Resource Manager templates",
-        "is_true": false,
-        "explanation": "Incorrect. ARM templates can include tags for resources they deploy, but they only apply during that specific deployment. They cannot enforce tagging on all resources deployed by any method going forward."
+    {
+      "question_id": 2,
+      "question_text": "What is the difference between a CanNotDelete lock and a ReadOnly lock?",
+      "options": {
+        "a": {
+          "text": "CanNotDelete prevents all changes including reads; ReadOnly only prevents deletions",
+          "is_true": false,
+          "explanation": "Incorrect. This is reversed. CanNotDelete allows reads and modifications but blocks deletion. ReadOnly is more restrictive — it blocks all modifications and deletions."
+        },
+        "b": {
+          "text": "CanNotDelete allows reads and modifications but prevents deletion; ReadOnly allows only read operations, blocking all modifications and deletions",
+          "is_true": true,
+          "explanation": "Correct. CanNotDelete: you can read and modify the resource, but you cannot delete it. ReadOnly: you can only read the resource — all modifications (including seemingly minor changes like adding tags) and deletions are blocked."
+        },
+        "c": {
+          "text": "Both lock types have the same effect — they both prevent all changes",
+          "is_true": false,
+          "explanation": "Incorrect. The two lock types have different levels of restriction. CanNotDelete still allows modifications; ReadOnly does not."
+        },
+        "d": {
+          "text": "CanNotDelete only applies to resource groups; ReadOnly only applies to individual resources",
+          "is_true": false,
+          "explanation": "Incorrect. Both lock types can be applied at the resource, resource group, or subscription level and inherit down to child resources."
+        }
       },
-      "b": {
-        "text": "Azure Policy",
-        "is_true": true,
-        "explanation": "Correct. Azure Policy can enforce governance rules across all resources. A policy like 'Require a tag on resources' can audit or deny the creation of any resource that lacks the required 'CostCenter' tag. It applies continuously to all new and existing resources."
-      },
-      "c": {
-        "text": "Azure Blueprints",
-        "is_true": false,
-        "explanation": "Incorrect. Blueprints can include policy assignments but applying a Blueprint to every deployment is less efficient than assigning a policy directly at the management group or subscription level."
-      },
-      "d": {
-        "text": "Azure Advisor",
-        "is_true": false,
-        "explanation": "Incorrect. Azure Advisor provides recommendations but cannot enforce rules or block resource creation. It is advisory, not prescriptive."
-      }
+      "correct_answer": [
+        "b"
+      ]
     },
-    "correct_answer": "b"
-  },
-  {
-    "question_id": 4,
-    "question_text": "Which Azure service provides personalized alerts about Azure service outages and maintenance events that specifically affect your subscriptions and regions?",
-    "options": {
-      "a": {
-        "text": "Azure Monitor",
-        "is_true": false,
-        "explanation": "Incorrect. Azure Monitor collects and analyses metrics and logs from your own resources. It does not provide information about Azure platform-level outages or maintenance."
+    {
+      "question_id": 3,
+      "question_text": "An organization wants to ensure that all newly created Azure resources automatically have a 'CostCenter' tag. Which Azure tool enforces this?",
+      "options": {
+        "a": {
+          "text": "Azure Resource Manager templates",
+          "is_true": false,
+          "explanation": "Incorrect. ARM templates can include tags for resources they deploy, but they only apply during that specific deployment. They cannot enforce tagging on all resources deployed by any method going forward."
+        },
+        "b": {
+          "text": "Azure Policy",
+          "is_true": true,
+          "explanation": "Correct. Azure Policy can enforce governance rules across all resources. A policy like 'Require a tag on resources' can audit or deny the creation of any resource that lacks the required 'CostCenter' tag. It applies continuously to all new and existing resources."
+        },
+        "c": {
+          "text": "Azure Blueprints",
+          "is_true": false,
+          "explanation": "Incorrect. Blueprints can include policy assignments but applying a Blueprint to every deployment is less efficient than assigning a policy directly at the management group or subscription level."
+        },
+        "d": {
+          "text": "Azure Advisor",
+          "is_true": false,
+          "explanation": "Incorrect. Azure Advisor provides recommendations but cannot enforce rules or block resource creation. It is advisory, not prescriptive."
+        }
       },
-      "b": {
-        "text": "Azure Advisor",
-        "is_true": false,
-        "explanation": "Incorrect. Azure Advisor provides best practice recommendations to optimize your deployments. It does not alert you to Azure platform service outages."
-      },
-      "c": {
-        "text": "Azure Service Health",
-        "is_true": true,
-        "explanation": "Correct. Azure Service Health provides personalized information about Azure service issues, planned maintenance, and health advisories that affect your specific subscriptions and regions. You can set up alerts to be notified when Azure services impacting you have incidents."
-      },
-      "d": {
-        "text": "Microsoft Defender for Cloud",
-        "is_true": false,
-        "explanation": "Incorrect. Defender for Cloud focuses on security posture and threat detection for your resources. It does not track Azure platform service health."
-      }
+      "correct_answer": [
+        "b"
+      ]
     },
-    "correct_answer": "c"
-  },
-  {
-    "question_id": 5,
-    "question_text": "What is Bicep in the context of Azure infrastructure management?",
-    "options": {
-      "a": {
-        "text": "A monitoring agent installed on Azure VMs to collect performance metrics",
-        "is_true": false,
-        "explanation": "Incorrect. Performance metric collection is done by the Azure Monitor agent. Bicep is an infrastructure-as-code language."
+    {
+      "question_id": 4,
+      "question_text": "Which Azure service provides personalized alerts about Azure service outages and maintenance events that specifically affect your subscriptions and regions?",
+      "options": {
+        "a": {
+          "text": "Azure Monitor",
+          "is_true": false,
+          "explanation": "Incorrect. Azure Monitor collects and analyses metrics and logs from your own resources. It does not provide information about Azure platform-level outages or maintenance."
+        },
+        "b": {
+          "text": "Azure Advisor",
+          "is_true": false,
+          "explanation": "Incorrect. Azure Advisor provides best practice recommendations to optimize your deployments. It does not alert you to Azure platform service outages."
+        },
+        "c": {
+          "text": "Azure Service Health",
+          "is_true": true,
+          "explanation": "Correct. Azure Service Health provides personalized information about Azure service issues, planned maintenance, and health advisories that affect your specific subscriptions and regions. You can set up alerts to be notified when Azure services impacting you have incidents."
+        },
+        "d": {
+          "text": "Microsoft Defender for Cloud",
+          "is_true": false,
+          "explanation": "Incorrect. Defender for Cloud focuses on security posture and threat detection for your resources. It does not track Azure platform service health."
+        }
       },
-      "b": {
-        "text": "A domain-specific language for deploying Azure resources that compiles to ARM templates",
-        "is_true": true,
-        "explanation": "Correct. Bicep is a DSL (domain-specific language) for declarative Azure infrastructure deployment. It is more readable and concise than raw JSON ARM templates but compiles to ARM JSON. It supports all Azure resource types and API versions."
-      },
-      "c": {
-        "text": "A tool for managing Azure costs and budget alerts",
-        "is_true": false,
-        "explanation": "Incorrect. Cost management and budget alerts are features of Azure Cost Management + Billing. Bicep is an infrastructure-as-code tool."
-      },
-      "d": {
-        "text": "Microsoft's CLI tool for managing Azure resources",
-        "is_true": false,
-        "explanation": "Incorrect. Microsoft's CLI tool for Azure is called Azure CLI (az). Bicep is a declarative language for defining infrastructure."
-      }
+      "correct_answer": [
+        "c"
+      ]
     },
-    "correct_answer": "b"
-  },
-  {
-    "question_id": 6,
-    "question_text": "Azure Monitor collects two primary types of data. What are they?",
-    "options": {
-      "a": {
-        "text": "Policies and role assignments",
-        "is_true": false,
-        "explanation": "Incorrect. Policies and role assignments are governance constructs managed by Azure Policy and Azure RBAC, not telemetry data collected by Azure Monitor."
+    {
+      "question_id": 5,
+      "question_text": "What is Bicep in the context of Azure infrastructure management?",
+      "options": {
+        "a": {
+          "text": "A monitoring agent installed on Azure VMs to collect performance metrics",
+          "is_true": false,
+          "explanation": "Incorrect. Performance metric collection is done by the Azure Monitor agent. Bicep is an infrastructure-as-code language."
+        },
+        "b": {
+          "text": "A domain-specific language for deploying Azure resources that compiles to ARM templates",
+          "is_true": true,
+          "explanation": "Correct. Bicep is a DSL (domain-specific language) for declarative Azure infrastructure deployment. It is more readable and concise than raw JSON ARM templates but compiles to ARM JSON. It supports all Azure resource types and API versions."
+        },
+        "c": {
+          "text": "A tool for managing Azure costs and budget alerts",
+          "is_true": false,
+          "explanation": "Incorrect. Cost management and budget alerts are features of Azure Cost Management + Billing. Bicep is an infrastructure-as-code tool."
+        },
+        "d": {
+          "text": "Microsoft's CLI tool for managing Azure resources",
+          "is_true": false,
+          "explanation": "Incorrect. Microsoft's CLI tool for Azure is called Azure CLI (az). Bicep is a declarative language for defining infrastructure."
+        }
       },
-      "b": {
-        "text": "Metrics and logs",
-        "is_true": true,
-        "explanation": "Correct. Azure Monitor collects: (1) Metrics — numerical time-series data like CPU percentage, memory usage, requests per second; and (2) Logs — structured records stored in Log Analytics workspaces, queryable with KQL (Kusto Query Language). Alerts can be created from both."
-      },
-      "c": {
-        "text": "Costs and reservations",
-        "is_true": false,
-        "explanation": "Incorrect. Cost and reservation data is managed by Azure Cost Management + Billing, not Azure Monitor."
-      },
-      "d": {
-        "text": "Users and identities",
-        "is_true": false,
-        "explanation": "Incorrect. User and identity management is the domain of Microsoft Entra ID. Azure Monitor focuses on operational telemetry from Azure resources."
-      }
+      "correct_answer": [
+        "b"
+      ]
     },
-    "correct_answer": "b"
-  },
-  {
-    "question_id": 7,
-    "question_text": "What does Azure Arc enable?",
-    "options": {
-      "a": {
-        "text": "Automatic backup of all Azure resources to an on-premises location",
-        "is_true": false,
-        "explanation": "Incorrect. Azure Backup handles backup functionality. Azure Arc is about extending Azure management capabilities outward, not backing up Azure resources locally."
+    {
+      "question_id": 6,
+      "question_text": "Azure Monitor collects two primary types of data. What are they?",
+      "options": {
+        "a": {
+          "text": "Policies and role assignments",
+          "is_true": false,
+          "explanation": "Incorrect. Policies and role assignments are governance constructs managed by Azure Policy and Azure RBAC, not telemetry data collected by Azure Monitor."
+        },
+        "b": {
+          "text": "Metrics and logs",
+          "is_true": true,
+          "explanation": "Correct. Azure Monitor collects: (1) Metrics — numerical time-series data like CPU percentage, memory usage, requests per second; and (2) Logs — structured records stored in Log Analytics workspaces, queryable with KQL (Kusto Query Language). Alerts can be created from both."
+        },
+        "c": {
+          "text": "Costs and reservations",
+          "is_true": false,
+          "explanation": "Incorrect. Cost and reservation data is managed by Azure Cost Management + Billing, not Azure Monitor."
+        },
+        "d": {
+          "text": "Users and identities",
+          "is_true": false,
+          "explanation": "Incorrect. User and identity management is the domain of Microsoft Entra ID. Azure Monitor focuses on operational telemetry from Azure resources."
+        }
       },
-      "b": {
-        "text": "Managing resources outside Azure (on-premises servers, other clouds) using Azure management tools, policies, and services",
-        "is_true": true,
-        "explanation": "Correct. Azure Arc extends the Azure control plane to non-Azure resources. You can manage on-premises servers, Kubernetes clusters on any infrastructure, and resources in other clouds as if they were Azure resources — applying Azure Policy, RBAC, and monitoring to them."
-      },
-      "c": {
-        "text": "Connecting multiple VNets across regions with automatic failover",
-        "is_true": false,
-        "explanation": "Incorrect. Cross-region VNet connectivity is handled by global VNet peering, VPN Gateway, and ExpressRoute. Azure Arc is about managing non-Azure infrastructure."
-      },
-      "d": {
-        "text": "Providing a graphical interface for managing Kubernetes clusters in AKS",
-        "is_true": false,
-        "explanation": "Incorrect. AKS management is done through the portal, CLI, or kubectl. Azure Arc's Kubernetes capability goes beyond AKS — it manages Kubernetes clusters anywhere, not just in Azure."
-      }
+      "correct_answer": [
+        "b"
+      ]
     },
-    "correct_answer": "b"
-  },
-  {
-    "question_id": 8,
-    "question_text": "Which Azure tool provides recommendations across five categories: Cost, Security, Reliability, Operational Excellence, and Performance?",
-    "options": {
-      "a": {
-        "text": "Azure Policy",
-        "is_true": false,
-        "explanation": "Incorrect. Azure Policy enforces compliance rules and governance. It does not analyse your deployments and generate optimization recommendations across five categories."
+    {
+      "question_id": 7,
+      "question_text": "What does Azure Arc enable?",
+      "options": {
+        "a": {
+          "text": "Automatic backup of all Azure resources to an on-premises location",
+          "is_true": false,
+          "explanation": "Incorrect. Azure Backup handles backup functionality. Azure Arc is about extending Azure management capabilities outward, not backing up Azure resources locally."
+        },
+        "b": {
+          "text": "Managing resources outside Azure (on-premises servers, other clouds) using Azure management tools, policies, and services",
+          "is_true": true,
+          "explanation": "Correct. Azure Arc extends the Azure control plane to non-Azure resources. You can manage on-premises servers, Kubernetes clusters on any infrastructure, and resources in other clouds as if they were Azure resources — applying Azure Policy, RBAC, and monitoring to them."
+        },
+        "c": {
+          "text": "Connecting multiple VNets across regions with automatic failover",
+          "is_true": false,
+          "explanation": "Incorrect. Cross-region VNet connectivity is handled by global VNet peering, VPN Gateway, and ExpressRoute. Azure Arc is about managing non-Azure infrastructure."
+        },
+        "d": {
+          "text": "Providing a graphical interface for managing Kubernetes clusters in AKS",
+          "is_true": false,
+          "explanation": "Incorrect. AKS management is done through the portal, CLI, or kubectl. Azure Arc's Kubernetes capability goes beyond AKS — it manages Kubernetes clusters anywhere, not just in Azure."
+        }
       },
-      "b": {
-        "text": "Microsoft Defender for Cloud",
-        "is_true": false,
-        "explanation": "Incorrect. Defender for Cloud focuses on security posture and threat detection. While it provides security recommendations, it does not cover cost, reliability, operational excellence, or performance."
-      },
-      "c": {
-        "text": "Azure Advisor",
-        "is_true": true,
-        "explanation": "Correct. Azure Advisor is a personalized cloud consultant that analyses your Azure usage and configuration and provides actionable recommendations across exactly five pillars: Cost (right-size or shut down idle resources), Security (apply missing controls), Reliability (improve availability), Operational Excellence (follow best practices), and Performance (optimize resource throughput)."
-      },
-      "d": {
-        "text": "Azure Service Health",
-        "is_true": false,
-        "explanation": "Incorrect. Azure Service Health tracks Azure platform service issues and maintenance events. It does not analyse your resource configurations to provide optimization recommendations."
-      }
+      "correct_answer": [
+        "b"
+      ]
     },
-    "correct_answer": "c"
-  }
-]
+    {
+      "question_id": 8,
+      "question_text": "Which Azure tool provides recommendations across five categories: Cost, Security, Reliability, Operational Excellence, and Performance?",
+      "options": {
+        "a": {
+          "text": "Azure Policy",
+          "is_true": false,
+          "explanation": "Incorrect. Azure Policy enforces compliance rules and governance. It does not analyse your deployments and generate optimization recommendations across five categories."
+        },
+        "b": {
+          "text": "Microsoft Defender for Cloud",
+          "is_true": false,
+          "explanation": "Incorrect. Defender for Cloud focuses on security posture and threat detection. While it provides security recommendations, it does not cover cost, reliability, operational excellence, or performance."
+        },
+        "c": {
+          "text": "Azure Advisor",
+          "is_true": true,
+          "explanation": "Correct. Azure Advisor is a personalized cloud consultant that analyses your Azure usage and configuration and provides actionable recommendations across exactly five pillars: Cost (right-size or shut down idle resources), Security (apply missing controls), Reliability (improve availability), Operational Excellence (follow best practices), and Performance (optimize resource throughput)."
+        },
+        "d": {
+          "text": "Azure Service Health",
+          "is_true": false,
+          "explanation": "Incorrect. Azure Service Health tracks Azure platform service issues and maintenance events. It does not analyse your resource configurations to provide optimization recommendations."
+        }
+      },
+      "correct_answer": [
+        "c"
+      ]
+    }
+  ]
+}

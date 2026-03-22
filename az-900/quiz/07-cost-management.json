@@ -1,299 +1,329 @@
-[
-  {
-    "question_id": 1,
-    "question_text": "You want to estimate the monthly cost of running a new Azure infrastructure before deploying anything. Which tool should you use?",
-    "options": {
-      "a": {
-        "text": "Azure Cost Management + Billing",
-        "is_true": false,
-        "explanation": "Incorrect. Azure Cost Management + Billing analyses actual existing spend on your subscription. It cannot estimate costs for resources that haven't been deployed yet."
-      },
-      "b": {
-        "text": "Azure Pricing Calculator",
-        "is_true": true,
-        "explanation": "Correct. The Azure Pricing Calculator is designed exactly for this purpose — it lets you configure Azure services and see an estimated monthly cost before you deploy. You can compare regions, pricing tiers, and commitment models."
-      },
-      "c": {
-        "text": "Azure Advisor",
-        "is_true": false,
-        "explanation": "Incorrect. Azure Advisor provides recommendations to optimize your existing Azure deployments (cost, security, reliability, etc.). It does not estimate costs for new undeployed resources."
-      },
-      "d": {
-        "text": "Azure TCO Calculator",
-        "is_true": false,
-        "explanation": "Incorrect. The TCO (Total Cost of Ownership) Calculator is for comparing the cost of running workloads on-premises versus in Azure. It is not used for estimating the cost of specific Azure service configurations."
-      }
-    },
-    "correct_answer": "b"
+{
+  "meta": {
+    "title": "Azure Fundamentals – Cost Management",
+    "subject": "AZ-900",
+    "version": "1.0.0",
+    "created": "2026-03-22"
   },
-  {
-    "question_id": 2,
-    "question_text": "A finance director wants to understand the potential savings from migrating the company's on-premises datacenter to Azure. Which tool provides this comparison?",
-    "options": {
-      "a": {
-        "text": "Azure Pricing Calculator",
-        "is_true": false,
-        "explanation": "Incorrect. The Pricing Calculator estimates costs for Azure services. It does not compare those costs against on-premises infrastructure costs."
+  "questions": [
+    {
+      "question_id": 1,
+      "question_text": "You want to estimate the monthly cost of running a new Azure infrastructure before deploying anything. Which tool should you use?",
+      "options": {
+        "a": {
+          "text": "Azure Cost Management + Billing",
+          "is_true": false,
+          "explanation": "Incorrect. Azure Cost Management + Billing analyses actual existing spend on your subscription. It cannot estimate costs for resources that haven't been deployed yet."
+        },
+        "b": {
+          "text": "Azure Pricing Calculator",
+          "is_true": true,
+          "explanation": "Correct. The Azure Pricing Calculator is designed exactly for this purpose — it lets you configure Azure services and see an estimated monthly cost before you deploy. You can compare regions, pricing tiers, and commitment models."
+        },
+        "c": {
+          "text": "Azure Advisor",
+          "is_true": false,
+          "explanation": "Incorrect. Azure Advisor provides recommendations to optimize your existing Azure deployments (cost, security, reliability, etc.). It does not estimate costs for new undeployed resources."
+        },
+        "d": {
+          "text": "Azure TCO Calculator",
+          "is_true": false,
+          "explanation": "Incorrect. The TCO (Total Cost of Ownership) Calculator is for comparing the cost of running workloads on-premises versus in Azure. It is not used for estimating the cost of specific Azure service configurations."
+        }
       },
-      "b": {
-        "text": "Azure TCO Calculator",
-        "is_true": true,
-        "explanation": "Correct. The Total Cost of Ownership (TCO) Calculator is specifically designed to help you estimate the cost savings of migrating on-premises workloads to Azure. You input your current infrastructure (servers, storage, networking) and labor costs, and it shows a comparison over 1, 3, and 5 years."
-      },
-      "c": {
-        "text": "Azure Cost Management + Billing",
-        "is_true": false,
-        "explanation": "Incorrect. Azure Cost Management + Billing analyses actual Azure spend. It cannot evaluate on-premises infrastructure costs or produce a migration ROI analysis."
-      },
-      "d": {
-        "text": "Azure Monitor",
-        "is_true": false,
-        "explanation": "Incorrect. Azure Monitor collects and analyses telemetry (metrics, logs) from Azure resources. It is not a financial planning or cost comparison tool."
-      }
+      "correct_answer": [
+        "b"
+      ]
     },
-    "correct_answer": "b"
-  },
-  {
-    "question_id": 3,
-    "question_text": "A company commits to using a specific Azure VM type for three years in exchange for a significant discount. What is this pricing model called?",
-    "options": {
-      "a": {
-        "text": "Spot pricing",
-        "is_true": false,
-        "explanation": "Incorrect. Spot pricing (Azure Spot VMs) uses surplus Azure capacity at deep discounts (up to 90%) but can be evicted with 30 seconds notice. It requires no commitment."
+    {
+      "question_id": 2,
+      "question_text": "A finance director wants to understand the potential savings from migrating the company's on-premises datacenter to Azure. Which tool provides this comparison?",
+      "options": {
+        "a": {
+          "text": "Azure Pricing Calculator",
+          "is_true": false,
+          "explanation": "Incorrect. The Pricing Calculator estimates costs for Azure services. It does not compare those costs against on-premises infrastructure costs."
+        },
+        "b": {
+          "text": "Azure TCO Calculator",
+          "is_true": true,
+          "explanation": "Correct. The Total Cost of Ownership (TCO) Calculator is specifically designed to help you estimate the cost savings of migrating on-premises workloads to Azure. You input your current infrastructure (servers, storage, networking) and labor costs, and it shows a comparison over 1, 3, and 5 years."
+        },
+        "c": {
+          "text": "Azure Cost Management + Billing",
+          "is_true": false,
+          "explanation": "Incorrect. Azure Cost Management + Billing analyses actual Azure spend. It cannot evaluate on-premises infrastructure costs or produce a migration ROI analysis."
+        },
+        "d": {
+          "text": "Azure Monitor",
+          "is_true": false,
+          "explanation": "Incorrect. Azure Monitor collects and analyses telemetry (metrics, logs) from Azure resources. It is not a financial planning or cost comparison tool."
+        }
       },
-      "b": {
-        "text": "Pay-as-you-go",
-        "is_true": false,
-        "explanation": "Incorrect. Pay-as-you-go is the standard consumption pricing model with no commitment and no upfront discount."
-      },
-      "c": {
-        "text": "Reserved Instances",
-        "is_true": true,
-        "explanation": "Correct. Azure Reserved Instances (also called Azure Reservations) allow you to commit to a specific resource type for 1 or 3 years in exchange for discounts of up to 72% compared to pay-as-you-go pricing. The reservation can be paid upfront or monthly."
-      },
-      "d": {
-        "text": "Azure Hybrid Benefit",
-        "is_true": false,
-        "explanation": "Incorrect. Azure Hybrid Benefit is a licensing benefit that lets you reuse existing on-premises Windows Server or SQL Server licenses in Azure, reducing software costs. It is not a compute commitment model."
-      }
+      "correct_answer": [
+        "b"
+      ]
     },
-    "correct_answer": "c"
-  },
-  {
-    "question_id": 4,
-    "question_text": "Which factor does NOT directly affect the cost of Azure services?",
-    "options": {
-      "a": {
-        "text": "The Azure region where the resource is deployed",
-        "is_true": false,
-        "explanation": "Incorrect — this does affect cost. The same resource type in different Azure regions can have different prices. US regions are generally cheaper than European or emerging market regions."
+    {
+      "question_id": 3,
+      "question_text": "A company commits to using a specific Azure VM type for three years in exchange for a significant discount. What is this pricing model called?",
+      "options": {
+        "a": {
+          "text": "Spot pricing",
+          "is_true": false,
+          "explanation": "Incorrect. Spot pricing (Azure Spot VMs) uses surplus Azure capacity at deep discounts (up to 90%) but can be evicted with 30 seconds notice. It requires no commitment."
+        },
+        "b": {
+          "text": "Pay-as-you-go",
+          "is_true": false,
+          "explanation": "Incorrect. Pay-as-you-go is the standard consumption pricing model with no commitment and no upfront discount."
+        },
+        "c": {
+          "text": "Reserved Instances",
+          "is_true": true,
+          "explanation": "Correct. Azure Reserved Instances (also called Azure Reservations) allow you to commit to a specific resource type for 1 or 3 years in exchange for discounts of up to 72% compared to pay-as-you-go pricing. The reservation can be paid upfront or monthly."
+        },
+        "d": {
+          "text": "Azure Hybrid Benefit",
+          "is_true": false,
+          "explanation": "Incorrect. Azure Hybrid Benefit is a licensing benefit that lets you reuse existing on-premises Windows Server or SQL Server licenses in Azure, reducing software costs. It is not a compute commitment model."
+        }
       },
-      "b": {
-        "text": "The number of Azure support engineers working at Microsoft",
-        "is_true": true,
-        "explanation": "Correct. The number of Microsoft support engineers has no bearing on the cost of Azure services. Azure pricing is determined by resource consumption, region, commitment model, and licensing — not Microsoft's staffing levels."
-      },
-      "c": {
-        "text": "The amount of outbound data transfer from Azure",
-        "is_true": false,
-        "explanation": "Incorrect — this does affect cost. Azure charges for data egress (outbound transfer). Inbound data to Azure is free, but outbound transfer is billed based on zone and volume."
-      },
-      "d": {
-        "text": "Whether a Reserved Instance or pay-as-you-go pricing is used",
-        "is_true": false,
-        "explanation": "Incorrect — this does affect cost. Reserved Instances provide up to 72% savings over pay-as-you-go pricing for the same VM type."
-      }
+      "correct_answer": [
+        "c"
+      ]
     },
-    "correct_answer": "b"
-  },
-  {
-    "question_id": 5,
-    "question_text": "What is the purpose of resource tags in Azure cost management?",
-    "options": {
-      "a": {
-        "text": "Tags automatically apply RBAC permissions to resources",
-        "is_true": false,
-        "explanation": "Incorrect. Tags are metadata labels. They do not automatically grant or restrict permissions. RBAC is configured separately."
+    {
+      "question_id": 4,
+      "question_text": "Which factor does NOT directly affect the cost of Azure services?",
+      "options": {
+        "a": {
+          "text": "The Azure region where the resource is deployed",
+          "is_true": false,
+          "explanation": "Incorrect — this does affect cost. The same resource type in different Azure regions can have different prices. US regions are generally cheaper than European or emerging market regions."
+        },
+        "b": {
+          "text": "The number of Azure support engineers working at Microsoft",
+          "is_true": true,
+          "explanation": "Correct. The number of Microsoft support engineers has no bearing on the cost of Azure services. Azure pricing is determined by resource consumption, region, commitment model, and licensing — not Microsoft's staffing levels."
+        },
+        "c": {
+          "text": "The amount of outbound data transfer from Azure",
+          "is_true": false,
+          "explanation": "Incorrect — this does affect cost. Azure charges for data egress (outbound transfer). Inbound data to Azure is free, but outbound transfer is billed based on zone and volume."
+        },
+        "d": {
+          "text": "Whether a Reserved Instance or pay-as-you-go pricing is used",
+          "is_true": false,
+          "explanation": "Incorrect — this does affect cost. Reserved Instances provide up to 72% savings over pay-as-you-go pricing for the same VM type."
+        }
       },
-      "b": {
-        "text": "Tags allow you to categorize resources so you can track and allocate costs by team, project, or environment",
-        "is_true": true,
-        "explanation": "Correct. Tags are name/value pairs you attach to resources (e.g., Department=Finance, Project=Relaunch). In Azure Cost Management, you can filter and group costs by tag, making it easy to see how much each team, project, or cost center is spending."
-      },
-      "c": {
-        "text": "Tags cause resources with the same tag to share the same billing subscription",
-        "is_true": false,
-        "explanation": "Incorrect. Tags are metadata only. Resources always bill to the subscription they belong to, regardless of tags."
-      },
-      "d": {
-        "text": "Tags are mandatory and must be applied to every resource before it can be deployed",
-        "is_true": false,
-        "explanation": "Incorrect. Tags are optional by default. You can use Azure Policy to enforce tag requirements, but out of the box they are not mandatory."
-      }
+      "correct_answer": [
+        "b"
+      ]
     },
-    "correct_answer": "b"
-  },
-  {
-    "question_id": 6,
-    "question_text": "Azure Spot VMs offer up to 90% discount compared to pay-as-you-go pricing. What is the trade-off?",
-    "options": {
-      "a": {
-        "text": "Spot VMs can only run Windows workloads",
-        "is_true": false,
-        "explanation": "Incorrect. Azure Spot VMs support both Windows and Linux. The limitation is about availability and eviction, not the operating system."
+    {
+      "question_id": 5,
+      "question_text": "What is the purpose of resource tags in Azure cost management?",
+      "options": {
+        "a": {
+          "text": "Tags automatically apply RBAC permissions to resources",
+          "is_true": false,
+          "explanation": "Incorrect. Tags are metadata labels. They do not automatically grant or restrict permissions. RBAC is configured separately."
+        },
+        "b": {
+          "text": "Tags allow you to categorize resources so you can track and allocate costs by team, project, or environment",
+          "is_true": true,
+          "explanation": "Correct. Tags are name/value pairs you attach to resources (e.g., Department=Finance, Project=Relaunch). In Azure Cost Management, you can filter and group costs by tag, making it easy to see how much each team, project, or cost center is spending."
+        },
+        "c": {
+          "text": "Tags cause resources with the same tag to share the same billing subscription",
+          "is_true": false,
+          "explanation": "Incorrect. Tags are metadata only. Resources always bill to the subscription they belong to, regardless of tags."
+        },
+        "d": {
+          "text": "Tags are mandatory and must be applied to every resource before it can be deployed",
+          "is_true": false,
+          "explanation": "Incorrect. Tags are optional by default. You can use Azure Policy to enforce tag requirements, but out of the box they are not mandatory."
+        }
       },
-      "b": {
-        "text": "Spot VMs have reduced CPU performance compared to regular VMs",
-        "is_true": false,
-        "explanation": "Incorrect. Spot VMs run on the same hardware as regular VMs with the same performance. The trade-off is availability, not performance."
-      },
-      "c": {
-        "text": "Spot VMs can be evicted with 30 seconds notice when Azure needs the capacity back",
-        "is_true": true,
-        "explanation": "Correct. Spot VMs use Azure's spare capacity. When Azure needs that capacity for regular customers, your Spot VM can be evicted with only a 30-second warning. This makes Spot VMs suitable only for fault-tolerant, interruptible workloads such as batch processing, rendering, or dev/test."
-      },
-      "d": {
-        "text": "Spot VMs can only run for a maximum of 24 hours before being terminated",
-        "is_true": false,
-        "explanation": "Incorrect. There is no 24-hour time limit on Spot VMs. They can run indefinitely as long as Azure has spare capacity. They are evicted based on capacity demand, not time."
-      }
+      "correct_answer": [
+        "b"
+      ]
     },
-    "correct_answer": "c"
-  },
-  {
-    "question_id": 7,
-    "question_text": "Your Azure Advisor dashboard shows that you have several virtual machines with CPU utilization consistently below 5% for 14 days. What type of recommendation is Advisor likely making?",
-    "options": {
-      "a": {
-        "text": "A security recommendation to enable encryption on those VMs",
-        "is_true": false,
-        "explanation": "Incorrect. Low CPU utilization is a resource efficiency issue, not a security concern. Advisor categorises this as a cost recommendation."
+    {
+      "question_id": 6,
+      "question_text": "Azure Spot VMs offer up to 90% discount compared to pay-as-you-go pricing. What is the trade-off?",
+      "options": {
+        "a": {
+          "text": "Spot VMs can only run Windows workloads",
+          "is_true": false,
+          "explanation": "Incorrect. Azure Spot VMs support both Windows and Linux. The limitation is about availability and eviction, not the operating system."
+        },
+        "b": {
+          "text": "Spot VMs have reduced CPU performance compared to regular VMs",
+          "is_true": false,
+          "explanation": "Incorrect. Spot VMs run on the same hardware as regular VMs with the same performance. The trade-off is availability, not performance."
+        },
+        "c": {
+          "text": "Spot VMs can be evicted with 30 seconds notice when Azure needs the capacity back",
+          "is_true": true,
+          "explanation": "Correct. Spot VMs use Azure's spare capacity. When Azure needs that capacity for regular customers, your Spot VM can be evicted with only a 30-second warning. This makes Spot VMs suitable only for fault-tolerant, interruptible workloads such as batch processing, rendering, or dev/test."
+        },
+        "d": {
+          "text": "Spot VMs can only run for a maximum of 24 hours before being terminated",
+          "is_true": false,
+          "explanation": "Incorrect. There is no 24-hour time limit on Spot VMs. They can run indefinitely as long as Azure has spare capacity. They are evicted based on capacity demand, not time."
+        }
       },
-      "b": {
-        "text": "A cost recommendation to shut down or right-size the underutilized VMs",
-        "is_true": true,
-        "explanation": "Correct. Azure Advisor monitors your resource usage and identifies underutilized resources. VMs consistently running at very low CPU utilization are flagged under the Cost category with recommendations to either shut them down or resize them to a smaller SKU, potentially saving significant money."
-      },
-      "c": {
-        "text": "A reliability recommendation to add redundancy to those VMs",
-        "is_true": false,
-        "explanation": "Incorrect. Advisor reliability recommendations focus on things like missing backups or lack of availability zone deployment, not on CPU utilization percentages."
-      },
-      "d": {
-        "text": "A performance recommendation to upgrade those VMs to a larger size",
-        "is_true": false,
-        "explanation": "Incorrect. A performance recommendation would suggest upgrading underperforming resources. VMs at 5% CPU are over-provisioned, not underperforming — this is a cost issue, not a performance one."
-      }
+      "correct_answer": [
+        "c"
+      ]
     },
-    "correct_answer": "b"
-  },
-  {
-    "question_id": 8,
-    "question_text": "Which Azure support plan is included at no additional cost with every Azure subscription?",
-    "options": {
-      "a": {
-        "text": "Developer",
-        "is_true": false,
-        "explanation": "Incorrect. Developer is the cheapest paid support plan (~$29/month). It is not included free with a subscription."
+    {
+      "question_id": 7,
+      "question_text": "Your Azure Advisor dashboard shows that you have several virtual machines with CPU utilization consistently below 5% for 14 days. What type of recommendation is Advisor likely making?",
+      "options": {
+        "a": {
+          "text": "A security recommendation to enable encryption on those VMs",
+          "is_true": false,
+          "explanation": "Incorrect. Low CPU utilization is a resource efficiency issue, not a security concern. Advisor categorises this as a cost recommendation."
+        },
+        "b": {
+          "text": "A cost recommendation to shut down or right-size the underutilized VMs",
+          "is_true": true,
+          "explanation": "Correct. Azure Advisor monitors your resource usage and identifies underutilized resources. VMs consistently running at very low CPU utilization are flagged under the Cost category with recommendations to either shut them down or resize them to a smaller SKU, potentially saving significant money."
+        },
+        "c": {
+          "text": "A reliability recommendation to add redundancy to those VMs",
+          "is_true": false,
+          "explanation": "Incorrect. Advisor reliability recommendations focus on things like missing backups or lack of availability zone deployment, not on CPU utilization percentages."
+        },
+        "d": {
+          "text": "A performance recommendation to upgrade those VMs to a larger size",
+          "is_true": false,
+          "explanation": "Incorrect. A performance recommendation would suggest upgrading underperforming resources. VMs at 5% CPU are over-provisioned, not underperforming — this is a cost issue, not a performance one."
+        }
       },
-      "b": {
-        "text": "Standard",
-        "is_true": false,
-        "explanation": "Incorrect. Standard is a paid plan (~$100/month) that adds 24/7 technical support. It is not included free."
-      },
-      "c": {
-        "text": "Basic",
-        "is_true": true,
-        "explanation": "Correct. The Basic support plan is included at no cost with every Azure subscription. It covers billing and subscription management support, access to Azure documentation, community forums, and Azure Advisor recommendations. It does not include technical support for Azure services."
-      },
-      "d": {
-        "text": "Professional Direct",
-        "is_true": false,
-        "explanation": "Incorrect. Professional Direct is a premium paid plan (~$1,000/month) designed for business-critical environments. It is not included free."
-      }
+      "correct_answer": [
+        "b"
+      ]
     },
-    "correct_answer": "c"
-  },
-  {
-    "question_id": 9,
-    "question_text": "A company runs a production e-commerce platform on Azure and needs 24/7 technical support by phone or email. What is the minimum support plan that meets this requirement?",
-    "options": {
-      "a": {
-        "text": "Basic",
-        "is_true": false,
-        "explanation": "Incorrect. Basic does not include any technical support for Azure services. It only covers billing/subscription management and self-help resources."
+    {
+      "question_id": 8,
+      "question_text": "Which Azure support plan is included at no additional cost with every Azure subscription?",
+      "options": {
+        "a": {
+          "text": "Developer",
+          "is_true": false,
+          "explanation": "Incorrect. Developer is the cheapest paid support plan (~$29/month). It is not included free with a subscription."
+        },
+        "b": {
+          "text": "Standard",
+          "is_true": false,
+          "explanation": "Incorrect. Standard is a paid plan (~$100/month) that adds 24/7 technical support. It is not included free."
+        },
+        "c": {
+          "text": "Basic",
+          "is_true": true,
+          "explanation": "Correct. The Basic support plan is included at no cost with every Azure subscription. It covers billing and subscription management support, access to Azure documentation, community forums, and Azure Advisor recommendations. It does not include technical support for Azure services."
+        },
+        "d": {
+          "text": "Professional Direct",
+          "is_true": false,
+          "explanation": "Incorrect. Professional Direct is a premium paid plan (~$1,000/month) designed for business-critical environments. It is not included free."
+        }
       },
-      "b": {
-        "text": "Developer",
-        "is_true": false,
-        "explanation": "Incorrect. Developer provides email-only support during business hours only — not 24/7. It is intended for trial and non-production environments."
-      },
-      "c": {
-        "text": "Standard",
-        "is_true": true,
-        "explanation": "Correct. Standard is the minimum plan that includes 24/7 technical support by email and phone. It also provides a 1-hour Severity A response time SLA, making it the recommended entry-level plan for production workloads."
-      },
-      "d": {
-        "text": "Professional Direct",
-        "is_true": false,
-        "explanation": "Incorrect. Professional Direct does include 24/7 support and adds proactive advisory services, but it is not the minimum plan that meets the requirement. Standard already satisfies 24/7 support at a lower cost."
-      }
+      "correct_answer": [
+        "c"
+      ]
     },
-    "correct_answer": "c"
-  },
-  {
-    "question_id": 10,
-    "question_text": "Which Azure support plan provides a dedicated Technical Account Manager (TAM) and is designed for enterprise-wide Microsoft support coverage?",
-    "options": {
-      "a": {
-        "text": "Standard",
-        "is_true": false,
-        "explanation": "Incorrect. Standard provides 24/7 technical support and a 1-hour Severity A response time but does not include a dedicated Technical Account Manager."
+    {
+      "question_id": 9,
+      "question_text": "A company runs a production e-commerce platform on Azure and needs 24/7 technical support by phone or email. What is the minimum support plan that meets this requirement?",
+      "options": {
+        "a": {
+          "text": "Basic",
+          "is_true": false,
+          "explanation": "Incorrect. Basic does not include any technical support for Azure services. It only covers billing/subscription management and self-help resources."
+        },
+        "b": {
+          "text": "Developer",
+          "is_true": false,
+          "explanation": "Incorrect. Developer provides email-only support during business hours only — not 24/7. It is intended for trial and non-production environments."
+        },
+        "c": {
+          "text": "Standard",
+          "is_true": true,
+          "explanation": "Correct. Standard is the minimum plan that includes 24/7 technical support by email and phone. It also provides a 1-hour Severity A response time SLA, making it the recommended entry-level plan for production workloads."
+        },
+        "d": {
+          "text": "Professional Direct",
+          "is_true": false,
+          "explanation": "Incorrect. Professional Direct does include 24/7 support and adds proactive advisory services, but it is not the minimum plan that meets the requirement. Standard already satisfies 24/7 support at a lower cost."
+        }
       },
-      "b": {
-        "text": "Professional Direct",
-        "is_true": false,
-        "explanation": "Incorrect. Professional Direct provides access to a pool of ProDirect delivery managers and proactive advisory services, but not a fully dedicated Technical Account Manager. That level belongs to Premier/Unified."
-      },
-      "c": {
-        "text": "Developer",
-        "is_true": false,
-        "explanation": "Incorrect. Developer is an entry-level paid plan for non-production use. It does not include advisory services or a Technical Account Manager."
-      },
-      "d": {
-        "text": "Premier / Unified",
-        "is_true": true,
-        "explanation": "Correct. The Premier (now rebranded as Microsoft Unified) support plan is the top-tier enterprise offering. It includes a dedicated Technical Account Manager, 15-minute Severity A response time, on-site support options, and coverage across all Microsoft products — not just Azure."
-      }
+      "correct_answer": [
+        "c"
+      ]
     },
-    "correct_answer": "d"
-  },
-  {
-    "question_id": 11,
-    "question_text": "An Azure support ticket is raised because a production system is completely down and business operations have halted. Which severity level applies, and which plan is the minimum to receive a 1-hour response time SLA for this case?",
-    "options": {
-      "a": {
-        "text": "Severity C — Developer plan",
-        "is_true": false,
-        "explanation": "Incorrect. Severity C applies to minimal business impact with a workaround available. Developer plan does not provide 24/7 support or a 1-hour SLA."
+    {
+      "question_id": 10,
+      "question_text": "Which Azure support plan provides a dedicated Technical Account Manager (TAM) and is designed for enterprise-wide Microsoft support coverage?",
+      "options": {
+        "a": {
+          "text": "Standard",
+          "is_true": false,
+          "explanation": "Incorrect. Standard provides 24/7 technical support and a 1-hour Severity A response time but does not include a dedicated Technical Account Manager."
+        },
+        "b": {
+          "text": "Professional Direct",
+          "is_true": false,
+          "explanation": "Incorrect. Professional Direct provides access to a pool of ProDirect delivery managers and proactive advisory services, but not a fully dedicated Technical Account Manager. That level belongs to Premier/Unified."
+        },
+        "c": {
+          "text": "Developer",
+          "is_true": false,
+          "explanation": "Incorrect. Developer is an entry-level paid plan for non-production use. It does not include advisory services or a Technical Account Manager."
+        },
+        "d": {
+          "text": "Premier / Unified",
+          "is_true": true,
+          "explanation": "Correct. The Premier (now rebranded as Microsoft Unified) support plan is the top-tier enterprise offering. It includes a dedicated Technical Account Manager, 15-minute Severity A response time, on-site support options, and coverage across all Microsoft products — not just Azure."
+        }
       },
-      "b": {
-        "text": "Severity A — Standard plan",
-        "is_true": true,
-        "explanation": "Correct. A production system that is completely down with full business impact is classified as Severity A (Critical). The Standard support plan is the minimum plan that includes a 1-hour response time SLA for Severity A cases, along with 24/7 phone and email support."
-      },
-      "c": {
-        "text": "Severity B — Standard plan",
-        "is_true": false,
-        "explanation": "Incorrect. Severity B applies to significant but partial impact where the system is degraded but still running. A completely down production system is Severity A."
-      },
-      "d": {
-        "text": "Severity A — Professional Direct plan",
-        "is_true": false,
-        "explanation": "Incorrect. Professional Direct does provide a 1-hour Severity A SLA plus additional proactive services, but it is not the minimum plan for a 1-hour response time. Standard already meets this requirement at a lower cost."
-      }
+      "correct_answer": [
+        "d"
+      ]
     },
-    "correct_answer": "b"
-  }
-]
+    {
+      "question_id": 11,
+      "question_text": "An Azure support ticket is raised because a production system is completely down and business operations have halted. Which severity level applies, and which plan is the minimum to receive a 1-hour response time SLA for this case?",
+      "options": {
+        "a": {
+          "text": "Severity C — Developer plan",
+          "is_true": false,
+          "explanation": "Incorrect. Severity C applies to minimal business impact with a workaround available. Developer plan does not provide 24/7 support or a 1-hour SLA."
+        },
+        "b": {
+          "text": "Severity A — Standard plan",
+          "is_true": true,
+          "explanation": "Correct. A production system that is completely down with full business impact is classified as Severity A (Critical). The Standard support plan is the minimum plan that includes a 1-hour response time SLA for Severity A cases, along with 24/7 phone and email support."
+        },
+        "c": {
+          "text": "Severity B — Standard plan",
+          "is_true": false,
+          "explanation": "Incorrect. Severity B applies to significant but partial impact where the system is degraded but still running. A completely down production system is Severity A."
+        },
+        "d": {
+          "text": "Severity A — Professional Direct plan",
+          "is_true": false,
+          "explanation": "Incorrect. Professional Direct does provide a 1-hour Severity A SLA plus additional proactive services, but it is not the minimum plan for a 1-hour response time. Standard already meets this requirement at a lower cost."
+        }
+      },
+      "correct_answer": [
+        "b"
+      ]
+    }
+  ]
+}

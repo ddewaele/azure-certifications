@@ -1,545 +1,593 @@
-[
-  {
-    "question_id": 1,
-    "question_text": "A company wants to build a system that can automatically sort incoming customer support emails into categories such as 'billing', 'technical', and 'general inquiry'. Which type of AI workload is this?",
-    "options": {
-      "a": {
-        "text": "Computer vision",
-        "is_true": false,
-        "explanation": "Incorrect. Computer vision deals with analyzing images and video, not categorizing text."
-      },
-      "b": {
-        "text": "Natural language processing",
-        "is_true": true,
-        "explanation": "Correct. Classifying text into categories based on its content is a natural language processing (NLP) workload — specifically text classification."
-      },
-      "c": {
-        "text": "Anomaly detection",
-        "is_true": false,
-        "explanation": "Incorrect. Anomaly detection identifies unusual patterns in data, not text categorization."
-      },
-      "d": {
-        "text": "Generative AI",
-        "is_true": false,
-        "explanation": "Incorrect. Generative AI creates new content. Sorting emails into existing categories is a classification task, not content generation."
-      }
-    },
-    "correct_answer": "b"
+{
+  "meta": {
+    "title": "AI Fundamentals – AI Concepts & Machine Learning",
+    "subject": "AI-900",
+    "version": "1.0.0",
+    "created": "2026-03-22"
   },
-  {
-    "question_id": 2,
-    "question_text": "A hospital is building an AI system to assist doctors in diagnosing diseases from medical images. Which principle of responsible AI should be the highest priority to ensure the system does not produce dangerous misdiagnoses?",
-    "options": {
-      "a": {
-        "text": "Inclusiveness",
-        "is_true": false,
-        "explanation": "Incorrect. Inclusiveness ensures AI is accessible to all users, but the primary concern with misdiagnosis is patient safety."
+  "questions": [
+    {
+      "question_id": 1,
+      "question_text": "A company wants to build a system that can automatically sort incoming customer support emails into categories such as 'billing', 'technical', and 'general inquiry'. Which type of AI workload is this?",
+      "options": {
+        "a": {
+          "text": "Computer vision",
+          "is_true": false,
+          "explanation": "Incorrect. Computer vision deals with analyzing images and video, not categorizing text."
+        },
+        "b": {
+          "text": "Natural language processing",
+          "is_true": true,
+          "explanation": "Correct. Classifying text into categories based on its content is a natural language processing (NLP) workload — specifically text classification."
+        },
+        "c": {
+          "text": "Anomaly detection",
+          "is_true": false,
+          "explanation": "Incorrect. Anomaly detection identifies unusual patterns in data, not text categorization."
+        },
+        "d": {
+          "text": "Generative AI",
+          "is_true": false,
+          "explanation": "Incorrect. Generative AI creates new content. Sorting emails into existing categories is a classification task, not content generation."
+        }
       },
-      "b": {
-        "text": "Transparency",
-        "is_true": false,
-        "explanation": "Incorrect. Transparency is important for understanding how the system works, but the most critical concern with misdiagnosis is safety."
-      },
-      "c": {
-        "text": "Reliability and safety",
-        "is_true": true,
-        "explanation": "Correct. Reliability and safety ensure AI systems perform consistently and do not cause harm. In a medical diagnosis scenario, an unreliable system could produce dangerous misdiagnoses that harm patients."
-      },
-      "d": {
-        "text": "Accountability",
-        "is_true": false,
-        "explanation": "Incorrect. Accountability ensures people are responsible for AI outcomes, but the most urgent concern with medical misdiagnosis is reliability and safety."
-      }
+      "correct_answer": [
+        "b"
+      ]
     },
-    "correct_answer": "c"
-  },
-  {
-    "question_id": 3,
-    "question_type": "multiple_select",
-    "question_text": "Which TWO of the following are principles of Microsoft's responsible AI framework?",
-    "options": {
-      "a": {
-        "text": "Profitability",
-        "is_true": false,
-        "explanation": "Incorrect. Profitability is a business objective, not one of Microsoft's six responsible AI principles."
+    {
+      "question_id": 2,
+      "question_text": "A hospital is building an AI system to assist doctors in diagnosing diseases from medical images. Which principle of responsible AI should be the highest priority to ensure the system does not produce dangerous misdiagnoses?",
+      "options": {
+        "a": {
+          "text": "Inclusiveness",
+          "is_true": false,
+          "explanation": "Incorrect. Inclusiveness ensures AI is accessible to all users, but the primary concern with misdiagnosis is patient safety."
+        },
+        "b": {
+          "text": "Transparency",
+          "is_true": false,
+          "explanation": "Incorrect. Transparency is important for understanding how the system works, but the most critical concern with misdiagnosis is safety."
+        },
+        "c": {
+          "text": "Reliability and safety",
+          "is_true": true,
+          "explanation": "Correct. Reliability and safety ensure AI systems perform consistently and do not cause harm. In a medical diagnosis scenario, an unreliable system could produce dangerous misdiagnoses that harm patients."
+        },
+        "d": {
+          "text": "Accountability",
+          "is_true": false,
+          "explanation": "Incorrect. Accountability ensures people are responsible for AI outcomes, but the most urgent concern with medical misdiagnosis is reliability and safety."
+        }
       },
-      "b": {
-        "text": "Fairness",
-        "is_true": true,
-        "explanation": "Correct. Fairness is one of Microsoft's six responsible AI principles, requiring that AI systems treat all people equitably without bias."
-      },
-      "c": {
-        "text": "Inclusiveness",
-        "is_true": true,
-        "explanation": "Correct. Inclusiveness is one of the six principles, ensuring AI systems empower everyone and engage people regardless of physical ability, gender, ethnicity, or other factors."
-      },
-      "d": {
-        "text": "Performance",
-        "is_true": false,
-        "explanation": "Incorrect. Performance is a general engineering concern, not one of Microsoft's six responsible AI principles (fairness, reliability & safety, privacy & security, inclusiveness, transparency, accountability)."
-      }
+      "correct_answer": [
+        "c"
+      ]
     },
-    "correct_answer": ["b", "c"]
-  },
-  {
-    "question_id": 4,
-    "question_text": "A company scans incoming invoices and extracts the vendor name, date, and total amount from the document images. Which type of AI workload does this describe?",
-    "options": {
-      "a": {
-        "text": "Generative AI",
-        "is_true": false,
-        "explanation": "Incorrect. Generative AI creates new content; this scenario extracts information from existing documents."
+    {
+      "question_id": 3,
+      "question_text": "Which TWO of the following are principles of Microsoft's responsible AI framework?",
+      "options": {
+        "a": {
+          "text": "Profitability",
+          "is_true": false,
+          "explanation": "Incorrect. Profitability is a business objective, not one of Microsoft's six responsible AI principles."
+        },
+        "b": {
+          "text": "Fairness",
+          "is_true": true,
+          "explanation": "Correct. Fairness is one of Microsoft's six responsible AI principles, requiring that AI systems treat all people equitably without bias."
+        },
+        "c": {
+          "text": "Inclusiveness",
+          "is_true": true,
+          "explanation": "Correct. Inclusiveness is one of the six principles, ensuring AI systems empower everyone and engage people regardless of physical ability, gender, ethnicity, or other factors."
+        },
+        "d": {
+          "text": "Performance",
+          "is_true": false,
+          "explanation": "Incorrect. Performance is a general engineering concern, not one of Microsoft's six responsible AI principles (fairness, reliability & safety, privacy & security, inclusiveness, transparency, accountability)."
+        }
       },
-      "b": {
-        "text": "Document processing",
-        "is_true": true,
-        "explanation": "Correct. Extracting structured data (vendor name, date, total) from document images is a document processing / information extraction workload."
-      },
-      "c": {
-        "text": "Speech recognition",
-        "is_true": false,
-        "explanation": "Incorrect. Speech recognition converts spoken audio to text. This scenario involves processing document images, not audio."
-      },
-      "d": {
-        "text": "Clustering",
-        "is_true": false,
-        "explanation": "Incorrect. Clustering groups similar data points together. This scenario is about extracting specific fields from documents."
-      }
+      "correct_answer": [
+        "b",
+        "c"
+      ]
     },
-    "correct_answer": "b"
-  },
-  {
-    "question_id": 5,
-    "question_text": "Which responsible AI principle requires that AI systems should be understandable, so that users can comprehend how and why the system makes decisions?",
-    "options": {
-      "a": {
-        "text": "Accountability",
-        "is_true": false,
-        "explanation": "Incorrect. Accountability means people are answerable for how the AI system operates, but understanding the decision-making process is about transparency."
+    {
+      "question_id": 4,
+      "question_text": "A company scans incoming invoices and extracts the vendor name, date, and total amount from the document images. Which type of AI workload does this describe?",
+      "options": {
+        "a": {
+          "text": "Generative AI",
+          "is_true": false,
+          "explanation": "Incorrect. Generative AI creates new content; this scenario extracts information from existing documents."
+        },
+        "b": {
+          "text": "Document processing",
+          "is_true": true,
+          "explanation": "Correct. Extracting structured data (vendor name, date, total) from document images is a document processing / information extraction workload."
+        },
+        "c": {
+          "text": "Speech recognition",
+          "is_true": false,
+          "explanation": "Incorrect. Speech recognition converts spoken audio to text. This scenario involves processing document images, not audio."
+        },
+        "d": {
+          "text": "Clustering",
+          "is_true": false,
+          "explanation": "Incorrect. Clustering groups similar data points together. This scenario is about extracting specific fields from documents."
+        }
       },
-      "b": {
-        "text": "Privacy and security",
-        "is_true": false,
-        "explanation": "Incorrect. Privacy and security deal with protecting data and ensuring secure access, not with explaining how AI decisions are made."
-      },
-      "c": {
-        "text": "Transparency",
-        "is_true": true,
-        "explanation": "Correct. Transparency means AI systems should be understandable so users can comprehend how and why the system makes decisions, enabling informed trust."
-      },
-      "d": {
-        "text": "Fairness",
-        "is_true": false,
-        "explanation": "Incorrect. Fairness ensures AI treats all people equitably, not that the decision process is understandable."
-      }
+      "correct_answer": [
+        "b"
+      ]
     },
-    "correct_answer": "c"
-  },
-  {
-    "question_id": 6,
-    "question_text": "An AI model analyzes photographs of products on an assembly line and rejects items with visible defects. Which type of AI workload is this?",
-    "options": {
-      "a": {
-        "text": "Natural language processing",
-        "is_true": false,
-        "explanation": "Incorrect. NLP processes text and spoken language, not images of products."
+    {
+      "question_id": 5,
+      "question_text": "Which responsible AI principle requires that AI systems should be understandable, so that users can comprehend how and why the system makes decisions?",
+      "options": {
+        "a": {
+          "text": "Accountability",
+          "is_true": false,
+          "explanation": "Incorrect. Accountability means people are answerable for how the AI system operates, but understanding the decision-making process is about transparency."
+        },
+        "b": {
+          "text": "Privacy and security",
+          "is_true": false,
+          "explanation": "Incorrect. Privacy and security deal with protecting data and ensuring secure access, not with explaining how AI decisions are made."
+        },
+        "c": {
+          "text": "Transparency",
+          "is_true": true,
+          "explanation": "Correct. Transparency means AI systems should be understandable so users can comprehend how and why the system makes decisions, enabling informed trust."
+        },
+        "d": {
+          "text": "Fairness",
+          "is_true": false,
+          "explanation": "Incorrect. Fairness ensures AI treats all people equitably, not that the decision process is understandable."
+        }
       },
-      "b": {
-        "text": "Computer vision",
-        "is_true": true,
-        "explanation": "Correct. Analyzing photographs to detect visual defects is a computer vision workload — specifically image classification or object detection for quality control."
-      },
-      "c": {
-        "text": "Generative AI",
-        "is_true": false,
-        "explanation": "Incorrect. Generative AI creates new content. Detecting defects in existing images is an analytical computer vision task."
-      },
-      "d": {
-        "text": "Regression",
-        "is_true": false,
-        "explanation": "Incorrect. Regression predicts numeric values. Identifying defects is a classification/detection task within computer vision."
-      }
+      "correct_answer": [
+        "c"
+      ]
     },
-    "correct_answer": "b"
-  },
-  {
-    "question_id": 7,
-    "question_text": "Which responsible AI principle addresses the concern that an AI-powered loan approval system might systematically deny applications from certain demographic groups?",
-    "options": {
-      "a": {
-        "text": "Reliability and safety",
-        "is_true": false,
-        "explanation": "Incorrect. Reliability and safety ensure the system works consistently without causing harm, but systematic bias against demographics is a fairness issue."
+    {
+      "question_id": 6,
+      "question_text": "An AI model analyzes photographs of products on an assembly line and rejects items with visible defects. Which type of AI workload is this?",
+      "options": {
+        "a": {
+          "text": "Natural language processing",
+          "is_true": false,
+          "explanation": "Incorrect. NLP processes text and spoken language, not images of products."
+        },
+        "b": {
+          "text": "Computer vision",
+          "is_true": true,
+          "explanation": "Correct. Analyzing photographs to detect visual defects is a computer vision workload — specifically image classification or object detection for quality control."
+        },
+        "c": {
+          "text": "Generative AI",
+          "is_true": false,
+          "explanation": "Incorrect. Generative AI creates new content. Detecting defects in existing images is an analytical computer vision task."
+        },
+        "d": {
+          "text": "Regression",
+          "is_true": false,
+          "explanation": "Incorrect. Regression predicts numeric values. Identifying defects is a classification/detection task within computer vision."
+        }
       },
-      "b": {
-        "text": "Fairness",
-        "is_true": true,
-        "explanation": "Correct. Fairness requires that AI systems treat all people equitably. A loan system that systematically disadvantages certain demographics violates this principle."
-      },
-      "c": {
-        "text": "Transparency",
-        "is_true": false,
-        "explanation": "Incorrect. Transparency is about understanding how decisions are made. The discriminatory outcomes themselves are a fairness concern."
-      },
-      "d": {
-        "text": "Inclusiveness",
-        "is_true": false,
-        "explanation": "Incorrect. Inclusiveness ensures AI is accessible and empowers everyone, but discriminatory treatment in loan decisions is specifically a fairness issue."
-      }
+      "correct_answer": [
+        "b"
+      ]
     },
-    "correct_answer": "b"
-  },
-  {
-    "question_id": 8,
-    "question_type": "multiple_select",
-    "question_text": "Which TWO of the following are examples of generative AI workloads?",
-    "options": {
-      "a": {
-        "text": "Detecting objects in security camera footage",
-        "is_true": false,
-        "explanation": "Incorrect. Object detection in video is a computer vision workload, not generative AI."
+    {
+      "question_id": 7,
+      "question_text": "Which responsible AI principle addresses the concern that an AI-powered loan approval system might systematically deny applications from certain demographic groups?",
+      "options": {
+        "a": {
+          "text": "Reliability and safety",
+          "is_true": false,
+          "explanation": "Incorrect. Reliability and safety ensure the system works consistently without causing harm, but systematic bias against demographics is a fairness issue."
+        },
+        "b": {
+          "text": "Fairness",
+          "is_true": true,
+          "explanation": "Correct. Fairness requires that AI systems treat all people equitably. A loan system that systematically disadvantages certain demographics violates this principle."
+        },
+        "c": {
+          "text": "Transparency",
+          "is_true": false,
+          "explanation": "Incorrect. Transparency is about understanding how decisions are made. The discriminatory outcomes themselves are a fairness concern."
+        },
+        "d": {
+          "text": "Inclusiveness",
+          "is_true": false,
+          "explanation": "Incorrect. Inclusiveness ensures AI is accessible and empowers everyone, but discriminatory treatment in loan decisions is specifically a fairness issue."
+        }
       },
-      "b": {
-        "text": "Generating marketing copy based on a product description",
-        "is_true": true,
-        "explanation": "Correct. Generating new text content (marketing copy) from a prompt is a generative AI workload."
-      },
-      "c": {
-        "text": "Classifying customer reviews as positive or negative",
-        "is_true": false,
-        "explanation": "Incorrect. Sentiment classification is an NLP workload, not generative AI."
-      },
-      "d": {
-        "text": "Creating an image from a text description",
-        "is_true": true,
-        "explanation": "Correct. Text-to-image generation (e.g., using DALL-E) is a generative AI workload that creates new visual content."
-      }
+      "correct_answer": [
+        "b"
+      ]
     },
-    "correct_answer": ["b", "d"]
-  },
-  {
-    "question_id": 9,
-    "question_text": "A real estate company wants to predict house prices based on features such as square footage, number of bedrooms, and location. Which type of machine learning is most appropriate?",
-    "options": {
-      "a": {
-        "text": "Classification",
-        "is_true": false,
-        "explanation": "Incorrect. Classification predicts categorical labels (e.g., 'luxury' or 'standard'), not continuous numeric values like price."
+    {
+      "question_id": 8,
+      "question_text": "Which TWO of the following are examples of generative AI workloads?",
+      "options": {
+        "a": {
+          "text": "Detecting objects in security camera footage",
+          "is_true": false,
+          "explanation": "Incorrect. Object detection in video is a computer vision workload, not generative AI."
+        },
+        "b": {
+          "text": "Generating marketing copy based on a product description",
+          "is_true": true,
+          "explanation": "Correct. Generating new text content (marketing copy) from a prompt is a generative AI workload."
+        },
+        "c": {
+          "text": "Classifying customer reviews as positive or negative",
+          "is_true": false,
+          "explanation": "Incorrect. Sentiment classification is an NLP workload, not generative AI."
+        },
+        "d": {
+          "text": "Creating an image from a text description",
+          "is_true": true,
+          "explanation": "Correct. Text-to-image generation (e.g., using DALL-E) is a generative AI workload that creates new visual content."
+        }
       },
-      "b": {
-        "text": "Clustering",
-        "is_true": false,
-        "explanation": "Incorrect. Clustering groups similar items together without labeled data. Predicting a specific price requires supervised learning."
-      },
-      "c": {
-        "text": "Regression",
-        "is_true": true,
-        "explanation": "Correct. Regression predicts continuous numeric values. Predicting house prices from features like square footage and bedrooms is a classic regression scenario."
-      },
-      "d": {
-        "text": "Reinforcement learning",
-        "is_true": false,
-        "explanation": "Incorrect. Reinforcement learning trains agents through rewards and penalties in an environment, not for predicting numeric values from features."
-      }
+      "correct_answer": [
+        "b",
+        "d"
+      ]
     },
-    "correct_answer": "c"
-  },
-  {
-    "question_id": 10,
-    "question_text": "Which evaluation metric for a regression model measures the proportion of variance in the target variable that is explained by the model, with a value of 1.0 indicating a perfect fit?",
-    "options": {
-      "a": {
-        "text": "Mean Absolute Error (MAE)",
-        "is_true": false,
-        "explanation": "Incorrect. MAE measures the average absolute difference between predicted and actual values. A perfect model has MAE = 0, not 1."
+    {
+      "question_id": 9,
+      "question_text": "A real estate company wants to predict house prices based on features such as square footage, number of bedrooms, and location. Which type of machine learning is most appropriate?",
+      "options": {
+        "a": {
+          "text": "Classification",
+          "is_true": false,
+          "explanation": "Incorrect. Classification predicts categorical labels (e.g., 'luxury' or 'standard'), not continuous numeric values like price."
+        },
+        "b": {
+          "text": "Clustering",
+          "is_true": false,
+          "explanation": "Incorrect. Clustering groups similar items together without labeled data. Predicting a specific price requires supervised learning."
+        },
+        "c": {
+          "text": "Regression",
+          "is_true": true,
+          "explanation": "Correct. Regression predicts continuous numeric values. Predicting house prices from features like square footage and bedrooms is a classic regression scenario."
+        },
+        "d": {
+          "text": "Reinforcement learning",
+          "is_true": false,
+          "explanation": "Incorrect. Reinforcement learning trains agents through rewards and penalties in an environment, not for predicting numeric values from features."
+        }
       },
-      "b": {
-        "text": "Root Mean Squared Error (RMSE)",
-        "is_true": false,
-        "explanation": "Incorrect. RMSE measures the square root of the average squared errors. A perfect model has RMSE = 0."
-      },
-      "c": {
-        "text": "R-squared (R²)",
-        "is_true": true,
-        "explanation": "Correct. R-squared (coefficient of determination) measures the proportion of variance explained by the model. A value of 1.0 means the model perfectly explains all variance; 0.0 means it explains none."
-      },
-      "d": {
-        "text": "F1 score",
-        "is_true": false,
-        "explanation": "Incorrect. F1 score is a classification metric (harmonic mean of precision and recall), not a regression metric."
-      }
+      "correct_answer": [
+        "c"
+      ]
     },
-    "correct_answer": "c"
-  },
-  {
-    "question_id": 11,
-    "question_text": "A bank wants to predict whether a loan applicant will default on their loan (yes or no). Which type of machine learning is most appropriate?",
-    "options": {
-      "a": {
-        "text": "Regression",
-        "is_true": false,
-        "explanation": "Incorrect. Regression predicts continuous numeric values, not yes/no outcomes."
+    {
+      "question_id": 10,
+      "question_text": "Which evaluation metric for a regression model measures the proportion of variance in the target variable that is explained by the model, with a value of 1.0 indicating a perfect fit?",
+      "options": {
+        "a": {
+          "text": "Mean Absolute Error (MAE)",
+          "is_true": false,
+          "explanation": "Incorrect. MAE measures the average absolute difference between predicted and actual values. A perfect model has MAE = 0, not 1."
+        },
+        "b": {
+          "text": "Root Mean Squared Error (RMSE)",
+          "is_true": false,
+          "explanation": "Incorrect. RMSE measures the square root of the average squared errors. A perfect model has RMSE = 0."
+        },
+        "c": {
+          "text": "R-squared (R²)",
+          "is_true": true,
+          "explanation": "Correct. R-squared (coefficient of determination) measures the proportion of variance explained by the model. A value of 1.0 means the model perfectly explains all variance; 0.0 means it explains none."
+        },
+        "d": {
+          "text": "F1 score",
+          "is_true": false,
+          "explanation": "Incorrect. F1 score is a classification metric (harmonic mean of precision and recall), not a regression metric."
+        }
       },
-      "b": {
-        "text": "Binary classification",
-        "is_true": true,
-        "explanation": "Correct. Predicting one of two possible outcomes (default / no default) is a binary classification problem."
-      },
-      "c": {
-        "text": "Multi-class classification",
-        "is_true": false,
-        "explanation": "Incorrect. Multi-class classification predicts one of three or more categories. With only two outcomes (yes/no), this is binary classification."
-      },
-      "d": {
-        "text": "Clustering",
-        "is_true": false,
-        "explanation": "Incorrect. Clustering is unsupervised learning that groups data without predefined labels. Predicting default requires labeled training data (supervised learning)."
-      }
+      "correct_answer": [
+        "c"
+      ]
     },
-    "correct_answer": "b"
-  },
-  {
-    "question_id": 12,
-    "question_text": "A retailer wants to group customers into segments based on purchasing behaviour, without any predefined categories. Which machine learning technique should they use?",
-    "options": {
-      "a": {
-        "text": "Regression",
-        "is_true": false,
-        "explanation": "Incorrect. Regression predicts numeric values and requires labeled training data."
+    {
+      "question_id": 11,
+      "question_text": "A bank wants to predict whether a loan applicant will default on their loan (yes or no). Which type of machine learning is most appropriate?",
+      "options": {
+        "a": {
+          "text": "Regression",
+          "is_true": false,
+          "explanation": "Incorrect. Regression predicts continuous numeric values, not yes/no outcomes."
+        },
+        "b": {
+          "text": "Binary classification",
+          "is_true": true,
+          "explanation": "Correct. Predicting one of two possible outcomes (default / no default) is a binary classification problem."
+        },
+        "c": {
+          "text": "Multi-class classification",
+          "is_true": false,
+          "explanation": "Incorrect. Multi-class classification predicts one of three or more categories. With only two outcomes (yes/no), this is binary classification."
+        },
+        "d": {
+          "text": "Clustering",
+          "is_true": false,
+          "explanation": "Incorrect. Clustering is unsupervised learning that groups data without predefined labels. Predicting default requires labeled training data (supervised learning)."
+        }
       },
-      "b": {
-        "text": "Classification",
-        "is_true": false,
-        "explanation": "Incorrect. Classification assigns items to predefined categories. The retailer has no predefined categories."
-      },
-      "c": {
-        "text": "Clustering",
-        "is_true": true,
-        "explanation": "Correct. Clustering is an unsupervised learning technique that groups data points based on similarity without requiring predefined labels — ideal for customer segmentation."
-      },
-      "d": {
-        "text": "Deep learning",
-        "is_true": false,
-        "explanation": "Incorrect. Deep learning is a technique that can be applied to many tasks, but the specific need to group customers without labels points to clustering."
-      }
+      "correct_answer": [
+        "b"
+      ]
     },
-    "correct_answer": "c"
-  },
-  {
-    "question_id": 13,
-    "question_text": "In a machine learning dataset used to predict whether an email is spam, the email text and sender address are examples of ___, while the spam/not-spam label is an example of a ___.",
-    "options": {
-      "a": {
-        "text": "labels; feature",
-        "is_true": false,
-        "explanation": "Incorrect. This is reversed. The email text and sender are input data (features), and spam/not-spam is the output prediction target (label)."
+    {
+      "question_id": 12,
+      "question_text": "A retailer wants to group customers into segments based on purchasing behaviour, without any predefined categories. Which machine learning technique should they use?",
+      "options": {
+        "a": {
+          "text": "Regression",
+          "is_true": false,
+          "explanation": "Incorrect. Regression predicts numeric values and requires labeled training data."
+        },
+        "b": {
+          "text": "Classification",
+          "is_true": false,
+          "explanation": "Incorrect. Classification assigns items to predefined categories. The retailer has no predefined categories."
+        },
+        "c": {
+          "text": "Clustering",
+          "is_true": true,
+          "explanation": "Correct. Clustering is an unsupervised learning technique that groups data points based on similarity without requiring predefined labels — ideal for customer segmentation."
+        },
+        "d": {
+          "text": "Deep learning",
+          "is_true": false,
+          "explanation": "Incorrect. Deep learning is a technique that can be applied to many tasks, but the specific need to group customers without labels points to clustering."
+        }
       },
-      "b": {
-        "text": "features; label",
-        "is_true": true,
-        "explanation": "Correct. Features are the input variables used to make predictions (email text, sender). The label is the value the model learns to predict (spam or not spam)."
-      },
-      "c": {
-        "text": "parameters; hyperparameter",
-        "is_true": false,
-        "explanation": "Incorrect. Parameters are internal model weights learned during training. Hyperparameters are settings configured before training. Neither describes input data or prediction targets."
-      },
-      "d": {
-        "text": "predictions; feature",
-        "is_true": false,
-        "explanation": "Incorrect. The email text is not a prediction — it is input data (a feature). The spam/not-spam designation is the label, not a feature."
-      }
+      "correct_answer": [
+        "c"
+      ]
     },
-    "correct_answer": "b"
-  },
-  {
-    "question_id": 14,
-    "question_text": "Why is a machine learning dataset typically split into training and validation sets?",
-    "options": {
-      "a": {
-        "text": "To speed up the training process by using less data.",
-        "is_true": false,
-        "explanation": "Incorrect. The split is not about speed — it is about evaluating model performance on unseen data."
+    {
+      "question_id": 13,
+      "question_text": "In a machine learning dataset used to predict whether an email is spam, the email text and sender address are examples of ___, while the spam/not-spam label is an example of a ___.",
+      "options": {
+        "a": {
+          "text": "labels; feature",
+          "is_true": false,
+          "explanation": "Incorrect. This is reversed. The email text and sender are input data (features), and spam/not-spam is the output prediction target (label)."
+        },
+        "b": {
+          "text": "features; label",
+          "is_true": true,
+          "explanation": "Correct. Features are the input variables used to make predictions (email text, sender). The label is the value the model learns to predict (spam or not spam)."
+        },
+        "c": {
+          "text": "parameters; hyperparameter",
+          "is_true": false,
+          "explanation": "Incorrect. Parameters are internal model weights learned during training. Hyperparameters are settings configured before training. Neither describes input data or prediction targets."
+        },
+        "d": {
+          "text": "predictions; feature",
+          "is_true": false,
+          "explanation": "Incorrect. The email text is not a prediction — it is input data (a feature). The spam/not-spam designation is the label, not a feature."
+        }
       },
-      "b": {
-        "text": "To evaluate how well the model generalises to data it has not seen during training.",
-        "is_true": true,
-        "explanation": "Correct. The training set is used to fit the model, while the validation set is used to evaluate how well the model performs on previously unseen data, helping detect overfitting."
-      },
-      "c": {
-        "text": "To ensure the model memorises all possible patterns in the data.",
-        "is_true": false,
-        "explanation": "Incorrect. Memorising all patterns is overfitting, which the train/validation split is designed to detect and prevent."
-      },
-      "d": {
-        "text": "To comply with Azure Machine Learning licensing requirements.",
-        "is_true": false,
-        "explanation": "Incorrect. The train/validation split is a fundamental machine learning best practice, not a licensing requirement."
-      }
+      "correct_answer": [
+        "b"
+      ]
     },
-    "correct_answer": "b"
-  },
-  {
-    "question_id": 15,
-    "question_text": "Which classification metric represents the harmonic mean of precision and recall?",
-    "options": {
-      "a": {
-        "text": "Accuracy",
-        "is_true": false,
-        "explanation": "Incorrect. Accuracy is the ratio of correct predictions to total predictions. It does not combine precision and recall."
+    {
+      "question_id": 14,
+      "question_text": "Why is a machine learning dataset typically split into training and validation sets?",
+      "options": {
+        "a": {
+          "text": "To speed up the training process by using less data.",
+          "is_true": false,
+          "explanation": "Incorrect. The split is not about speed — it is about evaluating model performance on unseen data."
+        },
+        "b": {
+          "text": "To evaluate how well the model generalises to data it has not seen during training.",
+          "is_true": true,
+          "explanation": "Correct. The training set is used to fit the model, while the validation set is used to evaluate how well the model performs on previously unseen data, helping detect overfitting."
+        },
+        "c": {
+          "text": "To ensure the model memorises all possible patterns in the data.",
+          "is_true": false,
+          "explanation": "Incorrect. Memorising all patterns is overfitting, which the train/validation split is designed to detect and prevent."
+        },
+        "d": {
+          "text": "To comply with Azure Machine Learning licensing requirements.",
+          "is_true": false,
+          "explanation": "Incorrect. The train/validation split is a fundamental machine learning best practice, not a licensing requirement."
+        }
       },
-      "b": {
-        "text": "AUC (Area Under the Curve)",
-        "is_true": false,
-        "explanation": "Incorrect. AUC measures the probability that the model ranks a random positive example higher than a random negative example. It is not the harmonic mean of precision and recall."
-      },
-      "c": {
-        "text": "F1 score",
-        "is_true": true,
-        "explanation": "Correct. The F1 score is the harmonic mean of precision and recall: F1 = 2 * (precision * recall) / (precision + recall). It balances both metrics in a single value."
-      },
-      "d": {
-        "text": "R-squared",
-        "is_true": false,
-        "explanation": "Incorrect. R-squared is a regression metric measuring variance explained, not a classification metric."
-      }
+      "correct_answer": [
+        "b"
+      ]
     },
-    "correct_answer": "c"
-  },
-  {
-    "question_id": 16,
-    "question_text": "Which deep learning architecture introduced the attention mechanism and is the foundation for modern large language models like GPT?",
-    "options": {
-      "a": {
-        "text": "Convolutional Neural Network (CNN)",
-        "is_true": false,
-        "explanation": "Incorrect. CNNs use convolutional layers to process spatial data like images. They do not use the attention mechanism foundational to LLMs."
+    {
+      "question_id": 15,
+      "question_text": "Which classification metric represents the harmonic mean of precision and recall?",
+      "options": {
+        "a": {
+          "text": "Accuracy",
+          "is_true": false,
+          "explanation": "Incorrect. Accuracy is the ratio of correct predictions to total predictions. It does not combine precision and recall."
+        },
+        "b": {
+          "text": "AUC (Area Under the Curve)",
+          "is_true": false,
+          "explanation": "Incorrect. AUC measures the probability that the model ranks a random positive example higher than a random negative example. It is not the harmonic mean of precision and recall."
+        },
+        "c": {
+          "text": "F1 score",
+          "is_true": true,
+          "explanation": "Correct. The F1 score is the harmonic mean of precision and recall: F1 = 2 * (precision * recall) / (precision + recall). It balances both metrics in a single value."
+        },
+        "d": {
+          "text": "R-squared",
+          "is_true": false,
+          "explanation": "Incorrect. R-squared is a regression metric measuring variance explained, not a classification metric."
+        }
       },
-      "b": {
-        "text": "Recurrent Neural Network (RNN)",
-        "is_true": false,
-        "explanation": "Incorrect. RNNs process sequences by passing hidden state forward, but they suffer from the vanishing gradient problem and were largely replaced by Transformers."
-      },
-      "c": {
-        "text": "Transformer",
-        "is_true": true,
-        "explanation": "Correct. The Transformer architecture, introduced in the 'Attention Is All You Need' paper, uses self-attention to process entire sequences in parallel. GPT and other LLMs are built on the Transformer architecture."
-      },
-      "d": {
-        "text": "Generative Adversarial Network (GAN)",
-        "is_true": false,
-        "explanation": "Incorrect. GANs use a generator and discriminator network to create synthetic data. They are not the basis for modern LLMs."
-      }
+      "correct_answer": [
+        "c"
+      ]
     },
-    "correct_answer": "c"
-  },
-  {
-    "question_id": 17,
-    "question_text": "Which Azure Machine Learning capability allows you to automatically try multiple algorithms and hyperparameters to find the best model for your data without writing code?",
-    "options": {
-      "a": {
-        "text": "Azure ML Designer",
-        "is_true": false,
-        "explanation": "Incorrect. Azure ML Designer provides a drag-and-drop visual interface for building pipelines, but you must manually select algorithms and configure components."
+    {
+      "question_id": 16,
+      "question_text": "Which deep learning architecture introduced the attention mechanism and is the foundation for modern large language models like GPT?",
+      "options": {
+        "a": {
+          "text": "Convolutional Neural Network (CNN)",
+          "is_true": false,
+          "explanation": "Incorrect. CNNs use convolutional layers to process spatial data like images. They do not use the attention mechanism foundational to LLMs."
+        },
+        "b": {
+          "text": "Recurrent Neural Network (RNN)",
+          "is_true": false,
+          "explanation": "Incorrect. RNNs process sequences by passing hidden state forward, but they suffer from the vanishing gradient problem and were largely replaced by Transformers."
+        },
+        "c": {
+          "text": "Transformer",
+          "is_true": true,
+          "explanation": "Correct. The Transformer architecture, introduced in the 'Attention Is All You Need' paper, uses self-attention to process entire sequences in parallel. GPT and other LLMs are built on the Transformer architecture."
+        },
+        "d": {
+          "text": "Generative Adversarial Network (GAN)",
+          "is_true": false,
+          "explanation": "Incorrect. GANs use a generator and discriminator network to create synthetic data. They are not the basis for modern LLMs."
+        }
       },
-      "b": {
-        "text": "Automated ML (AutoML)",
-        "is_true": true,
-        "explanation": "Correct. Automated ML automatically tries multiple algorithms, preprocessing steps, and hyperparameter combinations to find the best-performing model for your dataset."
-      },
-      "c": {
-        "text": "Azure ML Compute Clusters",
-        "is_true": false,
-        "explanation": "Incorrect. Compute clusters provide scalable compute resources for training, but they do not automatically select algorithms or tune hyperparameters."
-      },
-      "d": {
-        "text": "Managed Online Endpoints",
-        "is_true": false,
-        "explanation": "Incorrect. Managed online endpoints are used to deploy trained models for real-time inference, not to discover the best model."
-      }
+      "correct_answer": [
+        "c"
+      ]
     },
-    "correct_answer": "b"
-  },
-  {
-    "question_id": 18,
-    "question_type": "multiple_select",
-    "question_text": "Which TWO of the following are capabilities of Azure Machine Learning?",
-    "options": {
-      "a": {
-        "text": "Automated machine learning to find the best model",
-        "is_true": true,
-        "explanation": "Correct. Azure ML provides Automated ML to automatically test multiple algorithms and configurations to find the best-performing model."
+    {
+      "question_id": 17,
+      "question_text": "Which Azure Machine Learning capability allows you to automatically try multiple algorithms and hyperparameters to find the best model for your data without writing code?",
+      "options": {
+        "a": {
+          "text": "Azure ML Designer",
+          "is_true": false,
+          "explanation": "Incorrect. Azure ML Designer provides a drag-and-drop visual interface for building pipelines, but you must manually select algorithms and configure components."
+        },
+        "b": {
+          "text": "Automated ML (AutoML)",
+          "is_true": true,
+          "explanation": "Correct. Automated ML automatically tries multiple algorithms, preprocessing steps, and hyperparameter combinations to find the best-performing model for your dataset."
+        },
+        "c": {
+          "text": "Azure ML Compute Clusters",
+          "is_true": false,
+          "explanation": "Incorrect. Compute clusters provide scalable compute resources for training, but they do not automatically select algorithms or tune hyperparameters."
+        },
+        "d": {
+          "text": "Managed Online Endpoints",
+          "is_true": false,
+          "explanation": "Incorrect. Managed online endpoints are used to deploy trained models for real-time inference, not to discover the best model."
+        }
       },
-      "b": {
-        "text": "Real-time speech-to-text transcription",
-        "is_true": false,
-        "explanation": "Incorrect. Speech-to-text is a capability of the Azure AI Speech service, not Azure Machine Learning."
-      },
-      "c": {
-        "text": "Model registration and deployment to managed endpoints",
-        "is_true": true,
-        "explanation": "Correct. Azure ML provides model management capabilities including registering trained models and deploying them to managed online or batch endpoints for inference."
-      },
-      "d": {
-        "text": "Named entity recognition in text documents",
-        "is_true": false,
-        "explanation": "Incorrect. Named entity recognition is a capability of the Azure AI Language service, not Azure Machine Learning."
-      }
+      "correct_answer": [
+        "b"
+      ]
     },
-    "correct_answer": ["a", "c"]
-  },
-  {
-    "question_id": 19,
-    "question_text": "A model trained to predict customer churn achieves 99% accuracy on the training data but only 60% accuracy on the validation data. What problem does this indicate?",
-    "options": {
-      "a": {
-        "text": "Underfitting",
-        "is_true": false,
-        "explanation": "Incorrect. Underfitting occurs when a model performs poorly on both training and validation data. This model performs well on training data."
+    {
+      "question_id": 18,
+      "question_text": "Which TWO of the following are capabilities of Azure Machine Learning?",
+      "options": {
+        "a": {
+          "text": "Automated machine learning to find the best model",
+          "is_true": true,
+          "explanation": "Correct. Azure ML provides Automated ML to automatically test multiple algorithms and configurations to find the best-performing model."
+        },
+        "b": {
+          "text": "Real-time speech-to-text transcription",
+          "is_true": false,
+          "explanation": "Incorrect. Speech-to-text is a capability of the Azure AI Speech service, not Azure Machine Learning."
+        },
+        "c": {
+          "text": "Model registration and deployment to managed endpoints",
+          "is_true": true,
+          "explanation": "Correct. Azure ML provides model management capabilities including registering trained models and deploying them to managed online or batch endpoints for inference."
+        },
+        "d": {
+          "text": "Named entity recognition in text documents",
+          "is_true": false,
+          "explanation": "Incorrect. Named entity recognition is a capability of the Azure AI Language service, not Azure Machine Learning."
+        }
       },
-      "b": {
-        "text": "Overfitting",
-        "is_true": true,
-        "explanation": "Correct. A large gap between training accuracy (99%) and validation accuracy (60%) indicates overfitting — the model has memorised the training data's noise and patterns but fails to generalise to new data."
-      },
-      "c": {
-        "text": "Data leakage",
-        "is_true": false,
-        "explanation": "Incorrect. Data leakage would typically cause artificially high performance on both training and validation. The poor validation performance here indicates overfitting."
-      },
-      "d": {
-        "text": "Insufficient compute resources",
-        "is_true": false,
-        "explanation": "Incorrect. Compute resources affect training speed, not the model's ability to generalise. The accuracy gap is a model quality issue (overfitting)."
-      }
+      "correct_answer": [
+        "a",
+        "c"
+      ]
     },
-    "correct_answer": "b"
-  },
-  {
-    "question_id": 20,
-    "question_text": "Which of the following best describes the role of features in a machine learning model?",
-    "options": {
-      "a": {
-        "text": "Features are the output predictions made by the model.",
-        "is_true": false,
-        "explanation": "Incorrect. Output predictions are the model's results. Features are the input variables used to make those predictions."
+    {
+      "question_id": 19,
+      "question_text": "A model trained to predict customer churn achieves 99% accuracy on the training data but only 60% accuracy on the validation data. What problem does this indicate?",
+      "options": {
+        "a": {
+          "text": "Underfitting",
+          "is_true": false,
+          "explanation": "Incorrect. Underfitting occurs when a model performs poorly on both training and validation data. This model performs well on training data."
+        },
+        "b": {
+          "text": "Overfitting",
+          "is_true": true,
+          "explanation": "Correct. A large gap between training accuracy (99%) and validation accuracy (60%) indicates overfitting — the model has memorised the training data's noise and patterns but fails to generalise to new data."
+        },
+        "c": {
+          "text": "Data leakage",
+          "is_true": false,
+          "explanation": "Incorrect. Data leakage would typically cause artificially high performance on both training and validation. The poor validation performance here indicates overfitting."
+        },
+        "d": {
+          "text": "Insufficient compute resources",
+          "is_true": false,
+          "explanation": "Incorrect. Compute resources affect training speed, not the model's ability to generalise. The accuracy gap is a model quality issue (overfitting)."
+        }
       },
-      "b": {
-        "text": "Features are the input variables used to train and make predictions.",
-        "is_true": true,
-        "explanation": "Correct. Features (also called attributes or predictors) are the input variables in a dataset that the model uses to learn patterns and make predictions."
-      },
-      "c": {
-        "text": "Features are the hyperparameters that control the training process.",
-        "is_true": false,
-        "explanation": "Incorrect. Hyperparameters (like learning rate or number of iterations) are training configuration settings, not input data variables."
-      },
-      "d": {
-        "text": "Features are the internal weights of the neural network.",
-        "is_true": false,
-        "explanation": "Incorrect. Internal weights (parameters) are learned during training. Features are the input data columns provided to the model."
-      }
+      "correct_answer": [
+        "b"
+      ]
     },
-    "correct_answer": "b"
-  }
-]
+    {
+      "question_id": 20,
+      "question_text": "Which of the following best describes the role of features in a machine learning model?",
+      "options": {
+        "a": {
+          "text": "Features are the output predictions made by the model.",
+          "is_true": false,
+          "explanation": "Incorrect. Output predictions are the model's results. Features are the input variables used to make those predictions."
+        },
+        "b": {
+          "text": "Features are the input variables used to train and make predictions.",
+          "is_true": true,
+          "explanation": "Correct. Features (also called attributes or predictors) are the input variables in a dataset that the model uses to learn patterns and make predictions."
+        },
+        "c": {
+          "text": "Features are the hyperparameters that control the training process.",
+          "is_true": false,
+          "explanation": "Incorrect. Hyperparameters (like learning rate or number of iterations) are training configuration settings, not input data variables."
+        },
+        "d": {
+          "text": "Features are the internal weights of the neural network.",
+          "is_true": false,
+          "explanation": "Incorrect. Internal weights (parameters) are learned during training. Features are the input data columns provided to the model."
+        }
+      },
+      "correct_answer": [
+        "b"
+      ]
+    }
+  ]
+}

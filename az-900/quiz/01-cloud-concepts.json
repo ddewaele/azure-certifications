@@ -1,272 +1,300 @@
-[
-  {
-    "question_id": 1,
-    "question_text": "A company is moving its on-premises servers to Azure. Instead of purchasing new hardware, they will pay a monthly fee for Azure virtual machines. How does this change their cost model?",
-    "options": {
-      "a": {
-        "text": "From OpEx to CapEx",
-        "is_true": false,
-        "explanation": "Incorrect. On-premises hardware purchasing is CapEx (upfront capital investment). Moving to Azure shifts costs to OpEx, not the other way around."
-      },
-      "b": {
-        "text": "From CapEx to OpEx",
-        "is_true": true,
-        "explanation": "Correct. Purchasing and maintaining physical servers is a capital expenditure (CapEx). Paying monthly for Azure services is an operational expenditure (OpEx). Cloud adoption typically shifts IT spend from CapEx to OpEx."
-      },
-      "c": {
-        "text": "From OpEx to CapEx and OpEx",
-        "is_true": false,
-        "explanation": "Incorrect. Cloud removes the need for capital hardware investment — it is purely OpEx."
-      },
-      "d": {
-        "text": "There is no change in cost model",
-        "is_true": false,
-        "explanation": "Incorrect. There is a fundamental shift: on-premises requires upfront hardware investment (CapEx), while cloud uses pay-as-you-go billing (OpEx)."
-      }
-    },
-    "correct_answer": "b"
+{
+  "meta": {
+    "title": "Azure Fundamentals – Cloud Concepts",
+    "subject": "AZ-900",
+    "version": "1.0.0",
+    "created": "2026-03-22"
   },
-  {
-    "question_id": 2,
-    "question_text": "In the shared responsibility model, which responsibility always remains with the customer regardless of the cloud service model used?",
-    "options": {
-      "a": {
-        "text": "Operating system patching",
-        "is_true": false,
-        "explanation": "Incorrect. OS patching is the customer's responsibility in IaaS, but it is handled by the provider in PaaS and SaaS."
+  "questions": [
+    {
+      "question_id": 1,
+      "question_text": "A company is moving its on-premises servers to Azure. Instead of purchasing new hardware, they will pay a monthly fee for Azure virtual machines. How does this change their cost model?",
+      "options": {
+        "a": {
+          "text": "From OpEx to CapEx",
+          "is_true": false,
+          "explanation": "Incorrect. On-premises hardware purchasing is CapEx (upfront capital investment). Moving to Azure shifts costs to OpEx, not the other way around."
+        },
+        "b": {
+          "text": "From CapEx to OpEx",
+          "is_true": true,
+          "explanation": "Correct. Purchasing and maintaining physical servers is a capital expenditure (CapEx). Paying monthly for Azure services is an operational expenditure (OpEx). Cloud adoption typically shifts IT spend from CapEx to OpEx."
+        },
+        "c": {
+          "text": "From OpEx to CapEx and OpEx",
+          "is_true": false,
+          "explanation": "Incorrect. Cloud removes the need for capital hardware investment — it is purely OpEx."
+        },
+        "d": {
+          "text": "There is no change in cost model",
+          "is_true": false,
+          "explanation": "Incorrect. There is a fundamental shift: on-premises requires upfront hardware investment (CapEx), while cloud uses pay-as-you-go billing (OpEx)."
+        }
       },
-      "b": {
-        "text": "Physical datacenter security",
-        "is_true": false,
-        "explanation": "Incorrect. Physical security of the datacenter is always the cloud provider's responsibility, never the customer's."
-      },
-      "c": {
-        "text": "Data and identity management",
-        "is_true": true,
-        "explanation": "Correct. Regardless of whether you use IaaS, PaaS, or SaaS, the customer is always responsible for their data and managing who has access to it (identity and access management)."
-      },
-      "d": {
-        "text": "Network infrastructure",
-        "is_true": false,
-        "explanation": "Incorrect. Network infrastructure management shifts progressively to the provider as you move from IaaS to PaaS to SaaS."
-      }
+      "correct_answer": [
+        "b"
+      ]
     },
-    "correct_answer": "c"
-  },
-  {
-    "question_id": 3,
-    "question_text": "A development team wants to deploy a web application without managing the underlying operating system, runtime, or web server. Which cloud service model should they use?",
-    "options": {
-      "a": {
-        "text": "IaaS",
-        "is_true": false,
-        "explanation": "Incorrect. Infrastructure as a Service (IaaS) gives you virtualized hardware but you are still responsible for the OS, runtime, and application stack."
+    {
+      "question_id": 2,
+      "question_text": "In the shared responsibility model, which responsibility always remains with the customer regardless of the cloud service model used?",
+      "options": {
+        "a": {
+          "text": "Operating system patching",
+          "is_true": false,
+          "explanation": "Incorrect. OS patching is the customer's responsibility in IaaS, but it is handled by the provider in PaaS and SaaS."
+        },
+        "b": {
+          "text": "Physical datacenter security",
+          "is_true": false,
+          "explanation": "Incorrect. Physical security of the datacenter is always the cloud provider's responsibility, never the customer's."
+        },
+        "c": {
+          "text": "Data and identity management",
+          "is_true": true,
+          "explanation": "Correct. Regardless of whether you use IaaS, PaaS, or SaaS, the customer is always responsible for their data and managing who has access to it (identity and access management)."
+        },
+        "d": {
+          "text": "Network infrastructure",
+          "is_true": false,
+          "explanation": "Incorrect. Network infrastructure management shifts progressively to the provider as you move from IaaS to PaaS to SaaS."
+        }
       },
-      "b": {
-        "text": "SaaS",
-        "is_true": false,
-        "explanation": "Incorrect. Software as a Service is for consuming fully managed applications (like email or CRM). You cannot deploy your own custom application code on SaaS."
-      },
-      "c": {
-        "text": "PaaS",
-        "is_true": true,
-        "explanation": "Correct. Platform as a Service (PaaS) provides a managed platform where the provider handles the OS, runtime, and infrastructure. The team only manages their application code and data."
-      },
-      "d": {
-        "text": "On-premises",
-        "is_true": false,
-        "explanation": "Incorrect. On-premises requires the team to manage everything including physical hardware, which is the opposite of what they want."
-      }
+      "correct_answer": [
+        "c"
+      ]
     },
-    "correct_answer": "c"
-  },
-  {
-    "question_id": 4,
-    "question_text": "An organization needs to keep sensitive patient data on-premises due to regulatory requirements, but wants to use public cloud for less sensitive workloads. Which cloud deployment model is most appropriate?",
-    "options": {
-      "a": {
-        "text": "Public cloud",
-        "is_true": false,
-        "explanation": "Incorrect. A pure public cloud deployment would require all data, including sensitive patient data, to be hosted with the cloud provider, which conflicts with the regulatory requirement."
+    {
+      "question_id": 3,
+      "question_text": "A development team wants to deploy a web application without managing the underlying operating system, runtime, or web server. Which cloud service model should they use?",
+      "options": {
+        "a": {
+          "text": "IaaS",
+          "is_true": false,
+          "explanation": "Incorrect. Infrastructure as a Service (IaaS) gives you virtualized hardware but you are still responsible for the OS, runtime, and application stack."
+        },
+        "b": {
+          "text": "SaaS",
+          "is_true": false,
+          "explanation": "Incorrect. Software as a Service is for consuming fully managed applications (like email or CRM). You cannot deploy your own custom application code on SaaS."
+        },
+        "c": {
+          "text": "PaaS",
+          "is_true": true,
+          "explanation": "Correct. Platform as a Service (PaaS) provides a managed platform where the provider handles the OS, runtime, and infrastructure. The team only manages their application code and data."
+        },
+        "d": {
+          "text": "On-premises",
+          "is_true": false,
+          "explanation": "Incorrect. On-premises requires the team to manage everything including physical hardware, which is the opposite of what they want."
+        }
       },
-      "b": {
-        "text": "Private cloud",
-        "is_true": false,
-        "explanation": "Incorrect. A private cloud is entirely on-premises or dedicated to one organization. It does not leverage public cloud for the less sensitive workloads."
-      },
-      "c": {
-        "text": "Hybrid cloud",
-        "is_true": true,
-        "explanation": "Correct. A hybrid cloud combines on-premises (or private cloud) infrastructure with public cloud. This allows the organization to keep regulated data on-premises while using the public cloud for other workloads."
-      },
-      "d": {
-        "text": "Community cloud",
-        "is_true": false,
-        "explanation": "Incorrect. A community cloud is shared among organizations with common concerns but does not specifically address keeping some workloads on-premises while others are in public cloud."
-      }
+      "correct_answer": [
+        "c"
+      ]
     },
-    "correct_answer": "c"
-  },
-  {
-    "question_id": 5,
-    "question_text": "Which cloud benefit describes the ability of a system to automatically add resources during peak demand and remove them when demand drops?",
-    "options": {
-      "a": {
-        "text": "High availability",
-        "is_true": false,
-        "explanation": "Incorrect. High availability refers to a system's ability to remain operational and accessible even when components fail, not to automatic resource adjustment based on demand."
+    {
+      "question_id": 4,
+      "question_text": "An organization needs to keep sensitive patient data on-premises due to regulatory requirements, but wants to use public cloud for less sensitive workloads. Which cloud deployment model is most appropriate?",
+      "options": {
+        "a": {
+          "text": "Public cloud",
+          "is_true": false,
+          "explanation": "Incorrect. A pure public cloud deployment would require all data, including sensitive patient data, to be hosted with the cloud provider, which conflicts with the regulatory requirement."
+        },
+        "b": {
+          "text": "Private cloud",
+          "is_true": false,
+          "explanation": "Incorrect. A private cloud is entirely on-premises or dedicated to one organization. It does not leverage public cloud for the less sensitive workloads."
+        },
+        "c": {
+          "text": "Hybrid cloud",
+          "is_true": true,
+          "explanation": "Correct. A hybrid cloud combines on-premises (or private cloud) infrastructure with public cloud. This allows the organization to keep regulated data on-premises while using the public cloud for other workloads."
+        },
+        "d": {
+          "text": "Community cloud",
+          "is_true": false,
+          "explanation": "Incorrect. A community cloud is shared among organizations with common concerns but does not specifically address keeping some workloads on-premises while others are in public cloud."
+        }
       },
-      "b": {
-        "text": "Scalability",
-        "is_true": false,
-        "explanation": "Incorrect. Scalability is the ability to handle increased load by adding resources, but it does not imply the automatic adjustment aspect. Elasticity includes both scaling up and automatically scaling back down."
-      },
-      "c": {
-        "text": "Elasticity",
-        "is_true": true,
-        "explanation": "Correct. Elasticity specifically describes the ability to dynamically and automatically scale resources up when demand increases and back down when demand decreases, matching resource consumption to actual need."
-      },
-      "d": {
-        "text": "Agility",
-        "is_true": false,
-        "explanation": "Incorrect. Agility refers to the ability to rapidly deploy and iterate on resources and services, not to automatic resource scaling in response to demand."
-      }
+      "correct_answer": [
+        "c"
+      ]
     },
-    "correct_answer": "c"
-  },
-  {
-    "question_id": 6,
-    "question_text": "Which of the following is a characteristic of the consumption-based pricing model in cloud computing?",
-    "options": {
-      "a": {
-        "text": "You pay a fixed monthly fee regardless of usage",
-        "is_true": false,
-        "explanation": "Incorrect. A fixed fee regardless of usage is not consumption-based — it is a reserved or flat-rate pricing model."
+    {
+      "question_id": 5,
+      "question_text": "Which cloud benefit describes the ability of a system to automatically add resources during peak demand and remove them when demand drops?",
+      "options": {
+        "a": {
+          "text": "High availability",
+          "is_true": false,
+          "explanation": "Incorrect. High availability refers to a system's ability to remain operational and accessible even when components fail, not to automatic resource adjustment based on demand."
+        },
+        "b": {
+          "text": "Scalability",
+          "is_true": false,
+          "explanation": "Incorrect. Scalability is the ability to handle increased load by adding resources, but it does not imply the automatic adjustment aspect. Elasticity includes both scaling up and automatically scaling back down."
+        },
+        "c": {
+          "text": "Elasticity",
+          "is_true": true,
+          "explanation": "Correct. Elasticity specifically describes the ability to dynamically and automatically scale resources up when demand increases and back down when demand decreases, matching resource consumption to actual need."
+        },
+        "d": {
+          "text": "Agility",
+          "is_true": false,
+          "explanation": "Incorrect. Agility refers to the ability to rapidly deploy and iterate on resources and services, not to automatic resource scaling in response to demand."
+        }
       },
-      "b": {
-        "text": "You must purchase resources upfront before using them",
-        "is_true": false,
-        "explanation": "Incorrect. Purchasing resources upfront is characteristic of on-premises CapEx spending, not the consumption-based cloud model."
-      },
-      "c": {
-        "text": "You pay only for the resources you actually use",
-        "is_true": true,
-        "explanation": "Correct. Consumption-based pricing means you are billed only for what you consume — compute hours, storage GB, data transfer, etc. There are no upfront costs and no charges for idle capacity."
-      },
-      "d": {
-        "text": "You pay for maximum possible capacity to ensure performance",
-        "is_true": false,
-        "explanation": "Incorrect. Paying for maximum capacity to ensure performance is the on-premises approach. Cloud consumption-based pricing eliminates the need to over-provision."
-      }
+      "correct_answer": [
+        "c"
+      ]
     },
-    "correct_answer": "c"
-  },
-  {
-    "question_id": 7,
-    "question_text": "Which cloud service model is Microsoft 365 (formerly Office 365) an example of?",
-    "options": {
-      "a": {
-        "text": "IaaS",
-        "is_true": false,
-        "explanation": "Incorrect. IaaS provides virtualized infrastructure (VMs, storage, networking). Microsoft 365 is a fully managed application delivered over the internet, not raw infrastructure."
+    {
+      "question_id": 6,
+      "question_text": "Which of the following is a characteristic of the consumption-based pricing model in cloud computing?",
+      "options": {
+        "a": {
+          "text": "You pay a fixed monthly fee regardless of usage",
+          "is_true": false,
+          "explanation": "Incorrect. A fixed fee regardless of usage is not consumption-based — it is a reserved or flat-rate pricing model."
+        },
+        "b": {
+          "text": "You must purchase resources upfront before using them",
+          "is_true": false,
+          "explanation": "Incorrect. Purchasing resources upfront is characteristic of on-premises CapEx spending, not the consumption-based cloud model."
+        },
+        "c": {
+          "text": "You pay only for the resources you actually use",
+          "is_true": true,
+          "explanation": "Correct. Consumption-based pricing means you are billed only for what you consume — compute hours, storage GB, data transfer, etc. There are no upfront costs and no charges for idle capacity."
+        },
+        "d": {
+          "text": "You pay for maximum possible capacity to ensure performance",
+          "is_true": false,
+          "explanation": "Incorrect. Paying for maximum capacity to ensure performance is the on-premises approach. Cloud consumption-based pricing eliminates the need to over-provision."
+        }
       },
-      "b": {
-        "text": "PaaS",
-        "is_true": false,
-        "explanation": "Incorrect. PaaS provides a development and deployment platform. Microsoft 365 is a ready-to-use application, not a platform for building applications."
-      },
-      "c": {
-        "text": "SaaS",
-        "is_true": true,
-        "explanation": "Correct. Software as a Service (SaaS) delivers fully managed applications over the internet. Microsoft 365 (Word, Excel, Outlook, Teams, etc.) is a classic SaaS example — users access it without managing any infrastructure, platform, or application maintenance."
-      },
-      "d": {
-        "text": "On-premises software",
-        "is_true": false,
-        "explanation": "Incorrect. On-premises software is installed and managed locally. Microsoft 365 is a cloud-delivered service."
-      }
+      "correct_answer": [
+        "c"
+      ]
     },
-    "correct_answer": "c"
-  },
-  {
-    "question_id": 8,
-    "question_text": "What does 'high availability' mean in the context of cloud computing?",
-    "options": {
-      "a": {
-        "text": "The ability to deploy resources in multiple geographic regions",
-        "is_true": false,
-        "explanation": "Incorrect. Deploying to multiple regions relates to geo-distribution and disaster recovery, not high availability itself. High availability can be achieved within a single region."
+    {
+      "question_id": 7,
+      "question_text": "Which cloud service model is Microsoft 365 (formerly Office 365) an example of?",
+      "options": {
+        "a": {
+          "text": "IaaS",
+          "is_true": false,
+          "explanation": "Incorrect. IaaS provides virtualized infrastructure (VMs, storage, networking). Microsoft 365 is a fully managed application delivered over the internet, not raw infrastructure."
+        },
+        "b": {
+          "text": "PaaS",
+          "is_true": false,
+          "explanation": "Incorrect. PaaS provides a development and deployment platform. Microsoft 365 is a ready-to-use application, not a platform for building applications."
+        },
+        "c": {
+          "text": "SaaS",
+          "is_true": true,
+          "explanation": "Correct. Software as a Service (SaaS) delivers fully managed applications over the internet. Microsoft 365 (Word, Excel, Outlook, Teams, etc.) is a classic SaaS example — users access it without managing any infrastructure, platform, or application maintenance."
+        },
+        "d": {
+          "text": "On-premises software",
+          "is_true": false,
+          "explanation": "Incorrect. On-premises software is installed and managed locally. Microsoft 365 is a cloud-delivered service."
+        }
       },
-      "b": {
-        "text": "The ability for a service to remain accessible and operational even when some components fail",
-        "is_true": true,
-        "explanation": "Correct. High availability means a system is designed with redundancy so that component failures do not cause the overall service to go down. It is typically expressed as an SLA percentage (e.g., 99.9% or 99.99% uptime)."
-      },
-      "c": {
-        "text": "The ability to automatically increase resources during high demand",
-        "is_true": false,
-        "explanation": "Incorrect. Automatically increasing resources in response to demand is elasticity or scalability, not high availability."
-      },
-      "d": {
-        "text": "The speed at which new resources can be provisioned",
-        "is_true": false,
-        "explanation": "Incorrect. Provisioning speed relates to agility. High availability is about uptime and fault tolerance, not provisioning speed."
-      }
+      "correct_answer": [
+        "c"
+      ]
     },
-    "correct_answer": "b"
-  },
-  {
-    "question_id": 9,
-    "question_text": "Which of the following best describes a private cloud?",
-    "options": {
-      "a": {
-        "text": "Cloud infrastructure owned by a public cloud provider and shared among multiple customers",
-        "is_true": false,
-        "explanation": "Incorrect. Infrastructure shared among multiple customers on a provider's hardware is the definition of a public cloud."
+    {
+      "question_id": 8,
+      "question_text": "What does 'high availability' mean in the context of cloud computing?",
+      "options": {
+        "a": {
+          "text": "The ability to deploy resources in multiple geographic regions",
+          "is_true": false,
+          "explanation": "Incorrect. Deploying to multiple regions relates to geo-distribution and disaster recovery, not high availability itself. High availability can be achieved within a single region."
+        },
+        "b": {
+          "text": "The ability for a service to remain accessible and operational even when some components fail",
+          "is_true": true,
+          "explanation": "Correct. High availability means a system is designed with redundancy so that component failures do not cause the overall service to go down. It is typically expressed as an SLA percentage (e.g., 99.9% or 99.99% uptime)."
+        },
+        "c": {
+          "text": "The ability to automatically increase resources during high demand",
+          "is_true": false,
+          "explanation": "Incorrect. Automatically increasing resources in response to demand is elasticity or scalability, not high availability."
+        },
+        "d": {
+          "text": "The speed at which new resources can be provisioned",
+          "is_true": false,
+          "explanation": "Incorrect. Provisioning speed relates to agility. High availability is about uptime and fault tolerance, not provisioning speed."
+        }
       },
-      "b": {
-        "text": "Cloud infrastructure dedicated to and operated for a single organization",
-        "is_true": true,
-        "explanation": "Correct. A private cloud is computing infrastructure used exclusively by one organization. It may be hosted on-premises or by a third party, but it is not shared with other organizations."
-      },
-      "c": {
-        "text": "A combination of public cloud and on-premises resources",
-        "is_true": false,
-        "explanation": "Incorrect. Combining public cloud and on-premises resources is a hybrid cloud deployment model."
-      },
-      "d": {
-        "text": "A cloud environment that can only be accessed via a private network",
-        "is_true": false,
-        "explanation": "Incorrect. While private clouds often use private networks, the defining characteristic is that the infrastructure is dedicated to one organization, not the network access method."
-      }
+      "correct_answer": [
+        "b"
+      ]
     },
-    "correct_answer": "b"
-  },
-  {
-    "question_id": 10,
-    "question_text": "A startup wants to launch a new product quickly without investing in physical hardware. Which cloud benefit most directly supports this goal?",
-    "options": {
-      "a": {
-        "text": "Disaster recovery",
-        "is_true": false,
-        "explanation": "Incorrect. Disaster recovery is about restoring operations after a failure. While useful, it does not address the startup's need to launch quickly without hardware investment."
+    {
+      "question_id": 9,
+      "question_text": "Which of the following best describes a private cloud?",
+      "options": {
+        "a": {
+          "text": "Cloud infrastructure owned by a public cloud provider and shared among multiple customers",
+          "is_true": false,
+          "explanation": "Incorrect. Infrastructure shared among multiple customers on a provider's hardware is the definition of a public cloud."
+        },
+        "b": {
+          "text": "Cloud infrastructure dedicated to and operated for a single organization",
+          "is_true": true,
+          "explanation": "Correct. A private cloud is computing infrastructure used exclusively by one organization. It may be hosted on-premises or by a third party, but it is not shared with other organizations."
+        },
+        "c": {
+          "text": "A combination of public cloud and on-premises resources",
+          "is_true": false,
+          "explanation": "Incorrect. Combining public cloud and on-premises resources is a hybrid cloud deployment model."
+        },
+        "d": {
+          "text": "A cloud environment that can only be accessed via a private network",
+          "is_true": false,
+          "explanation": "Incorrect. While private clouds often use private networks, the defining characteristic is that the infrastructure is dedicated to one organization, not the network access method."
+        }
       },
-      "b": {
-        "text": "Geo-distribution",
-        "is_true": false,
-        "explanation": "Incorrect. Geo-distribution allows serving users from nearby regions globally. It does not specifically address rapid launch without hardware."
-      },
-      "c": {
-        "text": "Agility",
-        "is_true": true,
-        "explanation": "Correct. Agility is the cloud benefit that allows organizations to rapidly provision and deploy resources without long procurement cycles or upfront hardware investment. This directly supports the startup's goal of launching quickly."
-      },
-      "d": {
-        "text": "Reliability",
-        "is_true": false,
-        "explanation": "Incorrect. Reliability describes the system's ability to recover from failures and continue to function. It is not specifically about speed of initial deployment."
-      }
+      "correct_answer": [
+        "b"
+      ]
     },
-    "correct_answer": "c"
-  }
-]
+    {
+      "question_id": 10,
+      "question_text": "A startup wants to launch a new product quickly without investing in physical hardware. Which cloud benefit most directly supports this goal?",
+      "options": {
+        "a": {
+          "text": "Disaster recovery",
+          "is_true": false,
+          "explanation": "Incorrect. Disaster recovery is about restoring operations after a failure. While useful, it does not address the startup's need to launch quickly without hardware investment."
+        },
+        "b": {
+          "text": "Geo-distribution",
+          "is_true": false,
+          "explanation": "Incorrect. Geo-distribution allows serving users from nearby regions globally. It does not specifically address rapid launch without hardware."
+        },
+        "c": {
+          "text": "Agility",
+          "is_true": true,
+          "explanation": "Correct. Agility is the cloud benefit that allows organizations to rapidly provision and deploy resources without long procurement cycles or upfront hardware investment. This directly supports the startup's goal of launching quickly."
+        },
+        "d": {
+          "text": "Reliability",
+          "is_true": false,
+          "explanation": "Incorrect. Reliability describes the system's ability to recover from failures and continue to function. It is not specifically about speed of initial deployment."
+        }
+      },
+      "correct_answer": [
+        "c"
+      ]
+    }
+  ]
+}

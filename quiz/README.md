@@ -22,15 +22,33 @@ Any `.json` file in the folder that does **not** start with a digit is ignored b
 
 ## Top-Level Structure
 
-A quiz file is a **JSON array** of question objects:
+A quiz file is a **JSON object** with a required metadata block and a questions array:
 
 ```json
-[
-  { ...question },
-  { ...question },
-  { ...question }
-]
+{
+  "meta": {
+    "title": "Azure Fundamentals – Cloud Concepts",
+    "subject": "Cloud Computing",
+    "version": "1.0.0",
+    "created": "2025-09-01"
+  },
+  "questions": [
+    { ...question },
+    { ...question }
+  ]
+}
 ```
+
+---
+
+## Metadata Object (`meta`) — Required
+
+| Field | Type | Required | Description |
+|---|---|---|---|
+| `title` | `string` | Yes | Human-readable title for the quiz. |
+| `subject` | `string` | No | Broad subject area (e.g. `"Cloud Computing"`, `"ISO 27001"`). |
+| `version` | `string` | No | Semantic version string for tracking revisions. |
+| `created` | `string` | No | ISO 8601 date string (`YYYY-MM-DD`). |
 
 ---
 
@@ -40,11 +58,13 @@ A quiz file is a **JSON array** of question objects:
 
 | Field | Type | Required | Description |
 |---|---|---|---|
-| `question_id` | `number` | Yes | Unique identifier within the file. Used for reference only — questions are displayed in array order. |
+| `question_id` | `number` | Yes | Unique identifier within the file. Used for stable cross-referencing (e.g. linking from external tools or merging quiz files) — not for display order, which follows the array. Must not be renumbered on insertion. |
 | `question_text` | `string` | Yes | The full question text shown to the user. |
-| `options` | `object` | Yes | Map of answer options. Keys are single lowercase letters: `"a"`, `"b"`, `"c"`, `"d"`, etc. |
-| `correct_answer` | `string` \| `string[]` | Yes | The key(s) of the correct option(s). A single string for single-select; an array of strings for multiple-select. |
-| `question_type` | `string` | No | Set to `"multiple_select"` to signal that more than one answer is correct. If omitted, the question is treated as single-select. The CLI also infers multiple-select automatically when `correct_answer` is an array. |
+| `options` | `object` | Yes | Map of answer options. Keys are single lowercase letters: `"a"`, `"b"`, `"c"`, `"d"`, etc. Minimum 2 options required. |
+| `correct_answer` | `string[]` | Yes | Array of correct option key(s). Always an array. Single-select questions have one element (e.g. `["b"]`); multiple-select questions have two or more (e.g. `["a", "c"]`). The CLI infers question type from this array length — no separate `question_type` field is needed. |
+| `difficulty` | `string` | No | Difficulty level of the question. Allowed values: `"easy"`, `"medium"`, `"hard"`. Defaults to `"medium"` if omitted. |
+| `topic` | `string` | No | Specific sub-topic this question covers (e.g. `"CapEx vs OpEx"`, `"Shared Responsibility Model"`). Useful for filtering or grouping questions. |
+| `tags` | `string[]` | No | Free-form labels for further categorisation (e.g. `["definition", "scenario", "AZ-900"]`). |
 
 ---
 
@@ -62,12 +82,15 @@ Each key in `options` maps to an option object:
 
 ## Single-Select Question
 
-The most common type. The user presses a single letter key to answer immediately. `correct_answer` is a string.
+The most common type. The user presses a single letter key to answer immediately. `correct_answer` is a single-element array — the CLI treats any question with exactly one correct answer as single-select.
 
 ```json
 {
   "question_id": 1,
   "question_text": "A company moves its servers from an on-premises datacenter to Azure and switches from buying hardware to paying a monthly fee. How does this change their cost model?",
+  "difficulty": "medium",
+  "topic": "CapEx vs OpEx",
+  "tags": ["cost-model", "scenario", "AZ-900"],
   "options": {
     "a": {
       "text": "From OpEx to CapEx",
@@ -90,7 +113,7 @@ The most common type. The user presses a single letter key to answer immediately
       "explanation": "Incorrect. Cloud removes the need for capital hardware investment. Azure billing is purely OpEx."
     }
   },
-  "correct_answer": "b"
+  "correct_answer": ["b"]
 }
 ```
 
@@ -98,13 +121,15 @@ The most common type. The user presses a single letter key to answer immediately
 
 ## Multiple-Select Question
 
-Used when two or more answers are correct. Set `question_type` to `"multiple_select"` and provide `correct_answer` as an array. The CLI shows checkboxes and the user toggles options with letter keys before pressing Enter to submit.
+Used when two or more answers are correct. `correct_answer` contains more than one element — the CLI infers multiple-select from this automatically. The CLI shows checkboxes and the user toggles options with letter keys before pressing Enter to submit.
 
 ```json
 {
   "question_id": 2,
-  "question_type": "multiple_select",
   "question_text": "A startup is launching a new service and wants to avoid overbuying infrastructure before customer demand is known. Which TWO cloud benefits are the strongest match for this scenario?",
+  "difficulty": "easy",
+  "topic": "Cloud Benefits",
+  "tags": ["elasticity", "pricing", "scenario"],
   "options": {
     "a": {
       "text": "Elasticity",
@@ -130,6 +155,20 @@ Used when two or more answers are correct. Set `question_type` to `"multiple_sel
   "correct_answer": ["a", "c"]
 }
 ```
+
+---
+
+## Schema Constraints Summary
+
+- `meta` is **required**. `meta.title` is the only required field within it.
+- `correct_answer` is **always an array**. Single-select: one element (e.g. `["b"]`). Multiple-select: two or more (e.g. `["a", "c"]`). The CLI infers question type from array length — no `question_type` field exists.
+- `options` must contain **at least 2** entries.
+- `difficulty` defaults to `"medium"` if omitted. Allowed values: `"easy"`, `"medium"`, `"hard"`.
+- `is_true` on each option must be consistent with `correct_answer` — if a key appears in `correct_answer`, its `is_true` must be `true`, and vice versa.
+- `question_id` must be unique within the file and stable across edits (do not renumber on insertion). Display order follows the array, not the ID.
+- `tags` entries are free-form lowercase strings; no fixed vocabulary.
+- `meta.subject` (broad area) and `question.topic` (specific sub-topic) serve different granularities — use both to enable coarse and fine filtering.
+
 
 ---
 

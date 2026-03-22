@@ -1,218 +1,242 @@
-[
-  {
-    "question_id": 1,
-    "question_text": "A company connects its on-premises network to Azure using a connection that travels over the public internet but encrypts all traffic. Which Azure service provides this?",
-    "options": {
-      "a": {
-        "text": "Azure ExpressRoute",
-        "is_true": false,
-        "explanation": "Incorrect. ExpressRoute provides a private, dedicated connection that does NOT travel over the public internet. It uses a connectivity provider's infrastructure."
-      },
-      "b": {
-        "text": "Azure VPN Gateway",
-        "is_true": true,
-        "explanation": "Correct. Azure VPN Gateway creates encrypted IPsec/IKE tunnels between Azure and on-premises networks that travel over the public internet. It is the standard choice when private connectivity is not required and internet-based encrypted tunneling is acceptable."
-      },
-      "c": {
-        "text": "Azure Content Delivery Network",
-        "is_true": false,
-        "explanation": "Incorrect. Azure CDN caches content at edge nodes to improve delivery performance. It does not connect on-premises networks to Azure."
-      },
-      "d": {
-        "text": "Azure Load Balancer",
-        "is_true": false,
-        "explanation": "Incorrect. Azure Load Balancer distributes incoming traffic across backend resources. It does not provide connectivity between on-premises and Azure."
-      }
-    },
-    "correct_answer": "b"
+{
+  "meta": {
+    "title": "Azure Fundamentals – Networking",
+    "subject": "AZ-900",
+    "version": "1.0.0",
+    "created": "2026-03-22"
   },
-  {
-    "question_id": 2,
-    "question_text": "Which Azure service provides a private, dedicated physical connection between an on-premises network and Azure that does NOT travel over the public internet?",
-    "options": {
-      "a": {
-        "text": "Azure VPN Gateway",
-        "is_true": false,
-        "explanation": "Incorrect. VPN Gateway creates encrypted tunnels that travel over the public internet. It does not provide a dedicated private connection."
+  "questions": [
+    {
+      "question_id": 1,
+      "question_text": "A company connects its on-premises network to Azure using a connection that travels over the public internet but encrypts all traffic. Which Azure service provides this?",
+      "options": {
+        "a": {
+          "text": "Azure ExpressRoute",
+          "is_true": false,
+          "explanation": "Incorrect. ExpressRoute provides a private, dedicated connection that does NOT travel over the public internet. It uses a connectivity provider's infrastructure."
+        },
+        "b": {
+          "text": "Azure VPN Gateway",
+          "is_true": true,
+          "explanation": "Correct. Azure VPN Gateway creates encrypted IPsec/IKE tunnels between Azure and on-premises networks that travel over the public internet. It is the standard choice when private connectivity is not required and internet-based encrypted tunneling is acceptable."
+        },
+        "c": {
+          "text": "Azure Content Delivery Network",
+          "is_true": false,
+          "explanation": "Incorrect. Azure CDN caches content at edge nodes to improve delivery performance. It does not connect on-premises networks to Azure."
+        },
+        "d": {
+          "text": "Azure Load Balancer",
+          "is_true": false,
+          "explanation": "Incorrect. Azure Load Balancer distributes incoming traffic across backend resources. It does not provide connectivity between on-premises and Azure."
+        }
       },
-      "b": {
-        "text": "Azure Virtual Network",
-        "is_true": false,
-        "explanation": "Incorrect. Azure Virtual Network is a private network within Azure for connecting Azure resources. It does not connect on-premises infrastructure."
-      },
-      "c": {
-        "text": "Azure ExpressRoute",
-        "is_true": true,
-        "explanation": "Correct. ExpressRoute provides a private, dedicated connection between on-premises and Azure through a connectivity partner. Traffic never traverses the public internet, making it more reliable, faster, and suitable for compliance requirements that prohibit data travelling over the internet."
-      },
-      "d": {
-        "text": "Azure DNS",
-        "is_true": false,
-        "explanation": "Incorrect. Azure DNS is a hosting service for DNS domains. It does not provide network connectivity between on-premises and Azure."
-      }
+      "correct_answer": [
+        "b"
+      ]
     },
-    "correct_answer": "c"
-  },
-  {
-    "question_id": 3,
-    "question_text": "What is a Network Security Group (NSG) in Azure?",
-    "options": {
-      "a": {
-        "text": "A service that encrypts network traffic between VMs",
-        "is_true": false,
-        "explanation": "Incorrect. NSGs do not encrypt traffic. Encryption is handled at the application layer or via services like VPN Gateway."
+    {
+      "question_id": 2,
+      "question_text": "Which Azure service provides a private, dedicated physical connection between an on-premises network and Azure that does NOT travel over the public internet?",
+      "options": {
+        "a": {
+          "text": "Azure VPN Gateway",
+          "is_true": false,
+          "explanation": "Incorrect. VPN Gateway creates encrypted tunnels that travel over the public internet. It does not provide a dedicated private connection."
+        },
+        "b": {
+          "text": "Azure Virtual Network",
+          "is_true": false,
+          "explanation": "Incorrect. Azure Virtual Network is a private network within Azure for connecting Azure resources. It does not connect on-premises infrastructure."
+        },
+        "c": {
+          "text": "Azure ExpressRoute",
+          "is_true": true,
+          "explanation": "Correct. ExpressRoute provides a private, dedicated connection between on-premises and Azure through a connectivity partner. Traffic never traverses the public internet, making it more reliable, faster, and suitable for compliance requirements that prohibit data travelling over the internet."
+        },
+        "d": {
+          "text": "Azure DNS",
+          "is_true": false,
+          "explanation": "Incorrect. Azure DNS is a hosting service for DNS domains. It does not provide network connectivity between on-premises and Azure."
+        }
       },
-      "b": {
-        "text": "A firewall that filters inbound and outbound network traffic to Azure resources using security rules",
-        "is_true": true,
-        "explanation": "Correct. An NSG is a stateful network packet filter containing allow and deny rules. Rules specify source, destination, port, and protocol. NSGs can be applied to subnets or individual network interfaces to control what traffic can reach Azure resources."
-      },
-      "c": {
-        "text": "A group of administrators responsible for network security",
-        "is_true": false,
-        "explanation": "Incorrect. An NSG is a technical networking resource in Azure, not a team of people."
-      },
-      "d": {
-        "text": "A service that monitors network performance and latency",
-        "is_true": false,
-        "explanation": "Incorrect. Network monitoring and performance analysis is the role of Azure Monitor and Azure Network Watcher, not NSGs."
-      }
+      "correct_answer": [
+        "c"
+      ]
     },
-    "correct_answer": "b"
-  },
-  {
-    "question_id": 4,
-    "question_text": "Company A has a VNet peered with Company B's VNet. Company B's VNet is also peered with Company C's VNet. Can Company A communicate directly with Company C's VNet?",
-    "options": {
-      "a": {
-        "text": "Yes, peering is transitive so traffic automatically flows through Company B",
-        "is_true": false,
-        "explanation": "Incorrect. Azure VNet peering is NOT transitive. A peering between A-B and a separate peering between B-C does not allow A to reach C through B."
+    {
+      "question_id": 3,
+      "question_text": "What is a Network Security Group (NSG) in Azure?",
+      "options": {
+        "a": {
+          "text": "A service that encrypts network traffic between VMs",
+          "is_true": false,
+          "explanation": "Incorrect. NSGs do not encrypt traffic. Encryption is handled at the application layer or via services like VPN Gateway."
+        },
+        "b": {
+          "text": "A firewall that filters inbound and outbound network traffic to Azure resources using security rules",
+          "is_true": true,
+          "explanation": "Correct. An NSG is a stateful network packet filter containing allow and deny rules. Rules specify source, destination, port, and protocol. NSGs can be applied to subnets or individual network interfaces to control what traffic can reach Azure resources."
+        },
+        "c": {
+          "text": "A group of administrators responsible for network security",
+          "is_true": false,
+          "explanation": "Incorrect. An NSG is a technical networking resource in Azure, not a team of people."
+        },
+        "d": {
+          "text": "A service that monitors network performance and latency",
+          "is_true": false,
+          "explanation": "Incorrect. Network monitoring and performance analysis is the role of Azure Monitor and Azure Network Watcher, not NSGs."
+        }
       },
-      "b": {
-        "text": "No, VNet peering is non-transitive — Company A must create a direct peering with Company C to communicate",
-        "is_true": true,
-        "explanation": "Correct. VNet peering in Azure is non-transitive by default. To allow Company A to communicate with Company C, either a direct peering must be established between them, or a hub-and-spoke topology with a routing appliance in Company B's VNet must be configured."
-      },
-      "c": {
-        "text": "Yes, but only if all three VNets are in the same region",
-        "is_true": false,
-        "explanation": "Incorrect. Even within the same region, peering remains non-transitive. Region has no bearing on the transitivity rule."
-      },
-      "d": {
-        "text": "Yes, as long as the VNets use non-overlapping address spaces",
-        "is_true": false,
-        "explanation": "Incorrect. Non-overlapping address spaces are a requirement for peering to work, but they do not make peering transitive."
-      }
+      "correct_answer": [
+        "b"
+      ]
     },
-    "correct_answer": "b"
-  },
-  {
-    "question_id": 5,
-    "question_text": "You need to distribute HTTP traffic across multiple VMs and route requests to `/api` to one backend pool and `/images` to another. Which Azure service supports this URL-based routing?",
-    "options": {
-      "a": {
-        "text": "Azure Load Balancer",
-        "is_true": false,
-        "explanation": "Incorrect. Azure Load Balancer operates at Layer 4 (TCP/UDP) and is not HTTP-aware. It cannot inspect URL paths and route based on them."
+    {
+      "question_id": 4,
+      "question_text": "Company A has a VNet peered with Company B's VNet. Company B's VNet is also peered with Company C's VNet. Can Company A communicate directly with Company C's VNet?",
+      "options": {
+        "a": {
+          "text": "Yes, peering is transitive so traffic automatically flows through Company B",
+          "is_true": false,
+          "explanation": "Incorrect. Azure VNet peering is NOT transitive. A peering between A-B and a separate peering between B-C does not allow A to reach C through B."
+        },
+        "b": {
+          "text": "No, VNet peering is non-transitive — Company A must create a direct peering with Company C to communicate",
+          "is_true": true,
+          "explanation": "Correct. VNet peering in Azure is non-transitive by default. To allow Company A to communicate with Company C, either a direct peering must be established between them, or a hub-and-spoke topology with a routing appliance in Company B's VNet must be configured."
+        },
+        "c": {
+          "text": "Yes, but only if all three VNets are in the same region",
+          "is_true": false,
+          "explanation": "Incorrect. Even within the same region, peering remains non-transitive. Region has no bearing on the transitivity rule."
+        },
+        "d": {
+          "text": "Yes, as long as the VNets use non-overlapping address spaces",
+          "is_true": false,
+          "explanation": "Incorrect. Non-overlapping address spaces are a requirement for peering to work, but they do not make peering transitive."
+        }
       },
-      "b": {
-        "text": "Azure Traffic Manager",
-        "is_true": false,
-        "explanation": "Incorrect. Azure Traffic Manager is a DNS-based global traffic distributor. It routes users to the healthiest or nearest endpoint but does not perform HTTP path-based routing."
-      },
-      "c": {
-        "text": "Azure Application Gateway",
-        "is_true": true,
-        "explanation": "Correct. Azure Application Gateway is a Layer 7 (HTTP/S) load balancer that understands HTTP requests. It supports URL path-based routing, allowing you to send requests matching different URL patterns to different backend pools."
-      },
-      "d": {
-        "text": "Azure VPN Gateway",
-        "is_true": false,
-        "explanation": "Incorrect. Azure VPN Gateway provides encrypted network connectivity between Azure and on-premises networks. It does not distribute HTTP traffic."
-      }
+      "correct_answer": [
+        "b"
+      ]
     },
-    "correct_answer": "c"
-  },
-  {
-    "question_id": 6,
-    "question_text": "What is the primary purpose of Azure Virtual Network (VNet)?",
-    "options": {
-      "a": {
-        "text": "To provide internet access to Azure VMs",
-        "is_true": false,
-        "explanation": "Incorrect. Internet access for VMs is provided through public IP addresses and internet gateways. A VNet is a private network — it isolates resources from the internet by default."
+    {
+      "question_id": 5,
+      "question_text": "You need to distribute HTTP traffic across multiple VMs and route requests to `/api` to one backend pool and `/images` to another. Which Azure service supports this URL-based routing?",
+      "options": {
+        "a": {
+          "text": "Azure Load Balancer",
+          "is_true": false,
+          "explanation": "Incorrect. Azure Load Balancer operates at Layer 4 (TCP/UDP) and is not HTTP-aware. It cannot inspect URL paths and route based on them."
+        },
+        "b": {
+          "text": "Azure Traffic Manager",
+          "is_true": false,
+          "explanation": "Incorrect. Azure Traffic Manager is a DNS-based global traffic distributor. It routes users to the healthiest or nearest endpoint but does not perform HTTP path-based routing."
+        },
+        "c": {
+          "text": "Azure Application Gateway",
+          "is_true": true,
+          "explanation": "Correct. Azure Application Gateway is a Layer 7 (HTTP/S) load balancer that understands HTTP requests. It supports URL path-based routing, allowing you to send requests matching different URL patterns to different backend pools."
+        },
+        "d": {
+          "text": "Azure VPN Gateway",
+          "is_true": false,
+          "explanation": "Incorrect. Azure VPN Gateway provides encrypted network connectivity between Azure and on-premises networks. It does not distribute HTTP traffic."
+        }
       },
-      "b": {
-        "text": "To provide a logically isolated private network in Azure where you control IP addressing, subnets, and routing",
-        "is_true": true,
-        "explanation": "Correct. A VNet is your own private network in Azure. You define the IP address space, divide it into subnets, control routing, and use NSGs for access control. Resources within a VNet are isolated from the internet and from other VNets by default."
-      },
-      "c": {
-        "text": "To host DNS records for Azure services",
-        "is_true": false,
-        "explanation": "Incorrect. DNS hosting is the role of Azure DNS (public zones) and Azure Private DNS. VNet provides network connectivity, not DNS."
-      },
-      "d": {
-        "text": "To connect multiple Azure subscriptions under a single billing account",
-        "is_true": false,
-        "explanation": "Incorrect. Billing consolidation is handled through Azure's management hierarchy (Management Groups, subscriptions). VNets are a networking concept, not a billing one."
-      }
+      "correct_answer": [
+        "c"
+      ]
     },
-    "correct_answer": "b"
-  },
-  {
-    "question_id": 7,
-    "question_text": "Which Azure service would you use to cache content globally so that users around the world receive it from a nearby edge server rather than the origin?",
-    "options": {
-      "a": {
-        "text": "Azure Application Gateway",
-        "is_true": false,
-        "explanation": "Incorrect. Application Gateway is a regional load balancer for web applications. It does not cache or distribute content globally via edge nodes."
+    {
+      "question_id": 6,
+      "question_text": "What is the primary purpose of Azure Virtual Network (VNet)?",
+      "options": {
+        "a": {
+          "text": "To provide internet access to Azure VMs",
+          "is_true": false,
+          "explanation": "Incorrect. Internet access for VMs is provided through public IP addresses and internet gateways. A VNet is a private network — it isolates resources from the internet by default."
+        },
+        "b": {
+          "text": "To provide a logically isolated private network in Azure where you control IP addressing, subnets, and routing",
+          "is_true": true,
+          "explanation": "Correct. A VNet is your own private network in Azure. You define the IP address space, divide it into subnets, control routing, and use NSGs for access control. Resources within a VNet are isolated from the internet and from other VNets by default."
+        },
+        "c": {
+          "text": "To host DNS records for Azure services",
+          "is_true": false,
+          "explanation": "Incorrect. DNS hosting is the role of Azure DNS (public zones) and Azure Private DNS. VNet provides network connectivity, not DNS."
+        },
+        "d": {
+          "text": "To connect multiple Azure subscriptions under a single billing account",
+          "is_true": false,
+          "explanation": "Incorrect. Billing consolidation is handled through Azure's management hierarchy (Management Groups, subscriptions). VNets are a networking concept, not a billing one."
+        }
       },
-      "b": {
-        "text": "Azure Content Delivery Network (CDN)",
-        "is_true": true,
-        "explanation": "Correct. Azure CDN caches content at point-of-presence (POP) locations distributed globally. Users receive content from the closest edge node rather than the origin server, reducing latency and origin load."
-      },
-      "c": {
-        "text": "Azure VPN Gateway",
-        "is_true": false,
-        "explanation": "Incorrect. VPN Gateway provides encrypted connectivity between networks. It does not cache or distribute content."
-      },
-      "d": {
-        "text": "Azure Load Balancer",
-        "is_true": false,
-        "explanation": "Incorrect. Azure Load Balancer distributes traffic across VMs within a region. It does not cache content or operate globally via edge locations."
-      }
+      "correct_answer": [
+        "b"
+      ]
     },
-    "correct_answer": "b"
-  },
-  {
-    "question_id": 8,
-    "question_text": "What is the key advantage of Azure ExpressRoute compared to Azure VPN Gateway?",
-    "options": {
-      "a": {
-        "text": "ExpressRoute is free while VPN Gateway requires a paid subscription",
-        "is_true": false,
-        "explanation": "Incorrect. ExpressRoute is significantly more expensive than VPN Gateway. The difference is connection type and reliability, not cost."
+    {
+      "question_id": 7,
+      "question_text": "Which Azure service would you use to cache content globally so that users around the world receive it from a nearby edge server rather than the origin?",
+      "options": {
+        "a": {
+          "text": "Azure Application Gateway",
+          "is_true": false,
+          "explanation": "Incorrect. Application Gateway is a regional load balancer for web applications. It does not cache or distribute content globally via edge nodes."
+        },
+        "b": {
+          "text": "Azure Content Delivery Network (CDN)",
+          "is_true": true,
+          "explanation": "Correct. Azure CDN caches content at point-of-presence (POP) locations distributed globally. Users receive content from the closest edge node rather than the origin server, reducing latency and origin load."
+        },
+        "c": {
+          "text": "Azure VPN Gateway",
+          "is_true": false,
+          "explanation": "Incorrect. VPN Gateway provides encrypted connectivity between networks. It does not cache or distribute content."
+        },
+        "d": {
+          "text": "Azure Load Balancer",
+          "is_true": false,
+          "explanation": "Incorrect. Azure Load Balancer distributes traffic across VMs within a region. It does not cache content or operate globally via edge locations."
+        }
       },
-      "b": {
-        "text": "ExpressRoute traffic does not travel over the public internet, providing higher reliability, lower latency, and higher bandwidth",
-        "is_true": true,
-        "explanation": "Correct. ExpressRoute uses a dedicated private connection through a connectivity provider. Traffic never touches the public internet, resulting in more consistent performance, lower latency, higher bandwidth (up to 100 Gbps), and a higher SLA (99.95%) compared to VPN Gateway."
-      },
-      "c": {
-        "text": "ExpressRoute is faster to set up, taking only minutes compared to hours for VPN Gateway",
-        "is_true": false,
-        "explanation": "Incorrect. ExpressRoute typically takes weeks or months to provision because it involves working with a physical connectivity provider. VPN Gateway can be set up in hours."
-      },
-      "d": {
-        "text": "ExpressRoute automatically encrypts all traffic using IPsec",
-        "is_true": false,
-        "explanation": "Incorrect. ExpressRoute does not encrypt traffic by default. VPN Gateway uses IPsec for encryption. ExpressRoute relies on the physical security of the private connection. MACsec encryption can optionally be added to ExpressRoute."
-      }
+      "correct_answer": [
+        "b"
+      ]
     },
-    "correct_answer": "b"
-  }
-]
+    {
+      "question_id": 8,
+      "question_text": "What is the key advantage of Azure ExpressRoute compared to Azure VPN Gateway?",
+      "options": {
+        "a": {
+          "text": "ExpressRoute is free while VPN Gateway requires a paid subscription",
+          "is_true": false,
+          "explanation": "Incorrect. ExpressRoute is significantly more expensive than VPN Gateway. The difference is connection type and reliability, not cost."
+        },
+        "b": {
+          "text": "ExpressRoute traffic does not travel over the public internet, providing higher reliability, lower latency, and higher bandwidth",
+          "is_true": true,
+          "explanation": "Correct. ExpressRoute uses a dedicated private connection through a connectivity provider. Traffic never touches the public internet, resulting in more consistent performance, lower latency, higher bandwidth (up to 100 Gbps), and a higher SLA (99.95%) compared to VPN Gateway."
+        },
+        "c": {
+          "text": "ExpressRoute is faster to set up, taking only minutes compared to hours for VPN Gateway",
+          "is_true": false,
+          "explanation": "Incorrect. ExpressRoute typically takes weeks or months to provision because it involves working with a physical connectivity provider. VPN Gateway can be set up in hours."
+        },
+        "d": {
+          "text": "ExpressRoute automatically encrypts all traffic using IPsec",
+          "is_true": false,
+          "explanation": "Incorrect. ExpressRoute does not encrypt traffic by default. VPN Gateway uses IPsec for encryption. ExpressRoute relies on the physical security of the private connection. MACsec encryption can optionally be added to ExpressRoute."
+        }
+      },
+      "correct_answer": [
+        "b"
+      ]
+    }
+  ]
+}

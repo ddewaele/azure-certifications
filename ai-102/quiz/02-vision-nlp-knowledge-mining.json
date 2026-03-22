@@ -1,224 +1,593 @@
-[
-  {
-    "question_id": 1,
-    "question_text": "You need to detect and locate multiple products on a store shelf in an image, returning bounding box coordinates for each item. Which Azure AI Vision feature should you use?",
-    "options": {
-      "a": { "text": "Image tagging", "is_true": false, "explanation": "Incorrect. Tagging returns keywords for the entire image but does not provide bounding box coordinates for individual objects." },
-      "b": { "text": "Object detection", "is_true": true, "explanation": "Correct. Object detection identifies and locates multiple objects within an image, returning class labels and bounding box coordinates for each detected item." },
-      "c": { "text": "Image captioning", "is_true": false, "explanation": "Incorrect. Captioning generates a text description of the image, not individual object locations." },
-      "d": { "text": "OCR (Read)", "is_true": false, "explanation": "Incorrect. OCR extracts text from images, not physical objects like products on a shelf." }
-    },
-    "correct_answer": "b"
+{
+  "meta": {
+    "title": "Azure AI Engineer – Vision, NLP & Knowledge Mining",
+    "subject": "AI-102",
+    "version": "1.0.0",
+    "created": "2026-03-22"
   },
-  {
-    "question_id": 2,
-    "question_text": "You are training a custom vision model to detect defective parts on an assembly line. The model needs to locate each defect within the image. Should you use image classification or object detection?",
-    "options": {
-      "a": { "text": "Image classification, because it identifies defect types.", "is_true": false, "explanation": "Incorrect. Image classification labels the entire image but cannot locate where individual defects are within the image." },
-      "b": { "text": "Object detection, because it locates each defect with a bounding box.", "is_true": true, "explanation": "Correct. Object detection returns bounding boxes around each detected defect, allowing you to know both what the defect is and where it is located in the image." },
-      "c": { "text": "Image classification, because it is faster to train.", "is_true": false, "explanation": "Incorrect. Training speed is not the deciding factor — the requirement to locate defects within the image requires object detection." },
-      "d": { "text": "Neither — you should use Azure AI Vision's built-in models only.", "is_true": false, "explanation": "Incorrect. Built-in models may not recognise domain-specific defects. A custom model trained on your defect data is required." }
+  "questions": [
+    {
+      "question_id": 1,
+      "question_text": "You need to detect and locate multiple products on a store shelf in an image, returning bounding box coordinates for each item. Which Azure AI Vision feature should you use?",
+      "options": {
+        "a": {
+          "text": "Image tagging",
+          "is_true": false,
+          "explanation": "Incorrect. Tagging returns keywords for the entire image but does not provide bounding box coordinates for individual objects."
+        },
+        "b": {
+          "text": "Object detection",
+          "is_true": true,
+          "explanation": "Correct. Object detection identifies and locates multiple objects within an image, returning class labels and bounding box coordinates for each detected item."
+        },
+        "c": {
+          "text": "Image captioning",
+          "is_true": false,
+          "explanation": "Incorrect. Captioning generates a text description of the image, not individual object locations."
+        },
+        "d": {
+          "text": "OCR (Read)",
+          "is_true": false,
+          "explanation": "Incorrect. OCR extracts text from images, not physical objects like products on a shelf."
+        }
+      },
+      "correct_answer": [
+        "b"
+      ]
     },
-    "correct_answer": "b"
-  },
-  {
-    "question_id": 3,
-    "question_text": "Which Azure service would you use to detect the presence and movement of people in a retail store using real-time video feeds?",
-    "options": {
-      "a": { "text": "Azure AI Video Indexer", "is_true": false, "explanation": "Incorrect. Video Indexer extracts insights from recorded video (faces, transcripts, keywords) but is not designed for real-time spatial analysis of people movement." },
-      "b": { "text": "Azure AI Vision Spatial Analysis", "is_true": true, "explanation": "Correct. Spatial Analysis detects the presence and movement of people in video streams — supporting counting, dwell time, zone monitoring, and line crossing. It runs on edge hardware with GPU." },
-      "c": { "text": "Azure AI Vision Image Analysis", "is_true": false, "explanation": "Incorrect. Image Analysis processes individual images, not continuous video streams for movement detection." },
-      "d": { "text": "Azure AI Face", "is_true": false, "explanation": "Incorrect. Azure AI Face identifies and verifies faces but does not track movement patterns or count people in video." }
+    {
+      "question_id": 2,
+      "question_text": "You are training a custom vision model to detect defective parts on an assembly line. The model needs to locate each defect within the image. Should you use image classification or object detection?",
+      "options": {
+        "a": {
+          "text": "Image classification, because it identifies defect types.",
+          "is_true": false,
+          "explanation": "Incorrect. Image classification labels the entire image but cannot locate where individual defects are within the image."
+        },
+        "b": {
+          "text": "Object detection, because it locates each defect with a bounding box.",
+          "is_true": true,
+          "explanation": "Correct. Object detection returns bounding boxes around each detected defect, allowing you to know both what the defect is and where it is located in the image."
+        },
+        "c": {
+          "text": "Image classification, because it is faster to train.",
+          "is_true": false,
+          "explanation": "Incorrect. Training speed is not the deciding factor — the requirement to locate defects within the image requires object detection."
+        },
+        "d": {
+          "text": "Neither — you should use Azure AI Vision's built-in models only.",
+          "is_true": false,
+          "explanation": "Incorrect. Built-in models may not recognise domain-specific defects. A custom model trained on your defect data is required."
+        }
+      },
+      "correct_answer": [
+        "b"
+      ]
     },
-    "correct_answer": "b"
-  },
-  {
-    "question_id": 4,
-    "question_text": "You need to extract text from scanned historical documents that contain both printed and handwritten annotations. Which Azure AI Vision feature should you use?",
-    "options": {
-      "a": { "text": "Image tagging", "is_true": false, "explanation": "Incorrect. Image tagging identifies visual concepts, not text content." },
-      "b": { "text": "Object detection", "is_true": false, "explanation": "Incorrect. Object detection locates physical objects, not text characters." },
-      "c": { "text": "Read (OCR)", "is_true": true, "explanation": "Correct. The Read API supports both printed and handwritten text extraction, returning text organised as pages, lines, and words with bounding polygons and confidence scores." },
-      "d": { "text": "Dense captions", "is_true": false, "explanation": "Incorrect. Dense captions generate descriptive text about image regions — they do not extract existing text from the image." }
+    {
+      "question_id": 3,
+      "question_text": "Which Azure service would you use to detect the presence and movement of people in a retail store using real-time video feeds?",
+      "options": {
+        "a": {
+          "text": "Azure AI Video Indexer",
+          "is_true": false,
+          "explanation": "Incorrect. Video Indexer extracts insights from recorded video (faces, transcripts, keywords) but is not designed for real-time spatial analysis of people movement."
+        },
+        "b": {
+          "text": "Azure AI Vision Spatial Analysis",
+          "is_true": true,
+          "explanation": "Correct. Spatial Analysis detects the presence and movement of people in video streams — supporting counting, dwell time, zone monitoring, and line crossing. It runs on edge hardware with GPU."
+        },
+        "c": {
+          "text": "Azure AI Vision Image Analysis",
+          "is_true": false,
+          "explanation": "Incorrect. Image Analysis processes individual images, not continuous video streams for movement detection."
+        },
+        "d": {
+          "text": "Azure AI Face",
+          "is_true": false,
+          "explanation": "Incorrect. Azure AI Face identifies and verifies faces but does not track movement patterns or count people in video."
+        }
+      },
+      "correct_answer": [
+        "b"
+      ]
     },
-    "correct_answer": "c"
-  },
-  {
-    "question_id": 5,
-    "question_text": "You are building a customer feedback analysis system. You need to determine the overall sentiment AND the sentiment toward specific aspects mentioned in reviews. Which Azure AI Language features should you use?",
-    "options": {
-      "a": { "text": "Sentiment analysis only.", "is_true": false, "explanation": "Incorrect. Basic sentiment analysis gives overall sentiment but does not break it down by specific aspects (e.g., food vs service)." },
-      "b": { "text": "Sentiment analysis with opinion mining.", "is_true": true, "explanation": "Correct. Opinion mining (an advanced feature of sentiment analysis) identifies specific aspects and their associated sentiment — e.g., 'food: positive, service: negative' — providing aspect-level granularity." },
-      "c": { "text": "Key phrase extraction.", "is_true": false, "explanation": "Incorrect. Key phrase extraction identifies important terms but does not determine sentiment for those terms." },
-      "d": { "text": "Named entity recognition.", "is_true": false, "explanation": "Incorrect. NER identifies entities like people and places but does not analyse sentiment associated with them." }
+    {
+      "question_id": 4,
+      "question_text": "You need to extract text from scanned historical documents that contain both printed and handwritten annotations. Which Azure AI Vision feature should you use?",
+      "options": {
+        "a": {
+          "text": "Image tagging",
+          "is_true": false,
+          "explanation": "Incorrect. Image tagging identifies visual concepts, not text content."
+        },
+        "b": {
+          "text": "Object detection",
+          "is_true": false,
+          "explanation": "Incorrect. Object detection locates physical objects, not text characters."
+        },
+        "c": {
+          "text": "Read (OCR)",
+          "is_true": true,
+          "explanation": "Correct. The Read API supports both printed and handwritten text extraction, returning text organised as pages, lines, and words with bounding polygons and confidence scores."
+        },
+        "d": {
+          "text": "Dense captions",
+          "is_true": false,
+          "explanation": "Incorrect. Dense captions generate descriptive text about image regions — they do not extract existing text from the image."
+        }
+      },
+      "correct_answer": [
+        "c"
+      ]
     },
-    "correct_answer": "b"
-  },
-  {
-    "question_id": 6,
-    "question_text": "You need to detect and redact personally identifiable information (PII) such as social security numbers and email addresses in customer support transcripts. Which Azure AI Language feature should you use?",
-    "options": {
-      "a": { "text": "Named entity recognition (NER)", "is_true": false, "explanation": "Incorrect. NER identifies general entities (people, places, dates) but does not specifically target PII or provide redaction capabilities." },
-      "b": { "text": "PII detection", "is_true": true, "explanation": "Correct. PII detection identifies personally identifiable information and returns a redacted_text field with sensitive data replaced by placeholder characters." },
-      "c": { "text": "Key phrase extraction", "is_true": false, "explanation": "Incorrect. Key phrase extraction identifies topics, not personally identifiable information." },
-      "d": { "text": "Sentiment analysis", "is_true": false, "explanation": "Incorrect. Sentiment analysis determines emotional tone, not PII presence." }
+    {
+      "question_id": 5,
+      "question_text": "You are building a customer feedback analysis system. You need to determine the overall sentiment AND the sentiment toward specific aspects mentioned in reviews. Which Azure AI Language features should you use?",
+      "options": {
+        "a": {
+          "text": "Sentiment analysis only.",
+          "is_true": false,
+          "explanation": "Incorrect. Basic sentiment analysis gives overall sentiment but does not break it down by specific aspects (e.g., food vs service)."
+        },
+        "b": {
+          "text": "Sentiment analysis with opinion mining.",
+          "is_true": true,
+          "explanation": "Correct. Opinion mining (an advanced feature of sentiment analysis) identifies specific aspects and their associated sentiment — e.g., 'food: positive, service: negative' — providing aspect-level granularity."
+        },
+        "c": {
+          "text": "Key phrase extraction.",
+          "is_true": false,
+          "explanation": "Incorrect. Key phrase extraction identifies important terms but does not determine sentiment for those terms."
+        },
+        "d": {
+          "text": "Named entity recognition.",
+          "is_true": false,
+          "explanation": "Incorrect. NER identifies entities like people and places but does not analyse sentiment associated with them."
+        }
+      },
+      "correct_answer": [
+        "b"
+      ]
     },
-    "correct_answer": "b"
-  },
-  {
-    "question_id": 7,
-    "question_text": "You need to improve the naturalness of text-to-speech output by controlling the speaking rate, pitch, and adding pauses. Which technology should you use?",
-    "options": {
-      "a": { "text": "Custom speech model", "is_true": false, "explanation": "Incorrect. Custom speech models improve recognition accuracy for domain-specific vocabulary — they do not control synthesis parameters like rate and pitch." },
-      "b": { "text": "Speech Synthesis Markup Language (SSML)", "is_true": true, "explanation": "Correct. SSML provides fine-grained control over speech synthesis including <prosody> for rate/pitch/volume, <break> for pauses, <emphasis> for stress, and <say-as> for interpretation." },
-      "c": { "text": "Intent recognition", "is_true": false, "explanation": "Incorrect. Intent recognition determines what a user means when they speak — it does not control speech synthesis output." },
-      "d": { "text": "Speaker recognition", "is_true": false, "explanation": "Incorrect. Speaker recognition identifies or verifies who is speaking — it does not control text-to-speech output." }
+    {
+      "question_id": 6,
+      "question_text": "You need to detect and redact personally identifiable information (PII) such as social security numbers and email addresses in customer support transcripts. Which Azure AI Language feature should you use?",
+      "options": {
+        "a": {
+          "text": "Named entity recognition (NER)",
+          "is_true": false,
+          "explanation": "Incorrect. NER identifies general entities (people, places, dates) but does not specifically target PII or provide redaction capabilities."
+        },
+        "b": {
+          "text": "PII detection",
+          "is_true": true,
+          "explanation": "Correct. PII detection identifies personally identifiable information and returns a redacted_text field with sensitive data replaced by placeholder characters."
+        },
+        "c": {
+          "text": "Key phrase extraction",
+          "is_true": false,
+          "explanation": "Incorrect. Key phrase extraction identifies topics, not personally identifiable information."
+        },
+        "d": {
+          "text": "Sentiment analysis",
+          "is_true": false,
+          "explanation": "Incorrect. Sentiment analysis determines emotional tone, not PII presence."
+        }
+      },
+      "correct_answer": [
+        "b"
+      ]
     },
-    "correct_answer": "b"
-  },
-  {
-    "question_id": 8,
-    "question_type": "multiple_select",
-    "question_text": "You are building a conversational language understanding (CLU) model. Which THREE components must you define?",
-    "options": {
-      "a": { "text": "Intents", "is_true": true, "explanation": "Correct. Intents represent what the user wants to do (e.g., BookFlight, GetWeather). They are the actions your model recognises." },
-      "b": { "text": "Entities", "is_true": true, "explanation": "Correct. Entities are the key information to extract from utterances (e.g., destination city, date, time)." },
-      "c": { "text": "Utterances", "is_true": true, "explanation": "Correct. Utterances are example phrases that users might say, labeled with their corresponding intent and entities. They are the training data for the model." },
-      "d": { "text": "Embeddings", "is_true": false, "explanation": "Incorrect. Embeddings are vector representations used in search and similarity — they are not a CLU component you define." }
+    {
+      "question_id": 7,
+      "question_text": "You need to improve the naturalness of text-to-speech output by controlling the speaking rate, pitch, and adding pauses. Which technology should you use?",
+      "options": {
+        "a": {
+          "text": "Custom speech model",
+          "is_true": false,
+          "explanation": "Incorrect. Custom speech models improve recognition accuracy for domain-specific vocabulary — they do not control synthesis parameters like rate and pitch."
+        },
+        "b": {
+          "text": "Speech Synthesis Markup Language (SSML)",
+          "is_true": true,
+          "explanation": "Correct. SSML provides fine-grained control over speech synthesis including <prosody> for rate/pitch/volume, <break> for pauses, <emphasis> for stress, and <say-as> for interpretation."
+        },
+        "c": {
+          "text": "Intent recognition",
+          "is_true": false,
+          "explanation": "Incorrect. Intent recognition determines what a user means when they speak — it does not control speech synthesis output."
+        },
+        "d": {
+          "text": "Speaker recognition",
+          "is_true": false,
+          "explanation": "Incorrect. Speaker recognition identifies or verifies who is speaking — it does not control text-to-speech output."
+        }
+      },
+      "correct_answer": [
+        "b"
+      ]
     },
-    "correct_answer": ["a", "b", "c"]
-  },
-  {
-    "question_id": 9,
-    "question_text": "You are building a custom question answering knowledge base that should handle casual conversation alongside factual questions. Which feature should you enable?",
-    "options": {
-      "a": { "text": "Multi-turn conversations", "is_true": false, "explanation": "Incorrect. Multi-turn adds follow-up prompts for related questions — it does not handle casual conversation." },
-      "b": { "text": "Alternate phrasings", "is_true": false, "explanation": "Incorrect. Alternate phrasings add different ways to ask the same question — they do not cover casual conversation." },
-      "c": { "text": "Chit-chat", "is_true": true, "explanation": "Correct. The chit-chat feature adds a personality (friendly, professional, witty, etc.) that handles casual conversation like greetings, small talk, and social exchanges." },
-      "d": { "text": "Active learning", "is_true": false, "explanation": "Incorrect. Active learning suggests new QA pairs from user queries — it does not add casual conversation handling." }
+    {
+      "question_id": 8,
+      "question_text": "You are building a conversational language understanding (CLU) model. Which THREE components must you define?",
+      "options": {
+        "a": {
+          "text": "Intents",
+          "is_true": true,
+          "explanation": "Correct. Intents represent what the user wants to do (e.g., BookFlight, GetWeather). They are the actions your model recognises."
+        },
+        "b": {
+          "text": "Entities",
+          "is_true": true,
+          "explanation": "Correct. Entities are the key information to extract from utterances (e.g., destination city, date, time)."
+        },
+        "c": {
+          "text": "Utterances",
+          "is_true": true,
+          "explanation": "Correct. Utterances are example phrases that users might say, labeled with their corresponding intent and entities. They are the training data for the model."
+        },
+        "d": {
+          "text": "Embeddings",
+          "is_true": false,
+          "explanation": "Incorrect. Embeddings are vector representations used in search and similarity — they are not a CLU component you define."
+        }
+      },
+      "correct_answer": [
+        "a",
+        "b",
+        "c"
+      ]
     },
-    "correct_answer": "c"
-  },
-  {
-    "question_id": 10,
-    "question_text": "You need to translate technical documents from English to multiple languages while preserving the original document formatting (headers, tables, images). Which Azure service should you use?",
-    "options": {
-      "a": { "text": "Azure AI Language text translation", "is_true": false, "explanation": "Incorrect. Azure AI Language provides text analytics, not translation services." },
-      "b": { "text": "Azure Translator document translation", "is_true": true, "explanation": "Correct. Azure Translator's document translation feature translates entire documents while preserving the original formatting, layout, and structure." },
-      "c": { "text": "Azure OpenAI GPT-4", "is_true": false, "explanation": "Incorrect. While GPT-4 can translate text, it cannot preserve document formatting (headers, tables, images) in whole documents." },
-      "d": { "text": "Azure AI Speech translation", "is_true": false, "explanation": "Incorrect. Speech translation converts spoken language — it does not process written documents." }
+    {
+      "question_id": 9,
+      "question_text": "You are building a custom question answering knowledge base that should handle casual conversation alongside factual questions. Which feature should you enable?",
+      "options": {
+        "a": {
+          "text": "Multi-turn conversations",
+          "is_true": false,
+          "explanation": "Incorrect. Multi-turn adds follow-up prompts for related questions — it does not handle casual conversation."
+        },
+        "b": {
+          "text": "Alternate phrasings",
+          "is_true": false,
+          "explanation": "Incorrect. Alternate phrasings add different ways to ask the same question — they do not cover casual conversation."
+        },
+        "c": {
+          "text": "Chit-chat",
+          "is_true": true,
+          "explanation": "Correct. The chit-chat feature adds a personality (friendly, professional, witty, etc.) that handles casual conversation like greetings, small talk, and social exchanges."
+        },
+        "d": {
+          "text": "Active learning",
+          "is_true": false,
+          "explanation": "Incorrect. Active learning suggests new QA pairs from user queries — it does not add casual conversation handling."
+        }
+      },
+      "correct_answer": [
+        "c"
+      ]
     },
-    "correct_answer": "b"
-  },
-  {
-    "question_id": 11,
-    "question_text": "You are creating an Azure AI Search index. A field should support filtering by category AND allow users to see counts per category (faceted navigation). Which field attributes must you set?",
-    "options": {
-      "a": { "text": "searchable and retrievable", "is_true": false, "explanation": "Incorrect. Searchable enables full-text search, not filtering or faceting." },
-      "b": { "text": "filterable and facetable", "is_true": true, "explanation": "Correct. Filterable allows $filter expressions, and facetable enables faceted navigation that shows counts per category value." },
-      "c": { "text": "sortable and retrievable", "is_true": false, "explanation": "Incorrect. Sortable enables ordering results, and retrievable controls whether the field appears in results — neither enables filtering or facets." },
-      "d": { "text": "searchable and facetable", "is_true": false, "explanation": "Incorrect. Searchable enables full-text search which is different from filtering. You need filterable for $filter queries." }
+    {
+      "question_id": 10,
+      "question_text": "You need to translate technical documents from English to multiple languages while preserving the original document formatting (headers, tables, images). Which Azure service should you use?",
+      "options": {
+        "a": {
+          "text": "Azure AI Language text translation",
+          "is_true": false,
+          "explanation": "Incorrect. Azure AI Language provides text analytics, not translation services."
+        },
+        "b": {
+          "text": "Azure Translator document translation",
+          "is_true": true,
+          "explanation": "Correct. Azure Translator's document translation feature translates entire documents while preserving the original formatting, layout, and structure."
+        },
+        "c": {
+          "text": "Azure OpenAI GPT-4",
+          "is_true": false,
+          "explanation": "Incorrect. While GPT-4 can translate text, it cannot preserve document formatting (headers, tables, images) in whole documents."
+        },
+        "d": {
+          "text": "Azure AI Speech translation",
+          "is_true": false,
+          "explanation": "Incorrect. Speech translation converts spoken language — it does not process written documents."
+        }
+      },
+      "correct_answer": [
+        "b"
+      ]
     },
-    "correct_answer": "b"
-  },
-  {
-    "question_id": 12,
-    "question_text": "You have defined a skillset for your Azure AI Search indexer that includes OCR and entity recognition. Where does the enriched data flow?",
-    "options": {
-      "a": { "text": "Data source -> Skillset -> Index only", "is_true": false, "explanation": "Incorrect. While the enriched data flows to the index, it can also optionally flow to a knowledge store." },
-      "b": { "text": "Data source -> Indexer -> Skillset -> Index and optionally Knowledge Store", "is_true": true, "explanation": "Correct. The indexer reads from the data source, applies the skillset for AI enrichment, and sends results to the index. Optionally, enrichments can also be projected to a knowledge store for persistent storage." },
-      "c": { "text": "Skillset -> Data source -> Indexer -> Index", "is_true": false, "explanation": "Incorrect. The skillset is applied by the indexer, not before the data source. The correct order is: data source -> indexer (with skillset) -> index." },
-      "d": { "text": "Data source -> Index -> Skillset -> Knowledge Store", "is_true": false, "explanation": "Incorrect. The skillset is applied during indexing, not after data is already in the index." }
+    {
+      "question_id": 11,
+      "question_text": "You are creating an Azure AI Search index. A field should support filtering by category AND allow users to see counts per category (faceted navigation). Which field attributes must you set?",
+      "options": {
+        "a": {
+          "text": "searchable and retrievable",
+          "is_true": false,
+          "explanation": "Incorrect. Searchable enables full-text search, not filtering or faceting."
+        },
+        "b": {
+          "text": "filterable and facetable",
+          "is_true": true,
+          "explanation": "Correct. Filterable allows $filter expressions, and facetable enables faceted navigation that shows counts per category value."
+        },
+        "c": {
+          "text": "sortable and retrievable",
+          "is_true": false,
+          "explanation": "Incorrect. Sortable enables ordering results, and retrievable controls whether the field appears in results — neither enables filtering or facets."
+        },
+        "d": {
+          "text": "searchable and facetable",
+          "is_true": false,
+          "explanation": "Incorrect. Searchable enables full-text search which is different from filtering. You need filterable for $filter queries."
+        }
+      },
+      "correct_answer": [
+        "b"
+      ]
     },
-    "correct_answer": "b"
-  },
-  {
-    "question_id": 13,
-    "question_text": "You need to add a custom AI enrichment step to your Azure AI Search skillset that calls your own Azure Function to classify documents. Which skill type should you use?",
-    "options": {
-      "a": { "text": "Microsoft.Skills.Text.EntityRecognitionSkill", "is_true": false, "explanation": "Incorrect. This is a built-in skill for entity recognition, not for custom logic." },
-      "b": { "text": "Microsoft.Skills.Custom.WebApiSkill", "is_true": true, "explanation": "Correct. The WebApiSkill calls a custom HTTP endpoint (such as an Azure Function) that accepts and returns JSON records with matching recordId values." },
-      "c": { "text": "Microsoft.Skills.Vision.OcrSkill", "is_true": false, "explanation": "Incorrect. This is a built-in OCR skill, not for custom classification logic." },
-      "d": { "text": "Microsoft.Skills.Text.SplitSkill", "is_true": false, "explanation": "Incorrect. The SplitSkill divides text into pages or sentences — it is not for custom logic." }
+    {
+      "question_id": 12,
+      "question_text": "You have defined a skillset for your Azure AI Search indexer that includes OCR and entity recognition. Where does the enriched data flow?",
+      "options": {
+        "a": {
+          "text": "Data source -> Skillset -> Index only",
+          "is_true": false,
+          "explanation": "Incorrect. While the enriched data flows to the index, it can also optionally flow to a knowledge store."
+        },
+        "b": {
+          "text": "Data source -> Indexer -> Skillset -> Index and optionally Knowledge Store",
+          "is_true": true,
+          "explanation": "Correct. The indexer reads from the data source, applies the skillset for AI enrichment, and sends results to the index. Optionally, enrichments can also be projected to a knowledge store for persistent storage."
+        },
+        "c": {
+          "text": "Skillset -> Data source -> Indexer -> Index",
+          "is_true": false,
+          "explanation": "Incorrect. The skillset is applied by the indexer, not before the data source. The correct order is: data source -> indexer (with skillset) -> index."
+        },
+        "d": {
+          "text": "Data source -> Index -> Skillset -> Knowledge Store",
+          "is_true": false,
+          "explanation": "Incorrect. The skillset is applied during indexing, not after data is already in the index."
+        }
+      },
+      "correct_answer": [
+        "b"
+      ]
     },
-    "correct_answer": "b"
-  },
-  {
-    "question_id": 14,
-    "question_text": "You need to store AI-enriched data from Azure AI Search in Azure Table Storage for reporting in Power BI. Which knowledge store projection type should you use?",
-    "options": {
-      "a": { "text": "Object projection", "is_true": false, "explanation": "Incorrect. Object projections store data as JSON blobs in Azure Blob Storage — not in Table Storage." },
-      "b": { "text": "Table projection", "is_true": true, "explanation": "Correct. Table projections store structured data in Azure Table Storage, which can be easily connected to Power BI for reporting and analytics." },
-      "c": { "text": "File projection", "is_true": false, "explanation": "Incorrect. File projections store extracted images as files in Blob Storage — not tabular data for reporting." },
-      "d": { "text": "Index projection", "is_true": false, "explanation": "Incorrect. Index projections populate the search index itself — they do not write to external Table Storage." }
+    {
+      "question_id": 13,
+      "question_text": "You need to add a custom AI enrichment step to your Azure AI Search skillset that calls your own Azure Function to classify documents. Which skill type should you use?",
+      "options": {
+        "a": {
+          "text": "Microsoft.Skills.Text.EntityRecognitionSkill",
+          "is_true": false,
+          "explanation": "Incorrect. This is a built-in skill for entity recognition, not for custom logic."
+        },
+        "b": {
+          "text": "Microsoft.Skills.Custom.WebApiSkill",
+          "is_true": true,
+          "explanation": "Correct. The WebApiSkill calls a custom HTTP endpoint (such as an Azure Function) that accepts and returns JSON records with matching recordId values."
+        },
+        "c": {
+          "text": "Microsoft.Skills.Vision.OcrSkill",
+          "is_true": false,
+          "explanation": "Incorrect. This is a built-in OCR skill, not for custom classification logic."
+        },
+        "d": {
+          "text": "Microsoft.Skills.Text.SplitSkill",
+          "is_true": false,
+          "explanation": "Incorrect. The SplitSkill divides text into pages or sentences — it is not for custom logic."
+        }
+      },
+      "correct_answer": [
+        "b"
+      ]
     },
-    "correct_answer": "b"
-  },
-  {
-    "question_id": 15,
-    "question_text": "Which Azure AI Search query feature uses AI to re-rank results based on semantic understanding of the query intent, improving relevance beyond keyword matching?",
-    "options": {
-      "a": { "text": "Full-text search", "is_true": false, "explanation": "Incorrect. Full-text search uses BM25 keyword matching — it does not use AI for semantic understanding." },
-      "b": { "text": "Vector search", "is_true": false, "explanation": "Incorrect. Vector search finds semantically similar documents using embeddings but does not re-rank keyword results." },
-      "c": { "text": "Semantic search (semantic ranker)", "is_true": true, "explanation": "Correct. Semantic search applies an AI-powered re-ranker on top of keyword or hybrid results, promoting results that best match the semantic intent of the query." },
-      "d": { "text": "Fuzzy search", "is_true": false, "explanation": "Incorrect. Fuzzy search finds approximate string matches (typo tolerance) — it does not provide semantic understanding." }
+    {
+      "question_id": 14,
+      "question_text": "You need to store AI-enriched data from Azure AI Search in Azure Table Storage for reporting in Power BI. Which knowledge store projection type should you use?",
+      "options": {
+        "a": {
+          "text": "Object projection",
+          "is_true": false,
+          "explanation": "Incorrect. Object projections store data as JSON blobs in Azure Blob Storage — not in Table Storage."
+        },
+        "b": {
+          "text": "Table projection",
+          "is_true": true,
+          "explanation": "Correct. Table projections store structured data in Azure Table Storage, which can be easily connected to Power BI for reporting and analytics."
+        },
+        "c": {
+          "text": "File projection",
+          "is_true": false,
+          "explanation": "Incorrect. File projections store extracted images as files in Blob Storage — not tabular data for reporting."
+        },
+        "d": {
+          "text": "Index projection",
+          "is_true": false,
+          "explanation": "Incorrect. Index projections populate the search index itself — they do not write to external Table Storage."
+        }
+      },
+      "correct_answer": [
+        "b"
+      ]
     },
-    "correct_answer": "c"
-  },
-  {
-    "question_id": 16,
-    "question_text": "You need to extract vendor names, dates, and line items from invoices using Azure Document Intelligence. Which approach requires the least custom development?",
-    "options": {
-      "a": { "text": "Train a custom template model on sample invoices.", "is_true": false, "explanation": "Incorrect. Custom models require labeled training data and development effort. A prebuilt model for invoices already exists." },
-      "b": { "text": "Use the prebuilt invoice model.", "is_true": true, "explanation": "Correct. Azure Document Intelligence includes a prebuilt invoice model that extracts common invoice fields (vendor, date, amounts, line items) with no training required." },
-      "c": { "text": "Build an OCR pipeline and parse the text with regex.", "is_true": false, "explanation": "Incorrect. Custom OCR + regex is fragile and requires significant development. The prebuilt model handles this automatically." },
-      "d": { "text": "Use Azure AI Vision Image Analysis to detect text.", "is_true": false, "explanation": "Incorrect. Image Analysis can extract text but does not understand document structure or extract named fields like vendor and line items." }
+    {
+      "question_id": 15,
+      "question_text": "Which Azure AI Search query feature uses AI to re-rank results based on semantic understanding of the query intent, improving relevance beyond keyword matching?",
+      "options": {
+        "a": {
+          "text": "Full-text search",
+          "is_true": false,
+          "explanation": "Incorrect. Full-text search uses BM25 keyword matching — it does not use AI for semantic understanding."
+        },
+        "b": {
+          "text": "Vector search",
+          "is_true": false,
+          "explanation": "Incorrect. Vector search finds semantically similar documents using embeddings but does not re-rank keyword results."
+        },
+        "c": {
+          "text": "Semantic search (semantic ranker)",
+          "is_true": true,
+          "explanation": "Correct. Semantic search applies an AI-powered re-ranker on top of keyword or hybrid results, promoting results that best match the semantic intent of the query."
+        },
+        "d": {
+          "text": "Fuzzy search",
+          "is_true": false,
+          "explanation": "Incorrect. Fuzzy search finds approximate string matches (typo tolerance) — it does not provide semantic understanding."
+        }
+      },
+      "correct_answer": [
+        "c"
+      ]
     },
-    "correct_answer": "b"
-  },
-  {
-    "question_id": 17,
-    "question_text": "You process multiple document types (invoices, receipts, and contracts) through a single pipeline. Each type has its own custom Document Intelligence model. How should you combine them?",
-    "options": {
-      "a": { "text": "Create three separate endpoints and route documents manually.", "is_true": false, "explanation": "Incorrect. Manual routing adds complexity. A composed model handles this automatically." },
-      "b": { "text": "Create a composed model that automatically routes documents to the correct sub-model.", "is_true": true, "explanation": "Correct. A composed model combines multiple custom models into a single endpoint. It automatically classifies the document type and routes it to the appropriate sub-model for extraction." },
-      "c": { "text": "Train a single model on all three document types.", "is_true": false, "explanation": "Incorrect. Mixing different document structures in one model reduces accuracy. Composed models let each sub-model specialise." },
-      "d": { "text": "Use the prebuilt general document model for all types.", "is_true": false, "explanation": "Incorrect. The general document model may not extract domain-specific fields as accurately as custom models trained for each type." }
+    {
+      "question_id": 16,
+      "question_text": "You need to extract vendor names, dates, and line items from invoices using Azure Document Intelligence. Which approach requires the least custom development?",
+      "options": {
+        "a": {
+          "text": "Train a custom template model on sample invoices.",
+          "is_true": false,
+          "explanation": "Incorrect. Custom models require labeled training data and development effort. A prebuilt model for invoices already exists."
+        },
+        "b": {
+          "text": "Use the prebuilt invoice model.",
+          "is_true": true,
+          "explanation": "Correct. Azure Document Intelligence includes a prebuilt invoice model that extracts common invoice fields (vendor, date, amounts, line items) with no training required."
+        },
+        "c": {
+          "text": "Build an OCR pipeline and parse the text with regex.",
+          "is_true": false,
+          "explanation": "Incorrect. Custom OCR + regex is fragile and requires significant development. The prebuilt model handles this automatically."
+        },
+        "d": {
+          "text": "Use Azure AI Vision Image Analysis to detect text.",
+          "is_true": false,
+          "explanation": "Incorrect. Image Analysis can extract text but does not understand document structure or extract named fields like vendor and line items."
+        }
+      },
+      "correct_answer": [
+        "b"
+      ]
     },
-    "correct_answer": "b"
-  },
-  {
-    "question_id": 18,
-    "question_type": "multiple_select",
-    "question_text": "Which TWO search approaches should you combine for the best relevance in a RAG solution?",
-    "options": {
-      "a": { "text": "Full-text (keyword) search", "is_true": true, "explanation": "Correct. Full-text search handles exact matches, specific terms, and filters well. Combined with vector search, it creates a hybrid approach that captures both keyword and semantic relevance." },
-      "b": { "text": "Vector search", "is_true": true, "explanation": "Correct. Vector search finds semantically similar content even when different words are used. Combined with keyword search, it creates a hybrid approach with the best overall relevance." },
-      "c": { "text": "Fuzzy search only", "is_true": false, "explanation": "Incorrect. Fuzzy search handles typos but does not provide semantic understanding. It is a feature within full-text search, not a separate strategy for RAG." },
-      "d": { "text": "Regex pattern search only", "is_true": false, "explanation": "Incorrect. Regex is for specific pattern matching and is far too rigid for general-purpose retrieval in a RAG solution." }
+    {
+      "question_id": 17,
+      "question_text": "You process multiple document types (invoices, receipts, and contracts) through a single pipeline. Each type has its own custom Document Intelligence model. How should you combine them?",
+      "options": {
+        "a": {
+          "text": "Create three separate endpoints and route documents manually.",
+          "is_true": false,
+          "explanation": "Incorrect. Manual routing adds complexity. A composed model handles this automatically."
+        },
+        "b": {
+          "text": "Create a composed model that automatically routes documents to the correct sub-model.",
+          "is_true": true,
+          "explanation": "Correct. A composed model combines multiple custom models into a single endpoint. It automatically classifies the document type and routes it to the appropriate sub-model for extraction."
+        },
+        "c": {
+          "text": "Train a single model on all three document types.",
+          "is_true": false,
+          "explanation": "Incorrect. Mixing different document structures in one model reduces accuracy. Composed models let each sub-model specialise."
+        },
+        "d": {
+          "text": "Use the prebuilt general document model for all types.",
+          "is_true": false,
+          "explanation": "Incorrect. The general document model may not extract domain-specific fields as accurately as custom models trained for each type."
+        }
+      },
+      "correct_answer": [
+        "b"
+      ]
     },
-    "correct_answer": ["a", "b"]
-  },
-  {
-    "question_id": 19,
-    "question_text": "You are building a speech-to-speech translation system that translates English speech to French and German simultaneously. Which Azure service and feature should you use?",
-    "options": {
-      "a": { "text": "Azure AI Translator text translation", "is_true": false, "explanation": "Incorrect. Translator handles text, not audio. The scenario requires speech input and speech output." },
-      "b": { "text": "Azure AI Speech translation with multiple target languages", "is_true": true, "explanation": "Correct. Azure AI Speech translation supports recognising speech in one language and translating to multiple target languages simultaneously using add_target_language()." },
-      "c": { "text": "Azure OpenAI GPT-4o with audio input", "is_true": false, "explanation": "Incorrect. GPT-4o processes text and images. Real-time speech translation requires the dedicated Azure AI Speech service." },
-      "d": { "text": "Azure AI Language with translation feature", "is_true": false, "explanation": "Incorrect. Azure AI Language provides text analytics, not speech translation." }
+    {
+      "question_id": 18,
+      "question_text": "Which TWO search approaches should you combine for the best relevance in a RAG solution?",
+      "options": {
+        "a": {
+          "text": "Full-text (keyword) search",
+          "is_true": true,
+          "explanation": "Correct. Full-text search handles exact matches, specific terms, and filters well. Combined with vector search, it creates a hybrid approach that captures both keyword and semantic relevance."
+        },
+        "b": {
+          "text": "Vector search",
+          "is_true": true,
+          "explanation": "Correct. Vector search finds semantically similar content even when different words are used. Combined with keyword search, it creates a hybrid approach with the best overall relevance."
+        },
+        "c": {
+          "text": "Fuzzy search only",
+          "is_true": false,
+          "explanation": "Incorrect. Fuzzy search handles typos but does not provide semantic understanding. It is a feature within full-text search, not a separate strategy for RAG."
+        },
+        "d": {
+          "text": "Regex pattern search only",
+          "is_true": false,
+          "explanation": "Incorrect. Regex is for specific pattern matching and is far too rigid for general-purpose retrieval in a RAG solution."
+        }
+      },
+      "correct_answer": [
+        "a",
+        "b"
+      ]
     },
-    "correct_answer": "b"
-  },
-  {
-    "question_id": 20,
-    "question_text": "Which Azure service would you use to extract insights like transcripts, faces, keywords, sentiment, and scene segmentation from recorded video content?",
-    "options": {
-      "a": { "text": "Azure AI Vision Spatial Analysis", "is_true": false, "explanation": "Incorrect. Spatial Analysis is for real-time people detection/movement in live video — it does not extract transcripts, sentiment, or scene segmentation." },
-      "b": { "text": "Azure AI Video Indexer", "is_true": true, "explanation": "Correct. Azure AI Video Indexer extracts comprehensive insights from recorded video including transcripts, faces, keywords, sentiment, topics, scenes, shots, and named entities." },
-      "c": { "text": "Azure AI Vision Image Analysis", "is_true": false, "explanation": "Incorrect. Image Analysis processes individual images, not video content for insights like transcripts and scene segmentation." },
-      "d": { "text": "Azure Media Services", "is_true": false, "explanation": "Incorrect. Azure Media Services handles video streaming and encoding — it does not provide AI-powered video insights." }
+    {
+      "question_id": 19,
+      "question_text": "You are building a speech-to-speech translation system that translates English speech to French and German simultaneously. Which Azure service and feature should you use?",
+      "options": {
+        "a": {
+          "text": "Azure AI Translator text translation",
+          "is_true": false,
+          "explanation": "Incorrect. Translator handles text, not audio. The scenario requires speech input and speech output."
+        },
+        "b": {
+          "text": "Azure AI Speech translation with multiple target languages",
+          "is_true": true,
+          "explanation": "Correct. Azure AI Speech translation supports recognising speech in one language and translating to multiple target languages simultaneously using add_target_language()."
+        },
+        "c": {
+          "text": "Azure OpenAI GPT-4o with audio input",
+          "is_true": false,
+          "explanation": "Incorrect. GPT-4o processes text and images. Real-time speech translation requires the dedicated Azure AI Speech service."
+        },
+        "d": {
+          "text": "Azure AI Language with translation feature",
+          "is_true": false,
+          "explanation": "Incorrect. Azure AI Language provides text analytics, not speech translation."
+        }
+      },
+      "correct_answer": [
+        "b"
+      ]
     },
-    "correct_answer": "b"
-  }
-]
+    {
+      "question_id": 20,
+      "question_text": "Which Azure service would you use to extract insights like transcripts, faces, keywords, sentiment, and scene segmentation from recorded video content?",
+      "options": {
+        "a": {
+          "text": "Azure AI Vision Spatial Analysis",
+          "is_true": false,
+          "explanation": "Incorrect. Spatial Analysis is for real-time people detection/movement in live video — it does not extract transcripts, sentiment, or scene segmentation."
+        },
+        "b": {
+          "text": "Azure AI Video Indexer",
+          "is_true": true,
+          "explanation": "Correct. Azure AI Video Indexer extracts comprehensive insights from recorded video including transcripts, faces, keywords, sentiment, topics, scenes, shots, and named entities."
+        },
+        "c": {
+          "text": "Azure AI Vision Image Analysis",
+          "is_true": false,
+          "explanation": "Incorrect. Image Analysis processes individual images, not video content for insights like transcripts and scene segmentation."
+        },
+        "d": {
+          "text": "Azure Media Services",
+          "is_true": false,
+          "explanation": "Incorrect. Azure Media Services handles video streaming and encoding — it does not provide AI-powered video insights."
+        }
+      },
+      "correct_answer": [
+        "b"
+      ]
+    }
+  ]
+}

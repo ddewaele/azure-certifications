@@ -1,1649 +1,1777 @@
-[
-  {
-    "question_id": 1,
-    "question_text": "To complete the statement, select the appropriate option. An Azure Initiative ___.",
-    "options": {
-      "a": {
-        "text": "provides a model that is used by Azure Resource Manager to deploy large numbers of identical resources.",
-        "is_true": false,
-        "explanation": "Incorrect. This describes ARM templates, not an Azure Initiative."
-      },
-      "b": {
-        "text": "is a collection of Azure policies targeted toward reaching a single overall goal.",
-        "is_true": true,
-        "explanation": "Correct. An Azure Initiative is a collection of Azure Policy definitions grouped to achieve a single governance goal, simplifying policy management across subscriptions, resource groups, and management groups."
-      },
-      "c": {
-        "text": "lets you implement detailed granular resource access controls.",
-        "is_true": false,
-        "explanation": "Incorrect. Granular resource access control is the role of Azure RBAC (Role-Based Access Control), not Azure Policy initiatives."
-      },
-      "d": {
-        "text": "integrates with Azure Advisor to provide best practices for optimization.",
-        "is_true": false,
-        "explanation": "Incorrect. Azure Advisor is a separate service that provides personalized best-practice recommendations; it is not part of an Azure Initiative."
-      }
-    },
-    "correct_answer": "b"
+{
+  "meta": {
+    "title": "Azure Fundamentals – MeasureUp Practice",
+    "subject": "AZ-900",
+    "version": "1.0.0",
+    "created": "2026-03-22"
   },
-  {
-    "question_id": 2,
-    "question_text": "To complete the statement, select the appropriate option. Application Security Groups (ASGs) let you ___.",
-    "options": {
-      "a": {
-        "text": "directly allow or block connections to all servers running instances of the same service.",
-        "is_true": false,
-        "explanation": "Incorrect. Allowing or blocking connections is the function of Network Security Groups (NSGs). ASGs define logical groupings used within NSG rules."
+  "questions": [
+    {
+      "question_id": 1,
+      "question_text": "To complete the statement, select the appropriate option. An Azure Initiative ___.",
+      "options": {
+        "a": {
+          "text": "provides a model that is used by Azure Resource Manager to deploy large numbers of identical resources.",
+          "is_true": false,
+          "explanation": "Incorrect. This describes ARM templates, not an Azure Initiative."
+        },
+        "b": {
+          "text": "is a collection of Azure policies targeted toward reaching a single overall goal.",
+          "is_true": true,
+          "explanation": "Correct. An Azure Initiative is a collection of Azure Policy definitions grouped to achieve a single governance goal, simplifying policy management across subscriptions, resource groups, and management groups."
+        },
+        "c": {
+          "text": "lets you implement detailed granular resource access controls.",
+          "is_true": false,
+          "explanation": "Incorrect. Granular resource access control is the role of Azure RBAC (Role-Based Access Control), not Azure Policy initiatives."
+        },
+        "d": {
+          "text": "integrates with Azure Advisor to provide best practices for optimization.",
+          "is_true": false,
+          "explanation": "Incorrect. Azure Advisor is a separate service that provides personalized best-practice recommendations; it is not part of an Azure Initiative."
+        }
       },
-      "b": {
-        "text": "define templates for the rapid deployment of application instances in an orchestrated environment.",
-        "is_true": false,
-        "explanation": "Incorrect. Deployment templates describe ARM templates or VM Scale Sets, not ASGs."
-      },
-      "c": {
-        "text": "organize similar servers so you can easily define and implement security policies based on those groups.",
-        "is_true": true,
-        "explanation": "Correct. ASGs group VMs by role or tier (e.g., WebAccess, SQLTier) so you can use those groups as source or destination in NSG rules, avoiding the need to manage individual IP addresses."
-      },
-      "d": {
-        "text": "control user access to serverless applications.",
-        "is_true": false,
-        "explanation": "Incorrect. Controlling user access to applications is handled by Azure RBAC or Microsoft Entra ID, not ASGs."
-      }
+      "correct_answer": [
+        "b"
+      ]
     },
-    "correct_answer": "c"
-  },
-  {
-    "question_id": 3,
-    "question_text": "Your company runs a batch processing workload that processes large amounts of data during off-peak hours. The workload is fault-tolerant and can be interrupted without causing significant issues. Which solution provides the most cost-effective approach to run this workload in Azure?",
-    "options": {
-      "a": {
-        "text": "Run the batch processing task using reserved instances.",
-        "is_true": false,
-        "explanation": "Incorrect. Reserved instances offer discounts for steady, long-term committed workloads — not the best choice for intermittent, interruptible batch jobs."
+    {
+      "question_id": 2,
+      "question_text": "To complete the statement, select the appropriate option. Application Security Groups (ASGs) let you ___.",
+      "options": {
+        "a": {
+          "text": "directly allow or block connections to all servers running instances of the same service.",
+          "is_true": false,
+          "explanation": "Incorrect. Allowing or blocking connections is the function of Network Security Groups (NSGs). ASGs define logical groupings used within NSG rules."
+        },
+        "b": {
+          "text": "define templates for the rapid deployment of application instances in an orchestrated environment.",
+          "is_true": false,
+          "explanation": "Incorrect. Deployment templates describe ARM templates or VM Scale Sets, not ASGs."
+        },
+        "c": {
+          "text": "organize similar servers so you can easily define and implement security policies based on those groups.",
+          "is_true": true,
+          "explanation": "Correct. ASGs group VMs by role or tier (e.g., WebAccess, SQLTier) so you can use those groups as source or destination in NSG rules, avoiding the need to manage individual IP addresses."
+        },
+        "d": {
+          "text": "control user access to serverless applications.",
+          "is_true": false,
+          "explanation": "Incorrect. Controlling user access to applications is handled by Azure RBAC or Microsoft Entra ID, not ASGs."
+        }
       },
-      "b": {
-        "text": "Run the batch processing task using spot instances.",
-        "is_true": true,
-        "explanation": "Correct. Spot instances use Azure's spare compute capacity at significantly reduced prices (up to 90% off). Because the workload is fault-tolerant and can be interrupted, it is an ideal fit for spot pricing."
-      },
-      "c": {
-        "text": "Run the batch processing task using dedicated hosts.",
-        "is_true": false,
-        "explanation": "Incorrect. Azure Dedicated Hosts provide physical server isolation for compliance requirements, not for cost optimization of interruptible batch workloads."
-      },
-      "d": {
-        "text": "Run the batch processing task using standard pay-as-you-go VMs.",
-        "is_true": false,
-        "explanation": "Incorrect. Standard pay-as-you-go is more expensive than spot instances for fault-tolerant, interruptible workloads."
-      }
+      "correct_answer": [
+        "c"
+      ]
     },
-    "correct_answer": "b"
-  },
-  {
-    "question_id": 4,
-    "question_text": "Which phase of the Azure Cloud Adoption Framework (CAF) focuses on preparing the Azure environment — including governance, networking, identity, and monitoring — before any workloads are migrated?",
-    "options": {
-      "a": {
-        "text": "Strategy",
-        "is_true": false,
-        "explanation": "Incorrect. The Strategy phase defines business motivations and expected outcomes — the 'why' of cloud adoption."
+    {
+      "question_id": 3,
+      "question_text": "Your company runs a batch processing workload that processes large amounts of data during off-peak hours. The workload is fault-tolerant and can be interrupted without causing significant issues. Which solution provides the most cost-effective approach to run this workload in Azure?",
+      "options": {
+        "a": {
+          "text": "Run the batch processing task using reserved instances.",
+          "is_true": false,
+          "explanation": "Incorrect. Reserved instances offer discounts for steady, long-term committed workloads — not the best choice for intermittent, interruptible batch jobs."
+        },
+        "b": {
+          "text": "Run the batch processing task using spot instances.",
+          "is_true": true,
+          "explanation": "Correct. Spot instances use Azure's spare compute capacity at significantly reduced prices (up to 90% off). Because the workload is fault-tolerant and can be interrupted, it is an ideal fit for spot pricing."
+        },
+        "c": {
+          "text": "Run the batch processing task using dedicated hosts.",
+          "is_true": false,
+          "explanation": "Incorrect. Azure Dedicated Hosts provide physical server isolation for compliance requirements, not for cost optimization of interruptible batch workloads."
+        },
+        "d": {
+          "text": "Run the batch processing task using standard pay-as-you-go VMs.",
+          "is_true": false,
+          "explanation": "Incorrect. Standard pay-as-you-go is more expensive than spot instances for fault-tolerant, interruptible workloads."
+        }
       },
-      "b": {
-        "text": "Plan",
-        "is_true": false,
-        "explanation": "Incorrect. The Plan phase translates strategy into an actionable adoption plan, including digital estate assessment and the 5 Rs of rationalisation."
-      },
-      "c": {
-        "text": "Ready",
-        "is_true": true,
-        "explanation": "Correct. The Ready phase prepares the Azure environment by creating a landing zone with governance baselines, hub-and-spoke networking, RBAC, and monitoring before workloads arrive."
-      },
-      "d": {
-        "text": "Innovate",
-        "is_true": false,
-        "explanation": "Incorrect. Innovate is the track within the Adopt phase that focuses on building new cloud-native capabilities and modernising existing applications."
-      }
+      "correct_answer": [
+        "b"
+      ]
     },
-    "correct_answer": "c"
-  },
-  {
-    "question_id": 5,
-    "question_type": "multiple_select",
-    "question_text": "You use Azure Monitor to collect platform logs and metrics from your Azure resources. Which TWO destinations are valid targets for Azure Monitor log and metric data?",
-    "options": {
-      "a": {
-        "text": "Azure storage account",
-        "is_true": true,
-        "explanation": "Correct. Azure Storage is a valid destination for Azure Monitor data, allowing long-term archival and offline analysis of logs and metrics."
+    {
+      "question_id": 4,
+      "question_text": "Which phase of the Azure Cloud Adoption Framework (CAF) focuses on preparing the Azure environment — including governance, networking, identity, and monitoring — before any workloads are migrated?",
+      "options": {
+        "a": {
+          "text": "Strategy",
+          "is_true": false,
+          "explanation": "Incorrect. The Strategy phase defines business motivations and expected outcomes — the 'why' of cloud adoption."
+        },
+        "b": {
+          "text": "Plan",
+          "is_true": false,
+          "explanation": "Incorrect. The Plan phase translates strategy into an actionable adoption plan, including digital estate assessment and the 5 Rs of rationalisation."
+        },
+        "c": {
+          "text": "Ready",
+          "is_true": true,
+          "explanation": "Correct. The Ready phase prepares the Azure environment by creating a landing zone with governance baselines, hub-and-spoke networking, RBAC, and monitoring before workloads arrive."
+        },
+        "d": {
+          "text": "Innovate",
+          "is_true": false,
+          "explanation": "Incorrect. Innovate is the track within the Adopt phase that focuses on building new cloud-native capabilities and modernising existing applications."
+        }
       },
-      "b": {
-        "text": "Log Analytics workspace",
-        "is_true": true,
-        "explanation": "Correct. A Log Analytics workspace is a primary destination for Azure Monitor data, providing a rich environment to query, analyze, and visualize log data using KQL."
-      },
-      "c": {
-        "text": "Resource Health dashboard",
-        "is_true": false,
-        "explanation": "Incorrect. Resource Health is a service you use to check the health status of your resources — it is not a destination for Azure Monitor logs or metrics."
-      },
-      "d": {
-        "text": "Azure Advisor monitor",
-        "is_true": false,
-        "explanation": "Incorrect. Azure Advisor analyzes your resource configuration and usage telemetry to provide recommendations, but it is not a destination for Monitor data."
-      }
+      "correct_answer": [
+        "c"
+      ]
     },
-    "correct_answer": ["a", "b"]
-  },
-  {
-    "question_id": 6,
-    "question_type": "multiple_select",
-    "question_text": "Which TWO of the following are examples of Microsoft Entra Conditional Access policies?",
-    "options": {
-      "a": {
-        "text": "Block access by location",
-        "is_true": true,
-        "explanation": "Correct. Conditional Access policies can block or allow access based on the geographic location (country/region) from which a sign-in originates."
+    {
+      "question_id": 5,
+      "question_text": "You use Azure Monitor to collect platform logs and metrics from your Azure resources. Which TWO destinations are valid targets for Azure Monitor log and metric data?",
+      "options": {
+        "a": {
+          "text": "Azure storage account",
+          "is_true": true,
+          "explanation": "Correct. Azure Storage is a valid destination for Azure Monitor data, allowing long-term archival and offline analysis of logs and metrics."
+        },
+        "b": {
+          "text": "Log Analytics workspace",
+          "is_true": true,
+          "explanation": "Correct. A Log Analytics workspace is a primary destination for Azure Monitor data, providing a rich environment to query, analyze, and visualize log data using KQL."
+        },
+        "c": {
+          "text": "Resource Health dashboard",
+          "is_true": false,
+          "explanation": "Incorrect. Resource Health is a service you use to check the health status of your resources — it is not a destination for Azure Monitor logs or metrics."
+        },
+        "d": {
+          "text": "Azure Advisor monitor",
+          "is_true": false,
+          "explanation": "Incorrect. Azure Advisor analyzes your resource configuration and usage telemetry to provide recommendations, but it is not a destination for Monitor data."
+        }
       },
-      "b": {
-        "text": "Require compliant devices",
-        "is_true": true,
-        "explanation": "Correct. Conditional Access policies can require that devices meet compliance requirements — such as having device encryption enabled — before granting access to resources."
-      },
-      "c": {
-        "text": "Create dynamic groups",
-        "is_true": false,
-        "explanation": "Incorrect. Creating dynamic groups is a Microsoft Entra ID membership feature — it is not a type of Conditional Access policy."
-      },
-      "d": {
-        "text": "Enable password writeback to on-premises",
-        "is_true": false,
-        "explanation": "Incorrect. Password writeback is a Microsoft Entra ID authentication setting that syncs cloud password changes back to on-premises Active Directory — it is not a Conditional Access policy."
-      },
-      "e": {
-        "text": "Enable self-service password reset",
-        "is_true": false,
-        "explanation": "Incorrect. Self-service password reset (SSPR) is an authentication feature letting users reset their own passwords — it is not a Conditional Access policy."
-      }
+      "correct_answer": [
+        "a",
+        "b"
+      ]
     },
-    "correct_answer": ["a", "b"]
-  },
-  {
-    "question_id": 7,
-    "question_text": "A company uses an on-premises private cloud for its workloads. During periods of peak demand, the company needs additional compute capacity. Which of the following best describes the concept of cloud bursting?",
-    "options": {
-      "a": {
-        "text": "Cloud-based resources permanently replace on-premises infrastructure when demand exceeds capacity.",
-        "is_true": false,
-        "explanation": "Incorrect. Cloud bursting provides temporary overflow capacity — it does not permanently replace on-premises resources."
+    {
+      "question_id": 6,
+      "question_text": "Which TWO of the following are examples of Microsoft Entra Conditional Access policies?",
+      "options": {
+        "a": {
+          "text": "Block access by location",
+          "is_true": true,
+          "explanation": "Correct. Conditional Access policies can block or allow access based on the geographic location (country/region) from which a sign-in originates."
+        },
+        "b": {
+          "text": "Require compliant devices",
+          "is_true": true,
+          "explanation": "Correct. Conditional Access policies can require that devices meet compliance requirements — such as having device encryption enabled — before granting access to resources."
+        },
+        "c": {
+          "text": "Create dynamic groups",
+          "is_true": false,
+          "explanation": "Incorrect. Creating dynamic groups is a Microsoft Entra ID membership feature — it is not a type of Conditional Access policy."
+        },
+        "d": {
+          "text": "Enable password writeback to on-premises",
+          "is_true": false,
+          "explanation": "Incorrect. Password writeback is a Microsoft Entra ID authentication setting that syncs cloud password changes back to on-premises Active Directory — it is not a Conditional Access policy."
+        },
+        "e": {
+          "text": "Enable self-service password reset",
+          "is_true": false,
+          "explanation": "Incorrect. Self-service password reset (SSPR) is an authentication feature letting users reset their own passwords — it is not a Conditional Access policy."
+        }
       },
-      "b": {
-        "text": "Cloud-based resources are provisioned automatically when the on-premises private cloud reaches 100% resource capacity.",
-        "is_true": true,
-        "explanation": "Correct. Cloud bursting describes the model where cloud resources automatically come online when on-premises capacity is exhausted, then are decommissioned when demand returns to normal levels."
-      },
-      "c": {
-        "text": "All workloads are migrated to the public cloud to eliminate on-premises infrastructure.",
-        "is_true": false,
-        "explanation": "Incorrect. This describes a full public cloud migration. Cloud bursting maintains the private cloud and uses public cloud only as overflow."
-      },
-      "d": {
-        "text": "The company replicates its on-premises data to the cloud for disaster recovery purposes.",
-        "is_true": false,
-        "explanation": "Incorrect. Replicating data for disaster recovery describes Azure Site Recovery or geo-replication, not cloud bursting."
-      }
+      "correct_answer": [
+        "a",
+        "b"
+      ]
     },
-    "correct_answer": "b"
-  },
-  {
-    "question_id": 8,
-    "question_type": "multiple_select",
-    "question_text": "For each of the following statements about Azure security services, select those that are TRUE.",
-    "options": {
-      "a": {
-        "text": "Microsoft Entra ID manages cryptographic keys used by APIs.",
-        "is_true": false,
-        "explanation": "Incorrect. Cryptographic key management is the responsibility of Azure Key Vault, not Microsoft Entra ID. Entra ID is an identity and access management service."
+    {
+      "question_id": 7,
+      "question_text": "A company uses an on-premises private cloud for its workloads. During periods of peak demand, the company needs additional compute capacity. Which of the following best describes the concept of cloud bursting?",
+      "options": {
+        "a": {
+          "text": "Cloud-based resources permanently replace on-premises infrastructure when demand exceeds capacity.",
+          "is_true": false,
+          "explanation": "Incorrect. Cloud bursting provides temporary overflow capacity — it does not permanently replace on-premises resources."
+        },
+        "b": {
+          "text": "Cloud-based resources are provisioned automatically when the on-premises private cloud reaches 100% resource capacity.",
+          "is_true": true,
+          "explanation": "Correct. Cloud bursting describes the model where cloud resources automatically come online when on-premises capacity is exhausted, then are decommissioned when demand returns to normal levels."
+        },
+        "c": {
+          "text": "All workloads are migrated to the public cloud to eliminate on-premises infrastructure.",
+          "is_true": false,
+          "explanation": "Incorrect. This describes a full public cloud migration. Cloud bursting maintains the private cloud and uses public cloud only as overflow."
+        },
+        "d": {
+          "text": "The company replicates its on-premises data to the cloud for disaster recovery purposes.",
+          "is_true": false,
+          "explanation": "Incorrect. Replicating data for disaster recovery describes Azure Site Recovery or geo-replication, not cloud bursting."
+        }
       },
-      "b": {
-        "text": "Azure Storage encryption is enabled by default for all storage accounts.",
-        "is_true": true,
-        "explanation": "Correct. Azure Storage Service Encryption (SSE) is enabled by default for all Azure Storage accounts — data is automatically encrypted at rest using AES 256-bit encryption."
-      },
-      "c": {
-        "text": "Azure ExpressRoute encrypts traffic between virtual networks.",
-        "is_true": false,
-        "explanation": "Incorrect. ExpressRoute provides a private, dedicated connection between on-premises networks and Azure but does not encrypt traffic by default. Additional configuration such as IPsec is required for encryption."
-      }
+      "correct_answer": [
+        "b"
+      ]
     },
-    "correct_answer": ["b"]
-  },
-  {
-    "question_id": 9,
-    "question_type": "multiple_select",
-    "question_text": "You are using Microsoft Defender for Cloud to track your compliance posture. Which TWO pieces of information does the Regulatory Compliance dashboard provide?",
-    "options": {
-      "a": {
-        "text": "Your overall regulatory compliance score",
-        "is_true": true,
-        "explanation": "Correct. The Regulatory Compliance dashboard shows your overall compliance score against selected regulatory standards such as ISO 27001, PCI DSS, or Azure Security Benchmark."
+    {
+      "question_id": 8,
+      "question_text": "For each of the following statements about Azure security services, select those that are TRUE.",
+      "options": {
+        "a": {
+          "text": "Microsoft Entra ID manages cryptographic keys used by APIs.",
+          "is_true": false,
+          "explanation": "Incorrect. Cryptographic key management is the responsibility of Azure Key Vault, not Microsoft Entra ID. Entra ID is an identity and access management service."
+        },
+        "b": {
+          "text": "Azure Storage encryption is enabled by default for all storage accounts.",
+          "is_true": true,
+          "explanation": "Correct. Azure Storage Service Encryption (SSE) is enabled by default for all Azure Storage accounts — data is automatically encrypted at rest using AES 256-bit encryption."
+        },
+        "c": {
+          "text": "Azure ExpressRoute encrypts traffic between virtual networks.",
+          "is_true": false,
+          "explanation": "Incorrect. ExpressRoute provides a private, dedicated connection between on-premises networks and Azure but does not encrypt traffic by default. Additional configuration such as IPsec is required for encryption."
+        }
       },
-      "b": {
-        "text": "The number of passing and failing assessments for each control",
-        "is_true": true,
-        "explanation": "Correct. The dashboard breaks down each compliance control and shows how many assessments are passing and failing, allowing you to identify compliance gaps."
-      },
-      "c": {
-        "text": "Your overall Secure Score",
-        "is_true": false,
-        "explanation": "Incorrect. Secure Score is a separate Defender for Cloud feature measuring overall security posture — it is not part of the Regulatory Compliance dashboard."
-      },
-      "d": {
-        "text": "Security alerts ranked by severity",
-        "is_true": false,
-        "explanation": "Incorrect. Security alerts ranked by severity appear in the Security Alerts section of Defender for Cloud, not the Regulatory Compliance dashboard."
-      },
-      "e": {
-        "text": "Mitigation steps for all security threats detected",
-        "is_true": false,
-        "explanation": "Incorrect. Threat mitigation steps appear in the Recommendations and Security Alerts sections — not specifically in the Regulatory Compliance dashboard."
-      }
+      "correct_answer": [
+        "b"
+      ]
     },
-    "correct_answer": ["a", "b"]
-  },
-  {
-    "question_id": 10,
-    "question_text": "A company needs a fully managed PostgreSQL database service for high-traffic production workloads with consistent, predictable performance. The team does not want to manage the underlying server hardware or operating system. Which Azure service tier best meets these requirements?",
-    "options": {
-      "a": {
-        "text": "Azure Database for PostgreSQL Single Server Basic tier",
-        "is_true": false,
-        "explanation": "Incorrect. The Basic tier is designed for light-workload development and testing environments, not high-traffic production workloads."
+    {
+      "question_id": 9,
+      "question_text": "You are using Microsoft Defender for Cloud to track your compliance posture. Which TWO pieces of information does the Regulatory Compliance dashboard provide?",
+      "options": {
+        "a": {
+          "text": "Your overall regulatory compliance score",
+          "is_true": true,
+          "explanation": "Correct. The Regulatory Compliance dashboard shows your overall compliance score against selected regulatory standards such as ISO 27001, PCI DSS, or Azure Security Benchmark."
+        },
+        "b": {
+          "text": "The number of passing and failing assessments for each control",
+          "is_true": true,
+          "explanation": "Correct. The dashboard breaks down each compliance control and shows how many assessments are passing and failing, allowing you to identify compliance gaps."
+        },
+        "c": {
+          "text": "Your overall Secure Score",
+          "is_true": false,
+          "explanation": "Incorrect. Secure Score is a separate Defender for Cloud feature measuring overall security posture — it is not part of the Regulatory Compliance dashboard."
+        },
+        "d": {
+          "text": "Security alerts ranked by severity",
+          "is_true": false,
+          "explanation": "Incorrect. Security alerts ranked by severity appear in the Security Alerts section of Defender for Cloud, not the Regulatory Compliance dashboard."
+        },
+        "e": {
+          "text": "Mitigation steps for all security threats detected",
+          "is_true": false,
+          "explanation": "Incorrect. Threat mitigation steps appear in the Recommendations and Security Alerts sections — not specifically in the Regulatory Compliance dashboard."
+        }
       },
-      "b": {
-        "text": "Azure Database for PostgreSQL Single Server General Purpose tier",
-        "is_true": true,
-        "explanation": "Correct. The General Purpose tier is designed for production workloads that require balanced compute and memory with scalable I/O throughput — the right fit for consistently high-traffic applications."
-      },
-      "c": {
-        "text": "Azure Database for PostgreSQL Flexible Server Burstable tier",
-        "is_true": false,
-        "explanation": "Incorrect. The Burstable tier is designed for workloads that do not need full CPU continuously — not for consistently high-traffic production scenarios."
-      },
-      "d": {
-        "text": "SQL Server on Azure VMs",
-        "is_true": false,
-        "explanation": "Incorrect. SQL Server on Azure VMs uses SQL Server (not PostgreSQL) and requires managing the OS — the question asks for a fully managed PostgreSQL service."
-      }
+      "correct_answer": [
+        "a",
+        "b"
+      ]
     },
-    "correct_answer": "b"
-  },
-  {
-    "question_id": 11,
-    "question_text": "Which Azure feature enhances manageability and reliability by automatically provisioning and removing virtual machine instances based on workload demand?",
-    "options": {
-      "a": {
-        "text": "Serverless compute",
-        "is_true": false,
-        "explanation": "Incorrect. Serverless compute abstracts infrastructure management entirely, but it is not a feature that creates and removes virtual machine instances from a pool."
+    {
+      "question_id": 10,
+      "question_text": "A company needs a fully managed PostgreSQL database service for high-traffic production workloads with consistent, predictable performance. The team does not want to manage the underlying server hardware or operating system. Which Azure service tier best meets these requirements?",
+      "options": {
+        "a": {
+          "text": "Azure Database for PostgreSQL Single Server Basic tier",
+          "is_true": false,
+          "explanation": "Incorrect. The Basic tier is designed for light-workload development and testing environments, not high-traffic production workloads."
+        },
+        "b": {
+          "text": "Azure Database for PostgreSQL Single Server General Purpose tier",
+          "is_true": true,
+          "explanation": "Correct. The General Purpose tier is designed for production workloads that require balanced compute and memory with scalable I/O throughput — the right fit for consistently high-traffic applications."
+        },
+        "c": {
+          "text": "Azure Database for PostgreSQL Flexible Server Burstable tier",
+          "is_true": false,
+          "explanation": "Incorrect. The Burstable tier is designed for workloads that do not need full CPU continuously — not for consistently high-traffic production scenarios."
+        },
+        "d": {
+          "text": "SQL Server on Azure VMs",
+          "is_true": false,
+          "explanation": "Incorrect. SQL Server on Azure VMs uses SQL Server (not PostgreSQL) and requires managing the OS — the question asks for a fully managed PostgreSQL service."
+        }
       },
-      "b": {
-        "text": "Autoscale",
-        "is_true": true,
-        "explanation": "Correct. Azure Autoscale creates and removes VM instances from a pool based on workload demand — adding VMs when demand spikes and removing them when demand falls, ensuring both availability and cost-efficiency."
-      },
-      "c": {
-        "text": "Availability zones",
-        "is_true": false,
-        "explanation": "Incorrect. Availability zones distribute resources across physically separate datacenters within a region for redundancy — they do not provision or remove VM instances based on workload."
-      },
-      "d": {
-        "text": "Azure Site Recovery",
-        "is_true": false,
-        "explanation": "Incorrect. Azure Site Recovery provides disaster recovery by orchestrating replication of workloads to Azure — it does not scale VM instances based on demand."
-      }
+      "correct_answer": [
+        "b"
+      ]
     },
-    "correct_answer": "b"
-  },
-  {
-    "question_id": 12,
-    "question_text": "Which Azure security solution provides general security recommendations and suggests remediations to better secure your Azure, non-Azure cloud, and on-premises resources?",
-    "options": {
-      "a": {
-        "text": "Azure DDoS Protection",
-        "is_true": false,
-        "explanation": "Incorrect. Azure DDoS Protection is designed specifically to detect and mitigate DDoS attacks — it does not provide general security recommendations."
+    {
+      "question_id": 11,
+      "question_text": "Which Azure feature enhances manageability and reliability by automatically provisioning and removing virtual machine instances based on workload demand?",
+      "options": {
+        "a": {
+          "text": "Serverless compute",
+          "is_true": false,
+          "explanation": "Incorrect. Serverless compute abstracts infrastructure management entirely, but it is not a feature that creates and removes virtual machine instances from a pool."
+        },
+        "b": {
+          "text": "Autoscale",
+          "is_true": true,
+          "explanation": "Correct. Azure Autoscale creates and removes VM instances from a pool based on workload demand — adding VMs when demand spikes and removing them when demand falls, ensuring both availability and cost-efficiency."
+        },
+        "c": {
+          "text": "Availability zones",
+          "is_true": false,
+          "explanation": "Incorrect. Availability zones distribute resources across physically separate datacenters within a region for redundancy — they do not provision or remove VM instances based on workload."
+        },
+        "d": {
+          "text": "Azure Site Recovery",
+          "is_true": false,
+          "explanation": "Incorrect. Azure Site Recovery provides disaster recovery by orchestrating replication of workloads to Azure — it does not scale VM instances based on demand."
+        }
       },
-      "b": {
-        "text": "Azure Key Vault",
-        "is_true": false,
-        "explanation": "Incorrect. Azure Key Vault securely stores cryptographic keys, secrets, and certificates — it does not provide broad security recommendations."
-      },
-      "c": {
-        "text": "Microsoft Defender for Cloud",
-        "is_true": true,
-        "explanation": "Correct. Microsoft Defender for Cloud provides unified security management and threat protection across hybrid environments, including general security recommendations and remediation guidance to strengthen your security posture."
-      },
-      "d": {
-        "text": "Azure Information Protection (AIP)",
-        "is_true": false,
-        "explanation": "Incorrect. Azure Information Protection helps classify and protect documents and emails using labels — it does not provide infrastructure-level security recommendations."
-      }
+      "correct_answer": [
+        "b"
+      ]
     },
-    "correct_answer": "c"
-  },
-  {
-    "question_id": 13,
-    "question_type": "multiple_select",
-    "question_text": "For each of the following statements about Azure Advisor, select those that are TRUE.",
-    "options": {
-      "a": {
-        "text": "Azure Advisor makes shutdown recommendations based on CPU and memory utilization over the last seven days.",
-        "is_true": false,
-        "explanation": "Incorrect. Azure Advisor makes shutdown recommendations based on CPU and outbound network utilization, not memory utilization."
+    {
+      "question_id": 12,
+      "question_text": "Which Azure security solution provides general security recommendations and suggests remediations to better secure your Azure, non-Azure cloud, and on-premises resources?",
+      "options": {
+        "a": {
+          "text": "Azure DDoS Protection",
+          "is_true": false,
+          "explanation": "Incorrect. Azure DDoS Protection is designed specifically to detect and mitigate DDoS attacks — it does not provide general security recommendations."
+        },
+        "b": {
+          "text": "Azure Key Vault",
+          "is_true": false,
+          "explanation": "Incorrect. Azure Key Vault securely stores cryptographic keys, secrets, and certificates — it does not provide broad security recommendations."
+        },
+        "c": {
+          "text": "Microsoft Defender for Cloud",
+          "is_true": true,
+          "explanation": "Correct. Microsoft Defender for Cloud provides unified security management and threat protection across hybrid environments, including general security recommendations and remediation guidance to strengthen your security posture."
+        },
+        "d": {
+          "text": "Azure Information Protection (AIP)",
+          "is_true": false,
+          "explanation": "Incorrect. Azure Information Protection helps classify and protect documents and emails using labels — it does not provide infrastructure-level security recommendations."
+        }
       },
-      "b": {
-        "text": "You can use Azure Advisor to reduce costs by following its advice to resize underutilized virtual machines.",
-        "is_true": true,
-        "explanation": "Correct. Azure Advisor analyzes your resource usage and recommends resizing or shutting down underutilized VMs to reduce costs."
-      },
-      "c": {
-        "text": "Each Azure tag consists of a name, a location, and a value.",
-        "is_true": false,
-        "explanation": "Incorrect. Azure tags consist of a name and a value pair only — there is no location component in a tag."
-      }
+      "correct_answer": [
+        "c"
+      ]
     },
-    "correct_answer": ["b"]
-  },
-  {
-    "question_id": 14,
-    "question_type": "multiple_select",
-    "question_text": "Your company's customer service team frequently sends emails that may contain credit card numbers. You need to prevent this sensitive information from being sent to external customers. Which TWO actions should you perform?",
-    "options": {
-      "a": {
-        "text": "Configure Purview Message Encryption.",
-        "is_true": false,
-        "explanation": "Incorrect. Purview Message Encryption encrypts emails so their content cannot be read by unauthorized users — it does not scan for and block sensitive data from being sent externally."
+    {
+      "question_id": 13,
+      "question_text": "For each of the following statements about Azure Advisor, select those that are TRUE.",
+      "options": {
+        "a": {
+          "text": "Azure Advisor makes shutdown recommendations based on CPU and memory utilization over the last seven days.",
+          "is_true": false,
+          "explanation": "Incorrect. Azure Advisor makes shutdown recommendations based on CPU and outbound network utilization, not memory utilization."
+        },
+        "b": {
+          "text": "You can use Azure Advisor to reduce costs by following its advice to resize underutilized virtual machines.",
+          "is_true": true,
+          "explanation": "Correct. Azure Advisor analyzes your resource usage and recommends resizing or shutting down underutilized VMs to reduce costs."
+        },
+        "c": {
+          "text": "Each Azure tag consists of a name, a location, and a value.",
+          "is_true": false,
+          "explanation": "Incorrect. Azure tags consist of a name and a value pair only — there is no location component in a tag."
+        }
       },
-      "b": {
-        "text": "Define a Microsoft Purview Data Loss Prevention (DLP) policy.",
-        "is_true": true,
-        "explanation": "Correct. A DLP policy scans email content for sensitive information types (such as credit card numbers) and applies handling rules to detect and block them from being sent to external recipients."
-      },
-      "c": {
-        "text": "Apply Information Rights Management (IRM) using transport protection rules.",
-        "is_true": false,
-        "explanation": "Incorrect. IRM controls how emails are accessed and forwarded (e.g., restricting print or forwarding), but it does not detect or block sensitive content such as credit card numbers."
-      },
-      "d": {
-        "text": "Identify or define a sensitive information type.",
-        "is_true": true,
-        "explanation": "Correct. You must identify or define a sensitive information type (such as a credit card number pattern) so that a DLP policy can recognise and act on it when scanning email content."
-      },
-      "e": {
-        "text": "Deploy Secure/Multipurpose Internet Mail Extensions (S/MIME) for customer service agents.",
-        "is_true": false,
-        "explanation": "Incorrect. S/MIME encrypts message content end-to-end — because the data is encrypted, DLP systems cannot scan it to detect and prevent sensitive information from being sent."
-      }
+      "correct_answer": [
+        "b"
+      ]
     },
-    "correct_answer": ["b", "d"]
-  },
-  {
-    "question_id": 15,
-    "question_type": "multiple_select",
-    "question_text": "For each of the following statements regarding consumption-based and fixed cost pricing models in Azure, select those that are TRUE.",
-    "options": {
-      "a": {
-        "text": "For organizations with consistent, high utilization, the consumption-based pricing model is the most efficient one.",
-        "is_true": false,
-        "explanation": "Incorrect. For consistent, high utilization, fixed-price models (such as Azure Reservations) are more cost-efficient, offering discounts of up to 72% compared to pay-as-you-go."
+    {
+      "question_id": 14,
+      "question_text": "Your company's customer service team frequently sends emails that may contain credit card numbers. You need to prevent this sensitive information from being sent to external customers. Which TWO actions should you perform?",
+      "options": {
+        "a": {
+          "text": "Configure Purview Message Encryption.",
+          "is_true": false,
+          "explanation": "Incorrect. Purview Message Encryption encrypts emails so their content cannot be read by unauthorized users — it does not scan for and block sensitive data from being sent externally."
+        },
+        "b": {
+          "text": "Define a Microsoft Purview Data Loss Prevention (DLP) policy.",
+          "is_true": true,
+          "explanation": "Correct. A DLP policy scans email content for sensitive information types (such as credit card numbers) and applies handling rules to detect and block them from being sent to external recipients."
+        },
+        "c": {
+          "text": "Apply Information Rights Management (IRM) using transport protection rules.",
+          "is_true": false,
+          "explanation": "Incorrect. IRM controls how emails are accessed and forwarded (e.g., restricting print or forwarding), but it does not detect or block sensitive content such as credit card numbers."
+        },
+        "d": {
+          "text": "Identify or define a sensitive information type.",
+          "is_true": true,
+          "explanation": "Correct. You must identify or define a sensitive information type (such as a credit card number pattern) so that a DLP policy can recognise and act on it when scanning email content."
+        },
+        "e": {
+          "text": "Deploy Secure/Multipurpose Internet Mail Extensions (S/MIME) for customer service agents.",
+          "is_true": false,
+          "explanation": "Incorrect. S/MIME encrypts message content end-to-end — because the data is encrypted, DLP systems cannot scan it to detect and prevent sensitive information from being sent."
+        }
       },
-      "b": {
-        "text": "There are no upfront costs when using the consumption-based model.",
-        "is_true": true,
-        "explanation": "Correct. The consumption-based model has no upfront costs — you only pay for what you use, billed per unit of time or usage when you activate the resource."
-      },
-      "c": {
-        "text": "In the fixed price model, you pay for resources even if you do not use them.",
-        "is_true": true,
-        "explanation": "Correct. With a fixed-price commitment (e.g., a one-year reserved instance), you pay the same amount whether or not the server is actively used."
-      }
+      "correct_answer": [
+        "b",
+        "d"
+      ]
     },
-    "correct_answer": ["b", "c"]
-  },
-  {
-    "question_id": 16,
-    "question_text": "Your company plans to partner with a vendor for supply chain management and wants users from both organisations to collaborate via a shared Teams channel. You need to configure Microsoft Entra B2B direct connect. Which of the following statements about this configuration is correct?",
-    "options": {
-      "a": {
-        "text": "Login credentials created for partner users will be stored in your Microsoft Entra ID instance.",
-        "is_true": false,
-        "explanation": "Incorrect. With B2B direct connect, users authenticate using credentials from their own home directory — no partner identities are created in your Entra ID tenant."
+    {
+      "question_id": 15,
+      "question_text": "For each of the following statements regarding consumption-based and fixed cost pricing models in Azure, select those that are TRUE.",
+      "options": {
+        "a": {
+          "text": "For organizations with consistent, high utilization, the consumption-based pricing model is the most efficient one.",
+          "is_true": false,
+          "explanation": "Incorrect. For consistent, high utilization, fixed-price models (such as Azure Reservations) are more cost-efficient, offering discounts of up to 72% compared to pay-as-you-go."
+        },
+        "b": {
+          "text": "There are no upfront costs when using the consumption-based model.",
+          "is_true": true,
+          "explanation": "Correct. The consumption-based model has no upfront costs — you only pay for what you use, billed per unit of time or usage when you activate the resource."
+        },
+        "c": {
+          "text": "In the fixed price model, you pay for resources even if you do not use them.",
+          "is_true": true,
+          "explanation": "Correct. With a fixed-price commitment (e.g., a one-year reserved instance), you pay the same amount whether or not the server is actively used."
+        }
       },
-      "b": {
-        "text": "Your organisation will manage all the user accounts used for Teams collaboration.",
-        "is_true": false,
-        "explanation": "Incorrect. With B2B direct connect, partner users authenticate via their own organisation's Entra ID — your organisation does not manage their accounts."
-      },
-      "c": {
-        "text": "Users in the partner organisation are required to sign up for access via an invitation you send.",
-        "is_true": false,
-        "explanation": "Incorrect. B2B direct connect does not require invitation-based sign-up. Users from the partner organisation authenticate with their own credentials directly."
-      },
-      "d": {
-        "text": "Your organisation should create a mutual trust relationship with the partner organisation.",
-        "is_true": true,
-        "explanation": "Correct. Microsoft Entra B2B direct connect requires establishing a mutual trust relationship between the two organisations' Entra ID tenants, allowing users to authenticate from their home directory and collaborate without creating duplicate identities."
-      }
+      "correct_answer": [
+        "b",
+        "c"
+      ]
     },
-    "correct_answer": "d"
-  },
-  {
-    "question_id": 17,
-    "question_text": "Which Azure Blob storage access tier is NOT available at the storage account level and must be configured at the individual blob level?",
-    "options": {
-      "a": {
-        "text": "Hot",
-        "is_true": false,
-        "explanation": "Incorrect. Hot is the default access tier and can be set at the storage account level."
+    {
+      "question_id": 16,
+      "question_text": "Your company plans to partner with a vendor for supply chain management and wants users from both organisations to collaborate via a shared Teams channel. You need to configure Microsoft Entra B2B direct connect. Which of the following statements about this configuration is correct?",
+      "options": {
+        "a": {
+          "text": "Login credentials created for partner users will be stored in your Microsoft Entra ID instance.",
+          "is_true": false,
+          "explanation": "Incorrect. With B2B direct connect, users authenticate using credentials from their own home directory — no partner identities are created in your Entra ID tenant."
+        },
+        "b": {
+          "text": "Your organisation will manage all the user accounts used for Teams collaboration.",
+          "is_true": false,
+          "explanation": "Incorrect. With B2B direct connect, partner users authenticate via their own organisation's Entra ID — your organisation does not manage their accounts."
+        },
+        "c": {
+          "text": "Users in the partner organisation are required to sign up for access via an invitation you send.",
+          "is_true": false,
+          "explanation": "Incorrect. B2B direct connect does not require invitation-based sign-up. Users from the partner organisation authenticate with their own credentials directly."
+        },
+        "d": {
+          "text": "Your organisation should create a mutual trust relationship with the partner organisation.",
+          "is_true": true,
+          "explanation": "Correct. Microsoft Entra B2B direct connect requires establishing a mutual trust relationship between the two organisations' Entra ID tenants, allowing users to authenticate from their home directory and collaborate without creating duplicate identities."
+        }
       },
-      "b": {
-        "text": "Cool",
-        "is_true": false,
-        "explanation": "Incorrect. Cool tier can be set at the storage account level and has a 30-day minimum storage duration penalty for early deletion."
-      },
-      "c": {
-        "text": "Cold",
-        "is_true": false,
-        "explanation": "Incorrect. Cold tier can be configured at the storage account level and has a 90-day minimum storage duration."
-      },
-      "d": {
-        "text": "Archive",
-        "is_true": true,
-        "explanation": "Correct. The Archive tier is not available at the storage account level — it must be set on individual blobs. Archive data is offline and must be rehydrated (which incurs the highest access cost) before it can be read."
-      }
+      "correct_answer": [
+        "d"
+      ]
     },
-    "correct_answer": "d"
-  },
-  {
-    "question_id": 18,
-    "question_type": "multiple_select",
-    "question_text": "Your Azure tenant includes internet-facing web servers and database servers located in different virtual network subnets. You need to implement detailed controls over the types of connections between the tiers while minimising management overhead. Which TWO technologies should you include in your solution?",
-    "options": {
-      "a": {
-        "text": "Azure Firewall",
-        "is_true": false,
-        "explanation": "Incorrect. Azure Firewall adds cost and operational complexity. The recommended low-overhead pattern for intra-VNet tier-to-tier filtering is ASGs combined with NSGs."
+    {
+      "question_id": 17,
+      "question_text": "Which Azure Blob storage access tier is NOT available at the storage account level and must be configured at the individual blob level?",
+      "options": {
+        "a": {
+          "text": "Hot",
+          "is_true": false,
+          "explanation": "Incorrect. Hot is the default access tier and can be set at the storage account level."
+        },
+        "b": {
+          "text": "Cool",
+          "is_true": false,
+          "explanation": "Incorrect. Cool tier can be set at the storage account level and has a 30-day minimum storage duration penalty for early deletion."
+        },
+        "c": {
+          "text": "Cold",
+          "is_true": false,
+          "explanation": "Incorrect. Cold tier can be configured at the storage account level and has a 90-day minimum storage duration."
+        },
+        "d": {
+          "text": "Archive",
+          "is_true": true,
+          "explanation": "Correct. The Archive tier is not available at the storage account level — it must be set on individual blobs. Archive data is offline and must be rehydrated (which incurs the highest access cost) before it can be read."
+        }
       },
-      "b": {
-        "text": "Application Security Groups (ASGs)",
-        "is_true": true,
-        "explanation": "Correct. ASGs group VMs by role (e.g., WebAccess, SQLTier) and use those groups as source or destination in NSG rules, avoiding the need to manage IP addresses directly and reducing maintenance effort."
-      },
-      "c": {
-        "text": "User Defined Routes (UDRs)",
-        "is_true": false,
-        "explanation": "Incorrect. UDRs override default routing to direct traffic through specific appliances — they do not provide connection-type filtering between subnet tiers."
-      },
-      "d": {
-        "text": "Network Security Groups (NSGs)",
-        "is_true": true,
-        "explanation": "Correct. NSGs are packet-filtering firewalls that control traffic within a VNet between subnets or per VM. Combined with ASGs, they provide fine-grained, maintainable security rules."
-      },
-      "e": {
-        "text": "Azure Traffic Manager",
-        "is_true": false,
-        "explanation": "Incorrect. Azure Traffic Manager is a DNS-based global load balancer for routing traffic across Azure regions — it cannot filter connections between VNet subnets."
-      }
+      "correct_answer": [
+        "d"
+      ]
     },
-    "correct_answer": ["b", "d"]
-  },
-  {
-    "question_id": 19,
-    "question_text": "Your company plans to migrate applications and services to the cloud. You recommend deploying a hybrid cloud. What is the primary reason for this recommendation?",
-    "options": {
-      "a": {
-        "text": "To ensure that charges are only incurred when cloud resources are utilised.",
-        "is_true": false,
-        "explanation": "Incorrect. Pay-per-use pricing is a characteristic of public cloud consumption billing, not specific to hybrid cloud."
+    {
+      "question_id": 18,
+      "question_text": "Your Azure tenant includes internet-facing web servers and database servers located in different virtual network subnets. You need to implement detailed controls over the types of connections between the tiers while minimising management overhead. Which TWO technologies should you include in your solution?",
+      "options": {
+        "a": {
+          "text": "Azure Firewall",
+          "is_true": false,
+          "explanation": "Incorrect. Azure Firewall adds cost and operational complexity. The recommended low-overhead pattern for intra-VNet tier-to-tier filtering is ASGs combined with NSGs."
+        },
+        "b": {
+          "text": "Application Security Groups (ASGs)",
+          "is_true": true,
+          "explanation": "Correct. ASGs group VMs by role (e.g., WebAccess, SQLTier) and use those groups as source or destination in NSG rules, avoiding the need to manage IP addresses directly and reducing maintenance effort."
+        },
+        "c": {
+          "text": "User Defined Routes (UDRs)",
+          "is_true": false,
+          "explanation": "Incorrect. UDRs override default routing to direct traffic through specific appliances — they do not provide connection-type filtering between subnet tiers."
+        },
+        "d": {
+          "text": "Network Security Groups (NSGs)",
+          "is_true": true,
+          "explanation": "Correct. NSGs are packet-filtering firewalls that control traffic within a VNet between subnets or per VM. Combined with ASGs, they provide fine-grained, maintainable security rules."
+        },
+        "e": {
+          "text": "Azure Traffic Manager",
+          "is_true": false,
+          "explanation": "Incorrect. Azure Traffic Manager is a DNS-based global load balancer for routing traffic across Azure regions — it cannot filter connections between VNet subnets."
+        }
       },
-      "b": {
-        "text": "To consolidate all cloud resources in a single data centre.",
-        "is_true": false,
-        "explanation": "Incorrect. Consolidating resources in a single data centre describes a private cloud or on-premises setup."
-      },
-      "c": {
-        "text": "To eliminate the need for company-managed compute resources.",
-        "is_true": false,
-        "explanation": "Incorrect. All cloud models, including hybrid, still require the organisation to manage some compute resources."
-      },
-      "d": {
-        "text": "To augment on-premises resources by providing overflow capacity.",
-        "is_true": true,
-        "explanation": "Correct. A hybrid cloud combines on-premises infrastructure with public cloud resources. When on-premises capacity is reached, workloads overflow to the public cloud — then scale back down when demand subsides."
-      }
+      "correct_answer": [
+        "b",
+        "d"
+      ]
     },
-    "correct_answer": "d"
-  },
-  {
-    "question_id": 20,
-    "question_type": "multiple_select",
-    "question_text": "For each of the following statements about serverless computing using Azure services, select those that are TRUE.",
-    "options": {
-      "a": {
-        "text": "Azure Functions are controlled using an input trigger and an output trigger.",
-        "is_true": false,
-        "explanation": "Incorrect. Each Azure Function is associated with exactly one input trigger. Output bindings are optional and separate from the trigger — a Function is not controlled by two triggers."
+    {
+      "question_id": 19,
+      "question_text": "Your company plans to migrate applications and services to the cloud. You recommend deploying a hybrid cloud. What is the primary reason for this recommendation?",
+      "options": {
+        "a": {
+          "text": "To ensure that charges are only incurred when cloud resources are utilised.",
+          "is_true": false,
+          "explanation": "Incorrect. Pay-per-use pricing is a characteristic of public cloud consumption billing, not specific to hybrid cloud."
+        },
+        "b": {
+          "text": "To consolidate all cloud resources in a single data centre.",
+          "is_true": false,
+          "explanation": "Incorrect. Consolidating resources in a single data centre describes a private cloud or on-premises setup."
+        },
+        "c": {
+          "text": "To eliminate the need for company-managed compute resources.",
+          "is_true": false,
+          "explanation": "Incorrect. All cloud models, including hybrid, still require the organisation to manage some compute resources."
+        },
+        "d": {
+          "text": "To augment on-premises resources by providing overflow capacity.",
+          "is_true": true,
+          "explanation": "Correct. A hybrid cloud combines on-premises infrastructure with public cloud resources. When on-premises capacity is reached, workloads overflow to the public cloud — then scale back down when demand subsides."
+        }
       },
-      "b": {
-        "text": "Azure App Service can be used to run apps in Linux or Windows containers.",
-        "is_true": true,
-        "explanation": "Correct. Azure App Service supports hosting web applications directly on Linux or Windows, and it can run Linux or Windows-based containers via its container hosting options."
-      },
-      "c": {
-        "text": "Azure Logic Apps requires application coding.",
-        "is_true": false,
-        "explanation": "Incorrect. Azure Logic Apps is a low-code/no-code platform — workflows are built using a visual designer and 200+ pre-built connectors without requiring custom application code."
-      }
+      "correct_answer": [
+        "d"
+      ]
     },
-    "correct_answer": ["b"]
-  },
-  {
-    "question_id": 21,
-    "question_type": "multiple_select",
-    "question_text": "For each of the following statements about Azure Policy initiatives, select those that are TRUE.",
-    "options": {
-      "a": {
-        "text": "An initiative is limited to being assigned to resource groups or subscriptions only.",
-        "is_true": false,
-        "explanation": "Incorrect. An Azure initiative can be assigned to multiple scopes including management groups, subscriptions, and resource groups."
+    {
+      "question_id": 20,
+      "question_text": "For each of the following statements about serverless computing using Azure services, select those that are TRUE.",
+      "options": {
+        "a": {
+          "text": "Azure Functions are controlled using an input trigger and an output trigger.",
+          "is_true": false,
+          "explanation": "Incorrect. Each Azure Function is associated with exactly one input trigger. Output bindings are optional and separate from the trigger — a Function is not controlled by two triggers."
+        },
+        "b": {
+          "text": "Azure App Service can be used to run apps in Linux or Windows containers.",
+          "is_true": true,
+          "explanation": "Correct. Azure App Service supports hosting web applications directly on Linux or Windows, and it can run Linux or Windows-based containers via its container hosting options."
+        },
+        "c": {
+          "text": "Azure Logic Apps requires application coding.",
+          "is_true": false,
+          "explanation": "Incorrect. Azure Logic Apps is a low-code/no-code platform — workflows are built using a visual designer and 200+ pre-built connectors without requiring custom application code."
+        }
       },
-      "b": {
-        "text": "When an initiative assignment is evaluated, all of the policies in that initiative are evaluated.",
-        "is_true": true,
-        "explanation": "Correct. When an initiative is assigned and evaluated, all policy definitions included in that initiative are evaluated together against the assigned scope."
-      },
-      "c": {
-        "text": "An initiative can only contain policies that exist within the same subscription.",
-        "is_true": false,
-        "explanation": "Incorrect. A single initiative can be assigned to scopes across multiple subscriptions, provided the initiative and its policies are created at the management group level."
-      }
+      "correct_answer": [
+        "b"
+      ]
     },
-    "correct_answer": ["b"]
-  },
-  {
-    "question_id": 22,
-    "question_text": "Your Azure tenant's internet-facing web servers are experiencing attacks that exhaust server resources and make them unavailable to legitimate users. The attacks are launched from multiple locations. You need an Azure solution that automatically detects and mitigates attacks and generates alerts when an attack is underway. What is the best option?",
-    "options": {
-      "a": {
-        "text": "Azure DDoS Protection",
-        "is_true": true,
-        "explanation": "Correct. Azure DDoS Protection detects, prevents, and automatically mitigates DDoS attacks using machine learning to identify attack patterns. It protects the virtual network on which the web servers are deployed and generates alerts during active attacks."
+    {
+      "question_id": 21,
+      "question_text": "For each of the following statements about Azure Policy initiatives, select those that are TRUE.",
+      "options": {
+        "a": {
+          "text": "An initiative is limited to being assigned to resource groups or subscriptions only.",
+          "is_true": false,
+          "explanation": "Incorrect. An Azure initiative can be assigned to multiple scopes including management groups, subscriptions, and resource groups."
+        },
+        "b": {
+          "text": "When an initiative assignment is evaluated, all of the policies in that initiative are evaluated.",
+          "is_true": true,
+          "explanation": "Correct. When an initiative is assigned and evaluated, all policy definitions included in that initiative are evaluated together against the assigned scope."
+        },
+        "c": {
+          "text": "An initiative can only contain policies that exist within the same subscription.",
+          "is_true": false,
+          "explanation": "Incorrect. A single initiative can be assigned to scopes across multiple subscriptions, provided the initiative and its policies are created at the management group level."
+        }
       },
-      "b": {
-        "text": "Azure Firewall",
-        "is_true": false,
-        "explanation": "Incorrect. Azure Firewall can filter traffic but does not have the capability to detect and automatically mitigate volumetric DDoS attacks."
-      },
-      "c": {
-        "text": "Azure Information Protection (AIP)",
-        "is_true": false,
-        "explanation": "Incorrect. Azure Information Protection classifies and protects documents and emails — it has nothing to do with network-level DDoS attack detection."
-      },
-      "d": {
-        "text": "Azure Application Security Groups (ASG)",
-        "is_true": false,
-        "explanation": "Incorrect. ASGs group VMs for NSG rule management — they cannot detect or mitigate DDoS attacks."
-      }
+      "correct_answer": [
+        "b"
+      ]
     },
-    "correct_answer": "a"
-  },
-  {
-    "question_id": 23,
-    "question_text": "Your marketing department wants to use Azure services to integrate marketing data with business intelligence tools, focusing on application logic rather than managing infrastructure. Which cloud service model best describes this approach?",
-    "options": {
-      "a": {
-        "text": "Infrastructure as a Service (IaaS)",
-        "is_true": false,
-        "explanation": "Incorrect. IaaS provides managed hardware but requires the customer to manage the OS, middleware, and applications — the team would still be responsible for infrastructure."
+    {
+      "question_id": 22,
+      "question_text": "Your Azure tenant's internet-facing web servers are experiencing attacks that exhaust server resources and make them unavailable to legitimate users. The attacks are launched from multiple locations. You need an Azure solution that automatically detects and mitigates attacks and generates alerts when an attack is underway. What is the best option?",
+      "options": {
+        "a": {
+          "text": "Azure DDoS Protection",
+          "is_true": true,
+          "explanation": "Correct. Azure DDoS Protection detects, prevents, and automatically mitigates DDoS attacks using machine learning to identify attack patterns. It protects the virtual network on which the web servers are deployed and generates alerts during active attacks."
+        },
+        "b": {
+          "text": "Azure Firewall",
+          "is_true": false,
+          "explanation": "Incorrect. Azure Firewall can filter traffic but does not have the capability to detect and automatically mitigate volumetric DDoS attacks."
+        },
+        "c": {
+          "text": "Azure Information Protection (AIP)",
+          "is_true": false,
+          "explanation": "Incorrect. Azure Information Protection classifies and protects documents and emails — it has nothing to do with network-level DDoS attack detection."
+        },
+        "d": {
+          "text": "Azure Application Security Groups (ASG)",
+          "is_true": false,
+          "explanation": "Incorrect. ASGs group VMs for NSG rule management — they cannot detect or mitigate DDoS attacks."
+        }
       },
-      "b": {
-        "text": "Platform as a Service (PaaS)",
-        "is_true": true,
-        "explanation": "Correct. PaaS provides a managed platform for building and deploying applications without managing the underlying infrastructure. Azure services for BI integration (such as Azure Synapse, Data Factory) are PaaS offerings that let teams focus on application logic."
-      },
-      "c": {
-        "text": "Software as a Service (SaaS)",
-        "is_true": false,
-        "explanation": "Incorrect. SaaS delivers complete software applications over the internet — it is not the right model when teams are actively integrating Azure services and developing custom workflows."
-      },
-      "d": {
-        "text": "Function as a Service (FaaS)",
-        "is_true": false,
-        "explanation": "Incorrect. FaaS is an event-driven execution model for individual functions — it does not broadly describe using Azure services for BI integration workflows."
-      }
+      "correct_answer": [
+        "a"
+      ]
     },
-    "correct_answer": "b"
-  },
-  {
-    "question_id": 24,
-    "question_text": "You need to bring Azure Storage into your virtual network with a dedicated IP address so that traffic communicates with the service over the Microsoft backbone network, eliminating exposure to the public internet. Which solution should you use?",
-    "options": {
-      "a": {
-        "text": "Create a private endpoint with Azure Private Link.",
-        "is_true": true,
-        "explanation": "Correct. A private endpoint assigns a private IP address from your VNet to an Azure service (like Storage) using Azure Private Link. Traffic travels entirely over the Microsoft backbone network without leaving the VNet."
+    {
+      "question_id": 23,
+      "question_text": "Your marketing department wants to use Azure services to integrate marketing data with business intelligence tools, focusing on application logic rather than managing infrastructure. Which cloud service model best describes this approach?",
+      "options": {
+        "a": {
+          "text": "Infrastructure as a Service (IaaS)",
+          "is_true": false,
+          "explanation": "Incorrect. IaaS provides managed hardware but requires the customer to manage the OS, middleware, and applications — the team would still be responsible for infrastructure."
+        },
+        "b": {
+          "text": "Platform as a Service (PaaS)",
+          "is_true": true,
+          "explanation": "Correct. PaaS provides a managed platform for building and deploying applications without managing the underlying infrastructure. Azure services for BI integration (such as Azure Synapse, Data Factory) are PaaS offerings that let teams focus on application logic."
+        },
+        "c": {
+          "text": "Software as a Service (SaaS)",
+          "is_true": false,
+          "explanation": "Incorrect. SaaS delivers complete software applications over the internet — it is not the right model when teams are actively integrating Azure services and developing custom workflows."
+        },
+        "d": {
+          "text": "Function as a Service (FaaS)",
+          "is_true": false,
+          "explanation": "Incorrect. FaaS is an event-driven execution model for individual functions — it does not broadly describe using Azure services for BI integration workflows."
+        }
       },
-      "b": {
-        "text": "Peer your Azure virtual network (VNet) with an Azure Storage VNet.",
-        "is_true": false,
-        "explanation": "Incorrect. Azure Storage does not have its own VNet to peer with. VNet peering connects two Azure VNets — it is not the mechanism for giving Storage a private IP."
-      },
-      "c": {
-        "text": "Create a private connection with Azure ExpressRoute.",
-        "is_true": false,
-        "explanation": "Incorrect. ExpressRoute provides a private WAN connection between on-premises networks and Microsoft Cloud — it does not assign an Azure service a dedicated private IP within a VNet."
-      },
-      "d": {
-        "text": "Create a site-to-site VPN with Azure VPN Gateway.",
-        "is_true": false,
-        "explanation": "Incorrect. A site-to-site VPN connects on-premises networks to Azure VNets — it does not assign Azure Storage a private IP address within a VNet."
-      }
+      "correct_answer": [
+        "b"
+      ]
     },
-    "correct_answer": "a"
-  },
-  {
-    "question_id": 25,
-    "question_text": "You use Azure Cost Management and Billing to create cost reports. To understand the data in a cost report, Microsoft recommends you implement ___.",
-    "options": {
-      "a": {
-        "text": "management groups.",
-        "is_true": false,
-        "explanation": "Incorrect. Management groups provide a hierarchy for organising subscriptions for governance purposes — they are not specifically recommended for understanding cost report data."
+    {
+      "question_id": 24,
+      "question_text": "You need to bring Azure Storage into your virtual network with a dedicated IP address so that traffic communicates with the service over the Microsoft backbone network, eliminating exposure to the public internet. Which solution should you use?",
+      "options": {
+        "a": {
+          "text": "Create a private endpoint with Azure Private Link.",
+          "is_true": true,
+          "explanation": "Correct. A private endpoint assigns a private IP address from your VNet to an Azure service (like Storage) using Azure Private Link. Traffic travels entirely over the Microsoft backbone network without leaving the VNet."
+        },
+        "b": {
+          "text": "Peer your Azure virtual network (VNet) with an Azure Storage VNet.",
+          "is_true": false,
+          "explanation": "Incorrect. Azure Storage does not have its own VNet to peer with. VNet peering connects two Azure VNets — it is not the mechanism for giving Storage a private IP."
+        },
+        "c": {
+          "text": "Create a private connection with Azure ExpressRoute.",
+          "is_true": false,
+          "explanation": "Incorrect. ExpressRoute provides a private WAN connection between on-premises networks and Microsoft Cloud — it does not assign an Azure service a dedicated private IP within a VNet."
+        },
+        "d": {
+          "text": "Create a site-to-site VPN with Azure VPN Gateway.",
+          "is_true": false,
+          "explanation": "Incorrect. A site-to-site VPN connects on-premises networks to Azure VNets — it does not assign Azure Storage a private IP address within a VNet."
+        }
       },
-      "b": {
-        "text": "Resource Groups.",
-        "is_true": false,
-        "explanation": "Incorrect. Resource groups are containers for Azure resources — while they organise resources, Microsoft specifically recommends tags for cost reporting categorisation."
-      },
-      "c": {
-        "text": "Azure Resource Manager.",
-        "is_true": false,
-        "explanation": "Incorrect. Azure Resource Manager is the deployment and management service for Azure — it is not a data organisation mechanism for cost reports."
-      },
-      "d": {
-        "text": "tags.",
-        "is_true": true,
-        "explanation": "Correct. Microsoft recommends implementing tags to organise and categorise Azure resources for cost reporting. Tags are name-value pairs that can be applied to any resource, allowing cost data to be filtered by environment, department, project, or other dimensions."
-      }
+      "correct_answer": [
+        "a"
+      ]
     },
-    "correct_answer": "d"
-  },
-  {
-    "question_id": 26,
-    "question_type": "multiple_select",
-    "question_text": "Which of the following correctly matches an Azure service to its cloud service type? Select all that apply.",
-    "options": {
-      "a": {
-        "text": "Azure Cosmos DB — Platform as a Service (PaaS)",
-        "is_true": true,
-        "explanation": "Correct. Azure Cosmos DB is a fully managed NoSQL database service where Microsoft handles the underlying infrastructure — this is PaaS."
+    {
+      "question_id": 25,
+      "question_text": "You use Azure Cost Management and Billing to create cost reports. To understand the data in a cost report, Microsoft recommends you implement ___.",
+      "options": {
+        "a": {
+          "text": "management groups.",
+          "is_true": false,
+          "explanation": "Incorrect. Management groups provide a hierarchy for organising subscriptions for governance purposes — they are not specifically recommended for understanding cost report data."
+        },
+        "b": {
+          "text": "Resource Groups.",
+          "is_true": false,
+          "explanation": "Incorrect. Resource groups are containers for Azure resources — while they organise resources, Microsoft specifically recommends tags for cost reporting categorisation."
+        },
+        "c": {
+          "text": "Azure Resource Manager.",
+          "is_true": false,
+          "explanation": "Incorrect. Azure Resource Manager is the deployment and management service for Azure — it is not a data organisation mechanism for cost reports."
+        },
+        "d": {
+          "text": "tags.",
+          "is_true": true,
+          "explanation": "Correct. Microsoft recommends implementing tags to organise and categorise Azure resources for cost reporting. Tags are name-value pairs that can be applied to any resource, allowing cost data to be filtered by environment, department, project, or other dimensions."
+        }
       },
-      "b": {
-        "text": "Azure Storage — Platform as a Service (PaaS)",
-        "is_true": true,
-        "explanation": "Correct. Azure Storage is a fully managed service where Microsoft handles all backend infrastructure — you simply store and access data through APIs or the portal. This is PaaS."
-      },
-      "c": {
-        "text": "Microsoft Office 365 — Software as a Service (SaaS)",
-        "is_true": true,
-        "explanation": "Correct. Microsoft 365 is subscription-based software delivered over the internet. Microsoft manages everything including the application, infrastructure, and updates — this is SaaS."
-      },
-      "d": {
-        "text": "Azure Virtual Machines — Platform as a Service (PaaS)",
-        "is_true": false,
-        "explanation": "Incorrect. Azure Virtual Machines is Infrastructure as a Service (IaaS). Microsoft provides the hardware and hypervisor, but you manage the operating system, applications, and middleware."
-      }
+      "correct_answer": [
+        "d"
+      ]
     },
-    "correct_answer": ["a", "b", "c"]
-  },
-  {
-    "question_id": 27,
-    "question_text": "Your company uses management groups to manage resources in your Azure tenant. User1 should be able to assign access and assign policies to management groups. Following the principle of least privilege, which role should you add User1 to?",
-    "options": {
-      "a": {
-        "text": "Contributor",
-        "is_true": false,
-        "explanation": "Incorrect. The Contributor role can create and manage resources but cannot assign access or policies to management groups."
+    {
+      "question_id": 26,
+      "question_text": "Which of the following correctly matches an Azure service to its cloud service type? Select all that apply.",
+      "options": {
+        "a": {
+          "text": "Azure Cosmos DB — Platform as a Service (PaaS)",
+          "is_true": true,
+          "explanation": "Correct. Azure Cosmos DB is a fully managed NoSQL database service where Microsoft handles the underlying infrastructure — this is PaaS."
+        },
+        "b": {
+          "text": "Azure Storage — Platform as a Service (PaaS)",
+          "is_true": true,
+          "explanation": "Correct. Azure Storage is a fully managed service where Microsoft handles all backend infrastructure — you simply store and access data through APIs or the portal. This is PaaS."
+        },
+        "c": {
+          "text": "Microsoft Office 365 — Software as a Service (SaaS)",
+          "is_true": true,
+          "explanation": "Correct. Microsoft 365 is subscription-based software delivered over the internet. Microsoft manages everything including the application, infrastructure, and updates — this is SaaS."
+        },
+        "d": {
+          "text": "Azure Virtual Machines — Platform as a Service (PaaS)",
+          "is_true": false,
+          "explanation": "Incorrect. Azure Virtual Machines is Infrastructure as a Service (IaaS). Microsoft provides the hardware and hypervisor, but you manage the operating system, applications, and middleware."
+        }
       },
-      "b": {
-        "text": "User Access Administrator",
-        "is_true": true,
-        "explanation": "Correct. The User Access Administrator role grants permissions to assign access and assign policies within the management group scope — exactly the permissions required without the broader rights of the Owner role."
-      },
-      "c": {
-        "text": "Management Group Contributor",
-        "is_true": false,
-        "explanation": "Incorrect. The Management Group Contributor role can create, update, move, delete, and read management groups, but it cannot assign access or assign policies to them."
-      },
-      "d": {
-        "text": "Owner",
-        "is_true": false,
-        "explanation": "Incorrect. The Owner role includes full permissions including access assignment, but it violates the principle of least privilege by granting more permissions than needed."
-      }
+      "correct_answer": [
+        "a",
+        "b",
+        "c"
+      ]
     },
-    "correct_answer": "b"
-  },
-  {
-    "question_id": 28,
-    "question_type": "multiple_select",
-    "question_text": "Which of the following statements correctly describe both Azure PowerShell and Azure CLI? Select all that apply.",
-    "options": {
-      "a": {
-        "text": "Both work on Mac, Linux, and Windows.",
-        "is_true": true,
-        "explanation": "Correct. Both Azure CLI and Azure PowerShell are cross-platform tools that run on Mac, Linux, and Windows. PowerShell has supported all platforms since version 6.2.4 using .NET Core and the Az module."
+    {
+      "question_id": 27,
+      "question_text": "Your company uses management groups to manage resources in your Azure tenant. User1 should be able to assign access and assign policies to management groups. Following the principle of least privilege, which role should you add User1 to?",
+      "options": {
+        "a": {
+          "text": "Contributor",
+          "is_true": false,
+          "explanation": "Incorrect. The Contributor role can create and manage resources but cannot assign access or policies to management groups."
+        },
+        "b": {
+          "text": "User Access Administrator",
+          "is_true": true,
+          "explanation": "Correct. The User Access Administrator role grants permissions to assign access and assign policies within the management group scope — exactly the permissions required without the broader rights of the Owner role."
+        },
+        "c": {
+          "text": "Management Group Contributor",
+          "is_true": false,
+          "explanation": "Incorrect. The Management Group Contributor role can create, update, move, delete, and read management groups, but it cannot assign access or assign policies to them."
+        },
+        "d": {
+          "text": "Owner",
+          "is_true": false,
+          "explanation": "Incorrect. The Owner role includes full permissions including access assignment, but it violates the principle of least privilege by granting more permissions than needed."
+        }
       },
-      "b": {
-        "text": "Both are supported in Azure Cloud Shell.",
-        "is_true": true,
-        "explanation": "Correct. Azure Cloud Shell supports both Bash (for Azure CLI) and PowerShell environments — you choose your preferred shell when launching Cloud Shell."
-      },
-      "c": {
-        "text": "Both execute commands in an interactive command-line environment.",
-        "is_true": true,
-        "explanation": "Correct. Both Azure CLI and Azure PowerShell are interactive command-line tools. The choice between them is largely a matter of personal preference."
-      },
-      "d": {
-        "text": "Both support an optional graphical user interface (GUI).",
-        "is_true": false,
-        "explanation": "Incorrect. Neither Azure CLI nor Azure PowerShell has a GUI — both are command-line-only environments. Use the Azure Portal if you need a GUI."
-      }
+      "correct_answer": [
+        "b"
+      ]
     },
-    "correct_answer": ["a", "b", "c"]
-  },
-  {
-    "question_id": 29,
-    "question_type": "multiple_select",
-    "question_text": "For each of the following statements about using Azure Resource Manager (ARM) templates to deploy and manage resources, select those that are TRUE.",
-    "options": {
-      "a": {
-        "text": "The likelihood of configuration mistakes causing a system outage will be reduced.",
-        "is_true": true,
-        "explanation": "Correct. ARM templates work like source code — configuration is defined centrally and deployed consistently, reducing the risk of manual errors that can cause outages."
+    {
+      "question_id": 28,
+      "question_text": "Which of the following statements correctly describe both Azure PowerShell and Azure CLI? Select all that apply.",
+      "options": {
+        "a": {
+          "text": "Both work on Mac, Linux, and Windows.",
+          "is_true": true,
+          "explanation": "Correct. Both Azure CLI and Azure PowerShell are cross-platform tools that run on Mac, Linux, and Windows. PowerShell has supported all platforms since version 6.2.4 using .NET Core and the Az module."
+        },
+        "b": {
+          "text": "Both are supported in Azure Cloud Shell.",
+          "is_true": true,
+          "explanation": "Correct. Azure Cloud Shell supports both Bash (for Azure CLI) and PowerShell environments — you choose your preferred shell when launching Cloud Shell."
+        },
+        "c": {
+          "text": "Both execute commands in an interactive command-line environment.",
+          "is_true": true,
+          "explanation": "Correct. Both Azure CLI and Azure PowerShell are interactive command-line tools. The choice between them is largely a matter of personal preference."
+        },
+        "d": {
+          "text": "Both support an optional graphical user interface (GUI).",
+          "is_true": false,
+          "explanation": "Incorrect. Neither Azure CLI nor Azure PowerShell has a GUI — both are command-line-only environments. Use the Azure Portal if you need a GUI."
+        }
       },
-      "b": {
-        "text": "Non-administrative users will be prevented from making configuration changes.",
-        "is_true": false,
-        "explanation": "Incorrect. ARM templates deploy resources but do not control who can make changes. Access control is managed by Azure RBAC, not by the templates themselves."
-      },
-      "c": {
-        "text": "Configurations for devices and systems will continue to be stored locally on the device.",
-        "is_true": false,
-        "explanation": "Incorrect. ARM templates store configurations centrally (in source control or Azure), not locally on each device. Resources are managed through the centralised template."
-      },
-      "d": {
-        "text": "Administrators will no longer be required to maintain configurations for network devices.",
-        "is_true": false,
-        "explanation": "Incorrect. Administrators are still responsible for creating and maintaining ARM templates for network infrastructure. ARM provides a centralised, repeatable way to manage configurations — it does not eliminate the responsibility."
-      }
+      "correct_answer": [
+        "a",
+        "b",
+        "c"
+      ]
     },
-    "correct_answer": ["a"]
-  },
-  {
-    "question_id": 30,
-    "question_text": "To complete the statement, select the appropriate option. Creating highly portable, scalable app instances that include only the binaries and libraries required to run can be done using ___.",
-    "options": {
-      "a": {
-        "text": "virtual machines.",
-        "is_true": false,
-        "explanation": "Incorrect. Virtual machines include the full OS, drivers, and services — they are larger and slower to deploy than containers and are not typically described as lightweight portable app instances."
+    {
+      "question_id": 29,
+      "question_text": "For each of the following statements about using Azure Resource Manager (ARM) templates to deploy and manage resources, select those that are TRUE.",
+      "options": {
+        "a": {
+          "text": "The likelihood of configuration mistakes causing a system outage will be reduced.",
+          "is_true": true,
+          "explanation": "Correct. ARM templates work like source code — configuration is defined centrally and deployed consistently, reducing the risk of manual errors that can cause outages."
+        },
+        "b": {
+          "text": "Non-administrative users will be prevented from making configuration changes.",
+          "is_true": false,
+          "explanation": "Incorrect. ARM templates deploy resources but do not control who can make changes. Access control is managed by Azure RBAC, not by the templates themselves."
+        },
+        "c": {
+          "text": "Configurations for devices and systems will continue to be stored locally on the device.",
+          "is_true": false,
+          "explanation": "Incorrect. ARM templates store configurations centrally (in source control or Azure), not locally on each device. Resources are managed through the centralised template."
+        },
+        "d": {
+          "text": "Administrators will no longer be required to maintain configurations for network devices.",
+          "is_true": false,
+          "explanation": "Incorrect. Administrators are still responsible for creating and maintaining ARM templates for network infrastructure. ARM provides a centralised, repeatable way to manage configurations — it does not eliminate the responsibility."
+        }
       },
-      "b": {
-        "text": "containers.",
-        "is_true": true,
-        "explanation": "Correct. Containers package only the application binaries and libraries needed to run, making them portable, lightweight, and fast to deploy. They share the host OS kernel and avoid full hardware emulation overhead."
-      },
-      "c": {
-        "text": "virtual desktop infrastructure (VDI).",
-        "is_true": false,
-        "explanation": "Incorrect. VDI provides virtual desktops stored centrally for end users — it is not designed for packaging and deploying portable app instances."
-      },
-      "d": {
-        "text": "serverless functions.",
-        "is_true": false,
-        "explanation": "Incorrect. Serverless functions execute code in response to events but do not package application binaries and libraries as portable, scalable instances in the same way containers do."
-      }
+      "correct_answer": [
+        "a"
+      ]
     },
-    "correct_answer": "b"
-  },
-  {
-    "question_id": 31,
-    "question_text": "Your company uses Azure Advisor to identify cost savings across multiple Azure environments. You need to generate cost savings summaries across all your environments simultaneously. What should you use?",
-    "options": {
-      "a": {
-        "text": "Azure Reservations",
-        "is_true": false,
-        "explanation": "Incorrect. Azure Reservations reduce costs by committing to one- or three-year plans — they do not generate cost savings summaries across environments."
+    {
+      "question_id": 30,
+      "question_text": "To complete the statement, select the appropriate option. Creating highly portable, scalable app instances that include only the binaries and libraries required to run can be done using ___.",
+      "options": {
+        "a": {
+          "text": "virtual machines.",
+          "is_true": false,
+          "explanation": "Incorrect. Virtual machines include the full OS, drivers, and services — they are larger and slower to deploy than containers and are not typically described as lightweight portable app instances."
+        },
+        "b": {
+          "text": "containers.",
+          "is_true": true,
+          "explanation": "Correct. Containers package only the application binaries and libraries needed to run, making them portable, lightweight, and fast to deploy. They share the host OS kernel and avoid full hardware emulation overhead."
+        },
+        "c": {
+          "text": "virtual desktop infrastructure (VDI).",
+          "is_true": false,
+          "explanation": "Incorrect. VDI provides virtual desktops stored centrally for end users — it is not designed for packaging and deploying portable app instances."
+        },
+        "d": {
+          "text": "serverless functions.",
+          "is_true": false,
+          "explanation": "Incorrect. Serverless functions execute code in response to events but do not package application binaries and libraries as portable, scalable instances in the same way containers do."
+        }
       },
-      "b": {
-        "text": "Azure Resource Graph",
-        "is_true": true,
-        "explanation": "Correct. Azure Resource Graph lets you query data about resources across your entire Azure tenancy simultaneously, including Advisor cost, reliability, security, and performance recommendations across all environments at once."
-      },
-      "c": {
-        "text": "Azure savings plans",
-        "is_true": false,
-        "explanation": "Incorrect. Azure savings plans provide discounts through compute spend commitments — they do not generate cross-environment cost summaries."
-      },
-      "d": {
-        "text": "Azure TCO calculator",
-        "is_true": false,
-        "explanation": "Incorrect. The TCO calculator estimates cost savings from migrating on-premises workloads to Azure — it is not used to query Advisor recommendations across live environments."
-      }
+      "correct_answer": [
+        "b"
+      ]
     },
-    "correct_answer": "b"
-  },
-  {
-    "question_id": 32,
-    "question_type": "multiple_select",
-    "question_text": "For each of the following statements about infrastructure as a service (IaaS) on Azure, select those that are TRUE.",
-    "options": {
-      "a": {
-        "text": "Azure IaaS provides and manages container orchestrators.",
-        "is_true": false,
-        "explanation": "Incorrect. Container orchestration (Kubernetes) is offered through Azure Kubernetes Service (AKS), which is a PaaS offering — not IaaS."
+    {
+      "question_id": 31,
+      "question_text": "Your company uses Azure Advisor to identify cost savings across multiple Azure environments. You need to generate cost savings summaries across all your environments simultaneously. What should you use?",
+      "options": {
+        "a": {
+          "text": "Azure Reservations",
+          "is_true": false,
+          "explanation": "Incorrect. Azure Reservations reduce costs by committing to one- or three-year plans — they do not generate cost savings summaries across environments."
+        },
+        "b": {
+          "text": "Azure Resource Graph",
+          "is_true": true,
+          "explanation": "Correct. Azure Resource Graph lets you query data about resources across your entire Azure tenancy simultaneously, including Advisor cost, reliability, security, and performance recommendations across all environments at once."
+        },
+        "c": {
+          "text": "Azure savings plans",
+          "is_true": false,
+          "explanation": "Incorrect. Azure savings plans provide discounts through compute spend commitments — they do not generate cross-environment cost summaries."
+        },
+        "d": {
+          "text": "Azure TCO calculator",
+          "is_true": false,
+          "explanation": "Incorrect. The TCO calculator estimates cost savings from migrating on-premises workloads to Azure — it is not used to query Advisor recommendations across live environments."
+        }
       },
-      "b": {
-        "text": "Resources can be allocated on a pay-as-you-go basis, whenever needed.",
-        "is_true": true,
-        "explanation": "Correct. IaaS allows resources to be provisioned and billed on-demand using a pay-as-you-go model, enabling businesses to scale up or down as needed."
-      },
-      "c": {
-        "text": "You are responsible for managing applications and middleware while Azure manages operating systems.",
-        "is_true": false,
-        "explanation": "Incorrect. In IaaS, you are responsible for managing the operating system, middleware, and applications. Azure only manages the physical hardware — the OS and everything above it is your responsibility."
-      }
+      "correct_answer": [
+        "b"
+      ]
     },
-    "correct_answer": ["b"]
-  },
-  {
-    "question_id": 33,
-    "question_text": "Your company's web application suffered an outage due to a misconfigured driver on a database server. The company needs a cloud solution that allows the highly customised web application to run without requiring management of operating system settings or services, while still allowing developers to maintain their customisations. What should you do?",
-    "options": {
-      "a": {
-        "text": "Relocate the web app to an infrastructure as a service (IaaS) provider.",
-        "is_true": false,
-        "explanation": "Incorrect. IaaS still requires managing the operating system and services — the company would still be responsible for the OS configurations that caused the outage."
+    {
+      "question_id": 32,
+      "question_text": "For each of the following statements about infrastructure as a service (IaaS) on Azure, select those that are TRUE.",
+      "options": {
+        "a": {
+          "text": "Azure IaaS provides and manages container orchestrators.",
+          "is_true": false,
+          "explanation": "Incorrect. Container orchestration (Kubernetes) is offered through Azure Kubernetes Service (AKS), which is a PaaS offering — not IaaS."
+        },
+        "b": {
+          "text": "Resources can be allocated on a pay-as-you-go basis, whenever needed.",
+          "is_true": true,
+          "explanation": "Correct. IaaS allows resources to be provisioned and billed on-demand using a pay-as-you-go model, enabling businesses to scale up or down as needed."
+        },
+        "c": {
+          "text": "You are responsible for managing applications and middleware while Azure manages operating systems.",
+          "is_true": false,
+          "explanation": "Incorrect. In IaaS, you are responsible for managing the operating system, middleware, and applications. Azure only manages the physical hardware — the OS and everything above it is your responsibility."
+        }
       },
-      "b": {
-        "text": "Migrate the web app to serverless compute.",
-        "is_true": false,
-        "explanation": "Incorrect. In serverless compute, the CSP manages all infrastructure, which limits the ability to maintain customised application configurations."
-      },
-      "c": {
-        "text": "Move the web app to a software as a service (SaaS) provider.",
-        "is_true": false,
-        "explanation": "Incorrect. SaaS delivers pre-built software — developers cannot maintain custom application code in a SaaS model."
-      },
-      "d": {
-        "text": "Deploy the web app functionality using platform as a service (PaaS).",
-        "is_true": true,
-        "explanation": "Correct. PaaS handles OS and infrastructure management while developers retain full control over their application code and customisations. Azure App Service is a typical PaaS example for web apps."
-      }
+      "correct_answer": [
+        "b"
+      ]
     },
-    "correct_answer": "d"
-  },
-  {
-    "question_id": 34,
-    "question_text": "Your company plans to commit to virtual machines and storage resources with consistent, predictable usage over three years and wants to receive a reduction in pay-as-you-go prices. Which Azure feature should you use?",
-    "options": {
-      "a": {
-        "text": "Azure Cost Management",
-        "is_true": false,
-        "explanation": "Incorrect. Azure Cost Management is a free tool to monitor, allocate, and optimise cloud spend — it does not itself reduce the prices paid for resources."
+    {
+      "question_id": 33,
+      "question_text": "Your company's web application suffered an outage due to a misconfigured driver on a database server. The company needs a cloud solution that allows the highly customised web application to run without requiring management of operating system settings or services, while still allowing developers to maintain their customisations. What should you do?",
+      "options": {
+        "a": {
+          "text": "Relocate the web app to an infrastructure as a service (IaaS) provider.",
+          "is_true": false,
+          "explanation": "Incorrect. IaaS still requires managing the operating system and services — the company would still be responsible for the OS configurations that caused the outage."
+        },
+        "b": {
+          "text": "Migrate the web app to serverless compute.",
+          "is_true": false,
+          "explanation": "Incorrect. In serverless compute, the CSP manages all infrastructure, which limits the ability to maintain customised application configurations."
+        },
+        "c": {
+          "text": "Move the web app to a software as a service (SaaS) provider.",
+          "is_true": false,
+          "explanation": "Incorrect. SaaS delivers pre-built software — developers cannot maintain custom application code in a SaaS model."
+        },
+        "d": {
+          "text": "Deploy the web app functionality using platform as a service (PaaS).",
+          "is_true": true,
+          "explanation": "Correct. PaaS handles OS and infrastructure management while developers retain full control over their application code and customisations. Azure App Service is a typical PaaS example for web apps."
+        }
       },
-      "b": {
-        "text": "Azure Reservations",
-        "is_true": true,
-        "explanation": "Correct. Azure Reservations let you commit to a one- or three-year plan for VMs, storage, databases, and other resources in exchange for significant discounts (up to 72%) compared to pay-as-you-go pricing."
-      },
-      "c": {
-        "text": "Azure Advisor",
-        "is_true": false,
-        "explanation": "Incorrect. Azure Advisor identifies cost optimisation opportunities and may recommend reservations, but it is not the feature that applies the pricing reduction."
-      },
-      "d": {
-        "text": "Azure TCO Calculator",
-        "is_true": false,
-        "explanation": "Incorrect. The TCO Calculator estimates cost savings from migrating to Azure — it is a planning tool, not a feature that reduces the price you pay for running resources."
-      }
+      "correct_answer": [
+        "d"
+      ]
     },
-    "correct_answer": "b"
-  },
-  {
-    "question_id": 35,
-    "question_text": "Which Azure compute service abstracts away servers, infrastructure, and operating systems entirely, allowing developers to write and deploy small, event-triggered pieces of code without managing any underlying environment?",
-    "options": {
-      "a": {
-        "text": "Azure Virtual Machines",
-        "is_true": false,
-        "explanation": "Incorrect. Azure Virtual Machines include a virtual processor, memory, storage, and networking — you are responsible for managing the OS and everything installed on it."
+    {
+      "question_id": 34,
+      "question_text": "Your company plans to commit to virtual machines and storage resources with consistent, predictable usage over three years and wants to receive a reduction in pay-as-you-go prices. Which Azure feature should you use?",
+      "options": {
+        "a": {
+          "text": "Azure Cost Management",
+          "is_true": false,
+          "explanation": "Incorrect. Azure Cost Management is a free tool to monitor, allocate, and optimise cloud spend — it does not itself reduce the prices paid for resources."
+        },
+        "b": {
+          "text": "Azure Reservations",
+          "is_true": true,
+          "explanation": "Correct. Azure Reservations let you commit to a one- or three-year plan for VMs, storage, databases, and other resources in exchange for significant discounts (up to 72%) compared to pay-as-you-go pricing."
+        },
+        "c": {
+          "text": "Azure Advisor",
+          "is_true": false,
+          "explanation": "Incorrect. Azure Advisor identifies cost optimisation opportunities and may recommend reservations, but it is not the feature that applies the pricing reduction."
+        },
+        "d": {
+          "text": "Azure TCO Calculator",
+          "is_true": false,
+          "explanation": "Incorrect. The TCO Calculator estimates cost savings from migrating to Azure — it is a planning tool, not a feature that reduces the price you pay for running resources."
+        }
       },
-      "b": {
-        "text": "Azure Container Instances",
-        "is_true": false,
-        "explanation": "Incorrect. Azure Container Instances is a lightweight, virtualised application environment — you still define and manage the container image and runtime configuration."
-      },
-      "c": {
-        "text": "Azure Functions",
-        "is_true": true,
-        "explanation": "Correct. Azure Functions abstracts servers, infrastructure, and operating systems entirely. Developers define functions triggered by events (HTTP, timers, queues) and Azure handles all execution infrastructure automatically."
-      },
-      "d": {
-        "text": "Azure App Service",
-        "is_true": false,
-        "explanation": "Incorrect. Azure App Service manages the OS but you still configure and deploy the full application — it is not an event-driven, fully abstracted compute service."
-      }
+      "correct_answer": [
+        "b"
+      ]
     },
-    "correct_answer": "c"
-  },
-  {
-    "question_id": 36,
-    "question_type": "multiple_select",
-    "question_text": "For each of the following statements about Azure Distributed Denial of Service (DDoS) Protection, select those that are TRUE.",
-    "options": {
-      "a": {
-        "text": "Azure DDoS IP Protection is enabled automatically.",
-        "is_true": false,
-        "explanation": "Incorrect. Azure DDoS IP Protection is not enabled automatically — it is a pay-per-protected-IP model that must be explicitly configured on each resource."
+    {
+      "question_id": 35,
+      "question_text": "Which Azure compute service abstracts away servers, infrastructure, and operating systems entirely, allowing developers to write and deploy small, event-triggered pieces of code without managing any underlying environment?",
+      "options": {
+        "a": {
+          "text": "Azure Virtual Machines",
+          "is_true": false,
+          "explanation": "Incorrect. Azure Virtual Machines include a virtual processor, memory, storage, and networking — you are responsible for managing the OS and everything installed on it."
+        },
+        "b": {
+          "text": "Azure Container Instances",
+          "is_true": false,
+          "explanation": "Incorrect. Azure Container Instances is a lightweight, virtualised application environment — you still define and manage the container image and runtime configuration."
+        },
+        "c": {
+          "text": "Azure Functions",
+          "is_true": true,
+          "explanation": "Correct. Azure Functions abstracts servers, infrastructure, and operating systems entirely. Developers define functions triggered by events (HTTP, timers, queues) and Azure handles all execution infrastructure automatically."
+        },
+        "d": {
+          "text": "Azure App Service",
+          "is_true": false,
+          "explanation": "Incorrect. Azure App Service manages the OS but you still configure and deploy the full application — it is not an event-driven, fully abstracted compute service."
+        }
       },
-      "b": {
-        "text": "Azure DDoS Protection provides protection against volumetric, protocol, and application layer attacks.",
-        "is_true": true,
-        "explanation": "Correct. Azure DDoS Protection defends against all three DDoS attack categories: volumetric attacks that flood bandwidth, protocol attacks that exploit Layer 3/4 weaknesses, and application layer (Layer 7) attacks."
-      },
-      "c": {
-        "text": "Virtual networks from multiple subscriptions in your organisation can link to the same Azure DDoS Protection plan.",
-        "is_true": true,
-        "explanation": "Correct. A single Azure DDoS Protection plan can be associated with virtual networks across multiple subscriptions, enabling centralised DDoS protection management across an organisation."
-      }
+      "correct_answer": [
+        "c"
+      ]
     },
-    "correct_answer": ["b", "c"]
-  },
-  {
-    "question_id": 37,
-    "question_type": "multiple_select",
-    "question_text": "For each of the following statements about Azure virtual network peering, select those that are TRUE.",
-    "options": {
-      "a": {
-        "text": "Virtual network peering can be used to connect virtual networks across Azure regions.",
-        "is_true": true,
-        "explanation": "Correct. Azure supports global VNet peering, which connects virtual networks across different Azure regions — also known as Global VNet Peering."
+    {
+      "question_id": 36,
+      "question_text": "For each of the following statements about Azure Distributed Denial of Service (DDoS) Protection, select those that are TRUE.",
+      "options": {
+        "a": {
+          "text": "Azure DDoS IP Protection is enabled automatically.",
+          "is_true": false,
+          "explanation": "Incorrect. Azure DDoS IP Protection is not enabled automatically — it is a pay-per-protected-IP model that must be explicitly configured on each resource."
+        },
+        "b": {
+          "text": "Azure DDoS Protection provides protection against volumetric, protocol, and application layer attacks.",
+          "is_true": true,
+          "explanation": "Correct. Azure DDoS Protection defends against all three DDoS attack categories: volumetric attacks that flood bandwidth, protocol attacks that exploit Layer 3/4 weaknesses, and application layer (Layer 7) attacks."
+        },
+        "c": {
+          "text": "Virtual networks from multiple subscriptions in your organisation can link to the same Azure DDoS Protection plan.",
+          "is_true": true,
+          "explanation": "Correct. A single Azure DDoS Protection plan can be associated with virtual networks across multiple subscriptions, enabling centralised DDoS protection management across an organisation."
+        }
       },
-      "b": {
-        "text": "Virtual network peering can be used to transfer data between Microsoft Entra tenants.",
-        "is_true": true,
-        "explanation": "Correct. VNet peering supports transferring data between virtual networks across different tenants, subscriptions, and deployment models — tenancy boundaries do not prevent peering."
-      },
-      "c": {
-        "text": "Configuring virtual network peering requires a short downtime for the peered virtual networks.",
-        "is_true": false,
-        "explanation": "Incorrect. Configuring VNet peering requires no downtime. Resources in the peered VNets continue to support inbound and outbound connections without interruption throughout the peering process."
-      }
+      "correct_answer": [
+        "b",
+        "c"
+      ]
     },
-    "correct_answer": ["a", "b"]
-  },
-  {
-    "question_id": 38,
-    "question_text": "Your company is deploying a stateful application using Linux-based Azure Container Instances (ACI). The application needs storage to retrieve and persist state. What type of storage should you use?",
-    "options": {
-      "a": {
-        "text": "Azure Disk",
-        "is_true": false,
-        "explanation": "Incorrect. Azure Disk is block storage attached to virtual machines — it is not supported for use with Azure Container Instances."
+    {
+      "question_id": 37,
+      "question_text": "For each of the following statements about Azure virtual network peering, select those that are TRUE.",
+      "options": {
+        "a": {
+          "text": "Virtual network peering can be used to connect virtual networks across Azure regions.",
+          "is_true": true,
+          "explanation": "Correct. Azure supports global VNet peering, which connects virtual networks across different Azure regions — also known as Global VNet Peering."
+        },
+        "b": {
+          "text": "Virtual network peering can be used to transfer data between Microsoft Entra tenants.",
+          "is_true": true,
+          "explanation": "Correct. VNet peering supports transferring data between virtual networks across different tenants, subscriptions, and deployment models — tenancy boundaries do not prevent peering."
+        },
+        "c": {
+          "text": "Configuring virtual network peering requires a short downtime for the peered virtual networks.",
+          "is_true": false,
+          "explanation": "Incorrect. Configuring VNet peering requires no downtime. Resources in the peered VNets continue to support inbound and outbound connections without interruption throughout the peering process."
+        }
       },
-      "b": {
-        "text": "Azure Blob",
-        "is_true": false,
-        "explanation": "Incorrect. Azure Blob storage is designed for unstructured data and does not support the persistent share-mounting mechanism required for ACI stateful storage."
-      },
-      "c": {
-        "text": "Azure Archive",
-        "is_true": false,
-        "explanation": "Incorrect. Azure Archive is a low-cost, offline tier for rarely accessed data — it is not suitable as persistent storage for running containers."
-      },
-      "d": {
-        "text": "Azure Files",
-        "is_true": true,
-        "explanation": "Correct. Azure Files is the only Azure storage option that supports mounting persistent file shares directly into Azure Container Instances. You create the share, specify it in the container group definition, and ACI mounts it as a volume."
-      }
+      "correct_answer": [
+        "a",
+        "b"
+      ]
     },
-    "correct_answer": "d"
-  },
-  {
-    "question_id": 39,
-    "question_type": "multiple_select",
-    "question_text": "You are migrating virtual machines to Azure and need to transfer on-premises virtual hard disk (VHD) files to Azure Storage. Which TWO solutions should you use?",
-    "options": {
-      "a": {
-        "text": "Azure Data Share",
-        "is_true": false,
-        "explanation": "Incorrect. Azure Data Share is a cloud-based service for sharing data across organisations — it is not designed for migrating on-premises VHD files to Azure Storage."
+    {
+      "question_id": 38,
+      "question_text": "Your company is deploying a stateful application using Linux-based Azure Container Instances (ACI). The application needs storage to retrieve and persist state. What type of storage should you use?",
+      "options": {
+        "a": {
+          "text": "Azure Disk",
+          "is_true": false,
+          "explanation": "Incorrect. Azure Disk is block storage attached to virtual machines — it is not supported for use with Azure Container Instances."
+        },
+        "b": {
+          "text": "Azure Blob",
+          "is_true": false,
+          "explanation": "Incorrect. Azure Blob storage is designed for unstructured data and does not support the persistent share-mounting mechanism required for ACI stateful storage."
+        },
+        "c": {
+          "text": "Azure Archive",
+          "is_true": false,
+          "explanation": "Incorrect. Azure Archive is a low-cost, offline tier for rarely accessed data — it is not suitable as persistent storage for running containers."
+        },
+        "d": {
+          "text": "Azure Files",
+          "is_true": true,
+          "explanation": "Correct. Azure Files is the only Azure storage option that supports mounting persistent file shares directly into Azure Container Instances. You create the share, specify it in the container group definition, and ACI mounts it as a volume."
+        }
       },
-      "b": {
-        "text": "Azure Storage Explorer",
-        "is_true": true,
-        "explanation": "Correct. Azure Storage Explorer is a graphical tool that lets you manage Azure Storage resources and upload files, including VHD files, directly from local storage to Azure Blob storage."
-      },
-      "c": {
-        "text": "AzCopy",
-        "is_true": true,
-        "explanation": "Correct. AzCopy is a command-line tool for uploading and downloading data to and from Azure Blob storage. It supports block blobs and page blobs, making it suitable for transferring VHD files."
-      },
-      "d": {
-        "text": "Azure Files",
-        "is_true": false,
-        "explanation": "Incorrect. Azure Files is an SMB/NFS file service — while you can copy data to a file share, it is not the recommended mechanism for transferring VHDs intended for use as VM disks in Azure."
-      }
+      "correct_answer": [
+        "d"
+      ]
     },
-    "correct_answer": ["b", "c"]
-  },
-  {
-    "question_id": 40,
-    "question_text": "You need to compare the costs of running an application workload in Azure versus on-premises using the Azure TCO calculator. What should you do first to complete this task?",
-    "options": {
-      "a": {
-        "text": "Define the server, database, storage, and networking workload.",
-        "is_true": true,
-        "explanation": "Correct. The Azure TCO calculator requires you to define your workload by specifying server, database, storage, and networking resources. This input allows it to estimate the Azure cost and compare it with on-premises costs including hardware, power, and management."
+    {
+      "question_id": 39,
+      "question_text": "You are migrating virtual machines to Azure and need to transfer on-premises virtual hard disk (VHD) files to Azure Storage. Which TWO solutions should you use?",
+      "options": {
+        "a": {
+          "text": "Azure Data Share",
+          "is_true": false,
+          "explanation": "Incorrect. Azure Data Share is a cloud-based service for sharing data across organisations — it is not designed for migrating on-premises VHD files to Azure Storage."
+        },
+        "b": {
+          "text": "Azure Storage Explorer",
+          "is_true": true,
+          "explanation": "Correct. Azure Storage Explorer is a graphical tool that lets you manage Azure Storage resources and upload files, including VHD files, directly from local storage to Azure Blob storage."
+        },
+        "c": {
+          "text": "AzCopy",
+          "is_true": true,
+          "explanation": "Correct. AzCopy is a command-line tool for uploading and downloading data to and from Azure Blob storage. It supports block blobs and page blobs, making it suitable for transferring VHD files."
+        },
+        "d": {
+          "text": "Azure Files",
+          "is_true": false,
+          "explanation": "Incorrect. Azure Files is an SMB/NFS file service — while you can copy data to a file share, it is not the recommended mechanism for transferring VHDs intended for use as VM disks in Azure."
+        }
       },
-      "b": {
-        "text": "Create an authorised service account in Microsoft Entra ID.",
-        "is_true": false,
-        "explanation": "Incorrect. The TCO calculator is a free, publicly accessible tool that does not require a Microsoft Entra ID account."
-      },
-      "c": {
-        "text": "Determine the app's compute, storage, and network requirements.",
-        "is_true": false,
-        "explanation": "Incorrect. This step is typically performed when first deploying an application, not when using the TCO calculator. The calculator itself asks you to input the workload details."
-      },
-      "d": {
-        "text": "Initiate a paid Azure cloud subscription for your organisation.",
-        "is_true": false,
-        "explanation": "Incorrect. The Azure TCO calculator is free to use and does not require an Azure subscription — it is a pre-sales estimation tool."
-      }
+      "correct_answer": [
+        "b",
+        "c"
+      ]
     },
-    "correct_answer": "a"
-  },
-  {
-    "question_id": 41,
-    "question_text": "To complete the statement, select the appropriate option. A ___ storage account supports Blob, Queue, and Table Storage services.",
-    "options": {
-      "a": {
-        "text": "premium block blobs",
-        "is_true": false,
-        "explanation": "Incorrect. A premium block blobs storage account only supports the Blob Storage service — it does not support Queue or Table storage."
+    {
+      "question_id": 40,
+      "question_text": "You need to compare the costs of running an application workload in Azure versus on-premises using the Azure TCO calculator. What should you do first to complete this task?",
+      "options": {
+        "a": {
+          "text": "Define the server, database, storage, and networking workload.",
+          "is_true": true,
+          "explanation": "Correct. The Azure TCO calculator requires you to define your workload by specifying server, database, storage, and networking resources. This input allows it to estimate the Azure cost and compare it with on-premises costs including hardware, power, and management."
+        },
+        "b": {
+          "text": "Create an authorised service account in Microsoft Entra ID.",
+          "is_true": false,
+          "explanation": "Incorrect. The TCO calculator is a free, publicly accessible tool that does not require a Microsoft Entra ID account."
+        },
+        "c": {
+          "text": "Determine the app's compute, storage, and network requirements.",
+          "is_true": false,
+          "explanation": "Incorrect. This step is typically performed when first deploying an application, not when using the TCO calculator. The calculator itself asks you to input the workload details."
+        },
+        "d": {
+          "text": "Initiate a paid Azure cloud subscription for your organisation.",
+          "is_true": false,
+          "explanation": "Incorrect. The Azure TCO calculator is free to use and does not require an Azure subscription — it is a pre-sales estimation tool."
+        }
       },
-      "b": {
-        "text": "premium file shares",
-        "is_true": false,
-        "explanation": "Incorrect. A premium file shares storage account only supports Azure Files — it does not support Blob, Queue, or Table storage."
-      },
-      "c": {
-        "text": "standard general-purpose v2",
-        "is_true": true,
-        "explanation": "Correct. The standard general-purpose v2 (StorageV2) storage account supports all Azure Storage services: Blob, Queue, Table, and File storage. It is the recommended account type for most scenarios."
-      },
-      "d": {
-        "text": "premium page blobs",
-        "is_true": false,
-        "explanation": "Incorrect. A premium page blobs storage account is optimised for VM disks (page blobs) and does not support Queue or Table storage."
-      }
+      "correct_answer": [
+        "a"
+      ]
     },
-    "correct_answer": "c"
-  },
-  {
-    "question_id": 42,
-    "question_text": "You manage a development team that needs to focus all its efforts on creating and maintaining application code. Your team does not have the resources to provision and scale the infrastructure your applications require to run. What should you do?",
-    "options": {
-      "a": {
-        "text": "Configure virtual machines and deploy application updates using Azure CLI.",
-        "is_true": false,
-        "explanation": "Incorrect. Configuring VMs still requires the team to provision and manage infrastructure — they would continue spending time on operations rather than code."
+    {
+      "question_id": 41,
+      "question_text": "To complete the statement, select the appropriate option. A ___ storage account supports Blob, Queue, and Table Storage services.",
+      "options": {
+        "a": {
+          "text": "premium block blobs",
+          "is_true": false,
+          "explanation": "Incorrect. A premium block blobs storage account only supports the Blob Storage service — it does not support Queue or Table storage."
+        },
+        "b": {
+          "text": "premium file shares",
+          "is_true": false,
+          "explanation": "Incorrect. A premium file shares storage account only supports Azure Files — it does not support Blob, Queue, or Table storage."
+        },
+        "c": {
+          "text": "standard general-purpose v2",
+          "is_true": true,
+          "explanation": "Correct. The standard general-purpose v2 (StorageV2) storage account supports all Azure Storage services: Blob, Queue, Table, and File storage. It is the recommended account type for most scenarios."
+        },
+        "d": {
+          "text": "premium page blobs",
+          "is_true": false,
+          "explanation": "Incorrect. A premium page blobs storage account is optimised for VM disks (page blobs) and does not support Queue or Table storage."
+        }
       },
-      "b": {
-        "text": "Create an Azure Functions subscription and upload your code.",
-        "is_true": true,
-        "explanation": "Correct. Azure Functions is a serverless compute service where Azure provisions and scales infrastructure automatically. The team submits only their code, allowing them to focus entirely on development."
-      },
-      "c": {
-        "text": "Automate virtual machine provisioning with Azure Quickstart Templates.",
-        "is_true": false,
-        "explanation": "Incorrect. Azure Quickstart Templates automate VM deployment, but the team still manages the VMs once provisioned — this does not eliminate the infrastructure management burden."
-      },
-      "d": {
-        "text": "Containerise the apps and deploy a container cluster service.",
-        "is_true": false,
-        "explanation": "Incorrect. Running a container cluster (such as AKS) requires creating, deploying, and periodically updating containers — it is not a zero-infrastructure-management solution."
-      }
+      "correct_answer": [
+        "c"
+      ]
     },
-    "correct_answer": "b"
-  },
-  {
-    "question_id": 43,
-    "question_text": "You need to ensure consistent performance for users who access your application, which runs on customised Linux virtual machines. What should you use to provision virtual machines automatically?",
-    "options": {
-      "a": {
-        "text": "Azure Functions",
-        "is_true": false,
-        "explanation": "Incorrect. Azure Functions is a serverless compute service — it does not create and manage pools of virtual machines."
+    {
+      "question_id": 42,
+      "question_text": "You manage a development team that needs to focus all its efforts on creating and maintaining application code. Your team does not have the resources to provision and scale the infrastructure your applications require to run. What should you do?",
+      "options": {
+        "a": {
+          "text": "Configure virtual machines and deploy application updates using Azure CLI.",
+          "is_true": false,
+          "explanation": "Incorrect. Configuring VMs still requires the team to provision and manage infrastructure — they would continue spending time on operations rather than code."
+        },
+        "b": {
+          "text": "Create an Azure Functions subscription and upload your code.",
+          "is_true": true,
+          "explanation": "Correct. Azure Functions is a serverless compute service where Azure provisions and scales infrastructure automatically. The team submits only their code, allowing them to focus entirely on development."
+        },
+        "c": {
+          "text": "Automate virtual machine provisioning with Azure Quickstart Templates.",
+          "is_true": false,
+          "explanation": "Incorrect. Azure Quickstart Templates automate VM deployment, but the team still manages the VMs once provisioned — this does not eliminate the infrastructure management burden."
+        },
+        "d": {
+          "text": "Containerise the apps and deploy a container cluster service.",
+          "is_true": false,
+          "explanation": "Incorrect. Running a container cluster (such as AKS) requires creating, deploying, and periodically updating containers — it is not a zero-infrastructure-management solution."
+        }
       },
-      "b": {
-        "text": "Azure Dedicated Hosts",
-        "is_true": false,
-        "explanation": "Incorrect. Azure Dedicated Hosts provide physical server isolation for compliance requirements — they do not automatically provision or remove VMs based on workload demand."
-      },
-      "c": {
-        "text": "VM Scale Sets",
-        "is_true": true,
-        "explanation": "Correct. Azure Virtual Machine Scale Sets create and manage a group of identical, autoscaling VMs. Autoscale rules adjust the number of VMs based on workload metrics, ensuring consistent performance as demand changes."
-      },
-      "d": {
-        "text": "Availability zones",
-        "is_true": false,
-        "explanation": "Incorrect. Availability zones distribute resources across separate datacenters for redundancy — they do not automatically provision VMs based on workload demand."
-      }
+      "correct_answer": [
+        "b"
+      ]
     },
-    "correct_answer": "c"
-  },
-  {
-    "question_id": 44,
-    "question_text": "Your company deploys resources in Azure. According to the shared responsibility model, which task will you be required to perform?",
-    "options": {
-      "a": {
-        "text": "Install critical updates on virtual machines.",
-        "is_true": true,
-        "explanation": "Correct. In the shared responsibility model for IaaS, the customer is responsible for maintaining the operating system and software on virtual machines, including applying critical updates and patches."
+    {
+      "question_id": 43,
+      "question_text": "You need to ensure consistent performance for users who access your application, which runs on customised Linux virtual machines. What should you use to provision virtual machines automatically?",
+      "options": {
+        "a": {
+          "text": "Azure Functions",
+          "is_true": false,
+          "explanation": "Incorrect. Azure Functions is a serverless compute service — it does not create and manage pools of virtual machines."
+        },
+        "b": {
+          "text": "Azure Dedicated Hosts",
+          "is_true": false,
+          "explanation": "Incorrect. Azure Dedicated Hosts provide physical server isolation for compliance requirements — they do not automatically provision or remove VMs based on workload demand."
+        },
+        "c": {
+          "text": "VM Scale Sets",
+          "is_true": true,
+          "explanation": "Correct. Azure Virtual Machine Scale Sets create and manage a group of identical, autoscaling VMs. Autoscale rules adjust the number of VMs based on workload metrics, ensuring consistent performance as demand changes."
+        },
+        "d": {
+          "text": "Availability zones",
+          "is_true": false,
+          "explanation": "Incorrect. Availability zones distribute resources across separate datacenters for redundancy — they do not automatically provision VMs based on workload demand."
+        }
       },
-      "b": {
-        "text": "Upgrade RAM on virtualisation systems.",
-        "is_true": false,
-        "explanation": "Incorrect. The CSP (Microsoft) is always responsible for the physical hardware, including memory upgrades on the hypervisors that power Azure infrastructure."
-      },
-      "c": {
-        "text": "Manage access to data centre resources.",
-        "is_true": false,
-        "explanation": "Incorrect. Physical data centre access is tightly controlled and managed exclusively by Microsoft — customers do not have access to Azure data centres."
-      },
-      "d": {
-        "text": "Configure connectivity between regions.",
-        "is_true": false,
-        "explanation": "Incorrect. The CSP manages physical network connectivity between regions. Customers configure logical networking (VNets, VPN Gateways) but not the underlying physical regional interconnects."
-      }
+      "correct_answer": [
+        "c"
+      ]
     },
-    "correct_answer": "a"
-  },
-  {
-    "question_id": 45,
-    "question_type": "multiple_select",
-    "question_text": "You need to quickly deploy or clone application testing environments on an as-needed basis. Which TWO DevOps tools or practices could you use?",
-    "options": {
-      "a": {
-        "text": "Azure Arc",
-        "is_true": false,
-        "explanation": "Incorrect. Azure Arc manages resources across multiple environments from a single control plane — it is not a tool for quickly deploying or cloning test environments."
+    {
+      "question_id": 44,
+      "question_text": "Your company deploys resources in Azure. According to the shared responsibility model, which task will you be required to perform?",
+      "options": {
+        "a": {
+          "text": "Install critical updates on virtual machines.",
+          "is_true": true,
+          "explanation": "Correct. In the shared responsibility model for IaaS, the customer is responsible for maintaining the operating system and software on virtual machines, including applying critical updates and patches."
+        },
+        "b": {
+          "text": "Upgrade RAM on virtualisation systems.",
+          "is_true": false,
+          "explanation": "Incorrect. The CSP (Microsoft) is always responsible for the physical hardware, including memory upgrades on the hypervisors that power Azure infrastructure."
+        },
+        "c": {
+          "text": "Manage access to data centre resources.",
+          "is_true": false,
+          "explanation": "Incorrect. Physical data centre access is tightly controlled and managed exclusively by Microsoft — customers do not have access to Azure data centres."
+        },
+        "d": {
+          "text": "Configure connectivity between regions.",
+          "is_true": false,
+          "explanation": "Incorrect. The CSP manages physical network connectivity between regions. Customers configure logical networking (VNets, VPN Gateways) but not the underlying physical regional interconnects."
+        }
       },
-      "b": {
-        "text": "Micro-segmentation",
-        "is_true": false,
-        "explanation": "Incorrect. Micro-segmentation is a network security approach that isolates workloads — it is not a DevOps tool for deploying environments."
-      },
-      "c": {
-        "text": "ARM templates",
-        "is_true": true,
-        "explanation": "Correct. ARM templates define infrastructure as code and can be deployed repeatedly to create identical environments on demand — ideal for spinning up test environments quickly and consistently."
-      },
-      "d": {
-        "text": "Virtual machine (VM) scale sets",
-        "is_true": false,
-        "explanation": "Incorrect. VM scale sets autoscale a group of identical VMs based on load — they are not specifically for cloning complete application test environments."
-      },
-      "e": {
-        "text": "Infrastructure as code (IaC)",
-        "is_true": true,
-        "explanation": "Correct. Infrastructure as code defines environment configurations as versioned source code that can be deployed repeatedly. Azure's cloud-native IaC tool is Bicep; ARM templates are the underlying deployment format."
-      }
+      "correct_answer": [
+        "a"
+      ]
     },
-    "correct_answer": ["c", "e"]
-  },
-  {
-    "question_id": 46,
-    "question_type": "multiple_select",
-    "question_text": "For each of the following statements about Azure Files, select those that are TRUE.",
-    "options": {
-      "a": {
-        "text": "Azure Files can be accessed using the Server Message Block (SMB) protocol.",
-        "is_true": true,
-        "explanation": "Correct. Azure Files supports SMB, the standard Windows file-sharing protocol. Azure file shares can be mounted on Windows, Linux, and macOS clients like a traditional network drive."
+    {
+      "question_id": 45,
+      "question_text": "You need to quickly deploy or clone application testing environments on an as-needed basis. Which TWO DevOps tools or practices could you use?",
+      "options": {
+        "a": {
+          "text": "Azure Arc",
+          "is_true": false,
+          "explanation": "Incorrect. Azure Arc manages resources across multiple environments from a single control plane — it is not a tool for quickly deploying or cloning test environments."
+        },
+        "b": {
+          "text": "Micro-segmentation",
+          "is_true": false,
+          "explanation": "Incorrect. Micro-segmentation is a network security approach that isolates workloads — it is not a DevOps tool for deploying environments."
+        },
+        "c": {
+          "text": "ARM templates",
+          "is_true": true,
+          "explanation": "Correct. ARM templates define infrastructure as code and can be deployed repeatedly to create identical environments on demand — ideal for spinning up test environments quickly and consistently."
+        },
+        "d": {
+          "text": "Virtual machine (VM) scale sets",
+          "is_true": false,
+          "explanation": "Incorrect. VM scale sets autoscale a group of identical VMs based on load — they are not specifically for cloning complete application test environments."
+        },
+        "e": {
+          "text": "Infrastructure as code (IaC)",
+          "is_true": true,
+          "explanation": "Correct. Infrastructure as code defines environment configurations as versioned source code that can be deployed repeatedly. Azure's cloud-native IaC tool is Bicep; ARM templates are the underlying deployment format."
+        }
       },
-      "b": {
-        "text": "Azure Files can be accessed using the Network File System (NFS) protocol.",
-        "is_true": true,
-        "explanation": "Correct. Azure Files also supports NFS, the standard file-sharing protocol for Linux and Unix-based systems, making Azure file shares accessible from Linux VMs and on-premises Linux clients."
-      },
-      "c": {
-        "text": "A shared access signature (SAS) is required to access Azure Files.",
-        "is_true": false,
-        "explanation": "Incorrect. A SAS is not required to access Azure Files. Azure Files can be accessed using the storage account key, Azure AD authentication, or Kerberos — a SAS is optional and provides delegated, time-limited access."
-      }
+      "correct_answer": [
+        "c",
+        "e"
+      ]
     },
-    "correct_answer": ["a", "b"]
-  },
-  {
-    "question_id": 47,
-    "question_type": "multiple_select",
-    "question_text": "Your company hosts an IIS web server and an Exchange email server on-premises. As demand increases, you want to add capacity; as demand decreases, you want to decommission servers. You are considering moving the infrastructure to the cloud. For each of the following statements about the benefits of this move, select those that are TRUE.",
-    "options": {
-      "a": {
-        "text": "You can use horizontal scaling for the web server.",
-        "is_true": true,
-        "explanation": "Correct. Horizontal scaling (adding or removing VM instances) is a core cloud benefit. With autoscale, you can automatically add web server instances when demand rises and remove them when it falls."
+    {
+      "question_id": 46,
+      "question_text": "For each of the following statements about Azure Files, select those that are TRUE.",
+      "options": {
+        "a": {
+          "text": "Azure Files can be accessed using the Server Message Block (SMB) protocol.",
+          "is_true": true,
+          "explanation": "Correct. Azure Files supports SMB, the standard Windows file-sharing protocol. Azure file shares can be mounted on Windows, Linux, and macOS clients like a traditional network drive."
+        },
+        "b": {
+          "text": "Azure Files can be accessed using the Network File System (NFS) protocol.",
+          "is_true": true,
+          "explanation": "Correct. Azure Files also supports NFS, the standard file-sharing protocol for Linux and Unix-based systems, making Azure file shares accessible from Linux VMs and on-premises Linux clients."
+        },
+        "c": {
+          "text": "A shared access signature (SAS) is required to access Azure Files.",
+          "is_true": false,
+          "explanation": "Incorrect. A SAS is not required to access Azure Files. Azure Files can be accessed using the storage account key, Azure AD authentication, or Kerberos — a SAS is optional and provides delegated, time-limited access."
+        }
       },
-      "b": {
-        "text": "You can resize the disk on demand on the mail server if email storage demand increases.",
-        "is_true": true,
-        "explanation": "Correct. Azure supports elastic storage — you can resize managed disks on demand to accommodate increased storage requirements without downtime."
-      },
-      "c": {
-        "text": "You reduce the operational cost of IT staff.",
-        "is_true": true,
-        "explanation": "Correct. Moving to the cloud reduces costs associated with expert IT staff for hardware maintenance. You still need IT staff for IaaS tasks such as OS patching and configuration, but the operational overhead is reduced."
-      }
+      "correct_answer": [
+        "a",
+        "b"
+      ]
     },
-    "correct_answer": ["a", "b", "c"]
-  },
-  {
-    "question_id": 48,
-    "question_type": "multiple_select",
-    "question_text": "Your company plans to use Azure Blueprints to assist with migration to Azure. For each of the following statements about Azure Blueprints, select those that are TRUE.",
-    "options": {
-      "a": {
-        "text": "When a blueprint is updated and the updated version is published, any assignments of the blueprint are updated automatically.",
-        "is_true": false,
-        "explanation": "Incorrect. Publishing a new version of a blueprint does NOT automatically update existing assignments. You must manually update each assignment to point to the new version."
+    {
+      "question_id": 47,
+      "question_text": "Your company hosts an IIS web server and an Exchange email server on-premises. As demand increases, you want to add capacity; as demand decreases, you want to decommission servers. You are considering moving the infrastructure to the cloud. For each of the following statements about the benefits of this move, select those that are TRUE.",
+      "options": {
+        "a": {
+          "text": "You can use horizontal scaling for the web server.",
+          "is_true": true,
+          "explanation": "Correct. Horizontal scaling (adding or removing VM instances) is a core cloud benefit. With autoscale, you can automatically add web server instances when demand rises and remove them when it falls."
+        },
+        "b": {
+          "text": "You can resize the disk on demand on the mail server if email storage demand increases.",
+          "is_true": true,
+          "explanation": "Correct. Azure supports elastic storage — you can resize managed disks on demand to accommodate increased storage requirements without downtime."
+        },
+        "c": {
+          "text": "You reduce the operational cost of IT staff.",
+          "is_true": true,
+          "explanation": "Correct. Moving to the cloud reduces costs associated with expert IT staff for hardware maintenance. You still need IT staff for IaaS tasks such as OS patching and configuration, but the operational overhead is reduced."
+        }
       },
-      "b": {
-        "text": "When a blueprint is unassigned, all of the resources assigned by the blueprint remain in place, but blueprint resource locking is removed.",
-        "is_true": true,
-        "explanation": "Correct. Unassigning a blueprint removes the blueprint object and its resource locking but leaves all provisioned resources intact and operational."
-      },
-      "c": {
-        "text": "When you delete a core blueprint, any blueprint versions of that blueprint, including both Draft and Published blueprints, are deleted, except the one that has active assignments.",
-        "is_true": true,
-        "explanation": "Correct. When deleting a blueprint, all Draft and Published versions are removed except those with active assignments. You must first delete the active assignments before you can delete those blueprint versions."
-      }
+      "correct_answer": [
+        "a",
+        "b",
+        "c"
+      ]
     },
-    "correct_answer": ["b", "c"]
-  },
-  {
-    "question_id": 49,
-    "question_type": "multiple_select",
-    "question_text": "As part of a cloud migration, your Azure implementation has been seeded with 100 TB of data. As the migration continues, you need to periodically migrate additional data to Azure using Server Message Block (SMB). Which TWO solutions should you use?",
-    "options": {
-      "a": {
-        "text": "Azure Data Share",
-        "is_true": false,
-        "explanation": "Incorrect. Azure Data Share is a service for sharing data across organisations — it does not support ongoing SMB-based data migration to Azure."
+    {
+      "question_id": 48,
+      "question_text": "Your company plans to use Azure Blueprints to assist with migration to Azure. For each of the following statements about Azure Blueprints, select those that are TRUE.",
+      "options": {
+        "a": {
+          "text": "When a blueprint is updated and the updated version is published, any assignments of the blueprint are updated automatically.",
+          "is_true": false,
+          "explanation": "Incorrect. Publishing a new version of a blueprint does NOT automatically update existing assignments. You must manually update each assignment to point to the new version."
+        },
+        "b": {
+          "text": "When a blueprint is unassigned, all of the resources assigned by the blueprint remain in place, but blueprint resource locking is removed.",
+          "is_true": true,
+          "explanation": "Correct. Unassigning a blueprint removes the blueprint object and its resource locking but leaves all provisioned resources intact and operational."
+        },
+        "c": {
+          "text": "When you delete a core blueprint, any blueprint versions of that blueprint, including both Draft and Published blueprints, are deleted, except the one that has active assignments.",
+          "is_true": true,
+          "explanation": "Correct. When deleting a blueprint, all Draft and Published versions are removed except those with active assignments. You must first delete the active assignments before you can delete those blueprint versions."
+        }
       },
-      "b": {
-        "text": "Azure Data Box Gateway",
-        "is_true": true,
-        "explanation": "Correct. Azure Data Box Gateway is a virtual appliance that presents an SMB endpoint on-premises. Data copied to it is automatically transferred to your Azure Storage account — ideal for continuous or periodic data migration."
-      },
-      "c": {
-        "text": "Azure Data Box Heavy",
-        "is_true": false,
-        "explanation": "Incorrect. Azure Data Box Heavy is a physical appliance for one-time, very large-volume transfers (up to ~800 TB) — it is not designed for periodic, ongoing SMB-based migration."
-      },
-      "d": {
-        "text": "Azure Files",
-        "is_true": true,
-        "explanation": "Correct. Azure Files is a fully managed cloud file service accessible over SMB. You can periodically copy data from on-premises to an Azure file share using SMB, making it a valid ongoing migration target."
-      }
+      "correct_answer": [
+        "b",
+        "c"
+      ]
     },
-    "correct_answer": ["b", "d"]
-  },
-  {
-    "question_id": 50,
-    "question_text": "You are addressing performance issues on an Azure-based web server cluster. You need to configure virtual machines to scale vertically. What should you do?",
-    "options": {
-      "a": {
-        "text": "Add compute and memory resources to each virtual machine.",
-        "is_true": true,
-        "explanation": "Correct. Vertical scaling means increasing the capacity of individual VMs — adding more CPU, RAM, or storage. In Azure, this is done by changing the VM size to a larger SKU."
+    {
+      "question_id": 49,
+      "question_text": "As part of a cloud migration, your Azure implementation has been seeded with 100 TB of data. As the migration continues, you need to periodically migrate additional data to Azure using Server Message Block (SMB). Which TWO solutions should you use?",
+      "options": {
+        "a": {
+          "text": "Azure Data Share",
+          "is_true": false,
+          "explanation": "Incorrect. Azure Data Share is a service for sharing data across organisations — it does not support ongoing SMB-based data migration to Azure."
+        },
+        "b": {
+          "text": "Azure Data Box Gateway",
+          "is_true": true,
+          "explanation": "Correct. Azure Data Box Gateway is a virtual appliance that presents an SMB endpoint on-premises. Data copied to it is automatically transferred to your Azure Storage account — ideal for continuous or periodic data migration."
+        },
+        "c": {
+          "text": "Azure Data Box Heavy",
+          "is_true": false,
+          "explanation": "Incorrect. Azure Data Box Heavy is a physical appliance for one-time, very large-volume transfers (up to ~800 TB) — it is not designed for periodic, ongoing SMB-based migration."
+        },
+        "d": {
+          "text": "Azure Files",
+          "is_true": true,
+          "explanation": "Correct. Azure Files is a fully managed cloud file service accessible over SMB. You can periodically copy data from on-premises to an Azure file share using SMB, making it a valid ongoing migration target."
+        }
       },
-      "b": {
-        "text": "Migrate the server cluster to a Kubernetes cluster.",
-        "is_true": false,
-        "explanation": "Incorrect. Migrating to Kubernetes distributes workloads horizontally across multiple nodes — this is horizontal scaling, not vertical scaling."
-      },
-      "c": {
-        "text": "Configure the cluster to burst into a hybrid cloud.",
-        "is_true": false,
-        "explanation": "Incorrect. Cloud bursting adds additional cloud resources when on-premises capacity is exhausted — it does not scale individual VM resources vertically."
-      },
-      "d": {
-        "text": "Allow additional virtual machines to be auto-deployed as needed.",
-        "is_true": false,
-        "explanation": "Incorrect. Auto-deploying additional VMs describes horizontal scaling — distributing load across more machines, not increasing the resources of existing ones."
-      }
+      "correct_answer": [
+        "b",
+        "d"
+      ]
     },
-    "correct_answer": "a"
-  },
-  {
-    "question_id": 51,
-    "question_type": "multiple_select",
-    "question_text": "Which of the following correctly pair an Azure SQL service with its ideal use case? Select all that apply.",
-    "options": {
-      "a": {
-        "text": "SQL Server on Azure VMs — fast migration from on-premises SQL Server with retention of operating system access",
-        "is_true": true,
-        "explanation": "Correct. SQL Server on Azure VMs is an IaaS lift-and-shift option that maintains 100% SQL Server compatibility and provides full OS access — the fastest migration path for teams needing OS-level control."
+    {
+      "question_id": 50,
+      "question_text": "You are addressing performance issues on an Azure-based web server cluster. You need to configure virtual machines to scale vertically. What should you do?",
+      "options": {
+        "a": {
+          "text": "Add compute and memory resources to each virtual machine.",
+          "is_true": true,
+          "explanation": "Correct. Vertical scaling means increasing the capacity of individual VMs — adding more CPU, RAM, or storage. In Azure, this is done by changing the VM size to a larger SKU."
+        },
+        "b": {
+          "text": "Migrate the server cluster to a Kubernetes cluster.",
+          "is_true": false,
+          "explanation": "Incorrect. Migrating to Kubernetes distributes workloads horizontally across multiple nodes — this is horizontal scaling, not vertical scaling."
+        },
+        "c": {
+          "text": "Configure the cluster to burst into a hybrid cloud.",
+          "is_true": false,
+          "explanation": "Incorrect. Cloud bursting adds additional cloud resources when on-premises capacity is exhausted — it does not scale individual VM resources vertically."
+        },
+        "d": {
+          "text": "Allow additional virtual machines to be auto-deployed as needed.",
+          "is_true": false,
+          "explanation": "Incorrect. Auto-deploying additional VMs describes horizontal scaling — distributing load across more machines, not increasing the resources of existing ones."
+        }
       },
-      "b": {
-        "text": "Azure SQL Database — cost-effective serverless database with intermittent usage and low compute utilisation",
-        "is_true": true,
-        "explanation": "Correct. Azure SQL Database's serverless compute tier is optimised for intermittent, unpredictable usage — it automatically pauses during inactivity and bills per second of actual consumption."
-      },
-      "c": {
-        "text": "Azure SQL Managed Instance — lift-and-shift of on-premises SQL Server with minimal changes to a PaaS solution",
-        "is_true": true,
-        "explanation": "Correct. Azure SQL Managed Instance provides near 100% SQL Server Enterprise Edition compatibility in a fully managed PaaS offering — ideal for lift-and-shift migrations without significant application changes."
-      },
-      "d": {
-        "text": "Azure Database for PostgreSQL — lift-and-shift migration of on-premises SQL Server workloads",
-        "is_true": false,
-        "explanation": "Incorrect. Azure Database for PostgreSQL is designed for PostgreSQL workloads, not SQL Server migration. It is not compatible with SQL Server for lift-and-shift."
-      }
+      "correct_answer": [
+        "a"
+      ]
     },
-    "correct_answer": ["a", "b", "c"]
-  },
-  {
-    "question_id": 52,
-    "question_text": "Your company uses Microsoft Purview to manage its data estate. You need to search for data using data classifications, glossary terms, data types, and other identifiers. Which Purview app should you use?",
-    "options": {
-      "a": {
-        "text": "Data Policy",
-        "is_true": false,
-        "explanation": "Incorrect. The Data Policy app manages access to data across your estate by defining actions for access requests — it is not used for searching or discovering data."
+    {
+      "question_id": 51,
+      "question_text": "Which of the following correctly pair an Azure SQL service with its ideal use case? Select all that apply.",
+      "options": {
+        "a": {
+          "text": "SQL Server on Azure VMs — fast migration from on-premises SQL Server with retention of operating system access",
+          "is_true": true,
+          "explanation": "Correct. SQL Server on Azure VMs is an IaaS lift-and-shift option that maintains 100% SQL Server compatibility and provides full OS access — the fastest migration path for teams needing OS-level control."
+        },
+        "b": {
+          "text": "Azure SQL Database — cost-effective serverless database with intermittent usage and low compute utilisation",
+          "is_true": true,
+          "explanation": "Correct. Azure SQL Database's serverless compute tier is optimised for intermittent, unpredictable usage — it automatically pauses during inactivity and bills per second of actual consumption."
+        },
+        "c": {
+          "text": "Azure SQL Managed Instance — lift-and-shift of on-premises SQL Server with minimal changes to a PaaS solution",
+          "is_true": true,
+          "explanation": "Correct. Azure SQL Managed Instance provides near 100% SQL Server Enterprise Edition compatibility in a fully managed PaaS offering — ideal for lift-and-shift migrations without significant application changes."
+        },
+        "d": {
+          "text": "Azure Database for PostgreSQL — lift-and-shift migration of on-premises SQL Server workloads",
+          "is_true": false,
+          "explanation": "Incorrect. Azure Database for PostgreSQL is designed for PostgreSQL workloads, not SQL Server migration. It is not compatible with SQL Server for lift-and-shift."
+        }
       },
-      "b": {
-        "text": "Data Estate Insights",
-        "is_true": false,
-        "explanation": "Incorrect. Data Estate Insights determines data classification rates and evaluates governance health through the stewardship dashboard — it is not used for searching or browsing data."
-      },
-      "c": {
-        "text": "Data Catalog",
-        "is_true": true,
-        "explanation": "Correct. The Microsoft Purview Data Catalog enables users to search for data using classifications, glossary terms, data types, column names, and other identifiers — it tracks metadata and lineage across your entire data estate."
-      },
-      "d": {
-        "text": "Data Stewardship",
-        "is_true": false,
-        "explanation": "Incorrect. Data Stewardship is a governance role/function within Purview, not a standalone app for searching data by classification or type."
-      }
+      "correct_answer": [
+        "a",
+        "b",
+        "c"
+      ]
     },
-    "correct_answer": "c"
-  },
-  {
-    "question_id": 53,
-    "question_type": "multiple_select",
-    "question_text": "Which of the following correctly pair an Azure storage redundancy option with its description? Select all that apply.",
-    "options": {
-      "a": {
-        "text": "Geo-redundant storage (GRS) — stores three data copies in each of two Azure regions",
-        "is_true": true,
-        "explanation": "Correct. GRS stores three copies in the primary region (as LRS) and asynchronously replicates to a secondary region where another three copies are stored — six copies total across two regions."
+    {
+      "question_id": 52,
+      "question_text": "Your company uses Microsoft Purview to manage its data estate. You need to search for data using data classifications, glossary terms, data types, and other identifiers. Which Purview app should you use?",
+      "options": {
+        "a": {
+          "text": "Data Policy",
+          "is_true": false,
+          "explanation": "Incorrect. The Data Policy app manages access to data across your estate by defining actions for access requests — it is not used for searching or discovering data."
+        },
+        "b": {
+          "text": "Data Estate Insights",
+          "is_true": false,
+          "explanation": "Incorrect. Data Estate Insights determines data classification rates and evaluates governance health through the stewardship dashboard — it is not used for searching or browsing data."
+        },
+        "c": {
+          "text": "Data Catalog",
+          "is_true": true,
+          "explanation": "Correct. The Microsoft Purview Data Catalog enables users to search for data using classifications, glossary terms, data types, column names, and other identifiers — it tracks metadata and lineage across your entire data estate."
+        },
+        "d": {
+          "text": "Data Stewardship",
+          "is_true": false,
+          "explanation": "Incorrect. Data Stewardship is a governance role/function within Purview, not a standalone app for searching data by classification or type."
+        }
       },
-      "b": {
-        "text": "Read-access geo-redundant storage (RA-GRS) — allows replicated data to be simultaneously read from two regions",
-        "is_true": true,
-        "explanation": "Correct. RA-GRS extends GRS by enabling read access to the secondary region at all times. Without RA-GRS, the secondary region data is only accessible after a failover is initiated."
-      },
-      "c": {
-        "text": "Locally redundant storage (LRS) — stores all replicas across three availability zones in one region",
-        "is_true": false,
-        "explanation": "Incorrect. LRS stores three synchronous copies within a single datacenter, not across availability zones. Zone-redundant storage (ZRS) is the option that distributes copies across availability zones."
-      },
-      "d": {
-        "text": "Zone-redundant storage (ZRS) — stores all replicas within a single datacenter",
-        "is_true": false,
-        "explanation": "Incorrect. ZRS stores three synchronous copies across three separate availability zones within one region — not within a single datacenter. LRS stores copies within a single datacenter."
-      }
+      "correct_answer": [
+        "c"
+      ]
     },
-    "correct_answer": ["a", "b"]
-  },
-  {
-    "question_id": 54,
-    "question_text": "Your company plans to use Microsoft Entra External ID to manage customer authentication for your e-commerce website. Customers should be able to sign in using their existing social media accounts, while customer and employee data must be managed separately. Which Azure service should you deploy?",
-    "options": {
-      "a": {
-        "text": "Business-to-business (B2B) direct connect",
-        "is_true": false,
-        "explanation": "Incorrect. B2B direct connect establishes a trust between Microsoft Entra directories used by partner organisations — it is not designed for customer-facing social media authentication."
+    {
+      "question_id": 53,
+      "question_text": "Which of the following correctly pair an Azure storage redundancy option with its description? Select all that apply.",
+      "options": {
+        "a": {
+          "text": "Geo-redundant storage (GRS) — stores three data copies in each of two Azure regions",
+          "is_true": true,
+          "explanation": "Correct. GRS stores three copies in the primary region (as LRS) and asynchronously replicates to a secondary region where another three copies are stored — six copies total across two regions."
+        },
+        "b": {
+          "text": "Read-access geo-redundant storage (RA-GRS) — allows replicated data to be simultaneously read from two regions",
+          "is_true": true,
+          "explanation": "Correct. RA-GRS extends GRS by enabling read access to the secondary region at all times. Without RA-GRS, the secondary region data is only accessible after a failover is initiated."
+        },
+        "c": {
+          "text": "Locally redundant storage (LRS) — stores all replicas across three availability zones in one region",
+          "is_true": false,
+          "explanation": "Incorrect. LRS stores three synchronous copies within a single datacenter, not across availability zones. Zone-redundant storage (ZRS) is the option that distributes copies across availability zones."
+        },
+        "d": {
+          "text": "Zone-redundant storage (ZRS) — stores all replicas within a single datacenter",
+          "is_true": false,
+          "explanation": "Incorrect. ZRS stores three synchronous copies across three separate availability zones within one region — not within a single datacenter. LRS stores copies within a single datacenter."
+        }
       },
-      "b": {
-        "text": "Azure Active Directory business-to-consumer (Azure AD B2C)",
-        "is_true": true,
-        "explanation": "Correct. Azure AD B2C allows customers to sign in using external identity providers such as Google and Facebook. It manages customer identities in a separate Entra ID directory, keeping customer and employee data isolated."
-      },
-      "c": {
-        "text": "Azure managed identities",
-        "is_true": false,
-        "explanation": "Incorrect. Azure managed identities are used for service-to-service authentication within Azure (e.g., an app accessing Key Vault) — they are not for end-user customer authentication."
-      },
-      "d": {
-        "text": "Microsoft Entra business-to-business (Microsoft Entra B2B) collaboration",
-        "is_true": false,
-        "explanation": "Incorrect. Microsoft Entra B2B collaboration enables external partner users from other organisations to access your internal Microsoft apps — it is not designed for customer sign-in via social identity providers."
-      }
+      "correct_answer": [
+        "a",
+        "b"
+      ]
     },
-    "correct_answer": "b"
-  },
-  {
-    "question_id": 55,
-    "question_type": "multiple_select",
-    "question_text": "A company subscribes to Azure and wants to use the Microsoft Entra ID P1 edition. Which TWO features are supported by Microsoft Entra ID P1?",
-    "options": {
-      "a": {
-        "text": "Self-service entitlement management",
-        "is_true": false,
-        "explanation": "Incorrect. Self-service entitlement management is a Microsoft Entra ID P2 feature, not available in P1."
+    {
+      "question_id": 54,
+      "question_text": "Your company plans to use Microsoft Entra External ID to manage customer authentication for your e-commerce website. Customers should be able to sign in using their existing social media accounts, while customer and employee data must be managed separately. Which Azure service should you deploy?",
+      "options": {
+        "a": {
+          "text": "Business-to-business (B2B) direct connect",
+          "is_true": false,
+          "explanation": "Incorrect. B2B direct connect establishes a trust between Microsoft Entra directories used by partner organisations — it is not designed for customer-facing social media authentication."
+        },
+        "b": {
+          "text": "Azure Active Directory business-to-consumer (Azure AD B2C)",
+          "is_true": true,
+          "explanation": "Correct. Azure AD B2C allows customers to sign in using external identity providers such as Google and Facebook. It manages customer identities in a separate Entra ID directory, keeping customer and employee data isolated."
+        },
+        "c": {
+          "text": "Azure managed identities",
+          "is_true": false,
+          "explanation": "Incorrect. Azure managed identities are used for service-to-service authentication within Azure (e.g., an app accessing Key Vault) — they are not for end-user customer authentication."
+        },
+        "d": {
+          "text": "Microsoft Entra business-to-business (Microsoft Entra B2B) collaboration",
+          "is_true": false,
+          "explanation": "Incorrect. Microsoft Entra B2B collaboration enables external partner users from other organisations to access your internal Microsoft apps — it is not designed for customer sign-in via social identity providers."
+        }
       },
-      "b": {
-        "text": "Role-based access control (RBAC)",
-        "is_true": true,
-        "explanation": "Correct. Microsoft Entra ID P1 includes RBAC, allowing organisations to assign access to Azure resources and applications based on user roles."
-      },
-      "c": {
-        "text": "Conditional Access",
-        "is_true": true,
-        "explanation": "Correct. Microsoft Entra Conditional Access is included in the P1 licence — it lets organisations enforce access policies based on user, device, location, and risk signals."
-      },
-      "d": {
-        "text": "Identity Protection",
-        "is_true": false,
-        "explanation": "Incorrect. Identity Protection is a Microsoft Entra ID P2 feature that provides risk-based Conditional Access and detects compromised identities using machine learning."
-      },
-      "e": {
-        "text": "Privileged Identity Management (PIM), just-in-time access",
-        "is_true": false,
-        "explanation": "Incorrect. Privileged Identity Management (PIM) with just-in-time access is a Microsoft Entra ID P2 feature."
-      }
+      "correct_answer": [
+        "b"
+      ]
     },
-    "correct_answer": ["b", "c"]
-  },
-  {
-    "question_id": 56,
-    "question_text": "Your company uses Azure Blueprints to assist with migration to Azure. User1 should be able to assign published blueprints. Following the principle of least privilege, which role should you assign User1 to?",
-    "options": {
-      "a": {
-        "text": "Blueprint Operator",
-        "is_true": true,
-        "explanation": "Correct. The Blueprint Operator role allows a user to assign existing published blueprints but cannot create new blueprint definitions — it provides exactly the required permission with least privilege."
+    {
+      "question_id": 55,
+      "question_text": "A company subscribes to Azure and wants to use the Microsoft Entra ID P1 edition. Which TWO features are supported by Microsoft Entra ID P1?",
+      "options": {
+        "a": {
+          "text": "Self-service entitlement management",
+          "is_true": false,
+          "explanation": "Incorrect. Self-service entitlement management is a Microsoft Entra ID P2 feature, not available in P1."
+        },
+        "b": {
+          "text": "Role-based access control (RBAC)",
+          "is_true": true,
+          "explanation": "Correct. Microsoft Entra ID P1 includes RBAC, allowing organisations to assign access to Azure resources and applications based on user roles."
+        },
+        "c": {
+          "text": "Conditional Access",
+          "is_true": true,
+          "explanation": "Correct. Microsoft Entra Conditional Access is included in the P1 licence — it lets organisations enforce access policies based on user, device, location, and risk signals."
+        },
+        "d": {
+          "text": "Identity Protection",
+          "is_true": false,
+          "explanation": "Incorrect. Identity Protection is a Microsoft Entra ID P2 feature that provides risk-based Conditional Access and detects compromised identities using machine learning."
+        },
+        "e": {
+          "text": "Privileged Identity Management (PIM), just-in-time access",
+          "is_true": false,
+          "explanation": "Incorrect. Privileged Identity Management (PIM) with just-in-time access is a Microsoft Entra ID P2 feature."
+        }
       },
-      "b": {
-        "text": "Contributor",
-        "is_true": false,
-        "explanation": "Incorrect. The Contributor role can create and delete blueprint definitions but cannot assign published blueprints."
-      },
-      "c": {
-        "text": "Blueprint Contributor",
-        "is_true": false,
-        "explanation": "Incorrect. The Blueprint Contributor role enables managing blueprint definitions but not assigning them to scopes."
-      },
-      "d": {
-        "text": "Owner",
-        "is_true": false,
-        "explanation": "Incorrect. The Owner role includes all Blueprint permissions, but it violates least privilege by granting far more access than needed to simply assign published blueprints."
-      }
+      "correct_answer": [
+        "b",
+        "c"
+      ]
     },
-    "correct_answer": "a"
-  },
-  {
-    "question_id": 57,
-    "question_text": "You are developing a microservice-based application for handling events generated by data mining apps. You need an Azure service that is event-driven, provides compute-on-demand, does not require server management, and allows writing event-handling code in C#. Which Azure service should you select?",
-    "options": {
-      "a": {
-        "text": "Azure Functions",
-        "is_true": true,
-        "explanation": "Correct. Azure Functions is event-driven, serverless (no server management), compute-on-demand, and supports C# as well as Python, Java, and JavaScript — it satisfies all four requirements."
+    {
+      "question_id": 56,
+      "question_text": "Your company uses Azure Blueprints to assist with migration to Azure. User1 should be able to assign published blueprints. Following the principle of least privilege, which role should you assign User1 to?",
+      "options": {
+        "a": {
+          "text": "Blueprint Operator",
+          "is_true": true,
+          "explanation": "Correct. The Blueprint Operator role allows a user to assign existing published blueprints but cannot create new blueprint definitions — it provides exactly the required permission with least privilege."
+        },
+        "b": {
+          "text": "Contributor",
+          "is_true": false,
+          "explanation": "Incorrect. The Contributor role can create and delete blueprint definitions but cannot assign published blueprints."
+        },
+        "c": {
+          "text": "Blueprint Contributor",
+          "is_true": false,
+          "explanation": "Incorrect. The Blueprint Contributor role enables managing blueprint definitions but not assigning them to scopes."
+        },
+        "d": {
+          "text": "Owner",
+          "is_true": false,
+          "explanation": "Incorrect. The Owner role includes all Blueprint permissions, but it violates least privilege by granting far more access than needed to simply assign published blueprints."
+        }
       },
-      "b": {
-        "text": "Azure Virtual Machines",
-        "is_true": false,
-        "explanation": "Incorrect. Azure Virtual Machines require you to provision and manage server infrastructure — they are not event-driven or serverless."
-      },
-      "c": {
-        "text": "Azure Event Grid",
-        "is_true": false,
-        "explanation": "Incorrect. Azure Event Grid is an event routing service that delivers events to handlers — it does not itself execute your event-handling code. Azure Functions would subscribe to Event Grid events."
-      },
-      "d": {
-        "text": "Azure App Service",
-        "is_true": false,
-        "explanation": "Incorrect. Azure App Service is a PaaS platform for web applications and APIs — it is not natively event-driven and requires managing an always-on application."
-      }
+      "correct_answer": [
+        "a"
+      ]
     },
-    "correct_answer": "a"
-  },
-  {
-    "question_id": 58,
-    "question_text": "You want to perform automated deployments from Azure DevOps. Which Azure service enables you to perform automated deployments from Azure DevOps?",
-    "options": {
-      "a": {
-        "text": "Azure App Service",
-        "is_true": true,
-        "explanation": "Correct. Azure App Service has built-in integration with Azure DevOps for continuous deployment. Azure DevOps pipelines can automatically build and deploy web applications directly to App Service."
+    {
+      "question_id": 57,
+      "question_text": "You are developing a microservice-based application for handling events generated by data mining apps. You need an Azure service that is event-driven, provides compute-on-demand, does not require server management, and allows writing event-handling code in C#. Which Azure service should you select?",
+      "options": {
+        "a": {
+          "text": "Azure Functions",
+          "is_true": true,
+          "explanation": "Correct. Azure Functions is event-driven, serverless (no server management), compute-on-demand, and supports C# as well as Python, Java, and JavaScript — it satisfies all four requirements."
+        },
+        "b": {
+          "text": "Azure Virtual Machines",
+          "is_true": false,
+          "explanation": "Incorrect. Azure Virtual Machines require you to provision and manage server infrastructure — they are not event-driven or serverless."
+        },
+        "c": {
+          "text": "Azure Event Grid",
+          "is_true": false,
+          "explanation": "Incorrect. Azure Event Grid is an event routing service that delivers events to handlers — it does not itself execute your event-handling code. Azure Functions would subscribe to Event Grid events."
+        },
+        "d": {
+          "text": "Azure App Service",
+          "is_true": false,
+          "explanation": "Incorrect. Azure App Service is a PaaS platform for web applications and APIs — it is not natively event-driven and requires managing an always-on application."
+        }
       },
-      "b": {
-        "text": "Azure Data Studio",
-        "is_true": false,
-        "explanation": "Incorrect. Azure Data Studio is a data management tool for querying databases — it does not serve as a deployment target for Azure DevOps pipelines."
-      },
-      "c": {
-        "text": "Azure SQL",
-        "is_true": false,
-        "explanation": "Incorrect. Azure SQL is a relational database service — while database schema updates can be deployed via pipelines, it is not the primary service enabling automated application deployments from Azure DevOps."
-      },
-      "d": {
-        "text": "Azure Data Factory",
-        "is_true": false,
-        "explanation": "Incorrect. Azure Data Factory is a data integration and ETL service — it does not enable automated application deployments from Azure DevOps."
-      }
+      "correct_answer": [
+        "a"
+      ]
     },
-    "correct_answer": "a"
-  },
-  {
-    "question_id": 59,
-    "question_text": "A coworker informs you of a planned Azure maintenance window. You are uncertain whether the maintenance will impact the services you use. What should you do to determine how this maintenance might impact your organisation?",
-    "options": {
-      "a": {
-        "text": "Select the resource types for your account in Resource Health.",
-        "is_true": false,
-        "explanation": "Incorrect. Resource Health provides the current health status of your individual resources — it does not show planned maintenance windows for your organisation."
+    {
+      "question_id": 58,
+      "question_text": "You want to perform automated deployments from Azure DevOps. Which Azure service enables you to perform automated deployments from Azure DevOps?",
+      "options": {
+        "a": {
+          "text": "Azure App Service",
+          "is_true": true,
+          "explanation": "Correct. Azure App Service has built-in integration with Azure DevOps for continuous deployment. Azure DevOps pipelines can automatically build and deploy web applications directly to App Service."
+        },
+        "b": {
+          "text": "Azure Data Studio",
+          "is_true": false,
+          "explanation": "Incorrect. Azure Data Studio is a data management tool for querying databases — it does not serve as a deployment target for Azure DevOps pipelines."
+        },
+        "c": {
+          "text": "Azure SQL",
+          "is_true": false,
+          "explanation": "Incorrect. Azure SQL is a relational database service — while database schema updates can be deployed via pipelines, it is not the primary service enabling automated application deployments from Azure DevOps."
+        },
+        "d": {
+          "text": "Azure Data Factory",
+          "is_true": false,
+          "explanation": "Incorrect. Azure Data Factory is a data integration and ETL service — it does not enable automated application deployments from Azure DevOps."
+        }
       },
-      "b": {
-        "text": "Verify any planned maintenance via the Service Health dashboard.",
-        "is_true": true,
-        "explanation": "Correct. Azure Service Health provides personalised alerts about planned maintenance, service issues, and health advisories for the specific Azure services and regions your organisation uses — it is the correct tool to verify maintenance impact."
-      },
-      "c": {
-        "text": "Use Azure Monitor to view maintenance intervals for your resources.",
-        "is_true": false,
-        "explanation": "Incorrect. Azure Monitor collects and analyzes telemetry data (metrics, logs, alerts) — it does not display planned maintenance windows."
-      },
-      "d": {
-        "text": "Check the Azure status page for any planned maintenance outages.",
-        "is_true": false,
-        "explanation": "Incorrect. The Azure status page shows global availability of Microsoft Cloud services — it provides broad, non-personalised health information and will not show planned maintenance specific to your organisation's resources."
-      }
+      "correct_answer": [
+        "a"
+      ]
     },
-    "correct_answer": "b"
-  },
-  {
-    "question_id": 60,
-    "question_text": "You are responsible for several cloud-based apps that have shown consistent usage requirements over time. You need to optimise cloud costs by initiating a long-term commitment for the resources required to support these apps. Which Azure service or feature should you use?",
-    "options": {
-      "a": {
-        "text": "Azure Reservations",
-        "is_true": true,
-        "explanation": "Correct. Azure Reservations let you commit to one- or three-year plans for Azure resources in exchange for significant discounts (up to 72%) versus pay-as-you-go — ideal for workloads with consistent, predictable usage."
+    {
+      "question_id": 59,
+      "question_text": "A coworker informs you of a planned Azure maintenance window. You are uncertain whether the maintenance will impact the services you use. What should you do to determine how this maintenance might impact your organisation?",
+      "options": {
+        "a": {
+          "text": "Select the resource types for your account in Resource Health.",
+          "is_true": false,
+          "explanation": "Incorrect. Resource Health provides the current health status of your individual resources — it does not show planned maintenance windows for your organisation."
+        },
+        "b": {
+          "text": "Verify any planned maintenance via the Service Health dashboard.",
+          "is_true": true,
+          "explanation": "Correct. Azure Service Health provides personalised alerts about planned maintenance, service issues, and health advisories for the specific Azure services and regions your organisation uses — it is the correct tool to verify maintenance impact."
+        },
+        "c": {
+          "text": "Use Azure Monitor to view maintenance intervals for your resources.",
+          "is_true": false,
+          "explanation": "Incorrect. Azure Monitor collects and analyzes telemetry data (metrics, logs, alerts) — it does not display planned maintenance windows."
+        },
+        "d": {
+          "text": "Check the Azure status page for any planned maintenance outages.",
+          "is_true": false,
+          "explanation": "Incorrect. The Azure status page shows global availability of Microsoft Cloud services — it provides broad, non-personalised health information and will not show planned maintenance specific to your organisation's resources."
+        }
       },
-      "b": {
-        "text": "Azure Advisor",
-        "is_true": false,
-        "explanation": "Incorrect. Azure Advisor identifies optimisation opportunities (including recommending reservations) but is not itself the feature that applies the long-term commitment discount."
-      },
-      "c": {
-        "text": "Azure DevOps",
-        "is_true": false,
-        "explanation": "Incorrect. Azure DevOps is a software development and CI/CD platform — it has no role in cloud cost optimisation or resource pricing commitments."
-      },
-      "d": {
-        "text": "Azure Logic Apps",
-        "is_true": false,
-        "explanation": "Incorrect. Azure Logic Apps is a low-code/no-code workflow automation platform — it is not related to resource pricing or long-term cost commitment strategies."
-      }
+      "correct_answer": [
+        "b"
+      ]
     },
-    "correct_answer": "a"
-  },
-  {
-    "question_id": 61,
-    "question_text": "To complete the statement, select the appropriate option. Management groups let you organise multiple ___.",
-    "options": {
-      "a": {
-        "text": "subscriptions as a single management entity to facilitate easier management.",
-        "is_true": true,
-        "explanation": "Correct. Management groups provide a hierarchical structure above subscriptions. They allow governance (policies, RBAC) to be applied across multiple subscriptions simultaneously, treating them as a single management entity."
+    {
+      "question_id": 60,
+      "question_text": "You are responsible for several cloud-based apps that have shown consistent usage requirements over time. You need to optimise cloud costs by initiating a long-term commitment for the resources required to support these apps. Which Azure service or feature should you use?",
+      "options": {
+        "a": {
+          "text": "Azure Reservations",
+          "is_true": true,
+          "explanation": "Correct. Azure Reservations let you commit to one- or three-year plans for Azure resources in exchange for significant discounts (up to 72%) versus pay-as-you-go — ideal for workloads with consistent, predictable usage."
+        },
+        "b": {
+          "text": "Azure Advisor",
+          "is_true": false,
+          "explanation": "Incorrect. Azure Advisor identifies optimisation opportunities (including recommending reservations) but is not itself the feature that applies the long-term commitment discount."
+        },
+        "c": {
+          "text": "Azure DevOps",
+          "is_true": false,
+          "explanation": "Incorrect. Azure DevOps is a software development and CI/CD platform — it has no role in cloud cost optimisation or resource pricing commitments."
+        },
+        "d": {
+          "text": "Azure Logic Apps",
+          "is_true": false,
+          "explanation": "Incorrect. Azure Logic Apps is a low-code/no-code workflow automation platform — it is not related to resource pricing or long-term cost commitment strategies."
+        }
       },
-      "b": {
-        "text": "Microsoft Entra tenants as a single management entity to facilitate easier management.",
-        "is_true": false,
-        "explanation": "Incorrect. Management groups organise subscriptions, not Entra tenants. An organisation typically has one tenant containing multiple subscriptions managed via management groups."
-      },
-      "c": {
-        "text": "resource groups or resources for management.",
-        "is_true": false,
-        "explanation": "Incorrect. Resource groups and resources are organised within subscriptions. Management groups sit above subscriptions in the hierarchy — they do not directly contain resource groups or individual resources."
-      },
-      "d": {
-        "text": "Azure regions as a single management entity to facilitate geographic distribution.",
-        "is_true": false,
-        "explanation": "Incorrect. Management groups are a governance and access control hierarchy — they have no relationship with Azure regions or geographic distribution."
-      }
+      "correct_answer": [
+        "a"
+      ]
     },
-    "correct_answer": "a"
-  }
-]
+    {
+      "question_id": 61,
+      "question_text": "To complete the statement, select the appropriate option. Management groups let you organise multiple ___.",
+      "options": {
+        "a": {
+          "text": "subscriptions as a single management entity to facilitate easier management.",
+          "is_true": true,
+          "explanation": "Correct. Management groups provide a hierarchical structure above subscriptions. They allow governance (policies, RBAC) to be applied across multiple subscriptions simultaneously, treating them as a single management entity."
+        },
+        "b": {
+          "text": "Microsoft Entra tenants as a single management entity to facilitate easier management.",
+          "is_true": false,
+          "explanation": "Incorrect. Management groups organise subscriptions, not Entra tenants. An organisation typically has one tenant containing multiple subscriptions managed via management groups."
+        },
+        "c": {
+          "text": "resource groups or resources for management.",
+          "is_true": false,
+          "explanation": "Incorrect. Resource groups and resources are organised within subscriptions. Management groups sit above subscriptions in the hierarchy — they do not directly contain resource groups or individual resources."
+        },
+        "d": {
+          "text": "Azure regions as a single management entity to facilitate geographic distribution.",
+          "is_true": false,
+          "explanation": "Incorrect. Management groups are a governance and access control hierarchy — they have no relationship with Azure regions or geographic distribution."
+        }
+      },
+      "correct_answer": [
+        "a"
+      ]
+    }
+  ]
+}

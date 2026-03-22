@@ -1,225 +1,593 @@
-[
-  {
-    "question_id": 1,
-    "question_text": "You need to use a single endpoint and key to access Azure AI Language, Azure AI Vision, and Azure AI Speech in your application. Which type of resource should you create?",
-    "options": {
-      "a": { "text": "A separate single-service resource for each AI service.", "is_true": false, "explanation": "Incorrect. Creating separate resources gives you multiple endpoints and keys, not a single shared one." },
-      "b": { "text": "An Azure AI Services multi-service resource.", "is_true": true, "explanation": "Correct. A multi-service resource (kind: CognitiveServices) provides a single endpoint and key that can be used to access multiple Azure AI services." },
-      "c": { "text": "An Azure OpenAI resource.", "is_true": false, "explanation": "Incorrect. Azure OpenAI is a separate service specifically for OpenAI models. It does not provide access to AI Language, Vision, or Speech." },
-      "d": { "text": "An Azure Machine Learning workspace.", "is_true": false, "explanation": "Incorrect. Azure ML is for training and deploying custom models, not for accessing pre-built AI services." }
-    },
-    "correct_answer": "b"
+{
+  "meta": {
+    "title": "Azure AI Engineer – Planning & Managing AI Solutions",
+    "subject": "AI-102",
+    "version": "1.0.0",
+    "created": "2026-03-22"
   },
-  {
-    "question_id": 2,
-    "question_text": "You need to rotate the API key for your Azure AI Services resource without causing downtime for your production application. What is the correct procedure?",
-    "options": {
-      "a": { "text": "Regenerate key1, then update the application to use key1.", "is_true": false, "explanation": "Incorrect. Regenerating key1 first would break any application currently using it, causing downtime." },
-      "b": { "text": "Update the application to use key2, regenerate key1, then update the application to use the new key1.", "is_true": true, "explanation": "Correct. Switch to key2 first so the application continues working, then safely regenerate key1 without disruption." },
-      "c": { "text": "Delete the resource and create a new one with fresh keys.", "is_true": false, "explanation": "Incorrect. Deleting the resource would cause complete downtime and lose all configuration." },
-      "d": { "text": "Disable key-based authentication and switch to Entra ID.", "is_true": false, "explanation": "Incorrect. While Entra ID is preferred for production, switching authentication methods is not key rotation and could cause downtime if not planned." }
+  "questions": [
+    {
+      "question_id": 1,
+      "question_text": "You need to use a single endpoint and key to access Azure AI Language, Azure AI Vision, and Azure AI Speech in your application. Which type of resource should you create?",
+      "options": {
+        "a": {
+          "text": "A separate single-service resource for each AI service.",
+          "is_true": false,
+          "explanation": "Incorrect. Creating separate resources gives you multiple endpoints and keys, not a single shared one."
+        },
+        "b": {
+          "text": "An Azure AI Services multi-service resource.",
+          "is_true": true,
+          "explanation": "Correct. A multi-service resource (kind: CognitiveServices) provides a single endpoint and key that can be used to access multiple Azure AI services."
+        },
+        "c": {
+          "text": "An Azure OpenAI resource.",
+          "is_true": false,
+          "explanation": "Incorrect. Azure OpenAI is a separate service specifically for OpenAI models. It does not provide access to AI Language, Vision, or Speech."
+        },
+        "d": {
+          "text": "An Azure Machine Learning workspace.",
+          "is_true": false,
+          "explanation": "Incorrect. Azure ML is for training and deploying custom models, not for accessing pre-built AI services."
+        }
+      },
+      "correct_answer": [
+        "b"
+      ]
     },
-    "correct_answer": "b"
-  },
-  {
-    "question_id": 3,
-    "question_text": "Which authentication method is recommended for production Azure AI applications that need to call AI services from other Azure resources?",
-    "options": {
-      "a": { "text": "API key stored in application settings.", "is_true": false, "explanation": "Incorrect. API keys in application settings are less secure and harder to manage at scale. They can be leaked and don't provide audit trails." },
-      "b": { "text": "API key stored in Azure Key Vault.", "is_true": false, "explanation": "Incorrect. While better than plain text, this still requires managing secrets. Managed identity eliminates the need for secrets entirely." },
-      "c": { "text": "Managed identity with Microsoft Entra ID.", "is_true": true, "explanation": "Correct. Managed identity provides automatic token management without storing any secrets. Assign the Cognitive Services User role for inference access." },
-      "d": { "text": "Shared access signature (SAS) token.", "is_true": false, "explanation": "Incorrect. SAS tokens are used for Azure Storage, not for authenticating to Azure AI services." }
+    {
+      "question_id": 2,
+      "question_text": "You need to rotate the API key for your Azure AI Services resource without causing downtime for your production application. What is the correct procedure?",
+      "options": {
+        "a": {
+          "text": "Regenerate key1, then update the application to use key1.",
+          "is_true": false,
+          "explanation": "Incorrect. Regenerating key1 first would break any application currently using it, causing downtime."
+        },
+        "b": {
+          "text": "Update the application to use key2, regenerate key1, then update the application to use the new key1.",
+          "is_true": true,
+          "explanation": "Correct. Switch to key2 first so the application continues working, then safely regenerate key1 without disruption."
+        },
+        "c": {
+          "text": "Delete the resource and create a new one with fresh keys.",
+          "is_true": false,
+          "explanation": "Incorrect. Deleting the resource would cause complete downtime and lose all configuration."
+        },
+        "d": {
+          "text": "Disable key-based authentication and switch to Entra ID.",
+          "is_true": false,
+          "explanation": "Incorrect. While Entra ID is preferred for production, switching authentication methods is not key rotation and could cause downtime if not planned."
+        }
+      },
+      "correct_answer": [
+        "b"
+      ]
     },
-    "correct_answer": "c"
-  },
-  {
-    "question_id": 4,
-    "question_type": "multiple_select",
-    "question_text": "Which TWO Azure OpenAI content safety features help prevent jailbreak and prompt injection attacks?",
-    "options": {
-      "a": { "text": "Content filters with severity thresholds", "is_true": false, "explanation": "Incorrect. Content filters detect harmful categories (hate, violence, sexual, self-harm) in input/output but are not specifically designed to detect jailbreak attempts." },
-      "b": { "text": "Prompt shields", "is_true": true, "explanation": "Correct. Prompt shields specifically detect jailbreak and prompt injection attempts in user input, preventing adversarial manipulation of the model." },
-      "c": { "text": "Custom blocklists", "is_true": true, "explanation": "Correct. Custom blocklists can block specific terms and patterns commonly used in jailbreak prompts, adding a layer of defense against prompt injection." },
-      "d": { "text": "Groundedness detection", "is_true": false, "explanation": "Incorrect. Groundedness detection checks whether model outputs are supported by source data — it detects hallucinations, not jailbreak attempts." }
+    {
+      "question_id": 3,
+      "question_text": "Which authentication method is recommended for production Azure AI applications that need to call AI services from other Azure resources?",
+      "options": {
+        "a": {
+          "text": "API key stored in application settings.",
+          "is_true": false,
+          "explanation": "Incorrect. API keys in application settings are less secure and harder to manage at scale. They can be leaked and don't provide audit trails."
+        },
+        "b": {
+          "text": "API key stored in Azure Key Vault.",
+          "is_true": false,
+          "explanation": "Incorrect. While better than plain text, this still requires managing secrets. Managed identity eliminates the need for secrets entirely."
+        },
+        "c": {
+          "text": "Managed identity with Microsoft Entra ID.",
+          "is_true": true,
+          "explanation": "Correct. Managed identity provides automatic token management without storing any secrets. Assign the Cognitive Services User role for inference access."
+        },
+        "d": {
+          "text": "Shared access signature (SAS) token.",
+          "is_true": false,
+          "explanation": "Incorrect. SAS tokens are used for Azure Storage, not for authenticating to Azure AI services."
+        }
+      },
+      "correct_answer": [
+        "c"
+      ]
     },
-    "correct_answer": ["b", "c"]
-  },
-  {
-    "question_id": 5,
-    "question_text": "You need to deploy an Azure AI Language container for offline use in a factory with no internet connectivity. Which statement is true about Azure AI containers?",
-    "options": {
-      "a": { "text": "Containers can run completely offline with no Azure connectivity.", "is_true": false, "explanation": "Incorrect. Azure AI containers require periodic billing connectivity to Azure, even in disconnected scenarios." },
-      "b": { "text": "Containers require periodic connectivity to Azure for billing metering.", "is_true": true, "explanation": "Correct. Azure AI containers process data locally but must periodically connect to Azure to report usage for billing. Disconnected containers have a grace period but eventually stop working." },
-      "c": { "text": "Containers do not support any Azure AI services.", "is_true": false, "explanation": "Incorrect. Several Azure AI services support container deployment, including Language, Speech, Vision, and Document Intelligence." },
-      "d": { "text": "Containers require the same Azure region as the parent resource.", "is_true": false, "explanation": "Incorrect. Containers can run anywhere (on-premises, other clouds) regardless of the parent Azure resource's region." }
+    {
+      "question_id": 4,
+      "question_text": "Which TWO Azure OpenAI content safety features help prevent jailbreak and prompt injection attacks?",
+      "options": {
+        "a": {
+          "text": "Content filters with severity thresholds",
+          "is_true": false,
+          "explanation": "Incorrect. Content filters detect harmful categories (hate, violence, sexual, self-harm) in input/output but are not specifically designed to detect jailbreak attempts."
+        },
+        "b": {
+          "text": "Prompt shields",
+          "is_true": true,
+          "explanation": "Correct. Prompt shields specifically detect jailbreak and prompt injection attempts in user input, preventing adversarial manipulation of the model."
+        },
+        "c": {
+          "text": "Custom blocklists",
+          "is_true": true,
+          "explanation": "Correct. Custom blocklists can block specific terms and patterns commonly used in jailbreak prompts, adding a layer of defense against prompt injection."
+        },
+        "d": {
+          "text": "Groundedness detection",
+          "is_true": false,
+          "explanation": "Incorrect. Groundedness detection checks whether model outputs are supported by source data — it detects hallucinations, not jailbreak attempts."
+        }
+      },
+      "correct_answer": [
+        "b",
+        "c"
+      ]
     },
-    "correct_answer": "b"
-  },
-  {
-    "question_id": 6,
-    "question_text": "Which RBAC role should you assign to a service principal that only needs to call Azure AI Services for inference (predictions) but should not be able to manage the resource?",
-    "options": {
-      "a": { "text": "Cognitive Services Contributor", "is_true": false, "explanation": "Incorrect. Contributor grants management permissions (create, update, delete resources) which exceeds the requirement for inference-only access." },
-      "b": { "text": "Cognitive Services User", "is_true": true, "explanation": "Correct. The Cognitive Services User role grants permission to call AI service APIs for inference without the ability to manage or modify the resource — following the principle of least privilege." },
-      "c": { "text": "Reader", "is_true": false, "explanation": "Incorrect. The Reader role allows viewing resources in the portal but does not grant permission to call AI service APIs." },
-      "d": { "text": "Owner", "is_true": false, "explanation": "Incorrect. Owner grants full control including RBAC management, far exceeding what is needed for inference." }
+    {
+      "question_id": 5,
+      "question_text": "You need to deploy an Azure AI Language container for offline use in a factory with no internet connectivity. Which statement is true about Azure AI containers?",
+      "options": {
+        "a": {
+          "text": "Containers can run completely offline with no Azure connectivity.",
+          "is_true": false,
+          "explanation": "Incorrect. Azure AI containers require periodic billing connectivity to Azure, even in disconnected scenarios."
+        },
+        "b": {
+          "text": "Containers require periodic connectivity to Azure for billing metering.",
+          "is_true": true,
+          "explanation": "Correct. Azure AI containers process data locally but must periodically connect to Azure to report usage for billing. Disconnected containers have a grace period but eventually stop working."
+        },
+        "c": {
+          "text": "Containers do not support any Azure AI services.",
+          "is_true": false,
+          "explanation": "Incorrect. Several Azure AI services support container deployment, including Language, Speech, Vision, and Document Intelligence."
+        },
+        "d": {
+          "text": "Containers require the same Azure region as the parent resource.",
+          "is_true": false,
+          "explanation": "Incorrect. Containers can run anywhere (on-premises, other clouds) regardless of the parent Azure resource's region."
+        }
+      },
+      "correct_answer": [
+        "b"
+      ]
     },
-    "correct_answer": "b"
-  },
-  {
-    "question_id": 7,
-    "question_text": "You are building a RAG (Retrieval-Augmented Generation) solution. What is the correct order of steps when processing a user query?",
-    "options": {
-      "a": { "text": "Generate response -> Retrieve documents -> Augment prompt", "is_true": false, "explanation": "Incorrect. Generating first without retrieval defeats the purpose of RAG — the model would have no grounding context." },
-      "b": { "text": "Retrieve relevant documents -> Augment the prompt with context -> Generate a grounded response", "is_true": true, "explanation": "Correct. RAG follows: (1) retrieve relevant chunks from a search index, (2) inject them into the prompt as context, (3) the model generates a response grounded in the provided data." },
-      "c": { "text": "Augment prompt -> Generate response -> Retrieve documents for validation", "is_true": false, "explanation": "Incorrect. Retrieval must happen before generation so the model has context to ground its response." },
-      "d": { "text": "Fine-tune the model -> Generate response -> Validate with search", "is_true": false, "explanation": "Incorrect. RAG does not require fine-tuning — it retrieves context at query time. Fine-tuning and RAG are different techniques." }
+    {
+      "question_id": 6,
+      "question_text": "Which RBAC role should you assign to a service principal that only needs to call Azure AI Services for inference (predictions) but should not be able to manage the resource?",
+      "options": {
+        "a": {
+          "text": "Cognitive Services Contributor",
+          "is_true": false,
+          "explanation": "Incorrect. Contributor grants management permissions (create, update, delete resources) which exceeds the requirement for inference-only access."
+        },
+        "b": {
+          "text": "Cognitive Services User",
+          "is_true": true,
+          "explanation": "Correct. The Cognitive Services User role grants permission to call AI service APIs for inference without the ability to manage or modify the resource — following the principle of least privilege."
+        },
+        "c": {
+          "text": "Reader",
+          "is_true": false,
+          "explanation": "Incorrect. The Reader role allows viewing resources in the portal but does not grant permission to call AI service APIs."
+        },
+        "d": {
+          "text": "Owner",
+          "is_true": false,
+          "explanation": "Incorrect. Owner grants full control including RBAC management, far exceeding what is needed for inference."
+        }
+      },
+      "correct_answer": [
+        "b"
+      ]
     },
-    "correct_answer": "b"
-  },
-  {
-    "question_id": 8,
-    "question_text": "You need to deploy a GPT model for a production application with predictable, consistent throughput requirements. Which deployment type should you choose?",
-    "options": {
-      "a": { "text": "Serverless (pay-per-token)", "is_true": false, "explanation": "Incorrect. Serverless deployments share capacity and may experience throttling during high demand — not ideal for consistent throughput." },
-      "b": { "text": "Provisioned throughput (PTU)", "is_true": true, "explanation": "Correct. Provisioned throughput reserves dedicated capacity measured in PTUs (Provisioned Throughput Units), guaranteeing consistent, predictable performance for production workloads." },
-      "c": { "text": "Managed compute", "is_true": false, "explanation": "Incorrect. Managed compute deploys models on dedicated VMs, which is used for non-OpenAI models in the Foundry model catalog." },
-      "d": { "text": "Container deployment", "is_true": false, "explanation": "Incorrect. Azure OpenAI does not support container deployment — it is a cloud-only service." }
+    {
+      "question_id": 7,
+      "question_text": "You are building a RAG (Retrieval-Augmented Generation) solution. What is the correct order of steps when processing a user query?",
+      "options": {
+        "a": {
+          "text": "Generate response -> Retrieve documents -> Augment prompt",
+          "is_true": false,
+          "explanation": "Incorrect. Generating first without retrieval defeats the purpose of RAG — the model would have no grounding context."
+        },
+        "b": {
+          "text": "Retrieve relevant documents -> Augment the prompt with context -> Generate a grounded response",
+          "is_true": true,
+          "explanation": "Correct. RAG follows: (1) retrieve relevant chunks from a search index, (2) inject them into the prompt as context, (3) the model generates a response grounded in the provided data."
+        },
+        "c": {
+          "text": "Augment prompt -> Generate response -> Retrieve documents for validation",
+          "is_true": false,
+          "explanation": "Incorrect. Retrieval must happen before generation so the model has context to ground its response."
+        },
+        "d": {
+          "text": "Fine-tune the model -> Generate response -> Validate with search",
+          "is_true": false,
+          "explanation": "Incorrect. RAG does not require fine-tuning — it retrieves context at query time. Fine-tuning and RAG are different techniques."
+        }
+      },
+      "correct_answer": [
+        "b"
+      ]
     },
-    "correct_answer": "b"
-  },
-  {
-    "question_id": 9,
-    "question_type": "multiple_select",
-    "question_text": "Which TWO evaluation metrics measure how well a generative AI model's responses are supported by the provided source data?",
-    "options": {
-      "a": { "text": "Groundedness", "is_true": true, "explanation": "Correct. Groundedness measures whether the model's response is factually supported by the provided context/source data, detecting hallucinated content." },
-      "b": { "text": "Fluency", "is_true": false, "explanation": "Incorrect. Fluency measures grammatical correctness and naturalness of language, not factual support from source data." },
-      "c": { "text": "Relevance", "is_true": true, "explanation": "Correct. Relevance measures whether the response actually addresses the user's question using the provided context, ensuring the model stays on topic with grounded information." },
-      "d": { "text": "Coherence", "is_true": false, "explanation": "Incorrect. Coherence measures logical consistency and structure of the response, not its factual grounding in source data." }
+    {
+      "question_id": 8,
+      "question_text": "You need to deploy a GPT model for a production application with predictable, consistent throughput requirements. Which deployment type should you choose?",
+      "options": {
+        "a": {
+          "text": "Serverless (pay-per-token)",
+          "is_true": false,
+          "explanation": "Incorrect. Serverless deployments share capacity and may experience throttling during high demand — not ideal for consistent throughput."
+        },
+        "b": {
+          "text": "Provisioned throughput (PTU)",
+          "is_true": true,
+          "explanation": "Correct. Provisioned throughput reserves dedicated capacity measured in PTUs (Provisioned Throughput Units), guaranteeing consistent, predictable performance for production workloads."
+        },
+        "c": {
+          "text": "Managed compute",
+          "is_true": false,
+          "explanation": "Incorrect. Managed compute deploys models on dedicated VMs, which is used for non-OpenAI models in the Foundry model catalog."
+        },
+        "d": {
+          "text": "Container deployment",
+          "is_true": false,
+          "explanation": "Incorrect. Azure OpenAI does not support container deployment — it is a cloud-only service."
+        }
+      },
+      "correct_answer": [
+        "b"
+      ]
     },
-    "correct_answer": ["a", "c"]
-  },
-  {
-    "question_id": 10,
-    "question_text": "In Microsoft Foundry, what is the relationship between a Hub and a Project?",
-    "options": {
-      "a": { "text": "A Hub is a workspace within a Project.", "is_true": false, "explanation": "Incorrect. The hierarchy is reversed — a Project exists within a Hub, not the other way around." },
-      "b": { "text": "A Hub provides shared infrastructure, and Projects are workspaces within the Hub for organizing AI work.", "is_true": true, "explanation": "Correct. A Hub provides shared resources (compute, storage, networking, connections) and a Project is a workspace within the Hub where teams organize their models, flows, and evaluations." },
-      "c": { "text": "Hubs and Projects are independent resources with no relationship.", "is_true": false, "explanation": "Incorrect. Projects must be created within a Hub and inherit its shared infrastructure." },
-      "d": { "text": "A Project is a container for multiple Hubs.", "is_true": false, "explanation": "Incorrect. A Hub contains multiple Projects, not the other way around." }
+    {
+      "question_id": 9,
+      "question_text": "Which TWO evaluation metrics measure how well a generative AI model's responses are supported by the provided source data?",
+      "options": {
+        "a": {
+          "text": "Groundedness",
+          "is_true": true,
+          "explanation": "Correct. Groundedness measures whether the model's response is factually supported by the provided context/source data, detecting hallucinated content."
+        },
+        "b": {
+          "text": "Fluency",
+          "is_true": false,
+          "explanation": "Incorrect. Fluency measures grammatical correctness and naturalness of language, not factual support from source data."
+        },
+        "c": {
+          "text": "Relevance",
+          "is_true": true,
+          "explanation": "Correct. Relevance measures whether the response actually addresses the user's question using the provided context, ensuring the model stays on topic with grounded information."
+        },
+        "d": {
+          "text": "Coherence",
+          "is_true": false,
+          "explanation": "Incorrect. Coherence measures logical consistency and structure of the response, not its factual grounding in source data."
+        }
+      },
+      "correct_answer": [
+        "a",
+        "c"
+      ]
     },
-    "correct_answer": "b"
-  },
-  {
-    "question_id": 11,
-    "question_text": "You are building a prompt flow in Azure AI Foundry that needs to evaluate the quality of responses from a chatbot. Which flow type should you use?",
-    "options": {
-      "a": { "text": "Standard flow", "is_true": false, "explanation": "Incorrect. Standard flow is for general-purpose LLM orchestration, not specifically for evaluating other flows." },
-      "b": { "text": "Chat flow", "is_true": false, "explanation": "Incorrect. Chat flow is for conversation-oriented applications with chat history, not for evaluation." },
-      "c": { "text": "Evaluation flow", "is_true": true, "explanation": "Correct. Evaluation flows are specifically designed to assess the quality of outputs from other flows, measuring metrics like groundedness, relevance, coherence, and fluency." },
-      "d": { "text": "Batch flow", "is_true": false, "explanation": "Incorrect. Batch flow is not a prompt flow type. The three types are standard, chat, and evaluation." }
+    {
+      "question_id": 10,
+      "question_text": "In Microsoft Foundry, what is the relationship between a Hub and a Project?",
+      "options": {
+        "a": {
+          "text": "A Hub is a workspace within a Project.",
+          "is_true": false,
+          "explanation": "Incorrect. The hierarchy is reversed — a Project exists within a Hub, not the other way around."
+        },
+        "b": {
+          "text": "A Hub provides shared infrastructure, and Projects are workspaces within the Hub for organizing AI work.",
+          "is_true": true,
+          "explanation": "Correct. A Hub provides shared resources (compute, storage, networking, connections) and a Project is a workspace within the Hub where teams organize their models, flows, and evaluations."
+        },
+        "c": {
+          "text": "Hubs and Projects are independent resources with no relationship.",
+          "is_true": false,
+          "explanation": "Incorrect. Projects must be created within a Hub and inherit its shared infrastructure."
+        },
+        "d": {
+          "text": "A Project is a container for multiple Hubs.",
+          "is_true": false,
+          "explanation": "Incorrect. A Hub contains multiple Projects, not the other way around."
+        }
+      },
+      "correct_answer": [
+        "b"
+      ]
     },
-    "correct_answer": "c"
-  },
-  {
-    "question_id": 12,
-    "question_text": "Which tool in the Microsoft Foundry Agent Service allows an agent to execute Python code in a sandboxed environment for data analysis and calculations?",
-    "options": {
-      "a": { "text": "File Search", "is_true": false, "explanation": "Incorrect. File Search performs vector retrieval over uploaded documents — it does not execute code." },
-      "b": { "text": "Function Calling", "is_true": false, "explanation": "Incorrect. Function Calling invokes developer-defined external functions, not a sandbox for ad-hoc Python execution." },
-      "c": { "text": "Code Interpreter", "is_true": true, "explanation": "Correct. Code Interpreter executes Python code in a sandboxed environment, allowing the agent to perform calculations, data analysis, generate charts, and process files." },
-      "d": { "text": "Bing Grounding", "is_true": false, "explanation": "Incorrect. Bing Grounding searches the web for information — it does not execute code." }
+    {
+      "question_id": 11,
+      "question_text": "You are building a prompt flow in Azure AI Foundry that needs to evaluate the quality of responses from a chatbot. Which flow type should you use?",
+      "options": {
+        "a": {
+          "text": "Standard flow",
+          "is_true": false,
+          "explanation": "Incorrect. Standard flow is for general-purpose LLM orchestration, not specifically for evaluating other flows."
+        },
+        "b": {
+          "text": "Chat flow",
+          "is_true": false,
+          "explanation": "Incorrect. Chat flow is for conversation-oriented applications with chat history, not for evaluation."
+        },
+        "c": {
+          "text": "Evaluation flow",
+          "is_true": true,
+          "explanation": "Correct. Evaluation flows are specifically designed to assess the quality of outputs from other flows, measuring metrics like groundedness, relevance, coherence, and fluency."
+        },
+        "d": {
+          "text": "Batch flow",
+          "is_true": false,
+          "explanation": "Incorrect. Batch flow is not a prompt flow type. The three types are standard, chat, and evaluation."
+        }
+      },
+      "correct_answer": [
+        "c"
+      ]
     },
-    "correct_answer": "c"
-  },
-  {
-    "question_id": 13,
-    "question_text": "An AI agent needs to look up order status in your company's internal database when a customer asks about their order. Which agent tool should you implement?",
-    "options": {
-      "a": { "text": "Code Interpreter", "is_true": false, "explanation": "Incorrect. Code Interpreter runs Python in a sandbox but does not have access to your company's internal database." },
-      "b": { "text": "Function Calling", "is_true": true, "explanation": "Correct. Function Calling lets you define custom functions (with name, description, and parameters) that the agent can invoke. You implement the function logic to query your database and return results to the agent." },
-      "c": { "text": "File Search", "is_true": false, "explanation": "Incorrect. File Search performs vector retrieval over uploaded files — it cannot query a live database." },
-      "d": { "text": "Bing Grounding", "is_true": false, "explanation": "Incorrect. Bing Grounding searches the public web — it cannot access your company's internal database." }
+    {
+      "question_id": 12,
+      "question_text": "Which tool in the Microsoft Foundry Agent Service allows an agent to execute Python code in a sandboxed environment for data analysis and calculations?",
+      "options": {
+        "a": {
+          "text": "File Search",
+          "is_true": false,
+          "explanation": "Incorrect. File Search performs vector retrieval over uploaded documents — it does not execute code."
+        },
+        "b": {
+          "text": "Function Calling",
+          "is_true": false,
+          "explanation": "Incorrect. Function Calling invokes developer-defined external functions, not a sandbox for ad-hoc Python execution."
+        },
+        "c": {
+          "text": "Code Interpreter",
+          "is_true": true,
+          "explanation": "Correct. Code Interpreter executes Python code in a sandboxed environment, allowing the agent to perform calculations, data analysis, generate charts, and process files."
+        },
+        "d": {
+          "text": "Bing Grounding",
+          "is_true": false,
+          "explanation": "Incorrect. Bing Grounding searches the web for information — it does not execute code."
+        }
+      },
+      "correct_answer": [
+        "c"
+      ]
     },
-    "correct_answer": "b"
-  },
-  {
-    "question_id": 14,
-    "question_text": "You want to use DALL-E 3 in Azure to generate product images from text descriptions. Which API should you use?",
-    "options": {
-      "a": { "text": "Chat Completions API", "is_true": false, "explanation": "Incorrect. The Chat Completions API generates text responses, not images." },
-      "b": { "text": "Images Generate API", "is_true": true, "explanation": "Correct. The Images Generate API (client.images.generate) accepts a text prompt and returns generated images from DALL-E models." },
-      "c": { "text": "Embeddings API", "is_true": false, "explanation": "Incorrect. The Embeddings API converts text to vector representations for search — it does not generate images." },
-      "d": { "text": "Azure AI Vision Image Analysis API", "is_true": false, "explanation": "Incorrect. Azure AI Vision analyses existing images — it does not generate new images." }
+    {
+      "question_id": 13,
+      "question_text": "An AI agent needs to look up order status in your company's internal database when a customer asks about their order. Which agent tool should you implement?",
+      "options": {
+        "a": {
+          "text": "Code Interpreter",
+          "is_true": false,
+          "explanation": "Incorrect. Code Interpreter runs Python in a sandbox but does not have access to your company's internal database."
+        },
+        "b": {
+          "text": "Function Calling",
+          "is_true": true,
+          "explanation": "Correct. Function Calling lets you define custom functions (with name, description, and parameters) that the agent can invoke. You implement the function logic to query your database and return results to the agent."
+        },
+        "c": {
+          "text": "File Search",
+          "is_true": false,
+          "explanation": "Incorrect. File Search performs vector retrieval over uploaded files — it cannot query a live database."
+        },
+        "d": {
+          "text": "Bing Grounding",
+          "is_true": false,
+          "explanation": "Incorrect. Bing Grounding searches the public web — it cannot access your company's internal database."
+        }
+      },
+      "correct_answer": [
+        "b"
+      ]
     },
-    "correct_answer": "b"
-  },
-  {
-    "question_id": 15,
-    "question_text": "You are fine-tuning a GPT model for your application. In which format should you prepare the training data?",
-    "options": {
-      "a": { "text": "CSV with columns for prompt and completion.", "is_true": false, "explanation": "Incorrect. Fine-tuning modern chat models requires JSONL format with conversation messages, not CSV." },
-      "b": { "text": "JSONL with conversation messages (system, user, assistant).", "is_true": true, "explanation": "Correct. Fine-tuning data must be in JSONL format where each line is a JSON object containing a messages array with system, user, and assistant roles." },
-      "c": { "text": "Plain text files with examples separated by blank lines.", "is_true": false, "explanation": "Incorrect. Plain text is not a supported format for fine-tuning Azure OpenAI models." },
-      "d": { "text": "Parquet files with structured training pairs.", "is_true": false, "explanation": "Incorrect. Parquet is a columnar data format used in analytics, not for Azure OpenAI fine-tuning." }
+    {
+      "question_id": 14,
+      "question_text": "You want to use DALL-E 3 in Azure to generate product images from text descriptions. Which API should you use?",
+      "options": {
+        "a": {
+          "text": "Chat Completions API",
+          "is_true": false,
+          "explanation": "Incorrect. The Chat Completions API generates text responses, not images."
+        },
+        "b": {
+          "text": "Images Generate API",
+          "is_true": true,
+          "explanation": "Correct. The Images Generate API (client.images.generate) accepts a text prompt and returns generated images from DALL-E models."
+        },
+        "c": {
+          "text": "Embeddings API",
+          "is_true": false,
+          "explanation": "Incorrect. The Embeddings API converts text to vector representations for search — it does not generate images."
+        },
+        "d": {
+          "text": "Azure AI Vision Image Analysis API",
+          "is_true": false,
+          "explanation": "Incorrect. Azure AI Vision analyses existing images — it does not generate new images."
+        }
+      },
+      "correct_answer": [
+        "b"
+      ]
     },
-    "correct_answer": "b"
-  },
-  {
-    "question_id": 16,
-    "question_text": "You need to enable a GPT-4o model to analyse images alongside text in a single request. Which feature should you use?",
-    "options": {
-      "a": { "text": "Azure AI Vision Image Analysis", "is_true": false, "explanation": "Incorrect. Azure AI Vision is a separate service. The question asks about using GPT-4o's native capabilities." },
-      "b": { "text": "Multimodal input with image_url content type in the Chat Completions API", "is_true": true, "explanation": "Correct. GPT-4o supports multimodal input — you include both text and image_url content types in the messages array of the Chat Completions API." },
-      "c": { "text": "DALL-E image input mode", "is_true": false, "explanation": "Incorrect. DALL-E generates images from text — it does not analyse existing images." },
-      "d": { "text": "Whisper image transcription", "is_true": false, "explanation": "Incorrect. Whisper is a speech-to-text model — it processes audio, not images." }
+    {
+      "question_id": 15,
+      "question_text": "You are fine-tuning a GPT model for your application. In which format should you prepare the training data?",
+      "options": {
+        "a": {
+          "text": "CSV with columns for prompt and completion.",
+          "is_true": false,
+          "explanation": "Incorrect. Fine-tuning modern chat models requires JSONL format with conversation messages, not CSV."
+        },
+        "b": {
+          "text": "JSONL with conversation messages (system, user, assistant).",
+          "is_true": true,
+          "explanation": "Correct. Fine-tuning data must be in JSONL format where each line is a JSON object containing a messages array with system, user, and assistant roles."
+        },
+        "c": {
+          "text": "Plain text files with examples separated by blank lines.",
+          "is_true": false,
+          "explanation": "Incorrect. Plain text is not a supported format for fine-tuning Azure OpenAI models."
+        },
+        "d": {
+          "text": "Parquet files with structured training pairs.",
+          "is_true": false,
+          "explanation": "Incorrect. Parquet is a columnar data format used in analytics, not for Azure OpenAI fine-tuning."
+        }
+      },
+      "correct_answer": [
+        "b"
+      ]
     },
-    "correct_answer": "b"
-  },
-  {
-    "question_id": 17,
-    "question_type": "multiple_select",
-    "question_text": "Which TWO components are required for implementing vector search in Azure AI Search?",
-    "options": {
-      "a": { "text": "An embeddings model to convert text to vectors", "is_true": true, "explanation": "Correct. Vector search requires an embeddings model (e.g., text-embedding-ada-002) to convert both documents and queries into vector representations." },
-      "b": { "text": "A Collection(Edm.Single) field in the index schema", "is_true": true, "explanation": "Correct. Vector fields in Azure AI Search use the Collection(Edm.Single) data type to store float arrays representing embeddings." },
-      "c": { "text": "Azure AI Language entity recognition skill", "is_true": false, "explanation": "Incorrect. Entity recognition is a cognitive skill for text enrichment, not a requirement for vector search." },
-      "d": { "text": "A knowledge store with table projections", "is_true": false, "explanation": "Incorrect. Knowledge stores persist enriched data but are not required for vector search functionality." }
+    {
+      "question_id": 16,
+      "question_text": "You need to enable a GPT-4o model to analyse images alongside text in a single request. Which feature should you use?",
+      "options": {
+        "a": {
+          "text": "Azure AI Vision Image Analysis",
+          "is_true": false,
+          "explanation": "Incorrect. Azure AI Vision is a separate service. The question asks about using GPT-4o's native capabilities."
+        },
+        "b": {
+          "text": "Multimodal input with image_url content type in the Chat Completions API",
+          "is_true": true,
+          "explanation": "Correct. GPT-4o supports multimodal input — you include both text and image_url content types in the messages array of the Chat Completions API."
+        },
+        "c": {
+          "text": "DALL-E image input mode",
+          "is_true": false,
+          "explanation": "Incorrect. DALL-E generates images from text — it does not analyse existing images."
+        },
+        "d": {
+          "text": "Whisper image transcription",
+          "is_true": false,
+          "explanation": "Incorrect. Whisper is a speech-to-text model — it processes audio, not images."
+        }
+      },
+      "correct_answer": [
+        "b"
+      ]
     },
-    "correct_answer": ["a", "b"]
-  },
-  {
-    "question_id": 18,
-    "question_text": "In a multi-agent solution, you have a primary agent that coordinates specialist agents for different tasks (database queries, email drafting, calendar scheduling). Which multi-agent pattern does this describe?",
-    "options": {
-      "a": { "text": "Round-robin", "is_true": false, "explanation": "Incorrect. Round-robin gives each agent a turn sequentially. The scenario describes a coordinator delegating to specialists." },
-      "b": { "text": "Orchestrator", "is_true": true, "explanation": "Correct. The orchestrator pattern has a primary agent that coordinates and delegates tasks to specialist agents based on the request type." },
-      "c": { "text": "Collaborative", "is_true": false, "explanation": "Incorrect. Collaborative agents discuss and reach consensus together. This scenario has a clear coordinator-to-specialist hierarchy." },
-      "d": { "text": "Pipeline", "is_true": false, "explanation": "Incorrect. A pipeline passes output sequentially from one agent to the next. This scenario routes to different specialists based on task type." }
+    {
+      "question_id": 17,
+      "question_text": "Which TWO components are required for implementing vector search in Azure AI Search?",
+      "options": {
+        "a": {
+          "text": "An embeddings model to convert text to vectors",
+          "is_true": true,
+          "explanation": "Correct. Vector search requires an embeddings model (e.g., text-embedding-ada-002) to convert both documents and queries into vector representations."
+        },
+        "b": {
+          "text": "A Collection(Edm.Single) field in the index schema",
+          "is_true": true,
+          "explanation": "Correct. Vector fields in Azure AI Search use the Collection(Edm.Single) data type to store float arrays representing embeddings."
+        },
+        "c": {
+          "text": "Azure AI Language entity recognition skill",
+          "is_true": false,
+          "explanation": "Incorrect. Entity recognition is a cognitive skill for text enrichment, not a requirement for vector search."
+        },
+        "d": {
+          "text": "A knowledge store with table projections",
+          "is_true": false,
+          "explanation": "Incorrect. Knowledge stores persist enriched data but are not required for vector search functionality."
+        }
+      },
+      "correct_answer": [
+        "a",
+        "b"
+      ]
     },
-    "correct_answer": "b"
-  },
-  {
-    "question_id": 19,
-    "question_text": "You are setting up Azure Monitor for an Azure OpenAI resource. Which metric is most important for detecting that your application is being rate-limited?",
-    "options": {
-      "a": { "text": "Total token consumption", "is_true": false, "explanation": "Incorrect. Token consumption shows usage volume but does not indicate whether requests are being throttled." },
-      "b": { "text": "Average latency", "is_true": false, "explanation": "Incorrect. Latency measures response time but may increase for reasons other than rate limiting." },
-      "c": { "text": "HTTP 429 (Too Many Requests) response count", "is_true": true, "explanation": "Correct. HTTP 429 responses indicate that the application has exceeded the rate limit. Monitoring this metric alerts you to throttling issues." },
-      "d": { "text": "Successful request count", "is_true": false, "explanation": "Incorrect. Successful requests indicate things are working — this does not help detect rate limiting." }
+    {
+      "question_id": 18,
+      "question_text": "In a multi-agent solution, you have a primary agent that coordinates specialist agents for different tasks (database queries, email drafting, calendar scheduling). Which multi-agent pattern does this describe?",
+      "options": {
+        "a": {
+          "text": "Round-robin",
+          "is_true": false,
+          "explanation": "Incorrect. Round-robin gives each agent a turn sequentially. The scenario describes a coordinator delegating to specialists."
+        },
+        "b": {
+          "text": "Orchestrator",
+          "is_true": true,
+          "explanation": "Correct. The orchestrator pattern has a primary agent that coordinates and delegates tasks to specialist agents based on the request type."
+        },
+        "c": {
+          "text": "Collaborative",
+          "is_true": false,
+          "explanation": "Incorrect. Collaborative agents discuss and reach consensus together. This scenario has a clear coordinator-to-specialist hierarchy."
+        },
+        "d": {
+          "text": "Pipeline",
+          "is_true": false,
+          "explanation": "Incorrect. A pipeline passes output sequentially from one agent to the next. This scenario routes to different specialists based on task type."
+        }
+      },
+      "correct_answer": [
+        "b"
+      ]
     },
-    "correct_answer": "c"
-  },
-  {
-    "question_id": 20,
-    "question_text": "You want to ensure your generative AI chatbot only responds within the scope of company policy documents. Which technique should you implement?",
-    "options": {
-      "a": { "text": "Increase the temperature to 1.5 for more creative responses.", "is_true": false, "explanation": "Incorrect. Higher temperature increases randomness and creativity, making the model more likely to go off-topic." },
-      "b": { "text": "Fine-tune the model on all company documents.", "is_true": false, "explanation": "Incorrect. Fine-tuning adjusts model behaviour but does not constrain it to specific documents at query time. The model could still generate content beyond the documents." },
-      "c": { "text": "Implement RAG with the policy documents indexed in Azure AI Search, combined with a system message constraining responses to the provided context.", "is_true": true, "explanation": "Correct. RAG retrieves relevant policy content and injects it into the prompt, while the system message instructs the model to only use the provided context — effectively scoping responses to company documents." },
-      "d": { "text": "Deploy a smaller model to reduce hallucinations.", "is_true": false, "explanation": "Incorrect. Smaller models may actually hallucinate more. Model size alone does not constrain responses to specific documents." }
+    {
+      "question_id": 19,
+      "question_text": "You are setting up Azure Monitor for an Azure OpenAI resource. Which metric is most important for detecting that your application is being rate-limited?",
+      "options": {
+        "a": {
+          "text": "Total token consumption",
+          "is_true": false,
+          "explanation": "Incorrect. Token consumption shows usage volume but does not indicate whether requests are being throttled."
+        },
+        "b": {
+          "text": "Average latency",
+          "is_true": false,
+          "explanation": "Incorrect. Latency measures response time but may increase for reasons other than rate limiting."
+        },
+        "c": {
+          "text": "HTTP 429 (Too Many Requests) response count",
+          "is_true": true,
+          "explanation": "Correct. HTTP 429 responses indicate that the application has exceeded the rate limit. Monitoring this metric alerts you to throttling issues."
+        },
+        "d": {
+          "text": "Successful request count",
+          "is_true": false,
+          "explanation": "Incorrect. Successful requests indicate things are working — this does not help detect rate limiting."
+        }
+      },
+      "correct_answer": [
+        "c"
+      ]
     },
-    "correct_answer": "c"
-  }
-]
+    {
+      "question_id": 20,
+      "question_text": "You want to ensure your generative AI chatbot only responds within the scope of company policy documents. Which technique should you implement?",
+      "options": {
+        "a": {
+          "text": "Increase the temperature to 1.5 for more creative responses.",
+          "is_true": false,
+          "explanation": "Incorrect. Higher temperature increases randomness and creativity, making the model more likely to go off-topic."
+        },
+        "b": {
+          "text": "Fine-tune the model on all company documents.",
+          "is_true": false,
+          "explanation": "Incorrect. Fine-tuning adjusts model behaviour but does not constrain it to specific documents at query time. The model could still generate content beyond the documents."
+        },
+        "c": {
+          "text": "Implement RAG with the policy documents indexed in Azure AI Search, combined with a system message constraining responses to the provided context.",
+          "is_true": true,
+          "explanation": "Correct. RAG retrieves relevant policy content and injects it into the prompt, while the system message instructs the model to only use the provided context — effectively scoping responses to company documents."
+        },
+        "d": {
+          "text": "Deploy a smaller model to reduce hallucinations.",
+          "is_true": false,
+          "explanation": "Incorrect. Smaller models may actually hallucinate more. Model size alone does not constrain responses to specific documents."
+        }
+      },
+      "correct_answer": [
+        "c"
+      ]
+    }
+  ]
+}

@@ -62,7 +62,10 @@ const state = {
 // ─── Helpers ──────────────────────────────────────────────────────────────────
 
 function isMultiSelect(q) {
-  return q.question_type === 'multiple_select' || Array.isArray(q.correct_answer);
+  // New schema: correct_answer is always an array; multi-select has length > 1
+  // Legacy schema: detect via question_type or array correct_answer
+  if (Array.isArray(q.correct_answer)) return q.correct_answer.length > 1;
+  return q.question_type === 'multiple_select';
 }
 
 // ─── Load quiz files ──────────────────────────────────────────────────────────
@@ -74,14 +77,27 @@ function loadFiles() {
     .map(f => {
       try {
         const data = JSON.parse(fs.readFileSync(path.join(state.quizDir, f), 'utf8'));
-        if (Array.isArray(data) && data[0]?.question_id != null) {
-          const name = f
+        let questions, name;
+        if (data?.questions && Array.isArray(data.questions) && data.questions[0]?.question_id != null) {
+          // New schema: { meta, questions }
+          questions = data.questions;
+          name = data.meta?.title || f
             .replace(/^\d+-/, '')
             .replace(/\.json$/, '')
             .replace(/-/g, ' ')
             .replace(/\b\w/g, l => l.toUpperCase());
-          return { file: f, name, questions: data };
+        } else if (Array.isArray(data) && data[0]?.question_id != null) {
+          // Legacy schema: plain array
+          questions = data;
+          name = f
+            .replace(/^\d+-/, '')
+            .replace(/\.json$/, '')
+            .replace(/-/g, ' ')
+            .replace(/\b\w/g, l => l.toUpperCase());
+        } else {
+          return null;
         }
+        return { file: f, name, questions };
       } catch {}
       return null;
     })
@@ -176,7 +192,7 @@ function renderQuestion() {
   // Options
   const multi = isMultiSelect(q);
   for (const [key, opt] of Object.entries(q.options)) {
-    const correctKeys = multi ? q.correct_answer : [q.correct_answer];
+    const correctKeys = Array.isArray(q.correct_answer) ? q.correct_answer : [q.correct_answer];
     const isCorrect   = correctKeys.includes(key);
     const isChosen    = multi ? answer?.choice.includes(key) : answer?.choice === key;
     const isPending   = state.pending.has(key);
@@ -354,11 +370,12 @@ function renderResults() {
         ln(`      Your answer:    ${c.red}${chosenKeys.join(', ')}${c.reset}`);
         ln(`      Correct answer: ${c.green}${correctKeys.join(', ')}${c.reset}`);
       } else {
+        const ca = Array.isArray(q.correct_answer) ? q.correct_answer[0] : q.correct_answer;
         ln(`      Your answer:    ${c.red}${ans.choice})  ${q.options[ans.choice].text}${c.reset}`);
-        ln(`      Correct answer: ${c.green}${q.correct_answer})  ${q.options[q.correct_answer].text}${c.reset}`);
+        ln(`      Correct answer: ${c.green}${ca})  ${q.options[ca].text}${c.reset}`);
       }
       ln();
-      const correctKeys = multi ? q.correct_answer : [q.correct_answer];
+      const correctKeys = Array.isArray(q.correct_answer) ? q.correct_answer : [q.correct_answer];
       for (const [key, opt] of Object.entries(q.options)) {
         const isCorrect = correctKeys.includes(key);
         const label = isCorrect
@@ -436,7 +453,7 @@ function onQuizKey(key) {
     } else {
       state.answers[state.current] = {
         choice:  lk,
-        correct: lk === q.correct_answer,
+        correct: Array.isArray(q.correct_answer) ? q.correct_answer.includes(lk) : lk === q.correct_answer,
       };
       renderQuestion();
     }

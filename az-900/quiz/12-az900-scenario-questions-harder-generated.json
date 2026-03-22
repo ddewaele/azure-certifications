@@ -1,1388 +1,1422 @@
-[
-  {
-    "question_id": 1,
-    "question_type": "single_choice",
-    "question_text": "A company is planning a migration to Azure for a public-facing application that experiences unpredictable demand spikes during major marketing campaigns. The finance team wants to avoid purchasing excess hardware in advance, while the operations team wants the ability to increase and decrease capacity quickly as demand changes. Which cloud concept best addresses both of these requirements?",
-    "options": {
-      "a": {
-        "text": "Capital expenditure",
-        "is_true": false,
-        "explanation": "Incorrect because capital expenditure involves upfront purchases and does not address dynamic scaling."
-      },
-      "b": {
-        "text": "Elasticity",
-        "is_true": true,
-        "explanation": "Correct because elasticity allows resources to scale up and down as demand changes, which also supports a pay-for-what-you-use model."
-      },
-      "c": {
-        "text": "Resource locking",
-        "is_true": false,
-        "explanation": "Incorrect because resource locks prevent modification or deletion, not dynamic scaling."
-      },
-      "d": {
-        "text": "Defense in depth",
-        "is_true": false,
-        "explanation": "Incorrect because defense in depth is a security strategy, not a scaling or cost optimization concept."
-      }
-    },
-    "correct_answer": "b"
+{
+  "meta": {
+    "title": "Azure Fundamentals – Advanced Scenario Questions",
+    "subject": "AZ-900",
+    "version": "1.0.0",
+    "created": "2026-03-22"
   },
-  {
-    "question_id": 2,
-    "question_type": "multiple_select",
-    "question_text": "A startup wants to launch a new application in Azure without buying hardware up front. The founders also want to shut down unused resources at the end of a pilot project and stop paying for them immediately. Which two characteristics of cloud consumption-based pricing are most relevant in this scenario?",
-    "options": {
-      "a": {
-        "text": "No upfront costs",
-        "is_true": true,
-        "explanation": "Correct because cloud consumption models reduce or eliminate large upfront infrastructure purchases."
+  "questions": [
+    {
+      "question_id": 1,
+      "question_text": "A company is planning a migration to Azure for a public-facing application that experiences unpredictable demand spikes during major marketing campaigns. The finance team wants to avoid purchasing excess hardware in advance, while the operations team wants the ability to increase and decrease capacity quickly as demand changes. Which cloud concept best addresses both of these requirements?",
+      "options": {
+        "a": {
+          "text": "Capital expenditure",
+          "is_true": false,
+          "explanation": "Incorrect because capital expenditure involves upfront purchases and does not address dynamic scaling."
+        },
+        "b": {
+          "text": "Elasticity",
+          "is_true": true,
+          "explanation": "Correct because elasticity allows resources to scale up and down as demand changes, which also supports a pay-for-what-you-use model."
+        },
+        "c": {
+          "text": "Resource locking",
+          "is_true": false,
+          "explanation": "Incorrect because resource locks prevent modification or deletion, not dynamic scaling."
+        },
+        "d": {
+          "text": "Defense in depth",
+          "is_true": false,
+          "explanation": "Incorrect because defense in depth is a security strategy, not a scaling or cost optimization concept."
+        }
       },
-      "b": {
-        "text": "The ability to stop paying for resources that are no longer used",
-        "is_true": true,
-        "explanation": "Correct because pay-as-you-go billing means costs can stop when resources are no longer consumed."
-      },
-      "c": {
-        "text": "Guaranteed ownership of all physical hardware",
-        "is_true": false,
-        "explanation": "Incorrect because cloud customers typically do not own the provider's physical infrastructure."
-      },
-      "d": {
-        "text": "Mandatory high capital expenditures",
-        "is_true": false,
-        "explanation": "Incorrect because the scenario explicitly avoids major upfront purchases."
-      }
+      "correct_answer": [
+        "b"
+      ]
     },
-    "correct_answer": [
-      "a",
-      "b"
-    ]
-  },
-  {
-    "question_id": 3,
-    "question_type": "single_choice",
-    "question_text": "A software team is building a custom web API. They want Microsoft to manage the operating system, patching, and runtime platform, but they still need to deploy their own application code and configuration. Which cloud service model is the best fit?",
-    "options": {
-      "a": {
-        "text": "Infrastructure as a service (IaaS)",
-        "is_true": false,
-        "explanation": "Incorrect because IaaS requires the customer to manage the operating system."
+    {
+      "question_id": 2,
+      "question_text": "A startup wants to launch a new application in Azure without buying hardware up front. The founders also want to shut down unused resources at the end of a pilot project and stop paying for them immediately. Which two characteristics of cloud consumption-based pricing are most relevant in this scenario?",
+      "options": {
+        "a": {
+          "text": "No upfront costs",
+          "is_true": true,
+          "explanation": "Correct because cloud consumption models reduce or eliminate large upfront infrastructure purchases."
+        },
+        "b": {
+          "text": "The ability to stop paying for resources that are no longer used",
+          "is_true": true,
+          "explanation": "Correct because pay-as-you-go billing means costs can stop when resources are no longer consumed."
+        },
+        "c": {
+          "text": "Guaranteed ownership of all physical hardware",
+          "is_true": false,
+          "explanation": "Incorrect because cloud customers typically do not own the provider's physical infrastructure."
+        },
+        "d": {
+          "text": "Mandatory high capital expenditures",
+          "is_true": false,
+          "explanation": "Incorrect because the scenario explicitly avoids major upfront purchases."
+        }
       },
-      "b": {
-        "text": "Platform as a service (PaaS)",
-        "is_true": true,
-        "explanation": "Correct because PaaS lets developers deploy application code while Microsoft manages the platform and operating system."
-      },
-      "c": {
-        "text": "Software as a service (SaaS)",
-        "is_true": false,
-        "explanation": "Incorrect because SaaS is for consuming completed applications rather than deploying custom code."
-      },
-      "d": {
-        "text": "On-premises infrastructure",
-        "is_true": false,
-        "explanation": "Incorrect because the requirement is specifically for a cloud-managed platform."
-      }
+      "correct_answer": [
+        "a",
+        "b"
+      ]
     },
-    "correct_answer": "b"
-  },
-  {
-    "question_id": 4,
-    "question_type": "single_choice",
-    "question_text": "A legacy enterprise application must be migrated to Azure. The vendor requires that the customer installs custom middleware and manages OS-level settings inside the server environment. Which cloud service model should be selected?",
-    "options": {
-      "a": {
-        "text": "Software as a service (SaaS)",
-        "is_true": false,
-        "explanation": "Incorrect because SaaS does not provide direct OS-level control."
+    {
+      "question_id": 3,
+      "question_text": "A software team is building a custom web API. They want Microsoft to manage the operating system, patching, and runtime platform, but they still need to deploy their own application code and configuration. Which cloud service model is the best fit?",
+      "options": {
+        "a": {
+          "text": "Infrastructure as a service (IaaS)",
+          "is_true": false,
+          "explanation": "Incorrect because IaaS requires the customer to manage the operating system."
+        },
+        "b": {
+          "text": "Platform as a service (PaaS)",
+          "is_true": true,
+          "explanation": "Correct because PaaS lets developers deploy application code while Microsoft manages the platform and operating system."
+        },
+        "c": {
+          "text": "Software as a service (SaaS)",
+          "is_true": false,
+          "explanation": "Incorrect because SaaS is for consuming completed applications rather than deploying custom code."
+        },
+        "d": {
+          "text": "On-premises infrastructure",
+          "is_true": false,
+          "explanation": "Incorrect because the requirement is specifically for a cloud-managed platform."
+        }
       },
-      "b": {
-        "text": "Platform as a service (PaaS)",
-        "is_true": false,
-        "explanation": "Incorrect because PaaS abstracts away most OS-level management."
-      },
-      "c": {
-        "text": "Infrastructure as a service (IaaS)",
-        "is_true": true,
-        "explanation": "Correct because IaaS provides control over virtual machines, including OS and middleware configuration."
-      },
-      "d": {
-        "text": "Function as a service (FaaS)",
-        "is_true": false,
-        "explanation": "Incorrect because serverless functions do not provide full server control."
-      }
+      "correct_answer": [
+        "b"
+      ]
     },
-    "correct_answer": "c"
-  },
-  {
-    "question_id": 5,
-    "question_type": "single_choice",
-    "question_text": "A company wants to minimize downtime for an internal application, and it also wants to deploy copies of the application in multiple geographic regions to reduce latency for international users. Which cloud concept is most directly related to worldwide regional deployment?",
-    "options": {
-      "a": {
-        "text": "High availability",
-        "is_true": false,
-        "explanation": "Incorrect because high availability focuses on uptime and resiliency, not primarily on worldwide distribution."
+    {
+      "question_id": 4,
+      "question_text": "A legacy enterprise application must be migrated to Azure. The vendor requires that the customer installs custom middleware and manages OS-level settings inside the server environment. Which cloud service model should be selected?",
+      "options": {
+        "a": {
+          "text": "Software as a service (SaaS)",
+          "is_true": false,
+          "explanation": "Incorrect because SaaS does not provide direct OS-level control."
+        },
+        "b": {
+          "text": "Platform as a service (PaaS)",
+          "is_true": false,
+          "explanation": "Incorrect because PaaS abstracts away most OS-level management."
+        },
+        "c": {
+          "text": "Infrastructure as a service (IaaS)",
+          "is_true": true,
+          "explanation": "Correct because IaaS provides control over virtual machines, including OS and middleware configuration."
+        },
+        "d": {
+          "text": "Function as a service (FaaS)",
+          "is_true": false,
+          "explanation": "Incorrect because serverless functions do not provide full server control."
+        }
       },
-      "b": {
-        "text": "Geo-location",
-        "is_true": true,
-        "explanation": "Correct because geo-location or geographic distribution refers to deploying workloads in datacenters around the world."
-      },
-      "c": {
-        "text": "Vertical scaling",
-        "is_true": false,
-        "explanation": "Incorrect because vertical scaling increases the size of a single machine."
-      },
-      "d": {
-        "text": "Capital expenditure",
-        "is_true": false,
-        "explanation": "Incorrect because this is a financial concept, not a deployment characteristic."
-      }
+      "correct_answer": [
+        "c"
+      ]
     },
-    "correct_answer": "b"
-  },
-  {
-    "question_id": 6,
-    "question_type": "single_choice",
-    "question_text": "An Azure administrator increases the CPU and memory of an existing virtual machine rather than adding more virtual machines to the application tier. Which type of scaling is being performed?",
-    "options": {
-      "a": {
-        "text": "Horizontal scaling",
-        "is_true": false,
-        "explanation": "Incorrect because horizontal scaling adds more instances instead of increasing the size of one instance."
+    {
+      "question_id": 5,
+      "question_text": "A company wants to minimize downtime for an internal application, and it also wants to deploy copies of the application in multiple geographic regions to reduce latency for international users. Which cloud concept is most directly related to worldwide regional deployment?",
+      "options": {
+        "a": {
+          "text": "High availability",
+          "is_true": false,
+          "explanation": "Incorrect because high availability focuses on uptime and resiliency, not primarily on worldwide distribution."
+        },
+        "b": {
+          "text": "Geo-location",
+          "is_true": true,
+          "explanation": "Correct because geo-location or geographic distribution refers to deploying workloads in datacenters around the world."
+        },
+        "c": {
+          "text": "Vertical scaling",
+          "is_true": false,
+          "explanation": "Incorrect because vertical scaling increases the size of a single machine."
+        },
+        "d": {
+          "text": "Capital expenditure",
+          "is_true": false,
+          "explanation": "Incorrect because this is a financial concept, not a deployment characteristic."
+        }
       },
-      "b": {
-        "text": "Vertical scaling",
-        "is_true": true,
-        "explanation": "Correct because vertical scaling increases the resources available to a single existing machine."
-      },
-      "c": {
-        "text": "Geo-distribution",
-        "is_true": false,
-        "explanation": "Incorrect because geo-distribution relates to regional deployment."
-      },
-      "d": {
-        "text": "Disaster recovery",
-        "is_true": false,
-        "explanation": "Incorrect because disaster recovery is about recovery after failure, not capacity expansion."
-      }
+      "correct_answer": [
+        "b"
+      ]
     },
-    "correct_answer": "b"
-  },
-  {
-    "question_id": 7,
-    "question_type": "multiple_select",
-    "question_text": "A company is comparing cloud adoption with building a new on-premises datacenter. Which two statements describe typical advantages of cloud computing in Azure Fundamentals terms?",
-    "options": {
-      "a": {
-        "text": "Cloud computing supports geo-distribution",
-        "is_true": true,
-        "explanation": "Correct because cloud providers offer many regions around the world for deployment."
+    {
+      "question_id": 6,
+      "question_text": "An Azure administrator increases the CPU and memory of an existing virtual machine rather than adding more virtual machines to the application tier. Which type of scaling is being performed?",
+      "options": {
+        "a": {
+          "text": "Horizontal scaling",
+          "is_true": false,
+          "explanation": "Incorrect because horizontal scaling adds more instances instead of increasing the size of one instance."
+        },
+        "b": {
+          "text": "Vertical scaling",
+          "is_true": true,
+          "explanation": "Correct because vertical scaling increases the resources available to a single existing machine."
+        },
+        "c": {
+          "text": "Geo-distribution",
+          "is_true": false,
+          "explanation": "Incorrect because geo-distribution relates to regional deployment."
+        },
+        "d": {
+          "text": "Disaster recovery",
+          "is_true": false,
+          "explanation": "Incorrect because disaster recovery is about recovery after failure, not capacity expansion."
+        }
       },
-      "b": {
-        "text": "Cloud computing supports high availability",
-        "is_true": true,
-        "explanation": "Correct because cloud platforms are designed with resiliency and service uptime in mind."
-      },
-      "c": {
-        "text": "Cloud computing always gives customers physical access to provider servers",
-        "is_true": false,
-        "explanation": "Incorrect because customers generally do not have physical access to cloud provider hardware."
-      },
-      "d": {
-        "text": "Cloud computing eliminates the need for scaling",
-        "is_true": false,
-        "explanation": "Incorrect because scaling remains important; cloud simply makes it easier."
-      }
+      "correct_answer": [
+        "b"
+      ]
     },
-    "correct_answer": [
-      "a",
-      "b"
-    ]
-  },
-  {
-    "question_id": 8,
-    "question_type": "single_choice",
-    "question_text": "A company uses Microsoft 365 for collaboration and email. The IT manager wants to explain which service model this represents when compared to Azure infrastructure and developer platforms. Which answer is correct?",
-    "options": {
-      "a": {
-        "text": "Infrastructure as a service (IaaS)",
-        "is_true": false,
-        "explanation": "Incorrect because Microsoft 365 is not raw infrastructure."
+    {
+      "question_id": 7,
+      "question_text": "A company is comparing cloud adoption with building a new on-premises datacenter. Which two statements describe typical advantages of cloud computing in Azure Fundamentals terms?",
+      "options": {
+        "a": {
+          "text": "Cloud computing supports geo-distribution",
+          "is_true": true,
+          "explanation": "Correct because cloud providers offer many regions around the world for deployment."
+        },
+        "b": {
+          "text": "Cloud computing supports high availability",
+          "is_true": true,
+          "explanation": "Correct because cloud platforms are designed with resiliency and service uptime in mind."
+        },
+        "c": {
+          "text": "Cloud computing always gives customers physical access to provider servers",
+          "is_true": false,
+          "explanation": "Incorrect because customers generally do not have physical access to cloud provider hardware."
+        },
+        "d": {
+          "text": "Cloud computing eliminates the need for scaling",
+          "is_true": false,
+          "explanation": "Incorrect because scaling remains important; cloud simply makes it easier."
+        }
       },
-      "b": {
-        "text": "Platform as a service (PaaS)",
-        "is_true": false,
-        "explanation": "Incorrect because Microsoft 365 is not primarily a developer platform for deploying custom apps."
-      },
-      "c": {
-        "text": "Software as a service (SaaS)",
-        "is_true": true,
-        "explanation": "Correct because Microsoft 365 is a complete cloud-hosted application suite consumed by end users."
-      },
-      "d": {
-        "text": "Hybrid cloud hardware",
-        "is_true": false,
-        "explanation": "Incorrect because that is not the service model represented here."
-      }
+      "correct_answer": [
+        "a",
+        "b"
+      ]
     },
-    "correct_answer": "c"
-  },
-  {
-    "question_id": 9,
-    "question_type": "multiple_select",
-    "question_text": "A company is reviewing responsibility boundaries across different service models. In which two environments is the customer responsible for managing the operating system that hosts the application?",
-    "options": {
-      "a": {
-        "text": "On-premises",
-        "is_true": true,
-        "explanation": "Correct because on-premises environments require the customer to manage the operating system."
+    {
+      "question_id": 8,
+      "question_text": "A company uses Microsoft 365 for collaboration and email. The IT manager wants to explain which service model this represents when compared to Azure infrastructure and developer platforms. Which answer is correct?",
+      "options": {
+        "a": {
+          "text": "Infrastructure as a service (IaaS)",
+          "is_true": false,
+          "explanation": "Incorrect because Microsoft 365 is not raw infrastructure."
+        },
+        "b": {
+          "text": "Platform as a service (PaaS)",
+          "is_true": false,
+          "explanation": "Incorrect because Microsoft 365 is not primarily a developer platform for deploying custom apps."
+        },
+        "c": {
+          "text": "Software as a service (SaaS)",
+          "is_true": true,
+          "explanation": "Correct because Microsoft 365 is a complete cloud-hosted application suite consumed by end users."
+        },
+        "d": {
+          "text": "Hybrid cloud hardware",
+          "is_true": false,
+          "explanation": "Incorrect because that is not the service model represented here."
+        }
       },
-      "b": {
-        "text": "Infrastructure as a service (IaaS)",
-        "is_true": true,
-        "explanation": "Correct because in IaaS the customer manages the guest operating system."
-      },
-      "c": {
-        "text": "Platform as a service (PaaS)",
-        "is_true": false,
-        "explanation": "Incorrect because the cloud provider manages the operating system in PaaS."
-      },
-      "d": {
-        "text": "Software as a service (SaaS)",
-        "is_true": false,
-        "explanation": "Incorrect because the provider manages the application stack and operating system in SaaS."
-      }
+      "correct_answer": [
+        "c"
+      ]
     },
-    "correct_answer": [
-      "a",
-      "b"
-    ]
-  },
-  {
-    "question_id": 10,
-    "question_type": "single_choice",
-    "question_text": "Your company has an Azure subscription and stores critical data that must be replicated to another geographic region. The business also wants to be able to read the replicated data from the secondary location if needed. Which storage redundancy option should be recommended?",
-    "options": {
-      "a": {
-        "text": "Locally redundant storage (LRS)",
-        "is_true": false,
-        "explanation": "Incorrect because LRS keeps data copies only within a single region."
+    {
+      "question_id": 9,
+      "question_text": "A company is reviewing responsibility boundaries across different service models. In which two environments is the customer responsible for managing the operating system that hosts the application?",
+      "options": {
+        "a": {
+          "text": "On-premises",
+          "is_true": true,
+          "explanation": "Correct because on-premises environments require the customer to manage the operating system."
+        },
+        "b": {
+          "text": "Infrastructure as a service (IaaS)",
+          "is_true": true,
+          "explanation": "Correct because in IaaS the customer manages the guest operating system."
+        },
+        "c": {
+          "text": "Platform as a service (PaaS)",
+          "is_true": false,
+          "explanation": "Incorrect because the cloud provider manages the operating system in PaaS."
+        },
+        "d": {
+          "text": "Software as a service (SaaS)",
+          "is_true": false,
+          "explanation": "Incorrect because the provider manages the application stack and operating system in SaaS."
+        }
       },
-      "b": {
-        "text": "Zone-redundant storage (ZRS)",
-        "is_true": false,
-        "explanation": "Incorrect because ZRS replicates within one region across availability zones."
-      },
-      "c": {
-        "text": "Geo-redundant storage (GRS)",
-        "is_true": false,
-        "explanation": "Incorrect because GRS replicates to a secondary region but does not provide read access to that secondary endpoint."
-      },
-      "d": {
-        "text": "Read-access geo-redundant storage (RA-GRS)",
-        "is_true": true,
-        "explanation": "Correct because RA-GRS replicates data to a secondary region and allows read access from that secondary location."
-      }
+      "correct_answer": [
+        "a",
+        "b"
+      ]
     },
-    "correct_answer": "d"
-  },
-  {
-    "question_id": 11,
-    "question_type": "single_choice",
-    "question_text": "A storage architect needs data to remain within a single Azure region while still being protected from a datacenter-level failure inside that region. The business does not require replication to another geographic region. Which redundancy option best matches this requirement?",
-    "options": {
-      "a": {
-        "text": "Locally redundant storage (LRS)",
-        "is_true": false,
-        "explanation": "Incorrect because LRS does not spread data across separate availability zones."
+    {
+      "question_id": 10,
+      "question_text": "Your company has an Azure subscription and stores critical data that must be replicated to another geographic region. The business also wants to be able to read the replicated data from the secondary location if needed. Which storage redundancy option should be recommended?",
+      "options": {
+        "a": {
+          "text": "Locally redundant storage (LRS)",
+          "is_true": false,
+          "explanation": "Incorrect because LRS keeps data copies only within a single region."
+        },
+        "b": {
+          "text": "Zone-redundant storage (ZRS)",
+          "is_true": false,
+          "explanation": "Incorrect because ZRS replicates within one region across availability zones."
+        },
+        "c": {
+          "text": "Geo-redundant storage (GRS)",
+          "is_true": false,
+          "explanation": "Incorrect because GRS replicates to a secondary region but does not provide read access to that secondary endpoint."
+        },
+        "d": {
+          "text": "Read-access geo-redundant storage (RA-GRS)",
+          "is_true": true,
+          "explanation": "Correct because RA-GRS replicates data to a secondary region and allows read access from that secondary location."
+        }
       },
-      "b": {
-        "text": "Zone-redundant storage (ZRS)",
-        "is_true": true,
-        "explanation": "Correct because ZRS replicates data across multiple availability zones within the same region."
-      },
-      "c": {
-        "text": "Geo-redundant storage (GRS)",
-        "is_true": false,
-        "explanation": "Incorrect because GRS replicates to a secondary geographic region, which is not required here."
-      },
-      "d": {
-        "text": "Read-access geo-redundant storage (RA-GRS)",
-        "is_true": false,
-        "explanation": "Incorrect because RA-GRS includes a secondary geographic region and secondary read access."
-      }
+      "correct_answer": [
+        "d"
+      ]
     },
-    "correct_answer": "b"
-  },
-  {
-    "question_id": 12,
-    "question_type": "single_choice",
-    "question_text": "A company currently has the Basic Azure support plan. Management wants access to a support plan that includes more proactive advisory-style capabilities, but they still want to minimize cost. Which plan is the best fit?",
-    "options": {
-      "a": {
-        "text": "Developer",
-        "is_true": false,
-        "explanation": "Incorrect because Developer is intended for trial and non-production scenarios and does not provide the required advisory-style support."
+    {
+      "question_id": 11,
+      "question_text": "A storage architect needs data to remain within a single Azure region while still being protected from a datacenter-level failure inside that region. The business does not require replication to another geographic region. Which redundancy option best matches this requirement?",
+      "options": {
+        "a": {
+          "text": "Locally redundant storage (LRS)",
+          "is_true": false,
+          "explanation": "Incorrect because LRS does not spread data across separate availability zones."
+        },
+        "b": {
+          "text": "Zone-redundant storage (ZRS)",
+          "is_true": true,
+          "explanation": "Correct because ZRS replicates data across multiple availability zones within the same region."
+        },
+        "c": {
+          "text": "Geo-redundant storage (GRS)",
+          "is_true": false,
+          "explanation": "Incorrect because GRS replicates to a secondary geographic region, which is not required here."
+        },
+        "d": {
+          "text": "Read-access geo-redundant storage (RA-GRS)",
+          "is_true": false,
+          "explanation": "Incorrect because RA-GRS includes a secondary geographic region and secondary read access."
+        }
       },
-      "b": {
-        "text": "Standard",
-        "is_true": false,
-        "explanation": "Incorrect because Standard improves technical support but does not represent the advisory-focused option expected here."
-      },
-      "c": {
-        "text": "Professional Direct",
-        "is_true": true,
-        "explanation": "Correct because Professional Direct is the lowest Azure support plan that includes more proactive advisory guidance."
-      },
-      "d": {
-        "text": "Basic",
-        "is_true": false,
-        "explanation": "Incorrect because the company already has Basic and it does not meet the requirement."
-      }
+      "correct_answer": [
+        "b"
+      ]
     },
-    "correct_answer": "c"
-  },
-  {
-    "question_id": 13,
-    "question_type": "single_choice",
-    "question_text": "A finance department wants to compare the expected cost of staying in an on-premises datacenter with the cost of moving the same workloads to Azure. Which tool is specifically intended for this purpose?",
-    "options": {
-      "a": {
-        "text": "Azure Pricing calculator",
-        "is_true": false,
-        "explanation": "Incorrect because the Pricing calculator estimates Azure costs but is not designed primarily to compare them with on-premises costs."
+    {
+      "question_id": 12,
+      "question_text": "A company currently has the Basic Azure support plan. Management wants access to a support plan that includes more proactive advisory-style capabilities, but they still want to minimize cost. Which plan is the best fit?",
+      "options": {
+        "a": {
+          "text": "Developer",
+          "is_true": false,
+          "explanation": "Incorrect because Developer is intended for trial and non-production scenarios and does not provide the required advisory-style support."
+        },
+        "b": {
+          "text": "Standard",
+          "is_true": false,
+          "explanation": "Incorrect because Standard improves technical support but does not represent the advisory-focused option expected here."
+        },
+        "c": {
+          "text": "Professional Direct",
+          "is_true": true,
+          "explanation": "Correct because Professional Direct is the lowest Azure support plan that includes more proactive advisory guidance."
+        },
+        "d": {
+          "text": "Basic",
+          "is_true": false,
+          "explanation": "Incorrect because the company already has Basic and it does not meet the requirement."
+        }
       },
-      "b": {
-        "text": "Azure Advisor",
-        "is_true": false,
-        "explanation": "Incorrect because Advisor provides recommendations for existing Azure resources rather than an on-premises comparison."
-      },
-      "c": {
-        "text": "Total Cost of Ownership (TCO) Calculator",
-        "is_true": true,
-        "explanation": "Correct because the TCO Calculator is designed to compare on-premises costs with Azure costs."
-      },
-      "d": {
-        "text": "Azure Service Health",
-        "is_true": false,
-        "explanation": "Incorrect because Service Health is used for incidents and maintenance events."
-      }
+      "correct_answer": [
+        "c"
+      ]
     },
-    "correct_answer": "c"
-  },
-  {
-    "question_id": 14,
-    "question_type": "multiple_select",
-    "question_text": "A cloud financial analyst is reviewing Azure spending and wants to remember the core AZ-900 pricing factors that commonly appear in exam questions. Which two factors should be selected?",
-    "options": {
-      "a": {
-        "text": "Resource location",
-        "is_true": true,
-        "explanation": "Correct because Azure pricing can vary by region."
+    {
+      "question_id": 13,
+      "question_text": "A finance department wants to compare the expected cost of staying in an on-premises datacenter with the cost of moving the same workloads to Azure. Which tool is specifically intended for this purpose?",
+      "options": {
+        "a": {
+          "text": "Azure Pricing calculator",
+          "is_true": false,
+          "explanation": "Incorrect because the Pricing calculator estimates Azure costs but is not designed primarily to compare them with on-premises costs."
+        },
+        "b": {
+          "text": "Azure Advisor",
+          "is_true": false,
+          "explanation": "Incorrect because Advisor provides recommendations for existing Azure resources rather than an on-premises comparison."
+        },
+        "c": {
+          "text": "Total Cost of Ownership (TCO) Calculator",
+          "is_true": true,
+          "explanation": "Correct because the TCO Calculator is designed to compare on-premises costs with Azure costs."
+        },
+        "d": {
+          "text": "Azure Service Health",
+          "is_true": false,
+          "explanation": "Incorrect because Service Health is used for incidents and maintenance events."
+        }
       },
-      "b": {
-        "text": "Resource usage",
-        "is_true": true,
-        "explanation": "Correct because many Azure services are billed based on consumption or usage."
-      },
-      "c": {
-        "text": "Availability zone selection as the default pricing factor for this question type",
-        "is_true": false,
-        "explanation": "Incorrect because AZ-900 generally expects location and usage for this style of cost question."
-      },
-      "d": {
-        "text": "The order in which resources are created",
-        "is_true": false,
-        "explanation": "Incorrect because resource creation order is not a standard Azure pricing factor."
-      }
+      "correct_answer": [
+        "c"
+      ]
     },
-    "correct_answer": [
-      "a",
-      "b"
-    ]
-  },
-  {
-    "question_id": 15,
-    "question_type": "multiple_select",
-    "question_text": "A company wants to track spending by department and distinguish production resources from test resources without changing the way the resources function. Which two Azure tag use cases are valid?",
-    "options": {
-      "a": {
-        "text": "Categorizing costs by department",
-        "is_true": true,
-        "explanation": "Correct because tags can be used for departmental cost allocation."
+    {
+      "question_id": 14,
+      "question_text": "A cloud financial analyst is reviewing Azure spending and wants to remember the core AZ-900 pricing factors that commonly appear in exam questions. Which two factors should be selected?",
+      "options": {
+        "a": {
+          "text": "Resource location",
+          "is_true": true,
+          "explanation": "Correct because Azure pricing can vary by region."
+        },
+        "b": {
+          "text": "Resource usage",
+          "is_true": true,
+          "explanation": "Correct because many Azure services are billed based on consumption or usage."
+        },
+        "c": {
+          "text": "Availability zone selection as the default pricing factor for this question type",
+          "is_true": false,
+          "explanation": "Incorrect because AZ-900 generally expects location and usage for this style of cost question."
+        },
+        "d": {
+          "text": "The order in which resources are created",
+          "is_true": false,
+          "explanation": "Incorrect because resource creation order is not a standard Azure pricing factor."
+        }
       },
-      "b": {
-        "text": "Associating costs with different environments such as dev, test, and production",
-        "is_true": true,
-        "explanation": "Correct because tags are commonly used to identify and report by environment."
-      },
-      "c": {
-        "text": "Enforcing allowed regions for deployment",
-        "is_true": false,
-        "explanation": "Incorrect because Azure Policy, not tags, is used to enforce deployment rules."
-      },
-      "d": {
-        "text": "Preventing accidental deletion of virtual machines",
-        "is_true": false,
-        "explanation": "Incorrect because resource locks are used for delete protection."
-      }
+      "correct_answer": [
+        "a",
+        "b"
+      ]
     },
-    "correct_answer": [
-      "a",
-      "b"
-    ]
-  },
-  {
-    "question_id": 16,
-    "question_type": "multiple_select",
-    "question_text": "A cost governance team wants to control spending more effectively and analyze future trends. Which two capabilities are provided by Azure Cost Management + Billing?",
-    "options": {
-      "a": {
-        "text": "Create and manage budgets",
-        "is_true": true,
-        "explanation": "Correct because budgets are a core capability of Azure Cost Management + Billing."
+    {
+      "question_id": 15,
+      "question_text": "A company wants to track spending by department and distinguish production resources from test resources without changing the way the resources function. Which two Azure tag use cases are valid?",
+      "options": {
+        "a": {
+          "text": "Categorizing costs by department",
+          "is_true": true,
+          "explanation": "Correct because tags can be used for departmental cost allocation."
+        },
+        "b": {
+          "text": "Associating costs with different environments such as dev, test, and production",
+          "is_true": true,
+          "explanation": "Correct because tags are commonly used to identify and report by environment."
+        },
+        "c": {
+          "text": "Enforcing allowed regions for deployment",
+          "is_true": false,
+          "explanation": "Incorrect because Azure Policy, not tags, is used to enforce deployment rules."
+        },
+        "d": {
+          "text": "Preventing accidental deletion of virtual machines",
+          "is_true": false,
+          "explanation": "Incorrect because resource locks are used for delete protection."
+        }
       },
-      "b": {
-        "text": "Generate historical reports and forecast future usage",
-        "is_true": true,
-        "explanation": "Correct because Azure Cost Management provides reporting and forecasting capabilities."
-      },
-      "c": {
-        "text": "Provide storage redundancy across regions",
-        "is_true": false,
-        "explanation": "Incorrect because storage redundancy is a data durability feature, not a billing capability."
-      },
-      "d": {
-        "text": "Automatically convert all pay-as-you-go resources into reserved capacity",
-        "is_true": false,
-        "explanation": "Incorrect because reservations require a separate purchasing decision."
-      }
+      "correct_answer": [
+        "a",
+        "b"
+      ]
     },
-    "correct_answer": [
-      "a",
-      "b"
-    ]
-  },
-  {
-    "question_id": 17,
-    "question_type": "single_choice",
-    "question_text": "An organization runs several production virtual machines continuously and expects usage to remain stable for at least a year. The goal is to reduce cost without reducing functionality. Which Azure option should be recommended?",
-    "options": {
-      "a": {
-        "text": "Azure Reservations",
-        "is_true": true,
-        "explanation": "Correct because reservations can reduce cost for predictable, long-term resource usage."
+    {
+      "question_id": 16,
+      "question_text": "A cost governance team wants to control spending more effectively and analyze future trends. Which two capabilities are provided by Azure Cost Management + Billing?",
+      "options": {
+        "a": {
+          "text": "Create and manage budgets",
+          "is_true": true,
+          "explanation": "Correct because budgets are a core capability of Azure Cost Management + Billing."
+        },
+        "b": {
+          "text": "Generate historical reports and forecast future usage",
+          "is_true": true,
+          "explanation": "Correct because Azure Cost Management provides reporting and forecasting capabilities."
+        },
+        "c": {
+          "text": "Provide storage redundancy across regions",
+          "is_true": false,
+          "explanation": "Incorrect because storage redundancy is a data durability feature, not a billing capability."
+        },
+        "d": {
+          "text": "Automatically convert all pay-as-you-go resources into reserved capacity",
+          "is_true": false,
+          "explanation": "Incorrect because reservations require a separate purchasing decision."
+        }
       },
-      "b": {
-        "text": "Azure Monitor alerts",
-        "is_true": false,
-        "explanation": "Incorrect because alerts notify administrators but do not directly reduce VM pricing."
-      },
-      "c": {
-        "text": "Resource locks",
-        "is_true": false,
-        "explanation": "Incorrect because locks provide protection against changes, not cost savings."
-      },
-      "d": {
-        "text": "Management groups",
-        "is_true": false,
-        "explanation": "Incorrect because management groups organize subscriptions for governance, not pricing optimization."
-      }
+      "correct_answer": [
+        "a",
+        "b"
+      ]
     },
-    "correct_answer": "a"
-  },
-  {
-    "question_id": 18,
-    "question_type": "single_choice",
-    "question_text": "A production administrator wants to prevent an important Azure virtual machine from being deleted accidentally during maintenance. Which Azure feature should be applied directly to the resource?",
-    "options": {
-      "a": {
-        "text": "Azure Policy",
-        "is_true": false,
-        "explanation": "Incorrect because Policy is primarily for compliance and governance rules, not the most direct deletion protection mechanism."
+    {
+      "question_id": 17,
+      "question_text": "An organization runs several production virtual machines continuously and expects usage to remain stable for at least a year. The goal is to reduce cost without reducing functionality. Which Azure option should be recommended?",
+      "options": {
+        "a": {
+          "text": "Azure Reservations",
+          "is_true": true,
+          "explanation": "Correct because reservations can reduce cost for predictable, long-term resource usage."
+        },
+        "b": {
+          "text": "Azure Monitor alerts",
+          "is_true": false,
+          "explanation": "Incorrect because alerts notify administrators but do not directly reduce VM pricing."
+        },
+        "c": {
+          "text": "Resource locks",
+          "is_true": false,
+          "explanation": "Incorrect because locks provide protection against changes, not cost savings."
+        },
+        "d": {
+          "text": "Management groups",
+          "is_true": false,
+          "explanation": "Incorrect because management groups organize subscriptions for governance, not pricing optimization."
+        }
       },
-      "b": {
-        "text": "A resource lock",
-        "is_true": true,
-        "explanation": "Correct because a delete lock can prevent accidental resource deletion."
-      },
-      "c": {
-        "text": "A resource tag",
-        "is_true": false,
-        "explanation": "Incorrect because tags are metadata for organization and reporting."
-      },
-      "d": {
-        "text": "An Azure Reservation",
-        "is_true": false,
-        "explanation": "Incorrect because reservations are pricing constructs."
-      }
+      "correct_answer": [
+        "a"
+      ]
     },
-    "correct_answer": "b"
-  },
-  {
-    "question_id": 19,
-    "question_type": "single_choice",
-    "question_text": "A governance team wants to ensure that virtual machines can be deployed only in approved Azure regions. Which Azure feature is most appropriate to enforce this rule?",
-    "options": {
-      "a": {
-        "text": "Azure Policy",
-        "is_true": true,
-        "explanation": "Correct because Azure Policy can enforce allowed locations for resource deployment."
+    {
+      "question_id": 18,
+      "question_text": "A production administrator wants to prevent an important Azure virtual machine from being deleted accidentally during maintenance. Which Azure feature should be applied directly to the resource?",
+      "options": {
+        "a": {
+          "text": "Azure Policy",
+          "is_true": false,
+          "explanation": "Incorrect because Policy is primarily for compliance and governance rules, not the most direct deletion protection mechanism."
+        },
+        "b": {
+          "text": "A resource lock",
+          "is_true": true,
+          "explanation": "Correct because a delete lock can prevent accidental resource deletion."
+        },
+        "c": {
+          "text": "A resource tag",
+          "is_true": false,
+          "explanation": "Incorrect because tags are metadata for organization and reporting."
+        },
+        "d": {
+          "text": "An Azure Reservation",
+          "is_true": false,
+          "explanation": "Incorrect because reservations are pricing constructs."
+        }
       },
-      "b": {
-        "text": "Resource tags",
-        "is_true": false,
-        "explanation": "Incorrect because tags label resources but do not enforce allowed deployment rules."
-      },
-      "c": {
-        "text": "Azure Advisor",
-        "is_true": false,
-        "explanation": "Incorrect because Advisor gives recommendations rather than enforcing compliance."
-      },
-      "d": {
-        "text": "Azure Service Health",
-        "is_true": false,
-        "explanation": "Incorrect because Service Health provides service issue and maintenance information."
-      }
+      "correct_answer": [
+        "b"
+      ]
     },
-    "correct_answer": "a"
-  },
-  {
-    "question_id": 20,
-    "question_type": "multiple_select",
-    "question_text": "A junior administrator is using the Azure portal and wants to know which activities are common portal tasks covered by Azure Fundamentals. Which two actions should be selected?",
-    "options": {
-      "a": {
-        "text": "Create new Azure resources",
-        "is_true": true,
-        "explanation": "Correct because the Azure portal is commonly used to create and manage resources."
+    {
+      "question_id": 19,
+      "question_text": "A governance team wants to ensure that virtual machines can be deployed only in approved Azure regions. Which Azure feature is most appropriate to enforce this rule?",
+      "options": {
+        "a": {
+          "text": "Azure Policy",
+          "is_true": true,
+          "explanation": "Correct because Azure Policy can enforce allowed locations for resource deployment."
+        },
+        "b": {
+          "text": "Resource tags",
+          "is_true": false,
+          "explanation": "Incorrect because tags label resources but do not enforce allowed deployment rules."
+        },
+        "c": {
+          "text": "Azure Advisor",
+          "is_true": false,
+          "explanation": "Incorrect because Advisor gives recommendations rather than enforcing compliance."
+        },
+        "d": {
+          "text": "Azure Service Health",
+          "is_true": false,
+          "explanation": "Incorrect because Service Health provides service issue and maintenance information."
+        }
       },
-      "b": {
-        "text": "Create Microsoft Entra users",
-        "is_true": true,
-        "explanation": "Correct because the portal can be used to manage identity objects such as Entra users."
-      },
-      "c": {
-        "text": "Use the portal to convert any existing VM to another availability zone instantly",
-        "is_true": false,
-        "explanation": "Incorrect because this is not a standard direct Azure Fundamentals portal task in the way described."
-      },
-      "d": {
-        "text": "Replace Azure RBAC with local Windows group membership",
-        "is_true": false,
-        "explanation": "Incorrect because these are different access control systems."
-      }
+      "correct_answer": [
+        "a"
+      ]
     },
-    "correct_answer": [
-      "a",
-      "b"
-    ]
-  },
-  {
-    "question_id": 21,
-    "question_type": "single_choice",
-    "question_text": "An engineer wants to describe Azure infrastructure in a reusable declarative JSON file so that the same environment can be deployed repeatedly. Which Azure technology should be used?",
-    "options": {
-      "a": {
-        "text": "Azure Resource Manager (ARM) templates",
-        "is_true": true,
-        "explanation": "Correct because ARM templates define Azure resources declaratively in JSON."
+    {
+      "question_id": 20,
+      "question_text": "A junior administrator is using the Azure portal and wants to know which activities are common portal tasks covered by Azure Fundamentals. Which two actions should be selected?",
+      "options": {
+        "a": {
+          "text": "Create new Azure resources",
+          "is_true": true,
+          "explanation": "Correct because the Azure portal is commonly used to create and manage resources."
+        },
+        "b": {
+          "text": "Create Microsoft Entra users",
+          "is_true": true,
+          "explanation": "Correct because the portal can be used to manage identity objects such as Entra users."
+        },
+        "c": {
+          "text": "Use the portal to convert any existing VM to another availability zone instantly",
+          "is_true": false,
+          "explanation": "Incorrect because this is not a standard direct Azure Fundamentals portal task in the way described."
+        },
+        "d": {
+          "text": "Replace Azure RBAC with local Windows group membership",
+          "is_true": false,
+          "explanation": "Incorrect because these are different access control systems."
+        }
       },
-      "b": {
-        "text": "Azure Advisor",
-        "is_true": false,
-        "explanation": "Incorrect because Advisor provides recommendations rather than deployment definitions."
-      },
-      "c": {
-        "text": "Azure Cost Management",
-        "is_true": false,
-        "explanation": "Incorrect because Cost Management is for spending analysis."
-      },
-      "d": {
-        "text": "Azure Service Health",
-        "is_true": false,
-        "explanation": "Incorrect because Service Health is for incidents and maintenance notices."
-      }
+      "correct_answer": [
+        "a",
+        "b"
+      ]
     },
-    "correct_answer": "a"
-  },
-  {
-    "question_id": 22,
-    "question_type": "multiple_select",
-    "question_text": "A consultant is traveling with only an Android phone but still needs to create a new Azure virtual machine for a demo. Which two tools could realistically be used for that task?",
-    "options": {
-      "a": {
-        "text": "Azure portal",
-        "is_true": true,
-        "explanation": "Correct because the portal can be accessed from a mobile-capable browser or app experience."
+    {
+      "question_id": 21,
+      "question_text": "An engineer wants to describe Azure infrastructure in a reusable declarative JSON file so that the same environment can be deployed repeatedly. Which Azure technology should be used?",
+      "options": {
+        "a": {
+          "text": "Azure Resource Manager (ARM) templates",
+          "is_true": true,
+          "explanation": "Correct because ARM templates define Azure resources declaratively in JSON."
+        },
+        "b": {
+          "text": "Azure Advisor",
+          "is_true": false,
+          "explanation": "Incorrect because Advisor provides recommendations rather than deployment definitions."
+        },
+        "c": {
+          "text": "Azure Cost Management",
+          "is_true": false,
+          "explanation": "Incorrect because Cost Management is for spending analysis."
+        },
+        "d": {
+          "text": "Azure Service Health",
+          "is_true": false,
+          "explanation": "Incorrect because Service Health is for incidents and maintenance notices."
+        }
       },
-      "b": {
-        "text": "PowerShell in Azure Cloud Shell",
-        "is_true": true,
-        "explanation": "Correct because Cloud Shell can be accessed through a browser and used to create Azure resources."
-      },
-      "c": {
-        "text": "Remote Desktop to the VM before it exists",
-        "is_true": false,
-        "explanation": "Incorrect because Remote Desktop requires an existing machine."
-      },
-      "d": {
-        "text": "SSH to the VM before it exists",
-        "is_true": false,
-        "explanation": "Incorrect because SSH requires a reachable target host."
-      }
+      "correct_answer": [
+        "a"
+      ]
     },
-    "correct_answer": [
-      "a",
-      "b"
-    ]
-  },
-  {
-    "question_id": 23,
-    "question_type": "single_choice",
-    "question_text": "An operations team wants Azure to review the current environment and provide recommendations specifically aimed at reducing cost and improving reliability. Which service should they check first?",
-    "options": {
-      "a": {
-        "text": "Azure Advisor",
-        "is_true": true,
-        "explanation": "Correct because Azure Advisor provides recommendations for cost, reliability, and other best-practice categories."
+    {
+      "question_id": 22,
+      "question_text": "A consultant is traveling with only an Android phone but still needs to create a new Azure virtual machine for a demo. Which two tools could realistically be used for that task?",
+      "options": {
+        "a": {
+          "text": "Azure portal",
+          "is_true": true,
+          "explanation": "Correct because the portal can be accessed from a mobile-capable browser or app experience."
+        },
+        "b": {
+          "text": "PowerShell in Azure Cloud Shell",
+          "is_true": true,
+          "explanation": "Correct because Cloud Shell can be accessed through a browser and used to create Azure resources."
+        },
+        "c": {
+          "text": "Remote Desktop to the VM before it exists",
+          "is_true": false,
+          "explanation": "Incorrect because Remote Desktop requires an existing machine."
+        },
+        "d": {
+          "text": "SSH to the VM before it exists",
+          "is_true": false,
+          "explanation": "Incorrect because SSH requires a reachable target host."
+        }
       },
-      "b": {
-        "text": "Azure Service Health",
-        "is_true": false,
-        "explanation": "Incorrect because Service Health focuses on Azure service incidents and planned maintenance."
-      },
-      "c": {
-        "text": "Azure DNS",
-        "is_true": false,
-        "explanation": "Incorrect because Azure DNS provides name resolution services."
-      },
-      "d": {
-        "text": "Azure Reservations",
-        "is_true": false,
-        "explanation": "Incorrect because reservations are a purchasing model, not an advisory service."
-      }
+      "correct_answer": [
+        "a",
+        "b"
+      ]
     },
-    "correct_answer": "a"
-  },
-  {
-    "question_id": 24,
-    "question_type": "single_choice",
-    "question_text": "A major Azure outage affected a service used by your company last week. Management wants Microsoft's published root cause analysis for that incident. Where should the operations team look?",
-    "options": {
-      "a": {
-        "text": "Azure Service Health",
-        "is_true": true,
-        "explanation": "Correct because Azure Service Health provides incident details and root cause analysis for relevant Azure events."
+    {
+      "question_id": 23,
+      "question_text": "An operations team wants Azure to review the current environment and provide recommendations specifically aimed at reducing cost and improving reliability. Which service should they check first?",
+      "options": {
+        "a": {
+          "text": "Azure Advisor",
+          "is_true": true,
+          "explanation": "Correct because Azure Advisor provides recommendations for cost, reliability, and other best-practice categories."
+        },
+        "b": {
+          "text": "Azure Service Health",
+          "is_true": false,
+          "explanation": "Incorrect because Service Health focuses on Azure service incidents and planned maintenance."
+        },
+        "c": {
+          "text": "Azure DNS",
+          "is_true": false,
+          "explanation": "Incorrect because Azure DNS provides name resolution services."
+        },
+        "d": {
+          "text": "Azure Reservations",
+          "is_true": false,
+          "explanation": "Incorrect because reservations are a purchasing model, not an advisory service."
+        }
       },
-      "b": {
-        "text": "Azure Advisor",
-        "is_true": false,
-        "explanation": "Incorrect because Advisor does not publish outage RCA documents."
-      },
-      "c": {
-        "text": "Azure Files",
-        "is_true": false,
-        "explanation": "Incorrect because Azure Files is a storage service."
-      },
-      "d": {
-        "text": "Azure Policy",
-        "is_true": false,
-        "explanation": "Incorrect because Azure Policy is for compliance and governance."
-      }
+      "correct_answer": [
+        "a"
+      ]
     },
-    "correct_answer": "a"
-  },
-  {
-    "question_id": 25,
-    "question_type": "single_choice",
-    "question_text": "An application must automatically scale out when CPU metrics exceed a threshold and scale back in when demand falls. Which Azure service should be part of the design?",
-    "options": {
-      "a": {
-        "text": "Azure Monitor",
-        "is_true": true,
-        "explanation": "Correct because Azure Monitor provides the metrics and threshold-based monitoring used to drive autoscaling."
+    {
+      "question_id": 24,
+      "question_text": "A major Azure outage affected a service used by your company last week. Management wants Microsoft's published root cause analysis for that incident. Where should the operations team look?",
+      "options": {
+        "a": {
+          "text": "Azure Service Health",
+          "is_true": true,
+          "explanation": "Correct because Azure Service Health provides incident details and root cause analysis for relevant Azure events."
+        },
+        "b": {
+          "text": "Azure Advisor",
+          "is_true": false,
+          "explanation": "Incorrect because Advisor does not publish outage RCA documents."
+        },
+        "c": {
+          "text": "Azure Files",
+          "is_true": false,
+          "explanation": "Incorrect because Azure Files is a storage service."
+        },
+        "d": {
+          "text": "Azure Policy",
+          "is_true": false,
+          "explanation": "Incorrect because Azure Policy is for compliance and governance."
+        }
       },
-      "b": {
-        "text": "Azure Service Health",
-        "is_true": false,
-        "explanation": "Incorrect because Service Health is about Azure platform events, not workload scaling rules."
-      },
-      "c": {
-        "text": "Azure Bastion",
-        "is_true": false,
-        "explanation": "Incorrect because Bastion provides secure VM access."
-      },
-      "d": {
-        "text": "Azure Key Vault",
-        "is_true": false,
-        "explanation": "Incorrect because Key Vault stores secrets, keys, and certificates."
-      }
+      "correct_answer": [
+        "a"
+      ]
     },
-    "correct_answer": "a"
-  },
-  {
-    "question_id": 26,
-    "question_type": "single_choice",
-    "question_text": "Your company wants personalized notifications when Azure reports an outage in a region used by the company. Which Azure service should be configured?",
-    "options": {
-      "a": {
-        "text": "Azure Service Health",
-        "is_true": true,
-        "explanation": "Correct because Azure Service Health provides notifications for outages, incidents, and maintenance events affecting your resources."
+    {
+      "question_id": 25,
+      "question_text": "An application must automatically scale out when CPU metrics exceed a threshold and scale back in when demand falls. Which Azure service should be part of the design?",
+      "options": {
+        "a": {
+          "text": "Azure Monitor",
+          "is_true": true,
+          "explanation": "Correct because Azure Monitor provides the metrics and threshold-based monitoring used to drive autoscaling."
+        },
+        "b": {
+          "text": "Azure Service Health",
+          "is_true": false,
+          "explanation": "Incorrect because Service Health is about Azure platform events, not workload scaling rules."
+        },
+        "c": {
+          "text": "Azure Bastion",
+          "is_true": false,
+          "explanation": "Incorrect because Bastion provides secure VM access."
+        },
+        "d": {
+          "text": "Azure Key Vault",
+          "is_true": false,
+          "explanation": "Incorrect because Key Vault stores secrets, keys, and certificates."
+        }
       },
-      "b": {
-        "text": "Azure Advisor",
-        "is_true": false,
-        "explanation": "Incorrect because Advisor is for recommendations rather than outage alerts."
-      },
-      "c": {
-        "text": "Azure Monitor only",
-        "is_true": false,
-        "explanation": "Incorrect because the standard AZ-900 answer for Azure service outage notifications is Service Health."
-      },
-      "d": {
-        "text": "Azure Reservations",
-        "is_true": false,
-        "explanation": "Incorrect because reservations relate to pricing."
-      }
+      "correct_answer": [
+        "a"
+      ]
     },
-    "correct_answer": "a"
-  },
-  {
-    "question_id": 27,
-    "question_type": "single_choice",
-    "question_text": "An administrator needs to review planned Microsoft maintenance events that could affect critical Azure services in the coming days. Which Azure feature provides this information?",
-    "options": {
-      "a": {
-        "text": "Azure Service Health",
-        "is_true": true,
-        "explanation": "Correct because Azure Service Health includes planned maintenance information relevant to your Azure environment."
+    {
+      "question_id": 26,
+      "question_text": "Your company wants personalized notifications when Azure reports an outage in a region used by the company. Which Azure service should be configured?",
+      "options": {
+        "a": {
+          "text": "Azure Service Health",
+          "is_true": true,
+          "explanation": "Correct because Azure Service Health provides notifications for outages, incidents, and maintenance events affecting your resources."
+        },
+        "b": {
+          "text": "Azure Advisor",
+          "is_true": false,
+          "explanation": "Incorrect because Advisor is for recommendations rather than outage alerts."
+        },
+        "c": {
+          "text": "Azure Monitor only",
+          "is_true": false,
+          "explanation": "Incorrect because the standard AZ-900 answer for Azure service outage notifications is Service Health."
+        },
+        "d": {
+          "text": "Azure Reservations",
+          "is_true": false,
+          "explanation": "Incorrect because reservations relate to pricing."
+        }
       },
-      "b": {
-        "text": "Azure Advisor",
-        "is_true": false,
-        "explanation": "Incorrect because Advisor provides optimization recommendations, not maintenance schedules."
-      },
-      "c": {
-        "text": "Log Analytics",
-        "is_true": false,
-        "explanation": "Incorrect because Log Analytics is for querying collected logs rather than Microsoft-published maintenance notifications."
-      },
-      "d": {
-        "text": "Azure Pricing calculator",
-        "is_true": false,
-        "explanation": "Incorrect because the Pricing calculator estimates costs."
-      }
+      "correct_answer": [
+        "a"
+      ]
     },
-    "correct_answer": "a"
-  },
-  {
-    "question_id": 28,
-    "question_type": "single_choice",
-    "question_text": "A solution architect wants a logical container to group resources that belong to the same application so they can be organized and managed together. Which Azure construct should be used?",
-    "options": {
-      "a": {
-        "text": "Resource group",
-        "is_true": true,
-        "explanation": "Correct because a resource group is the logical container for Azure resources."
+    {
+      "question_id": 27,
+      "question_text": "An administrator needs to review planned Microsoft maintenance events that could affect critical Azure services in the coming days. Which Azure feature provides this information?",
+      "options": {
+        "a": {
+          "text": "Azure Service Health",
+          "is_true": true,
+          "explanation": "Correct because Azure Service Health includes planned maintenance information relevant to your Azure environment."
+        },
+        "b": {
+          "text": "Azure Advisor",
+          "is_true": false,
+          "explanation": "Incorrect because Advisor provides optimization recommendations, not maintenance schedules."
+        },
+        "c": {
+          "text": "Log Analytics",
+          "is_true": false,
+          "explanation": "Incorrect because Log Analytics is for querying collected logs rather than Microsoft-published maintenance notifications."
+        },
+        "d": {
+          "text": "Azure Pricing calculator",
+          "is_true": false,
+          "explanation": "Incorrect because the Pricing calculator estimates costs."
+        }
       },
-      "b": {
-        "text": "Availability set",
-        "is_true": false,
-        "explanation": "Incorrect because availability sets are used for VM resiliency."
-      },
-      "c": {
-        "text": "Region pair",
-        "is_true": false,
-        "explanation": "Incorrect because region pairs are a geographic resiliency concept."
-      },
-      "d": {
-        "text": "Tag",
-        "is_true": false,
-        "explanation": "Incorrect because tags label resources but are not the primary containment unit."
-      }
+      "correct_answer": [
+        "a"
+      ]
     },
-    "correct_answer": "a"
-  },
-  {
-    "question_id": 29,
-    "question_type": "single_choice",
-    "question_text": "An enterprise wants to apply governance and policy more easily across many Azure subscriptions. The company needs a hierarchy level above subscriptions for organization and inheritance. Which Azure feature is designed for this?",
-    "options": {
-      "a": {
-        "text": "Management groups",
-        "is_true": true,
-        "explanation": "Correct because management groups allow governance across multiple subscriptions."
+    {
+      "question_id": 28,
+      "question_text": "A solution architect wants a logical container to group resources that belong to the same application so they can be organized and managed together. Which Azure construct should be used?",
+      "options": {
+        "a": {
+          "text": "Resource group",
+          "is_true": true,
+          "explanation": "Correct because a resource group is the logical container for Azure resources."
+        },
+        "b": {
+          "text": "Availability set",
+          "is_true": false,
+          "explanation": "Incorrect because availability sets are used for VM resiliency."
+        },
+        "c": {
+          "text": "Region pair",
+          "is_true": false,
+          "explanation": "Incorrect because region pairs are a geographic resiliency concept."
+        },
+        "d": {
+          "text": "Tag",
+          "is_true": false,
+          "explanation": "Incorrect because tags label resources but are not the primary containment unit."
+        }
       },
-      "b": {
-        "text": "Resource groups",
-        "is_true": false,
-        "explanation": "Incorrect because resource groups sit below subscriptions, not above them."
-      },
-      "c": {
-        "text": "Availability zones",
-        "is_true": false,
-        "explanation": "Incorrect because availability zones are physical resiliency constructs."
-      },
-      "d": {
-        "text": "Service endpoints",
-        "is_true": false,
-        "explanation": "Incorrect because service endpoints connect VNets to supported Azure services."
-      }
+      "correct_answer": [
+        "a"
+      ]
     },
-    "correct_answer": "a"
-  },
-  {
-    "question_id": 30,
-    "question_type": "single_choice",
-    "question_text": "An administrator is studying region pairs for disaster recovery planning. Which statement correctly describes Azure region pairs?",
-    "options": {
-      "a": {
-        "text": "A region is paired with another region in the same geography",
-        "is_true": true,
-        "explanation": "Correct because Azure region pairs are generally located in the same geography."
+    {
+      "question_id": 29,
+      "question_text": "An enterprise wants to apply governance and policy more easily across many Azure subscriptions. The company needs a hierarchy level above subscriptions for organization and inheritance. Which Azure feature is designed for this?",
+      "options": {
+        "a": {
+          "text": "Management groups",
+          "is_true": true,
+          "explanation": "Correct because management groups allow governance across multiple subscriptions."
+        },
+        "b": {
+          "text": "Resource groups",
+          "is_true": false,
+          "explanation": "Incorrect because resource groups sit below subscriptions, not above them."
+        },
+        "c": {
+          "text": "Availability zones",
+          "is_true": false,
+          "explanation": "Incorrect because availability zones are physical resiliency constructs."
+        },
+        "d": {
+          "text": "Service endpoints",
+          "is_true": false,
+          "explanation": "Incorrect because service endpoints connect VNets to supported Azure services."
+        }
       },
-      "b": {
-        "text": "A region pair always consists of two availability zones inside one region",
-        "is_true": false,
-        "explanation": "Incorrect because availability zones exist within one region, whereas region pairs involve two separate regions."
-      },
-      "c": {
-        "text": "Region pairs are created to separate billing reports",
-        "is_true": false,
-        "explanation": "Incorrect because region pairs are a resiliency concept, not a billing concept."
-      },
-      "d": {
-        "text": "Every resource group automatically creates a region pair",
-        "is_true": false,
-        "explanation": "Incorrect because resource groups are logical containers and do not create region pairs."
-      }
+      "correct_answer": [
+        "a"
+      ]
     },
-    "correct_answer": "a"
-  },
-  {
-    "question_id": 31,
-    "question_type": "single_choice",
-    "question_text": "A billing administrator wants to know the default Azure boundary at which separate billing reports and invoices are generated. Which answer is correct?",
-    "options": {
-      "a": {
-        "text": "Subscription",
-        "is_true": true,
-        "explanation": "Correct because subscriptions are the default Azure billing boundary."
+    {
+      "question_id": 30,
+      "question_text": "An administrator is studying region pairs for disaster recovery planning. Which statement correctly describes Azure region pairs?",
+      "options": {
+        "a": {
+          "text": "A region is paired with another region in the same geography",
+          "is_true": true,
+          "explanation": "Correct because Azure region pairs are generally located in the same geography."
+        },
+        "b": {
+          "text": "A region pair always consists of two availability zones inside one region",
+          "is_true": false,
+          "explanation": "Incorrect because availability zones exist within one region, whereas region pairs involve two separate regions."
+        },
+        "c": {
+          "text": "Region pairs are created to separate billing reports",
+          "is_true": false,
+          "explanation": "Incorrect because region pairs are a resiliency concept, not a billing concept."
+        },
+        "d": {
+          "text": "Every resource group automatically creates a region pair",
+          "is_true": false,
+          "explanation": "Incorrect because resource groups are logical containers and do not create region pairs."
+        }
       },
-      "b": {
-        "text": "Resource group",
-        "is_true": false,
-        "explanation": "Incorrect because resource groups are organizational units, not default invoice boundaries."
-      },
-      "c": {
-        "text": "Management group",
-        "is_true": false,
-        "explanation": "Incorrect because management groups organize subscriptions but are not the default billing unit."
-      },
-      "d": {
-        "text": "Virtual network",
-        "is_true": false,
-        "explanation": "Incorrect because VNets are networking resources, not billing boundaries."
-      }
+      "correct_answer": [
+        "a"
+      ]
     },
-    "correct_answer": "a"
-  },
-  {
-    "question_id": 32,
-    "question_type": "multiple_select",
-    "question_text": "A solution architect wants to identify Azure resources that can directly make use of availability zones. Which two answers are valid?",
-    "options": {
-      "a": {
-        "text": "Virtual machines",
-        "is_true": true,
-        "explanation": "Correct because virtual machines can be deployed into specific availability zones."
+    {
+      "question_id": 31,
+      "question_text": "A billing administrator wants to know the default Azure boundary at which separate billing reports and invoices are generated. Which answer is correct?",
+      "options": {
+        "a": {
+          "text": "Subscription",
+          "is_true": true,
+          "explanation": "Correct because subscriptions are the default Azure billing boundary."
+        },
+        "b": {
+          "text": "Resource group",
+          "is_true": false,
+          "explanation": "Incorrect because resource groups are organizational units, not default invoice boundaries."
+        },
+        "c": {
+          "text": "Management group",
+          "is_true": false,
+          "explanation": "Incorrect because management groups organize subscriptions but are not the default billing unit."
+        },
+        "d": {
+          "text": "Virtual network",
+          "is_true": false,
+          "explanation": "Incorrect because VNets are networking resources, not billing boundaries."
+        }
       },
-      "b": {
-        "text": "Azure SQL databases",
-        "is_true": true,
-        "explanation": "Correct because certain Azure SQL offerings support availability zone-based resiliency."
-      },
-      "c": {
-        "text": "Subscriptions",
-        "is_true": false,
-        "explanation": "Incorrect because subscriptions are billing and governance boundaries."
-      },
-      "d": {
-        "text": "Resource groups",
-        "is_true": false,
-        "explanation": "Incorrect because resource groups are logical containers and not zonal resources."
-      }
+      "correct_answer": [
+        "a"
+      ]
     },
-    "correct_answer": [
-      "a",
-      "b"
-    ]
-  },
-  {
-    "question_id": 33,
-    "question_type": "single_choice",
-    "question_text": "A web application requires a compute service that can deploy and manage a large set of identical virtual machines and scale them as demand changes. Which Azure service best matches this need?",
-    "options": {
-      "a": {
-        "text": "Availability sets",
-        "is_true": false,
-        "explanation": "Incorrect because availability sets improve resiliency but do not manage scalable identical VM fleets."
+    {
+      "question_id": 32,
+      "question_text": "A solution architect wants to identify Azure resources that can directly make use of availability zones. Which two answers are valid?",
+      "options": {
+        "a": {
+          "text": "Virtual machines",
+          "is_true": true,
+          "explanation": "Correct because virtual machines can be deployed into specific availability zones."
+        },
+        "b": {
+          "text": "Azure SQL databases",
+          "is_true": true,
+          "explanation": "Correct because certain Azure SQL offerings support availability zone-based resiliency."
+        },
+        "c": {
+          "text": "Subscriptions",
+          "is_true": false,
+          "explanation": "Incorrect because subscriptions are billing and governance boundaries."
+        },
+        "d": {
+          "text": "Resource groups",
+          "is_true": false,
+          "explanation": "Incorrect because resource groups are logical containers and not zonal resources."
+        }
       },
-      "b": {
-        "text": "Azure Virtual Machine Scale Sets",
-        "is_true": true,
-        "explanation": "Correct because VM Scale Sets are designed for deploying and managing sets of identical VMs."
-      },
-      "c": {
-        "text": "Azure App Service Free tier",
-        "is_true": false,
-        "explanation": "Incorrect because this is a different compute model and not a VM scale fleet."
-      },
-      "d": {
-        "text": "Azure Functions",
-        "is_true": false,
-        "explanation": "Incorrect because Functions is a serverless compute service."
-      }
+      "correct_answer": [
+        "a",
+        "b"
+      ]
     },
-    "correct_answer": "b"
-  },
-  {
-    "question_id": 34,
-    "question_type": "single_choice",
-    "question_text": "Two separate Azure virtual networks host different application tiers, and these tiers must communicate privately with one another over Azure's network. Which feature should be configured?",
-    "options": {
-      "a": {
-        "text": "Virtual network peering",
-        "is_true": true,
-        "explanation": "Correct because peering enables communication between Azure virtual networks."
+    {
+      "question_id": 33,
+      "question_text": "A web application requires a compute service that can deploy and manage a large set of identical virtual machines and scale them as demand changes. Which Azure service best matches this need?",
+      "options": {
+        "a": {
+          "text": "Availability sets",
+          "is_true": false,
+          "explanation": "Incorrect because availability sets improve resiliency but do not manage scalable identical VM fleets."
+        },
+        "b": {
+          "text": "Azure Virtual Machine Scale Sets",
+          "is_true": true,
+          "explanation": "Correct because VM Scale Sets are designed for deploying and managing sets of identical VMs."
+        },
+        "c": {
+          "text": "Azure App Service Free tier",
+          "is_true": false,
+          "explanation": "Incorrect because this is a different compute model and not a VM scale fleet."
+        },
+        "d": {
+          "text": "Azure Functions",
+          "is_true": false,
+          "explanation": "Incorrect because Functions is a serverless compute service."
+        }
       },
-      "b": {
-        "text": "Network security group",
-        "is_true": false,
-        "explanation": "Incorrect because an NSG filters traffic but does not connect VNets."
-      },
-      "c": {
-        "text": "Point-to-site VPN",
-        "is_true": false,
-        "explanation": "Incorrect because point-to-site VPN is for client-to-network connectivity."
-      },
-      "d": {
-        "text": "Resource lock",
-        "is_true": false,
-        "explanation": "Incorrect because locks protect resources from modification or deletion."
-      }
+      "correct_answer": [
+        "b"
+      ]
     },
-    "correct_answer": "a"
-  },
-  {
-    "question_id": 35,
-    "question_type": "single_choice",
-    "question_text": "An Azure-hosted application in a virtual network needs to connect securely to Azure SQL Database by extending the VNet identity to the database service. Which Azure networking feature should be used in this exam context?",
-    "options": {
-      "a": {
-        "text": "Service endpoints",
-        "is_true": true,
-        "explanation": "Correct because service endpoints connect supported Azure services such as Azure SQL to a virtual network."
+    {
+      "question_id": 34,
+      "question_text": "Two separate Azure virtual networks host different application tiers, and these tiers must communicate privately with one another over Azure's network. Which feature should be configured?",
+      "options": {
+        "a": {
+          "text": "Virtual network peering",
+          "is_true": true,
+          "explanation": "Correct because peering enables communication between Azure virtual networks."
+        },
+        "b": {
+          "text": "Network security group",
+          "is_true": false,
+          "explanation": "Incorrect because an NSG filters traffic but does not connect VNets."
+        },
+        "c": {
+          "text": "Point-to-site VPN",
+          "is_true": false,
+          "explanation": "Incorrect because point-to-site VPN is for client-to-network connectivity."
+        },
+        "d": {
+          "text": "Resource lock",
+          "is_true": false,
+          "explanation": "Incorrect because locks protect resources from modification or deletion."
+        }
       },
-      "b": {
-        "text": "Peering",
-        "is_true": false,
-        "explanation": "Incorrect because peering connects VNets to each other, not VNets to Azure PaaS services."
-      },
-      "c": {
-        "text": "Network security groups",
-        "is_true": false,
-        "explanation": "Incorrect because NSGs control traffic filtering but do not establish the service connection by themselves."
-      },
-      "d": {
-        "text": "Availability sets",
-        "is_true": false,
-        "explanation": "Incorrect because availability sets are a resiliency feature for virtual machines."
-      }
+      "correct_answer": [
+        "a"
+      ]
     },
-    "correct_answer": "a"
-  },
-  {
-    "question_id": 36,
-    "question_type": "multiple_select",
-    "question_text": "A hybrid networking design requires secure connectivity between an on-premises datacenter and Azure resources. Which two Azure services are standard choices for this scenario?",
-    "options": {
-      "a": {
-        "text": "Azure VPN Gateway",
-        "is_true": true,
-        "explanation": "Correct because Azure VPN Gateway provides VPN-based connectivity between on-premises networks and Azure."
+    {
+      "question_id": 35,
+      "question_text": "An Azure-hosted application in a virtual network needs to connect securely to Azure SQL Database by extending the VNet identity to the database service. Which Azure networking feature should be used in this exam context?",
+      "options": {
+        "a": {
+          "text": "Service endpoints",
+          "is_true": true,
+          "explanation": "Correct because service endpoints connect supported Azure services such as Azure SQL to a virtual network."
+        },
+        "b": {
+          "text": "Peering",
+          "is_true": false,
+          "explanation": "Incorrect because peering connects VNets to each other, not VNets to Azure PaaS services."
+        },
+        "c": {
+          "text": "Network security groups",
+          "is_true": false,
+          "explanation": "Incorrect because NSGs control traffic filtering but do not establish the service connection by themselves."
+        },
+        "d": {
+          "text": "Availability sets",
+          "is_true": false,
+          "explanation": "Incorrect because availability sets are a resiliency feature for virtual machines."
+        }
       },
-      "b": {
-        "text": "ExpressRoute",
-        "is_true": true,
-        "explanation": "Correct because ExpressRoute provides dedicated private connectivity between on-premises environments and Azure."
-      },
-      "c": {
-        "text": "Azure Bastion",
-        "is_true": false,
-        "explanation": "Incorrect because Bastion is used for secure access to VMs rather than site connectivity."
-      },
-      "d": {
-        "text": "Azure Firewall",
-        "is_true": false,
-        "explanation": "Incorrect because Firewall filters traffic but is not the main connectivity service for hybrid links."
-      }
+      "correct_answer": [
+        "a"
+      ]
     },
-    "correct_answer": [
-      "a",
-      "b"
-    ]
-  },
-  {
-    "question_id": 37,
-    "question_type": "single_choice",
-    "question_text": "The end-user computing team wants Mac and Android devices to access Windows desktops and run Windows-based applications hosted in Azure. Which service should be recommended?",
-    "options": {
-      "a": {
-        "text": "Azure Virtual Desktop",
-        "is_true": true,
-        "explanation": "Correct because Azure Virtual Desktop provides Windows desktop and application access across multiple client platforms."
+    {
+      "question_id": 36,
+      "question_text": "A hybrid networking design requires secure connectivity between an on-premises datacenter and Azure resources. Which two Azure services are standard choices for this scenario?",
+      "options": {
+        "a": {
+          "text": "Azure VPN Gateway",
+          "is_true": true,
+          "explanation": "Correct because Azure VPN Gateway provides VPN-based connectivity between on-premises networks and Azure."
+        },
+        "b": {
+          "text": "ExpressRoute",
+          "is_true": true,
+          "explanation": "Correct because ExpressRoute provides dedicated private connectivity between on-premises environments and Azure."
+        },
+        "c": {
+          "text": "Azure Bastion",
+          "is_true": false,
+          "explanation": "Incorrect because Bastion is used for secure access to VMs rather than site connectivity."
+        },
+        "d": {
+          "text": "Azure Firewall",
+          "is_true": false,
+          "explanation": "Incorrect because Firewall filters traffic but is not the main connectivity service for hybrid links."
+        }
       },
-      "b": {
-        "text": "Azure Container Instances",
-        "is_true": false,
-        "explanation": "Incorrect because Container Instances runs containers, not remote Windows desktops."
-      },
-      "c": {
-        "text": "Azure Functions",
-        "is_true": false,
-        "explanation": "Incorrect because Functions is a serverless compute service."
-      },
-      "d": {
-        "text": "Azure Queue Storage",
-        "is_true": false,
-        "explanation": "Incorrect because Queue Storage is a messaging service."
-      }
+      "correct_answer": [
+        "a",
+        "b"
+      ]
     },
-    "correct_answer": "a"
-  },
-  {
-    "question_id": 38,
-    "question_type": "single_choice",
-    "question_text": "A storage migration project requires managed cloud file shares that can be mounted by clients using the SMB protocol. Which Azure service best fits the requirement?",
-    "options": {
-      "a": {
-        "text": "Azure Files",
-        "is_true": true,
-        "explanation": "Correct because Azure Files provides fully managed SMB file shares in the cloud."
+    {
+      "question_id": 37,
+      "question_text": "The end-user computing team wants Mac and Android devices to access Windows desktops and run Windows-based applications hosted in Azure. Which service should be recommended?",
+      "options": {
+        "a": {
+          "text": "Azure Virtual Desktop",
+          "is_true": true,
+          "explanation": "Correct because Azure Virtual Desktop provides Windows desktop and application access across multiple client platforms."
+        },
+        "b": {
+          "text": "Azure Container Instances",
+          "is_true": false,
+          "explanation": "Incorrect because Container Instances runs containers, not remote Windows desktops."
+        },
+        "c": {
+          "text": "Azure Functions",
+          "is_true": false,
+          "explanation": "Incorrect because Functions is a serverless compute service."
+        },
+        "d": {
+          "text": "Azure Queue Storage",
+          "is_true": false,
+          "explanation": "Incorrect because Queue Storage is a messaging service."
+        }
       },
-      "b": {
-        "text": "Azure Blob Storage",
-        "is_true": false,
-        "explanation": "Incorrect because Blob Storage is object storage, not SMB-based file shares."
-      },
-      "c": {
-        "text": "Azure Table Storage",
-        "is_true": false,
-        "explanation": "Incorrect because Table Storage is a NoSQL key-value store."
-      },
-      "d": {
-        "text": "Azure Queue Storage",
-        "is_true": false,
-        "explanation": "Incorrect because Queue Storage is used for messaging."
-      }
+      "correct_answer": [
+        "a"
+      ]
     },
-    "correct_answer": "a"
-  },
-  {
-    "question_id": 39,
-    "question_type": "multiple_select",
-    "question_text": "A company stores huge volumes of images, PDFs, and backup archives in Azure. Which two scenarios are common use cases for Azure Blob Storage?",
-    "options": {
-      "a": {
-        "text": "Serving images or documents directly to a browser",
-        "is_true": true,
-        "explanation": "Correct because Blob Storage is commonly used for unstructured objects such as images and documents."
+    {
+      "question_id": 38,
+      "question_text": "A storage migration project requires managed cloud file shares that can be mounted by clients using the SMB protocol. Which Azure service best fits the requirement?",
+      "options": {
+        "a": {
+          "text": "Azure Files",
+          "is_true": true,
+          "explanation": "Correct because Azure Files provides fully managed SMB file shares in the cloud."
+        },
+        "b": {
+          "text": "Azure Blob Storage",
+          "is_true": false,
+          "explanation": "Incorrect because Blob Storage is object storage, not SMB-based file shares."
+        },
+        "c": {
+          "text": "Azure Table Storage",
+          "is_true": false,
+          "explanation": "Incorrect because Table Storage is a NoSQL key-value store."
+        },
+        "d": {
+          "text": "Azure Queue Storage",
+          "is_true": false,
+          "explanation": "Incorrect because Queue Storage is used for messaging."
+        }
       },
-      "b": {
-        "text": "Storing data for backup and restore",
-        "is_true": true,
-        "explanation": "Correct because Blob Storage is widely used for backup, archival, and restore scenarios."
-      },
-      "c": {
-        "text": "Hosting SMB shares for virtual machines as the main scenario",
-        "is_true": false,
-        "explanation": "Incorrect because SMB share scenarios are a better fit for Azure Files."
-      },
-      "d": {
-        "text": "Providing Windows desktop sessions to end users",
-        "is_true": false,
-        "explanation": "Incorrect because desktop virtualization is not a Blob Storage use case."
-      }
+      "correct_answer": [
+        "a"
+      ]
     },
-    "correct_answer": [
-      "a",
-      "b"
-    ]
-  },
-  {
-    "question_id": 40,
-    "question_type": "single_choice",
-    "question_text": "A security lead explains that the organization should not rely on a single security control because attackers may bypass one layer. Instead, several protective layers should exist so that if one fails, others still protect the environment. Which strategy is being described?",
-    "options": {
-      "a": {
-        "text": "Defense in depth",
-        "is_true": true,
-        "explanation": "Correct because defense in depth is the strategy of applying multiple layers of security controls."
+    {
+      "question_id": 39,
+      "question_text": "A company stores huge volumes of images, PDFs, and backup archives in Azure. Which two scenarios are common use cases for Azure Blob Storage?",
+      "options": {
+        "a": {
+          "text": "Serving images or documents directly to a browser",
+          "is_true": true,
+          "explanation": "Correct because Blob Storage is commonly used for unstructured objects such as images and documents."
+        },
+        "b": {
+          "text": "Storing data for backup and restore",
+          "is_true": true,
+          "explanation": "Correct because Blob Storage is widely used for backup, archival, and restore scenarios."
+        },
+        "c": {
+          "text": "Hosting SMB shares for virtual machines as the main scenario",
+          "is_true": false,
+          "explanation": "Incorrect because SMB share scenarios are a better fit for Azure Files."
+        },
+        "d": {
+          "text": "Providing Windows desktop sessions to end users",
+          "is_true": false,
+          "explanation": "Incorrect because desktop virtualization is not a Blob Storage use case."
+        }
       },
-      "b": {
-        "text": "Least privilege only",
-        "is_true": false,
-        "explanation": "Incorrect because least privilege is an important principle but not the broader layered strategy described."
-      },
-      "c": {
-        "text": "Horizontal scaling",
-        "is_true": false,
-        "explanation": "Incorrect because scaling is unrelated to layered security strategy."
-      },
-      "d": {
-        "text": "Geo-redundancy",
-        "is_true": false,
-        "explanation": "Incorrect because geo-redundancy is about data replication and resiliency."
-      }
+      "correct_answer": [
+        "a",
+        "b"
+      ]
     },
-    "correct_answer": "a"
-  },
-  {
-    "question_id": 41,
-    "question_type": "single_choice",
-    "question_text": "Users complain that they must repeatedly authenticate when moving between approved business applications. Which Microsoft Entra capability is designed to let them sign in once and access multiple applications?",
-    "options": {
-      "a": {
-        "text": "Single sign-on (SSO)",
-        "is_true": true,
-        "explanation": "Correct because SSO allows one authentication event to be reused across multiple applications."
+    {
+      "question_id": 40,
+      "question_text": "A security lead explains that the organization should not rely on a single security control because attackers may bypass one layer. Instead, several protective layers should exist so that if one fails, others still protect the environment. Which strategy is being described?",
+      "options": {
+        "a": {
+          "text": "Defense in depth",
+          "is_true": true,
+          "explanation": "Correct because defense in depth is the strategy of applying multiple layers of security controls."
+        },
+        "b": {
+          "text": "Least privilege only",
+          "is_true": false,
+          "explanation": "Incorrect because least privilege is an important principle but not the broader layered strategy described."
+        },
+        "c": {
+          "text": "Horizontal scaling",
+          "is_true": false,
+          "explanation": "Incorrect because scaling is unrelated to layered security strategy."
+        },
+        "d": {
+          "text": "Geo-redundancy",
+          "is_true": false,
+          "explanation": "Incorrect because geo-redundancy is about data replication and resiliency."
+        }
       },
-      "b": {
-        "text": "Multifactor authentication (MFA)",
-        "is_true": false,
-        "explanation": "Incorrect because MFA strengthens authentication but does not itself provide one sign-in across multiple services."
-      },
-      "c": {
-        "text": "Conditional Access",
-        "is_true": false,
-        "explanation": "Incorrect because Conditional Access controls access conditions rather than providing one-time sign-in reuse."
-      },
-      "d": {
-        "text": "Resource locking",
-        "is_true": false,
-        "explanation": "Incorrect because resource locks are unrelated to user sign-in."
-      }
+      "correct_answer": [
+        "a"
+      ]
     },
-    "correct_answer": "a"
-  },
-  {
-    "question_id": 42,
-    "question_type": "single_choice",
-    "question_text": "A security team wants to ensure that employees can access corporate applications only when using devices that meet compliance requirements. Which Microsoft Entra capability best supports this?",
-    "options": {
-      "a": {
-        "text": "Conditional Access",
-        "is_true": true,
-        "explanation": "Correct because Conditional Access can require device compliance before granting access."
+    {
+      "question_id": 41,
+      "question_text": "Users complain that they must repeatedly authenticate when moving between approved business applications. Which Microsoft Entra capability is designed to let them sign in once and access multiple applications?",
+      "options": {
+        "a": {
+          "text": "Single sign-on (SSO)",
+          "is_true": true,
+          "explanation": "Correct because SSO allows one authentication event to be reused across multiple applications."
+        },
+        "b": {
+          "text": "Multifactor authentication (MFA)",
+          "is_true": false,
+          "explanation": "Incorrect because MFA strengthens authentication but does not itself provide one sign-in across multiple services."
+        },
+        "c": {
+          "text": "Conditional Access",
+          "is_true": false,
+          "explanation": "Incorrect because Conditional Access controls access conditions rather than providing one-time sign-in reuse."
+        },
+        "d": {
+          "text": "Resource locking",
+          "is_true": false,
+          "explanation": "Incorrect because resource locks are unrelated to user sign-in."
+        }
       },
-      "b": {
-        "text": "Single sign-on (SSO)",
-        "is_true": false,
-        "explanation": "Incorrect because SSO improves login convenience but does not enforce compliant-device rules."
-      },
-      "c": {
-        "text": "Azure Reservations",
-        "is_true": false,
-        "explanation": "Incorrect because reservations are related to pricing."
-      },
-      "d": {
-        "text": "Azure Monitor",
-        "is_true": false,
-        "explanation": "Incorrect because Monitor is for telemetry and alerts."
-      }
+      "correct_answer": [
+        "a"
+      ]
     },
-    "correct_answer": "a"
-  },
-  {
-    "question_id": 43,
-    "question_type": "single_choice",
-    "question_text": "A department manager wants one employee to manage all resources inside a specific resource group, but not across the whole subscription. Which Azure feature should be used to grant that level of access?",
-    "options": {
-      "a": {
-        "text": "Azure role-based access control (RBAC)",
-        "is_true": true,
-        "explanation": "Correct because RBAC roles can be assigned at the resource group scope."
+    {
+      "question_id": 42,
+      "question_text": "A security team wants to ensure that employees can access corporate applications only when using devices that meet compliance requirements. Which Microsoft Entra capability best supports this?",
+      "options": {
+        "a": {
+          "text": "Conditional Access",
+          "is_true": true,
+          "explanation": "Correct because Conditional Access can require device compliance before granting access."
+        },
+        "b": {
+          "text": "Single sign-on (SSO)",
+          "is_true": false,
+          "explanation": "Incorrect because SSO improves login convenience but does not enforce compliant-device rules."
+        },
+        "c": {
+          "text": "Azure Reservations",
+          "is_true": false,
+          "explanation": "Incorrect because reservations are related to pricing."
+        },
+        "d": {
+          "text": "Azure Monitor",
+          "is_true": false,
+          "explanation": "Incorrect because Monitor is for telemetry and alerts."
+        }
       },
-      "b": {
-        "text": "Resource tags",
-        "is_true": false,
-        "explanation": "Incorrect because tags do not grant permissions."
-      },
-      "c": {
-        "text": "Azure Advisor",
-        "is_true": false,
-        "explanation": "Incorrect because Advisor provides recommendations, not access control."
-      },
-      "d": {
-        "text": "Resource locks",
-        "is_true": false,
-        "explanation": "Incorrect because locks restrict changes rather than delegate administrative rights."
-      }
+      "correct_answer": [
+        "a"
+      ]
     },
-    "correct_answer": "a"
-  },
-  {
-    "question_id": 44,
-    "question_type": "single_choice",
-    "question_text": "An auditor asks where Azure RBAC permissions are applied. Which term correctly describes the object or level at which a role assignment is made?",
-    "options": {
-      "a": {
-        "text": "Scope",
-        "is_true": true,
-        "explanation": "Correct because RBAC roles are assigned at a scope such as management group, subscription, resource group, or resource."
+    {
+      "question_id": 43,
+      "question_text": "A department manager wants one employee to manage all resources inside a specific resource group, but not across the whole subscription. Which Azure feature should be used to grant that level of access?",
+      "options": {
+        "a": {
+          "text": "Azure role-based access control (RBAC)",
+          "is_true": true,
+          "explanation": "Correct because RBAC roles can be assigned at the resource group scope."
+        },
+        "b": {
+          "text": "Resource tags",
+          "is_true": false,
+          "explanation": "Incorrect because tags do not grant permissions."
+        },
+        "c": {
+          "text": "Azure Advisor",
+          "is_true": false,
+          "explanation": "Incorrect because Advisor provides recommendations, not access control."
+        },
+        "d": {
+          "text": "Resource locks",
+          "is_true": false,
+          "explanation": "Incorrect because locks restrict changes rather than delegate administrative rights."
+        }
       },
-      "b": {
-        "text": "Tag",
-        "is_true": false,
-        "explanation": "Incorrect because tags are metadata and not permission boundaries."
-      },
-      "c": {
-        "text": "Policy",
-        "is_true": false,
-        "explanation": "Incorrect because policies define or audit allowed configurations, not role assignment levels."
-      },
-      "d": {
-        "text": "Availability zone",
-        "is_true": false,
-        "explanation": "Incorrect because availability zones are physical locations within a region."
-      }
+      "correct_answer": [
+        "a"
+      ]
     },
-    "correct_answer": "a"
-  },
-  {
-    "question_id": 45,
-    "question_type": "multiple_select",
-    "question_text": "A new Azure administrator is asked which services are core examples of Microsoft Entra capabilities in an AZ-900 context. Which two answers are correct?",
-    "options": {
-      "a": {
-        "text": "Authentication",
-        "is_true": true,
-        "explanation": "Correct because Microsoft Entra provides identity and authentication services."
+    {
+      "question_id": 44,
+      "question_text": "An auditor asks where Azure RBAC permissions are applied. Which term correctly describes the object or level at which a role assignment is made?",
+      "options": {
+        "a": {
+          "text": "Scope",
+          "is_true": true,
+          "explanation": "Correct because RBAC roles are assigned at a scope such as management group, subscription, resource group, or resource."
+        },
+        "b": {
+          "text": "Tag",
+          "is_true": false,
+          "explanation": "Incorrect because tags are metadata and not permission boundaries."
+        },
+        "c": {
+          "text": "Policy",
+          "is_true": false,
+          "explanation": "Incorrect because policies define or audit allowed configurations, not role assignment levels."
+        },
+        "d": {
+          "text": "Availability zone",
+          "is_true": false,
+          "explanation": "Incorrect because availability zones are physical locations within a region."
+        }
       },
-      "b": {
-        "text": "Single sign-on (SSO)",
-        "is_true": true,
-        "explanation": "Correct because SSO is one of the core identity capabilities associated with Microsoft Entra."
-      },
-      "c": {
-        "text": "Name resolution",
-        "is_true": false,
-        "explanation": "Incorrect because name resolution is a DNS-related capability, not a Microsoft Entra identity service."
-      },
-      "d": {
-        "text": "Data encryption at rest for all storage accounts",
-        "is_true": false,
-        "explanation": "Incorrect because that is not the core identity service being tested here."
-      }
+      "correct_answer": [
+        "a"
+      ]
     },
-    "correct_answer": [
-      "a",
-      "b"
-    ]
-  },
-  {
-    "question_id": 46,
-    "question_type": "single_choice",
-    "question_text": "Your company is deploying Azure virtual machines and needs to choose the correct cloud model. A colleague suggests using Software as a Service (SaaS). Does that solution meet the goal?",
-    "options": {
-      "a": {
-        "text": "Yes",
-        "is_true": false,
-        "explanation": "Incorrect because Azure virtual machines are not a SaaS offering."
+    {
+      "question_id": 45,
+      "question_text": "A new Azure administrator is asked which services are core examples of Microsoft Entra capabilities in an AZ-900 context. Which two answers are correct?",
+      "options": {
+        "a": {
+          "text": "Authentication",
+          "is_true": true,
+          "explanation": "Correct because Microsoft Entra provides identity and authentication services."
+        },
+        "b": {
+          "text": "Single sign-on (SSO)",
+          "is_true": true,
+          "explanation": "Correct because SSO is one of the core identity capabilities associated with Microsoft Entra."
+        },
+        "c": {
+          "text": "Name resolution",
+          "is_true": false,
+          "explanation": "Incorrect because name resolution is a DNS-related capability, not a Microsoft Entra identity service."
+        },
+        "d": {
+          "text": "Data encryption at rest for all storage accounts",
+          "is_true": false,
+          "explanation": "Incorrect because that is not the core identity service being tested here."
+        }
       },
-      "b": {
-        "text": "No",
-        "is_true": true,
-        "explanation": "Correct because Azure virtual machines are an Infrastructure as a Service scenario."
-      }
+      "correct_answer": [
+        "a",
+        "b"
+      ]
     },
-    "correct_answer": "b"
-  },
-  {
-    "question_id": 47,
-    "question_type": "single_choice",
-    "question_text": "Your company is deploying Azure virtual machines and needs to choose the correct cloud model. Another colleague suggests using Platform as a Service (PaaS). Does that solution meet the goal?",
-    "options": {
-      "a": {
-        "text": "Yes",
-        "is_true": false,
-        "explanation": "Incorrect because PaaS is for deploying applications without managing the underlying virtual machines directly."
+    {
+      "question_id": 46,
+      "question_text": "Your company is deploying Azure virtual machines and needs to choose the correct cloud model. A colleague suggests using Software as a Service (SaaS). Does that solution meet the goal?",
+      "options": {
+        "a": {
+          "text": "Yes",
+          "is_true": false,
+          "explanation": "Incorrect because Azure virtual machines are not a SaaS offering."
+        },
+        "b": {
+          "text": "No",
+          "is_true": true,
+          "explanation": "Correct because Azure virtual machines are an Infrastructure as a Service scenario."
+        }
       },
-      "b": {
-        "text": "No",
-        "is_true": true,
-        "explanation": "Correct because Azure virtual machines are a classic IaaS workload."
-      }
+      "correct_answer": [
+        "b"
+      ]
     },
-    "correct_answer": "b"
-  },
-  {
-    "question_id": 48,
-    "question_type": "single_choice",
-    "question_text": "Your company is deploying Azure virtual machines and needs to choose the correct cloud model. A third colleague suggests using Infrastructure as a Service (IaaS). Does that solution meet the goal?",
-    "options": {
-      "a": {
-        "text": "Yes",
-        "is_true": true,
-        "explanation": "Correct because Azure virtual machines are provided as Infrastructure as a Service."
+    {
+      "question_id": 47,
+      "question_text": "Your company is deploying Azure virtual machines and needs to choose the correct cloud model. Another colleague suggests using Platform as a Service (PaaS). Does that solution meet the goal?",
+      "options": {
+        "a": {
+          "text": "Yes",
+          "is_true": false,
+          "explanation": "Incorrect because PaaS is for deploying applications without managing the underlying virtual machines directly."
+        },
+        "b": {
+          "text": "No",
+          "is_true": true,
+          "explanation": "Correct because Azure virtual machines are a classic IaaS workload."
+        }
       },
-      "b": {
-        "text": "No",
-        "is_true": false,
-        "explanation": "Incorrect because IaaS is the correct service model for Azure virtual machines."
-      }
+      "correct_answer": [
+        "b"
+      ]
     },
-    "correct_answer": "a"
-  },
-  {
-    "question_id": 49,
-    "question_type": "single_choice",
-    "question_text": "A company is moving all virtual machines from Hyper-V hosts in its datacenter to an Azure pay-as-you-go subscription. An engineer says that the company should adopt an 'elastic expenditure model' because that is the standard Azure cost term. Does this meet the goal?",
-    "options": {
-      "a": {
-        "text": "Yes",
-        "is_true": false,
-        "explanation": "Incorrect because 'elastic expenditure model' is not the correct Azure cost term being tested here."
+    {
+      "question_id": 48,
+      "question_text": "Your company is deploying Azure virtual machines and needs to choose the correct cloud model. A third colleague suggests using Infrastructure as a Service (IaaS). Does that solution meet the goal?",
+      "options": {
+        "a": {
+          "text": "Yes",
+          "is_true": true,
+          "explanation": "Correct because Azure virtual machines are provided as Infrastructure as a Service."
+        },
+        "b": {
+          "text": "No",
+          "is_true": false,
+          "explanation": "Incorrect because IaaS is the correct service model for Azure virtual machines."
+        }
       },
-      "b": {
-        "text": "No",
-        "is_true": true,
-        "explanation": "Correct because the standard Azure Fundamentals concept is a consumption-based model with operational expenditure characteristics, not an 'elastic expenditure model' term."
-      }
+      "correct_answer": [
+        "a"
+      ]
     },
-    "correct_answer": "b"
-  },
-  {
-    "question_id": 50,
-    "question_type": "single_choice",
-    "question_text": "A multinational company wants to reduce administrative overhead while segmenting Azure resources so that each division can manage its own deployments. One architect suggests creating several separate Microsoft Entra directories to represent each division. Does this solution best meet the goal?",
-    "options": {
-      "a": {
-        "text": "Yes",
-        "is_true": false,
-        "explanation": "Incorrect because using multiple Entra directories increases complexity and is not the simplest way to segment Azure resources for divisions."
+    {
+      "question_id": 49,
+      "question_text": "A company is moving all virtual machines from Hyper-V hosts in its datacenter to an Azure pay-as-you-go subscription. An engineer says that the company should adopt an 'elastic expenditure model' because that is the standard Azure cost term. Does this meet the goal?",
+      "options": {
+        "a": {
+          "text": "Yes",
+          "is_true": false,
+          "explanation": "Incorrect because 'elastic expenditure model' is not the correct Azure cost term being tested here."
+        },
+        "b": {
+          "text": "No",
+          "is_true": true,
+          "explanation": "Correct because the standard Azure Fundamentals concept is a consumption-based model with operational expenditure characteristics, not an 'elastic expenditure model' term."
+        }
       },
-      "b": {
-        "text": "No",
-        "is_true": true,
-        "explanation": "Correct because segmentation is typically handled more simply with subscriptions, resource groups, and governance structures rather than multiple separate directories."
-      }
+      "correct_answer": [
+        "b"
+      ]
     },
-    "correct_answer": "b"
-  }
-]
+    {
+      "question_id": 50,
+      "question_text": "A multinational company wants to reduce administrative overhead while segmenting Azure resources so that each division can manage its own deployments. One architect suggests creating several separate Microsoft Entra directories to represent each division. Does this solution best meet the goal?",
+      "options": {
+        "a": {
+          "text": "Yes",
+          "is_true": false,
+          "explanation": "Incorrect because using multiple Entra directories increases complexity and is not the simplest way to segment Azure resources for divisions."
+        },
+        "b": {
+          "text": "No",
+          "is_true": true,
+          "explanation": "Correct because segmentation is typically handled more simply with subscriptions, resource groups, and governance structures rather than multiple separate directories."
+        }
+      },
+      "correct_answer": [
+        "b"
+      ]
+    }
+  ]
+}

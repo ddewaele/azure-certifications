@@ -1,545 +1,593 @@
-[
-  {
-    "question_id": 1,
-    "question_text": "A logistics company needs to identify the type and quantity of packages on a conveyor belt using camera images. Each package type must be located within the image with a bounding box. Which computer vision technique should they use?",
-    "options": {
-      "a": {
-        "text": "Image classification",
-        "is_true": false,
-        "explanation": "Incorrect. Image classification assigns a single label to an entire image. It cannot locate individual objects or draw bounding boxes around them."
-      },
-      "b": {
-        "text": "Object detection",
-        "is_true": true,
-        "explanation": "Correct. Object detection identifies and locates multiple objects within an image, drawing bounding boxes around each detected item and classifying its type."
-      },
-      "c": {
-        "text": "Optical character recognition (OCR)",
-        "is_true": false,
-        "explanation": "Incorrect. OCR extracts text from images. The scenario requires identifying and locating physical objects, not reading text."
-      },
-      "d": {
-        "text": "Facial detection",
-        "is_true": false,
-        "explanation": "Incorrect. Facial detection identifies human faces in images. The scenario involves detecting packages, not faces."
-      }
-    },
-    "correct_answer": "b"
+{
+  "meta": {
+    "title": "AI Fundamentals – Vision, NLP & Generative AI",
+    "subject": "AI-900",
+    "version": "1.0.0",
+    "created": "2026-03-22"
   },
-  {
-    "question_id": 2,
-    "question_text": "A government agency needs to digitise thousands of historical printed documents by extracting the text from scanned page images. Which computer vision capability should they use?",
-    "options": {
-      "a": {
-        "text": "Image classification",
-        "is_true": false,
-        "explanation": "Incorrect. Image classification categorises entire images into classes. Extracting text content from document images requires OCR."
+  "questions": [
+    {
+      "question_id": 1,
+      "question_text": "A logistics company needs to identify the type and quantity of packages on a conveyor belt using camera images. Each package type must be located within the image with a bounding box. Which computer vision technique should they use?",
+      "options": {
+        "a": {
+          "text": "Image classification",
+          "is_true": false,
+          "explanation": "Incorrect. Image classification assigns a single label to an entire image. It cannot locate individual objects or draw bounding boxes around them."
+        },
+        "b": {
+          "text": "Object detection",
+          "is_true": true,
+          "explanation": "Correct. Object detection identifies and locates multiple objects within an image, drawing bounding boxes around each detected item and classifying its type."
+        },
+        "c": {
+          "text": "Optical character recognition (OCR)",
+          "is_true": false,
+          "explanation": "Incorrect. OCR extracts text from images. The scenario requires identifying and locating physical objects, not reading text."
+        },
+        "d": {
+          "text": "Facial detection",
+          "is_true": false,
+          "explanation": "Incorrect. Facial detection identifies human faces in images. The scenario involves detecting packages, not faces."
+        }
       },
-      "b": {
-        "text": "Object detection",
-        "is_true": false,
-        "explanation": "Incorrect. Object detection locates objects within images. Extracting readable text from document scans requires OCR."
-      },
-      "c": {
-        "text": "Optical character recognition (OCR)",
-        "is_true": true,
-        "explanation": "Correct. OCR (Optical Character Recognition) extracts printed or handwritten text from images and scanned documents, converting them into machine-readable text."
-      },
-      "d": {
-        "text": "Facial analysis",
-        "is_true": false,
-        "explanation": "Incorrect. Facial analysis detects and analyses human faces. The scenario requires text extraction from document images."
-      }
+      "correct_answer": [
+        "b"
+      ]
     },
-    "correct_answer": "c"
-  },
-  {
-    "question_id": 3,
-    "question_type": "multiple_select",
-    "question_text": "Which TWO capabilities are provided by the Azure AI Vision service?",
-    "options": {
-      "a": {
-        "text": "Generating descriptive captions for images",
-        "is_true": true,
-        "explanation": "Correct. Azure AI Vision can generate human-readable captions that describe the content of an image, including objects, scenes, and activities."
+    {
+      "question_id": 2,
+      "question_text": "A government agency needs to digitise thousands of historical printed documents by extracting the text from scanned page images. Which computer vision capability should they use?",
+      "options": {
+        "a": {
+          "text": "Image classification",
+          "is_true": false,
+          "explanation": "Incorrect. Image classification categorises entire images into classes. Extracting text content from document images requires OCR."
+        },
+        "b": {
+          "text": "Object detection",
+          "is_true": false,
+          "explanation": "Incorrect. Object detection locates objects within images. Extracting readable text from document scans requires OCR."
+        },
+        "c": {
+          "text": "Optical character recognition (OCR)",
+          "is_true": true,
+          "explanation": "Correct. OCR (Optical Character Recognition) extracts printed or handwritten text from images and scanned documents, converting them into machine-readable text."
+        },
+        "d": {
+          "text": "Facial analysis",
+          "is_true": false,
+          "explanation": "Incorrect. Facial analysis detects and analyses human faces. The scenario requires text extraction from document images."
+        }
       },
-      "b": {
-        "text": "Translating text between languages",
-        "is_true": false,
-        "explanation": "Incorrect. Text translation is a capability of the Azure AI Translator service, not Azure AI Vision."
-      },
-      "c": {
-        "text": "Detecting and reading text in images (OCR)",
-        "is_true": true,
-        "explanation": "Correct. Azure AI Vision includes OCR capabilities that can detect and extract printed and handwritten text from images."
-      },
-      "d": {
-        "text": "Converting speech to text in real time",
-        "is_true": false,
-        "explanation": "Incorrect. Speech-to-text is a capability of the Azure AI Speech service, not Azure AI Vision."
-      }
+      "correct_answer": [
+        "c"
+      ]
     },
-    "correct_answer": ["a", "c"]
-  },
-  {
-    "question_id": 4,
-    "question_text": "A security application needs to verify that the person standing at a door matches the photo on their ID badge. Which Azure AI capability is most appropriate?",
-    "options": {
-      "a": {
-        "text": "Face detection",
-        "is_true": false,
-        "explanation": "Incorrect. Face detection identifies the presence and location of faces in an image, but does not compare faces to determine if they are the same person."
+    {
+      "question_id": 3,
+      "question_text": "Which TWO capabilities are provided by the Azure AI Vision service?",
+      "options": {
+        "a": {
+          "text": "Generating descriptive captions for images",
+          "is_true": true,
+          "explanation": "Correct. Azure AI Vision can generate human-readable captions that describe the content of an image, including objects, scenes, and activities."
+        },
+        "b": {
+          "text": "Translating text between languages",
+          "is_true": false,
+          "explanation": "Incorrect. Text translation is a capability of the Azure AI Translator service, not Azure AI Vision."
+        },
+        "c": {
+          "text": "Detecting and reading text in images (OCR)",
+          "is_true": true,
+          "explanation": "Correct. Azure AI Vision includes OCR capabilities that can detect and extract printed and handwritten text from images."
+        },
+        "d": {
+          "text": "Converting speech to text in real time",
+          "is_true": false,
+          "explanation": "Incorrect. Speech-to-text is a capability of the Azure AI Speech service, not Azure AI Vision."
+        }
       },
-      "b": {
-        "text": "Face verification",
-        "is_true": true,
-        "explanation": "Correct. Face verification (1:1 matching) compares two face images to determine whether they belong to the same person — exactly what is needed to match a live face against an ID badge photo."
-      },
-      "c": {
-        "text": "Face identification",
-        "is_true": false,
-        "explanation": "Incorrect. Face identification (1:many matching) determines who a person is from a group of known individuals. The scenario is simpler — comparing against a single photo (verification)."
-      },
-      "d": {
-        "text": "Image classification",
-        "is_true": false,
-        "explanation": "Incorrect. Image classification assigns category labels to images. It does not compare faces for identity matching."
-      }
+      "correct_answer": [
+        "a",
+        "c"
+      ]
     },
-    "correct_answer": "b"
-  },
-  {
-    "question_id": 5,
-    "question_text": "Which of the following is a responsible AI consideration specific to facial recognition technology?",
-    "options": {
-      "a": {
-        "text": "The model should be trained on the largest possible dataset regardless of consent.",
-        "is_true": false,
-        "explanation": "Incorrect. Using data regardless of consent violates privacy and security principles. Facial recognition data must be collected with informed consent."
+    {
+      "question_id": 4,
+      "question_text": "A security application needs to verify that the person standing at a door matches the photo on their ID badge. Which Azure AI capability is most appropriate?",
+      "options": {
+        "a": {
+          "text": "Face detection",
+          "is_true": false,
+          "explanation": "Incorrect. Face detection identifies the presence and location of faces in an image, but does not compare faces to determine if they are the same person."
+        },
+        "b": {
+          "text": "Face verification",
+          "is_true": true,
+          "explanation": "Correct. Face verification (1:1 matching) compares two face images to determine whether they belong to the same person — exactly what is needed to match a live face against an ID badge photo."
+        },
+        "c": {
+          "text": "Face identification",
+          "is_true": false,
+          "explanation": "Incorrect. Face identification (1:many matching) determines who a person is from a group of known individuals. The scenario is simpler — comparing against a single photo (verification)."
+        },
+        "d": {
+          "text": "Image classification",
+          "is_true": false,
+          "explanation": "Incorrect. Image classification assigns category labels to images. It does not compare faces for identity matching."
+        }
       },
-      "b": {
-        "text": "Facial recognition accuracy may vary across different demographic groups, potentially causing biased outcomes.",
-        "is_true": true,
-        "explanation": "Correct. Facial recognition systems can exhibit bias if training data is not diverse, leading to lower accuracy for underrepresented demographic groups. This is a key fairness concern that must be addressed."
-      },
-      "c": {
-        "text": "Facial recognition should always be fully automated without human oversight.",
-        "is_true": false,
-        "explanation": "Incorrect. High-stakes facial recognition decisions should include human oversight (accountability principle), especially given potential bias and error rates."
-      },
-      "d": {
-        "text": "Face detection models are equally accurate for all skin tones and ages.",
-        "is_true": false,
-        "explanation": "Incorrect. Research has shown that facial recognition accuracy can vary significantly across demographics, which is precisely why responsible AI considerations are important."
-      }
+      "correct_answer": [
+        "b"
+      ]
     },
-    "correct_answer": "b"
-  },
-  {
-    "question_id": 6,
-    "question_text": "A company analyses customer product reviews to determine overall customer sentiment. Which NLP feature should they use?",
-    "options": {
-      "a": {
-        "text": "Key phrase extraction",
-        "is_true": false,
-        "explanation": "Incorrect. Key phrase extraction identifies important terms and concepts in text, but does not determine whether the overall tone is positive, negative, or neutral."
+    {
+      "question_id": 5,
+      "question_text": "Which of the following is a responsible AI consideration specific to facial recognition technology?",
+      "options": {
+        "a": {
+          "text": "The model should be trained on the largest possible dataset regardless of consent.",
+          "is_true": false,
+          "explanation": "Incorrect. Using data regardless of consent violates privacy and security principles. Facial recognition data must be collected with informed consent."
+        },
+        "b": {
+          "text": "Facial recognition accuracy may vary across different demographic groups, potentially causing biased outcomes.",
+          "is_true": true,
+          "explanation": "Correct. Facial recognition systems can exhibit bias if training data is not diverse, leading to lower accuracy for underrepresented demographic groups. This is a key fairness concern that must be addressed."
+        },
+        "c": {
+          "text": "Facial recognition should always be fully automated without human oversight.",
+          "is_true": false,
+          "explanation": "Incorrect. High-stakes facial recognition decisions should include human oversight (accountability principle), especially given potential bias and error rates."
+        },
+        "d": {
+          "text": "Face detection models are equally accurate for all skin tones and ages.",
+          "is_true": false,
+          "explanation": "Incorrect. Research has shown that facial recognition accuracy can vary significantly across demographics, which is precisely why responsible AI considerations are important."
+        }
       },
-      "b": {
-        "text": "Named entity recognition",
-        "is_true": false,
-        "explanation": "Incorrect. Named entity recognition identifies specific entities like people, places, and organisations — it does not assess the emotional tone of text."
-      },
-      "c": {
-        "text": "Sentiment analysis",
-        "is_true": true,
-        "explanation": "Correct. Sentiment analysis evaluates text to determine its emotional tone — positive, negative, neutral, or mixed — which is exactly what is needed to gauge overall customer sentiment from reviews."
-      },
-      "d": {
-        "text": "Language detection",
-        "is_true": false,
-        "explanation": "Incorrect. Language detection identifies which language a text is written in. It does not analyse sentiment."
-      }
+      "correct_answer": [
+        "b"
+      ]
     },
-    "correct_answer": "c"
-  },
-  {
-    "question_id": 7,
-    "question_text": "A news aggregator needs to automatically identify mentions of people, organisations, locations, and dates in articles. Which NLP capability is most appropriate?",
-    "options": {
-      "a": {
-        "text": "Sentiment analysis",
-        "is_true": false,
-        "explanation": "Incorrect. Sentiment analysis determines emotional tone, not the identity of specific entities mentioned in text."
+    {
+      "question_id": 6,
+      "question_text": "A company analyses customer product reviews to determine overall customer sentiment. Which NLP feature should they use?",
+      "options": {
+        "a": {
+          "text": "Key phrase extraction",
+          "is_true": false,
+          "explanation": "Incorrect. Key phrase extraction identifies important terms and concepts in text, but does not determine whether the overall tone is positive, negative, or neutral."
+        },
+        "b": {
+          "text": "Named entity recognition",
+          "is_true": false,
+          "explanation": "Incorrect. Named entity recognition identifies specific entities like people, places, and organisations — it does not assess the emotional tone of text."
+        },
+        "c": {
+          "text": "Sentiment analysis",
+          "is_true": true,
+          "explanation": "Correct. Sentiment analysis evaluates text to determine its emotional tone — positive, negative, neutral, or mixed — which is exactly what is needed to gauge overall customer sentiment from reviews."
+        },
+        "d": {
+          "text": "Language detection",
+          "is_true": false,
+          "explanation": "Incorrect. Language detection identifies which language a text is written in. It does not analyse sentiment."
+        }
       },
-      "b": {
-        "text": "Key phrase extraction",
-        "is_true": false,
-        "explanation": "Incorrect. Key phrase extraction identifies important terms but does not classify them into categories like person, organisation, or location."
-      },
-      "c": {
-        "text": "Named entity recognition (NER)",
-        "is_true": true,
-        "explanation": "Correct. Named entity recognition identifies and classifies specific entities in text — such as people, organisations, locations, dates, and quantities — which is exactly what the news aggregator needs."
-      },
-      "d": {
-        "text": "Text translation",
-        "is_true": false,
-        "explanation": "Incorrect. Translation converts text from one language to another. It does not identify specific entities within text."
-      }
+      "correct_answer": [
+        "c"
+      ]
     },
-    "correct_answer": "c"
-  },
-  {
-    "question_id": 8,
-    "question_type": "multiple_select",
-    "question_text": "Which TWO capabilities are provided by the Azure AI Speech service?",
-    "options": {
-      "a": {
-        "text": "Converting spoken audio to text (speech-to-text)",
-        "is_true": true,
-        "explanation": "Correct. Azure AI Speech provides speech-to-text (speech recognition) that transcribes spoken audio into written text in real time or from audio files."
+    {
+      "question_id": 7,
+      "question_text": "A news aggregator needs to automatically identify mentions of people, organisations, locations, and dates in articles. Which NLP capability is most appropriate?",
+      "options": {
+        "a": {
+          "text": "Sentiment analysis",
+          "is_true": false,
+          "explanation": "Incorrect. Sentiment analysis determines emotional tone, not the identity of specific entities mentioned in text."
+        },
+        "b": {
+          "text": "Key phrase extraction",
+          "is_true": false,
+          "explanation": "Incorrect. Key phrase extraction identifies important terms but does not classify them into categories like person, organisation, or location."
+        },
+        "c": {
+          "text": "Named entity recognition (NER)",
+          "is_true": true,
+          "explanation": "Correct. Named entity recognition identifies and classifies specific entities in text — such as people, organisations, locations, dates, and quantities — which is exactly what the news aggregator needs."
+        },
+        "d": {
+          "text": "Text translation",
+          "is_true": false,
+          "explanation": "Incorrect. Translation converts text from one language to another. It does not identify specific entities within text."
+        }
       },
-      "b": {
-        "text": "Extracting key phrases from text documents",
-        "is_true": false,
-        "explanation": "Incorrect. Key phrase extraction is a feature of the Azure AI Language service, not the Speech service."
-      },
-      "c": {
-        "text": "Converting text to natural-sounding spoken audio (text-to-speech)",
-        "is_true": true,
-        "explanation": "Correct. Azure AI Speech provides text-to-speech (speech synthesis) that converts written text into natural-sounding spoken audio using neural voices."
-      },
-      "d": {
-        "text": "Detecting objects in images",
-        "is_true": false,
-        "explanation": "Incorrect. Object detection is a computer vision capability provided by Azure AI Vision, not the Speech service."
-      }
+      "correct_answer": [
+        "c"
+      ]
     },
-    "correct_answer": ["a", "c"]
-  },
-  {
-    "question_id": 9,
-    "question_text": "Which Azure AI service would you use to detect the language of a text document, extract key phrases, and perform sentiment analysis?",
-    "options": {
-      "a": {
-        "text": "Azure AI Vision",
-        "is_true": false,
-        "explanation": "Incorrect. Azure AI Vision processes images and video, not text analytics."
+    {
+      "question_id": 8,
+      "question_text": "Which TWO capabilities are provided by the Azure AI Speech service?",
+      "options": {
+        "a": {
+          "text": "Converting spoken audio to text (speech-to-text)",
+          "is_true": true,
+          "explanation": "Correct. Azure AI Speech provides speech-to-text (speech recognition) that transcribes spoken audio into written text in real time or from audio files."
+        },
+        "b": {
+          "text": "Extracting key phrases from text documents",
+          "is_true": false,
+          "explanation": "Incorrect. Key phrase extraction is a feature of the Azure AI Language service, not the Speech service."
+        },
+        "c": {
+          "text": "Converting text to natural-sounding spoken audio (text-to-speech)",
+          "is_true": true,
+          "explanation": "Correct. Azure AI Speech provides text-to-speech (speech synthesis) that converts written text into natural-sounding spoken audio using neural voices."
+        },
+        "d": {
+          "text": "Detecting objects in images",
+          "is_true": false,
+          "explanation": "Incorrect. Object detection is a computer vision capability provided by Azure AI Vision, not the Speech service."
+        }
       },
-      "b": {
-        "text": "Azure AI Language",
-        "is_true": true,
-        "explanation": "Correct. Azure AI Language provides text analytics capabilities including language detection, key phrase extraction, sentiment analysis, and named entity recognition."
-      },
-      "c": {
-        "text": "Azure AI Speech",
-        "is_true": false,
-        "explanation": "Incorrect. Azure AI Speech handles speech-to-text and text-to-speech. Text analytics features are provided by Azure AI Language."
-      },
-      "d": {
-        "text": "Azure OpenAI Service",
-        "is_true": false,
-        "explanation": "Incorrect. Azure OpenAI provides generative AI models. While they can analyse text, the purpose-built service for key phrase extraction, sentiment analysis, and NER is Azure AI Language."
-      }
+      "correct_answer": [
+        "a",
+        "c"
+      ]
     },
-    "correct_answer": "b"
-  },
-  {
-    "question_id": 10,
-    "question_text": "A multinational company needs to translate technical documentation from English into 15 other languages while preserving formatting. Which Azure capability is best suited?",
-    "options": {
-      "a": {
-        "text": "Azure AI Language — conversational language understanding",
-        "is_true": false,
-        "explanation": "Incorrect. Conversational language understanding interprets user intent in conversations. It does not translate documents."
+    {
+      "question_id": 9,
+      "question_text": "Which Azure AI service would you use to detect the language of a text document, extract key phrases, and perform sentiment analysis?",
+      "options": {
+        "a": {
+          "text": "Azure AI Vision",
+          "is_true": false,
+          "explanation": "Incorrect. Azure AI Vision processes images and video, not text analytics."
+        },
+        "b": {
+          "text": "Azure AI Language",
+          "is_true": true,
+          "explanation": "Correct. Azure AI Language provides text analytics capabilities including language detection, key phrase extraction, sentiment analysis, and named entity recognition."
+        },
+        "c": {
+          "text": "Azure AI Speech",
+          "is_true": false,
+          "explanation": "Incorrect. Azure AI Speech handles speech-to-text and text-to-speech. Text analytics features are provided by Azure AI Language."
+        },
+        "d": {
+          "text": "Azure OpenAI Service",
+          "is_true": false,
+          "explanation": "Incorrect. Azure OpenAI provides generative AI models. While they can analyse text, the purpose-built service for key phrase extraction, sentiment analysis, and NER is Azure AI Language."
+        }
       },
-      "b": {
-        "text": "Azure AI Translator — document translation",
-        "is_true": true,
-        "explanation": "Correct. Azure AI Translator provides document translation that translates entire documents while preserving the original formatting and structure — supporting over 100 languages."
-      },
-      "c": {
-        "text": "Azure AI Speech — speech translation",
-        "is_true": false,
-        "explanation": "Incorrect. Speech translation converts spoken language in real time. The scenario requires translating written documentation."
-      },
-      "d": {
-        "text": "Azure OpenAI — GPT model",
-        "is_true": false,
-        "explanation": "Incorrect. While GPT can translate text, Azure AI Translator is purpose-built for document translation with formatting preservation and is the recommended service for this scenario."
-      }
+      "correct_answer": [
+        "b"
+      ]
     },
-    "correct_answer": "b"
-  },
-  {
-    "question_id": 11,
-    "question_text": "A call centre wants to convert customer phone calls into text transcripts in real time for quality analysis. Which feature of Azure AI Speech should they use?",
-    "options": {
-      "a": {
-        "text": "Text-to-speech",
-        "is_true": false,
-        "explanation": "Incorrect. Text-to-speech converts written text to spoken audio — the opposite direction of what is needed."
+    {
+      "question_id": 10,
+      "question_text": "A multinational company needs to translate technical documentation from English into 15 other languages while preserving formatting. Which Azure capability is best suited?",
+      "options": {
+        "a": {
+          "text": "Azure AI Language — conversational language understanding",
+          "is_true": false,
+          "explanation": "Incorrect. Conversational language understanding interprets user intent in conversations. It does not translate documents."
+        },
+        "b": {
+          "text": "Azure AI Translator — document translation",
+          "is_true": true,
+          "explanation": "Correct. Azure AI Translator provides document translation that translates entire documents while preserving the original formatting and structure — supporting over 100 languages."
+        },
+        "c": {
+          "text": "Azure AI Speech — speech translation",
+          "is_true": false,
+          "explanation": "Incorrect. Speech translation converts spoken language in real time. The scenario requires translating written documentation."
+        },
+        "d": {
+          "text": "Azure OpenAI — GPT model",
+          "is_true": false,
+          "explanation": "Incorrect. While GPT can translate text, Azure AI Translator is purpose-built for document translation with formatting preservation and is the recommended service for this scenario."
+        }
       },
-      "b": {
-        "text": "Speech-to-text",
-        "is_true": true,
-        "explanation": "Correct. Speech-to-text (speech recognition) converts spoken audio into text in real time, which is exactly what is needed to transcribe live phone calls."
-      },
-      "c": {
-        "text": "Speaker recognition",
-        "is_true": false,
-        "explanation": "Incorrect. Speaker recognition identifies who is speaking, but does not transcribe what they are saying."
-      },
-      "d": {
-        "text": "Speech translation",
-        "is_true": false,
-        "explanation": "Incorrect. Speech translation converts spoken words from one language to another. The scenario requires transcription within the same language."
-      }
+      "correct_answer": [
+        "b"
+      ]
     },
-    "correct_answer": "b"
-  },
-  {
-    "question_id": 12,
-    "question_text": "What is a large language model (LLM)?",
-    "options": {
-      "a": {
-        "text": "A database that stores large amounts of text for search queries.",
-        "is_true": false,
-        "explanation": "Incorrect. A database stores and retrieves data. An LLM is a trained neural network that generates and understands language."
+    {
+      "question_id": 11,
+      "question_text": "A call centre wants to convert customer phone calls into text transcripts in real time for quality analysis. Which feature of Azure AI Speech should they use?",
+      "options": {
+        "a": {
+          "text": "Text-to-speech",
+          "is_true": false,
+          "explanation": "Incorrect. Text-to-speech converts written text to spoken audio — the opposite direction of what is needed."
+        },
+        "b": {
+          "text": "Speech-to-text",
+          "is_true": true,
+          "explanation": "Correct. Speech-to-text (speech recognition) converts spoken audio into text in real time, which is exactly what is needed to transcribe live phone calls."
+        },
+        "c": {
+          "text": "Speaker recognition",
+          "is_true": false,
+          "explanation": "Incorrect. Speaker recognition identifies who is speaking, but does not transcribe what they are saying."
+        },
+        "d": {
+          "text": "Speech translation",
+          "is_true": false,
+          "explanation": "Incorrect. Speech translation converts spoken words from one language to another. The scenario requires transcription within the same language."
+        }
       },
-      "b": {
-        "text": "A deep learning model trained on massive text datasets that can understand and generate human-like language.",
-        "is_true": true,
-        "explanation": "Correct. A large language model is a deep learning model (based on the Transformer architecture) trained on vast amounts of text data. It learns patterns in language, enabling it to generate, summarise, translate, and reason about text."
-      },
-      "c": {
-        "text": "A rule-based system that uses predefined grammar rules to parse sentences.",
-        "is_true": false,
-        "explanation": "Incorrect. Rule-based systems follow explicit programming. LLMs learn language patterns from data using deep learning, without explicit rules."
-      },
-      "d": {
-        "text": "A search engine that retrieves relevant documents based on keywords.",
-        "is_true": false,
-        "explanation": "Incorrect. Search engines retrieve existing content. LLMs generate new content and can reason about language."
-      }
+      "correct_answer": [
+        "b"
+      ]
     },
-    "correct_answer": "b"
-  },
-  {
-    "question_id": 13,
-    "question_text": "Which generative AI concept describes the process of converting text into numerical representations (tokens) that the model can process?",
-    "options": {
-      "a": {
-        "text": "Embedding",
-        "is_true": false,
-        "explanation": "Incorrect. Embeddings are dense vector representations of tokens that capture semantic meaning. Tokenisation is the step that breaks text into tokens before embeddings are created."
+    {
+      "question_id": 12,
+      "question_text": "What is a large language model (LLM)?",
+      "options": {
+        "a": {
+          "text": "A database that stores large amounts of text for search queries.",
+          "is_true": false,
+          "explanation": "Incorrect. A database stores and retrieves data. An LLM is a trained neural network that generates and understands language."
+        },
+        "b": {
+          "text": "A deep learning model trained on massive text datasets that can understand and generate human-like language.",
+          "is_true": true,
+          "explanation": "Correct. A large language model is a deep learning model (based on the Transformer architecture) trained on vast amounts of text data. It learns patterns in language, enabling it to generate, summarise, translate, and reason about text."
+        },
+        "c": {
+          "text": "A rule-based system that uses predefined grammar rules to parse sentences.",
+          "is_true": false,
+          "explanation": "Incorrect. Rule-based systems follow explicit programming. LLMs learn language patterns from data using deep learning, without explicit rules."
+        },
+        "d": {
+          "text": "A search engine that retrieves relevant documents based on keywords.",
+          "is_true": false,
+          "explanation": "Incorrect. Search engines retrieve existing content. LLMs generate new content and can reason about language."
+        }
       },
-      "b": {
-        "text": "Tokenisation",
-        "is_true": true,
-        "explanation": "Correct. Tokenisation is the process of breaking input text into smaller units (tokens) — words, subwords, or characters — and mapping them to numerical IDs that the model can process."
-      },
-      "c": {
-        "text": "Fine-tuning",
-        "is_true": false,
-        "explanation": "Incorrect. Fine-tuning is the process of further training a pre-trained model on domain-specific data. It does not describe converting text to numerical tokens."
-      },
-      "d": {
-        "text": "Prompt engineering",
-        "is_true": false,
-        "explanation": "Incorrect. Prompt engineering is the practice of crafting effective input prompts to guide model responses. Tokenisation is the underlying text-to-number conversion process."
-      }
+      "correct_answer": [
+        "b"
+      ]
     },
-    "correct_answer": "b"
-  },
-  {
-    "question_id": 14,
-    "question_text": "In the context of generative AI, what is an AI agent?",
-    "options": {
-      "a": {
-        "text": "A human who reviews AI-generated content for accuracy.",
-        "is_true": false,
-        "explanation": "Incorrect. A human reviewer is not an AI agent. An AI agent is an automated system powered by an LLM."
+    {
+      "question_id": 13,
+      "question_text": "Which generative AI concept describes the process of converting text into numerical representations (tokens) that the model can process?",
+      "options": {
+        "a": {
+          "text": "Embedding",
+          "is_true": false,
+          "explanation": "Incorrect. Embeddings are dense vector representations of tokens that capture semantic meaning. Tokenisation is the step that breaks text into tokens before embeddings are created."
+        },
+        "b": {
+          "text": "Tokenisation",
+          "is_true": true,
+          "explanation": "Correct. Tokenisation is the process of breaking input text into smaller units (tokens) — words, subwords, or characters — and mapping them to numerical IDs that the model can process."
+        },
+        "c": {
+          "text": "Fine-tuning",
+          "is_true": false,
+          "explanation": "Incorrect. Fine-tuning is the process of further training a pre-trained model on domain-specific data. It does not describe converting text to numerical tokens."
+        },
+        "d": {
+          "text": "Prompt engineering",
+          "is_true": false,
+          "explanation": "Incorrect. Prompt engineering is the practice of crafting effective input prompts to guide model responses. Tokenisation is the underlying text-to-number conversion process."
+        }
       },
-      "b": {
-        "text": "An AI system that can autonomously plan, use tools, and take actions to accomplish goals beyond simple text generation.",
-        "is_true": true,
-        "explanation": "Correct. An AI agent extends LLM capabilities by adding the ability to plan multi-step tasks, use external tools (APIs, databases, code execution), and take actions to accomplish goals — going beyond basic text generation."
-      },
-      "c": {
-        "text": "A pre-trained language model deployed as a REST API endpoint.",
-        "is_true": false,
-        "explanation": "Incorrect. A deployed model API provides inference capabilities, but an AI agent specifically adds autonomous planning, tool use, and action-taking abilities."
-      },
-      "d": {
-        "text": "A data preprocessing pipeline that cleans text before it is fed to a model.",
-        "is_true": false,
-        "explanation": "Incorrect. Data preprocessing is an ETL task. An AI agent is an autonomous system that uses LLMs to plan and execute tasks."
-      }
+      "correct_answer": [
+        "b"
+      ]
     },
-    "correct_answer": "b"
-  },
-  {
-    "question_id": 15,
-    "question_text": "A developer sets the 'temperature' parameter of a generative AI model to 0.0. What effect does this have on the model's output?",
-    "options": {
-      "a": {
-        "text": "The model generates the most random and creative responses possible.",
-        "is_true": false,
-        "explanation": "Incorrect. A temperature of 0.0 produces the least random output. Higher temperature values (closer to 1.0 or above) increase randomness and creativity."
+    {
+      "question_id": 14,
+      "question_text": "In the context of generative AI, what is an AI agent?",
+      "options": {
+        "a": {
+          "text": "A human who reviews AI-generated content for accuracy.",
+          "is_true": false,
+          "explanation": "Incorrect. A human reviewer is not an AI agent. An AI agent is an automated system powered by an LLM."
+        },
+        "b": {
+          "text": "An AI system that can autonomously plan, use tools, and take actions to accomplish goals beyond simple text generation.",
+          "is_true": true,
+          "explanation": "Correct. An AI agent extends LLM capabilities by adding the ability to plan multi-step tasks, use external tools (APIs, databases, code execution), and take actions to accomplish goals — going beyond basic text generation."
+        },
+        "c": {
+          "text": "A pre-trained language model deployed as a REST API endpoint.",
+          "is_true": false,
+          "explanation": "Incorrect. A deployed model API provides inference capabilities, but an AI agent specifically adds autonomous planning, tool use, and action-taking abilities."
+        },
+        "d": {
+          "text": "A data preprocessing pipeline that cleans text before it is fed to a model.",
+          "is_true": false,
+          "explanation": "Incorrect. Data preprocessing is an ETL task. An AI agent is an autonomous system that uses LLMs to plan and execute tasks."
+        }
       },
-      "b": {
-        "text": "The model always selects the most probable next token, producing deterministic and focused output.",
-        "is_true": true,
-        "explanation": "Correct. A temperature of 0.0 makes the model always choose the highest-probability token at each step, producing deterministic, consistent, and focused responses."
-      },
-      "c": {
-        "text": "The model refuses to generate any output.",
-        "is_true": false,
-        "explanation": "Incorrect. A temperature of 0.0 does not stop generation — it makes the output deterministic by always selecting the most likely token."
-      },
-      "d": {
-        "text": "The model generates shorter responses to save compute resources.",
-        "is_true": false,
-        "explanation": "Incorrect. Temperature controls randomness in token selection, not response length. Response length is controlled by max_tokens."
-      }
+      "correct_answer": [
+        "b"
+      ]
     },
-    "correct_answer": "b"
-  },
-  {
-    "question_id": 16,
-    "question_text": "Which prompt engineering technique involves providing the model with a few examples of the desired input-output format before asking it to complete a new task?",
-    "options": {
-      "a": {
-        "text": "Zero-shot learning",
-        "is_true": false,
-        "explanation": "Incorrect. Zero-shot learning asks the model to perform a task without any examples — relying entirely on its pre-trained knowledge."
+    {
+      "question_id": 15,
+      "question_text": "A developer sets the 'temperature' parameter of a generative AI model to 0.0. What effect does this have on the model's output?",
+      "options": {
+        "a": {
+          "text": "The model generates the most random and creative responses possible.",
+          "is_true": false,
+          "explanation": "Incorrect. A temperature of 0.0 produces the least random output. Higher temperature values (closer to 1.0 or above) increase randomness and creativity."
+        },
+        "b": {
+          "text": "The model always selects the most probable next token, producing deterministic and focused output.",
+          "is_true": true,
+          "explanation": "Correct. A temperature of 0.0 makes the model always choose the highest-probability token at each step, producing deterministic, consistent, and focused responses."
+        },
+        "c": {
+          "text": "The model refuses to generate any output.",
+          "is_true": false,
+          "explanation": "Incorrect. A temperature of 0.0 does not stop generation — it makes the output deterministic by always selecting the most likely token."
+        },
+        "d": {
+          "text": "The model generates shorter responses to save compute resources.",
+          "is_true": false,
+          "explanation": "Incorrect. Temperature controls randomness in token selection, not response length. Response length is controlled by max_tokens."
+        }
       },
-      "b": {
-        "text": "Few-shot learning",
-        "is_true": true,
-        "explanation": "Correct. Few-shot learning provides a small number of examples (shots) in the prompt to demonstrate the expected input-output pattern, helping the model understand the desired format and task."
-      },
-      "c": {
-        "text": "Fine-tuning",
-        "is_true": false,
-        "explanation": "Incorrect. Fine-tuning retrains the model's weights on additional data. Few-shot learning provides examples within the prompt without modifying the model."
-      },
-      "d": {
-        "text": "Chain of thought",
-        "is_true": false,
-        "explanation": "Incorrect. Chain of thought prompting asks the model to reason step-by-step. Few-shot learning demonstrates the desired output format through examples."
-      }
+      "correct_answer": [
+        "b"
+      ]
     },
-    "correct_answer": "b"
-  },
-  {
-    "question_id": 17,
-    "question_text": "When a generative AI model produces confident-sounding but factually incorrect information, this is known as ___.",
-    "options": {
-      "a": {
-        "text": "Bias",
-        "is_true": false,
-        "explanation": "Incorrect. Bias refers to systematic prejudice in model outputs based on training data imbalances. Factually incorrect but confident output is called hallucination."
+    {
+      "question_id": 16,
+      "question_text": "Which prompt engineering technique involves providing the model with a few examples of the desired input-output format before asking it to complete a new task?",
+      "options": {
+        "a": {
+          "text": "Zero-shot learning",
+          "is_true": false,
+          "explanation": "Incorrect. Zero-shot learning asks the model to perform a task without any examples — relying entirely on its pre-trained knowledge."
+        },
+        "b": {
+          "text": "Few-shot learning",
+          "is_true": true,
+          "explanation": "Correct. Few-shot learning provides a small number of examples (shots) in the prompt to demonstrate the expected input-output pattern, helping the model understand the desired format and task."
+        },
+        "c": {
+          "text": "Fine-tuning",
+          "is_true": false,
+          "explanation": "Incorrect. Fine-tuning retrains the model's weights on additional data. Few-shot learning provides examples within the prompt without modifying the model."
+        },
+        "d": {
+          "text": "Chain of thought",
+          "is_true": false,
+          "explanation": "Incorrect. Chain of thought prompting asks the model to reason step-by-step. Few-shot learning demonstrates the desired output format through examples."
+        }
       },
-      "b": {
-        "text": "Overfitting",
-        "is_true": false,
-        "explanation": "Incorrect. Overfitting is a training problem where a model memorises training data. Generating false information during inference is hallucination."
-      },
-      "c": {
-        "text": "Hallucination",
-        "is_true": true,
-        "explanation": "Correct. Hallucination occurs when a generative AI model produces output that sounds plausible and confident but is factually incorrect or fabricated. It is a key responsible AI concern for generative AI systems."
-      },
-      "d": {
-        "text": "Grounding",
-        "is_true": false,
-        "explanation": "Incorrect. Grounding is actually the technique used to reduce hallucinations by connecting model outputs to factual source data."
-      }
+      "correct_answer": [
+        "b"
+      ]
     },
-    "correct_answer": "c"
-  },
-  {
-    "question_id": 18,
-    "question_text": "Which Azure service provides access to OpenAI models such as GPT-4, DALL-E, and Whisper with enterprise-grade security, compliance, and regional availability?",
-    "options": {
-      "a": {
-        "text": "Azure Machine Learning",
-        "is_true": false,
-        "explanation": "Incorrect. Azure Machine Learning is for training, deploying, and managing custom ML models. It does not provide direct access to OpenAI models."
+    {
+      "question_id": 17,
+      "question_text": "When a generative AI model produces confident-sounding but factually incorrect information, this is known as ___.",
+      "options": {
+        "a": {
+          "text": "Bias",
+          "is_true": false,
+          "explanation": "Incorrect. Bias refers to systematic prejudice in model outputs based on training data imbalances. Factually incorrect but confident output is called hallucination."
+        },
+        "b": {
+          "text": "Overfitting",
+          "is_true": false,
+          "explanation": "Incorrect. Overfitting is a training problem where a model memorises training data. Generating false information during inference is hallucination."
+        },
+        "c": {
+          "text": "Hallucination",
+          "is_true": true,
+          "explanation": "Correct. Hallucination occurs when a generative AI model produces output that sounds plausible and confident but is factually incorrect or fabricated. It is a key responsible AI concern for generative AI systems."
+        },
+        "d": {
+          "text": "Grounding",
+          "is_true": false,
+          "explanation": "Incorrect. Grounding is actually the technique used to reduce hallucinations by connecting model outputs to factual source data."
+        }
       },
-      "b": {
-        "text": "Azure AI Language",
-        "is_true": false,
-        "explanation": "Incorrect. Azure AI Language provides text analytics and NLP capabilities, not access to OpenAI generative models."
-      },
-      "c": {
-        "text": "Azure OpenAI Service",
-        "is_true": true,
-        "explanation": "Correct. Azure OpenAI Service provides access to OpenAI's GPT-4, GPT-4o, DALL-E, and Whisper models with enterprise-grade security, compliance, content filtering, and regional data residency."
-      },
-      "d": {
-        "text": "Azure AI Vision",
-        "is_true": false,
-        "explanation": "Incorrect. Azure AI Vision provides image analysis and OCR capabilities, not access to OpenAI generative models."
-      }
+      "correct_answer": [
+        "c"
+      ]
     },
-    "correct_answer": "c"
-  },
-  {
-    "question_id": 19,
-    "question_type": "multiple_select",
-    "question_text": "Which TWO features are available in Azure AI Foundry (formerly Azure AI Studio)?",
-    "options": {
-      "a": {
-        "text": "A model catalog with open-source and proprietary models",
-        "is_true": true,
-        "explanation": "Correct. Azure AI Foundry includes a model catalog that provides access to hundreds of models including open-source models (e.g., Llama, Mistral) and proprietary models (e.g., GPT-4) for evaluation and deployment."
+    {
+      "question_id": 18,
+      "question_text": "Which Azure service provides access to OpenAI models such as GPT-4, DALL-E, and Whisper with enterprise-grade security, compliance, and regional availability?",
+      "options": {
+        "a": {
+          "text": "Azure Machine Learning",
+          "is_true": false,
+          "explanation": "Incorrect. Azure Machine Learning is for training, deploying, and managing custom ML models. It does not provide direct access to OpenAI models."
+        },
+        "b": {
+          "text": "Azure AI Language",
+          "is_true": false,
+          "explanation": "Incorrect. Azure AI Language provides text analytics and NLP capabilities, not access to OpenAI generative models."
+        },
+        "c": {
+          "text": "Azure OpenAI Service",
+          "is_true": true,
+          "explanation": "Correct. Azure OpenAI Service provides access to OpenAI's GPT-4, GPT-4o, DALL-E, and Whisper models with enterprise-grade security, compliance, content filtering, and regional data residency."
+        },
+        "d": {
+          "text": "Azure AI Vision",
+          "is_true": false,
+          "explanation": "Incorrect. Azure AI Vision provides image analysis and OCR capabilities, not access to OpenAI generative models."
+        }
       },
-      "b": {
-        "text": "A drag-and-drop pipeline designer for training regression models",
-        "is_true": false,
-        "explanation": "Incorrect. The drag-and-drop pipeline designer for ML training is a feature of Azure Machine Learning, not Azure AI Foundry."
-      },
-      "c": {
-        "text": "Prompt flow for building and testing LLM-based applications",
-        "is_true": true,
-        "explanation": "Correct. Azure AI Foundry provides prompt flow — a visual tool for building, testing, and deploying LLM-based applications by connecting prompts, models, and tools into workflows."
-      },
-      "d": {
-        "text": "Automated hyperparameter tuning for custom neural networks",
-        "is_true": false,
-        "explanation": "Incorrect. Automated hyperparameter tuning is a feature of Azure Machine Learning (AutoML/HyperDrive), not Azure AI Foundry."
-      }
+      "correct_answer": [
+        "c"
+      ]
     },
-    "correct_answer": ["a", "c"]
-  },
-  {
-    "question_id": 20,
-    "question_text": "A developer is building a chatbot using Azure OpenAI. They want the chatbot to always respond as a friendly travel assistant that only answers travel-related questions. Which prompt engineering technique should they use?",
-    "options": {
-      "a": {
-        "text": "Set a high temperature value",
-        "is_true": false,
-        "explanation": "Incorrect. Temperature controls randomness in output, not the persona or topic scope of the chatbot."
+    {
+      "question_id": 19,
+      "question_text": "Which TWO features are available in Azure AI Foundry (formerly Azure AI Studio)?",
+      "options": {
+        "a": {
+          "text": "A model catalog with open-source and proprietary models",
+          "is_true": true,
+          "explanation": "Correct. Azure AI Foundry includes a model catalog that provides access to hundreds of models including open-source models (e.g., Llama, Mistral) and proprietary models (e.g., GPT-4) for evaluation and deployment."
+        },
+        "b": {
+          "text": "A drag-and-drop pipeline designer for training regression models",
+          "is_true": false,
+          "explanation": "Incorrect. The drag-and-drop pipeline designer for ML training is a feature of Azure Machine Learning, not Azure AI Foundry."
+        },
+        "c": {
+          "text": "Prompt flow for building and testing LLM-based applications",
+          "is_true": true,
+          "explanation": "Correct. Azure AI Foundry provides prompt flow — a visual tool for building, testing, and deploying LLM-based applications by connecting prompts, models, and tools into workflows."
+        },
+        "d": {
+          "text": "Automated hyperparameter tuning for custom neural networks",
+          "is_true": false,
+          "explanation": "Incorrect. Automated hyperparameter tuning is a feature of Azure Machine Learning (AutoML/HyperDrive), not Azure AI Foundry."
+        }
       },
-      "b": {
-        "text": "Define a system message that specifies the persona and boundaries",
-        "is_true": true,
-        "explanation": "Correct. The system message sets the behaviour, persona, and boundaries for the model. By specifying 'You are a friendly travel assistant. Only answer travel-related questions', the developer constrains the chatbot's scope and tone."
-      },
-      "c": {
-        "text": "Increase the max_tokens parameter",
-        "is_true": false,
-        "explanation": "Incorrect. The max_tokens parameter controls the maximum length of the response, not the persona or topic boundaries."
-      },
-      "d": {
-        "text": "Use a smaller model to reduce response complexity",
-        "is_true": false,
-        "explanation": "Incorrect. Model size affects capability, not persona or topic restrictions. The system message is the correct way to define chatbot behaviour."
-      }
+      "correct_answer": [
+        "a",
+        "c"
+      ]
     },
-    "correct_answer": "b"
-  }
-]
+    {
+      "question_id": 20,
+      "question_text": "A developer is building a chatbot using Azure OpenAI. They want the chatbot to always respond as a friendly travel assistant that only answers travel-related questions. Which prompt engineering technique should they use?",
+      "options": {
+        "a": {
+          "text": "Set a high temperature value",
+          "is_true": false,
+          "explanation": "Incorrect. Temperature controls randomness in output, not the persona or topic scope of the chatbot."
+        },
+        "b": {
+          "text": "Define a system message that specifies the persona and boundaries",
+          "is_true": true,
+          "explanation": "Correct. The system message sets the behaviour, persona, and boundaries for the model. By specifying 'You are a friendly travel assistant. Only answer travel-related questions', the developer constrains the chatbot's scope and tone."
+        },
+        "c": {
+          "text": "Increase the max_tokens parameter",
+          "is_true": false,
+          "explanation": "Incorrect. The max_tokens parameter controls the maximum length of the response, not the persona or topic boundaries."
+        },
+        "d": {
+          "text": "Use a smaller model to reduce response complexity",
+          "is_true": false,
+          "explanation": "Incorrect. Model size affects capability, not persona or topic restrictions. The system message is the correct way to define chatbot behaviour."
+        }
+      },
+      "correct_answer": [
+        "b"
+      ]
+    }
+  ]
+}
