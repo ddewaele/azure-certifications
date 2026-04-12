@@ -1,0 +1,222 @@
+[
+  {
+    "question_id": 1,
+    "question_text": "A user cannot RDP to a Windows VM in Azure. The VM is running, has a public IP, and the admin confirms the VM agent is healthy. What should be checked FIRST using the most targeted diagnostic tool?",
+    "options": {
+      "a": { "text": "Redeploy the VM to a new host in case of hardware issues", "is_true": false, "explanation": "Redeployment is a disruptive last resort. Many common RDP issues (NSG, firewall, RDP service) can be diagnosed and fixed without redeployment." },
+      "b": { "text": "Use 'IP Flow Verify' in Network Watcher to test whether the NSG allows TCP 3389 inbound from the user's IP", "is_true": true, "explanation": "IP Flow Verify is the fastest, most targeted tool to confirm whether an NSG is blocking RDP (TCP 3389). It tests the specific 5-tuple (source IP, destination IP, port, protocol, direction) against all NSG rules and reports exactly which rule allows or denies the traffic. This is the first diagnostic step for connectivity issues." },
+      "c": { "text": "Check the VM's CPU and memory metrics in Azure Monitor to see if it's overwhelmed", "is_true": false, "explanation": "High CPU/memory would cause slow RDP sessions but not completely block connection. The most common RDP failure causes are NSG rules and firewall settings — check connectivity first." },
+      "d": { "text": "Delete and recreate the public IP address associated with the VM", "is_true": false, "explanation": "Recreating the public IP changes the IP address, causing further disruption. This does not diagnose or fix the underlying NSG or configuration issue." }
+    },
+    "correct_answer": ["b"]
+  },
+  {
+    "question_id": 2,
+    "question_text": "An admin configures Just-In-Time (JIT) VM access for a Windows VM. A developer requests RDP access for 4 hours. What happens when the 4-hour window expires?",
+    "options": {
+      "a": { "text": "The developer is immediately disconnected from their active RDP session", "is_true": false, "explanation": "JIT access does not terminate active sessions when the time window expires. Active connections remain alive. JIT only controls new connection requests by modifying NSG rules." },
+      "b": { "text": "The NSG rule allowing RDP from the developer's IP is automatically removed — new connections from that IP to port 3389 are blocked, but existing sessions remain active", "is_true": true, "explanation": "JIT VM access works by adding a temporary 'Allow' NSG rule for the requested source IP and port. When the time window expires, JIT automatically removes that rule. Any existing RDP sessions that were established during the window continue unaffected (TCP sessions persist). Only new connection attempts are blocked." },
+      "c": { "text": "The developer's Azure account is locked for 24 hours to prevent repeated access requests", "is_true": false, "explanation": "JIT does not lock accounts. It is a network-level access control mechanism, not an authentication control. The developer can immediately request a new JIT access window after the previous one expires." },
+      "d": { "text": "The VM is stopped (deallocated) to prevent any further connections", "is_true": false, "explanation": "JIT does not stop or deallocate VMs. It only manages NSG rules for specific ports and source IPs. The VM continues running after the JIT window expires." }
+    },
+    "correct_answer": ["b"]
+  },
+  {
+    "question_id": 3,
+    "question_text": "A Windows VM has no public IP address and is in a VNet with no VPN or ExpressRoute. An admin needs to RDP to the VM immediately. Which Azure service enables this WITHOUT requiring a public IP on the VM?",
+    "options": {
+      "a": { "text": "Assign a temporary public IP to the VM, use it for RDP, then remove it", "is_true": false, "explanation": "This approach works but exposes the VM to the internet during the session. Azure Bastion is the purpose-built service for secure access without requiring a public IP." },
+      "b": { "text": "Azure Bastion — provides browser-based RDP over HTTPS (port 443) to VMs without requiring a public IP on the VM", "is_true": true, "explanation": "Azure Bastion is a PaaS service deployed in the VNet that provides secure, seamless RDP and SSH access to VMs in the same VNet (or peered VNets) through the Azure portal over HTTPS. The VM has no public IP and no port 3389 needs to be exposed. Bastion terminates the RDP/SSH connection and proxies it securely." },
+      "c": { "text": "Azure Cloud Shell — can connect to VMs in the same VNet via SSH/RDP from the browser", "is_true": false, "explanation": "Azure Cloud Shell provides a browser-based terminal with Azure CLI/PowerShell tools. It does not provide RDP/SSH connectivity to VMs as a proxy service. Cloud Shell can run 'az vm' commands but cannot directly RDP to a VM." },
+      "d": { "text": "Enable the Serial Console on the VM for a terminal-based alternative to RDP", "is_true": false, "explanation": "The Azure Serial Console provides console-level access (similar to physical keyboard/monitor access) for troubleshooting unresponsive VMs. It is not a full RDP replacement and requires the VM to be booted with SAC enabled on Windows." }
+    },
+    "correct_answer": ["b"]
+  },
+  {
+    "question_id": 4,
+    "question_text": "An admin uses Azure Bastion to connect to a Windows VM. During the RDP session, the admin needs to copy a file from their local machine to the VM. However, the Bastion session's clipboard only works for text — file transfer doesn't seem to work. What must be enabled?",
+    "options": {
+      "a": { "text": "File transfer is not supported over Azure Bastion under any configuration — use AzCopy or Azure Files instead", "is_true": false, "explanation": "Azure Bastion does support file upload/download, but it requires the Bastion SKU to be Standard (not Basic). The Basic SKU has limited features including no file transfer." },
+      "b": { "text": "Upgrade the Bastion deployment to the Standard SKU, which includes file transfer capabilities", "is_true": true, "explanation": "Azure Bastion Basic SKU supports browser-based RDP/SSH with clipboard text and basic features. The Standard SKU adds file upload/download, shareable links, IP-based connections, and native client support. File transfer requires the Standard SKU to be deployed in the VNet." },
+      "c": { "text": "Enable the 'Allow file transfer' setting on the VM's NIC in the portal", "is_true": false, "explanation": "There is no 'Allow file transfer' setting on a VM's NIC. File transfer capability in Bastion is a Bastion SKU feature, not a VM NIC configuration." },
+      "d": { "text": "Configure the AzureBastionSubnet NSG to allow inbound traffic on port 8080 for file transfer", "is_true": false, "explanation": "Azure Bastion file transfer uses the existing HTTPS (443) connection, not a separate port. Bastion communicates with VMs using the RDP/SSH protocol internally over the VNet, and with clients over HTTPS externally." }
+    },
+    "correct_answer": ["b"]
+  },
+  {
+    "question_id": 5,
+    "question_text": "A Windows VM has an NSG rule allowing RDP (TCP 3389) from Any source. The admin adds a rule to block RDP from a specific IP (192.168.1.100) with priority 200. The existing Allow-Any rule is at priority 300. A user at 192.168.1.100 tries to RDP. What happens?",
+    "options": {
+      "a": { "text": "The Allow-Any rule (priority 300) takes precedence because Allow rules override Deny rules", "is_true": false, "explanation": "NSG rules are evaluated in priority order (lowest number first). There is no 'Allow overrides Deny' rule — whichever rule matches FIRST (lowest priority number) is applied." },
+      "b": { "text": "The Deny rule (priority 200) is evaluated first and blocks traffic from 192.168.1.100 — the Allow-Any rule at priority 300 is never reached", "is_true": true, "explanation": "NSG rules are evaluated in ascending priority order. Priority 200 (Deny from 192.168.1.100) is evaluated before priority 300 (Allow from Any). The deny rule matches the traffic from 192.168.1.100 and evaluation stops — the traffic is blocked. The allow rule at priority 300 is never evaluated." },
+      "c": { "text": "Both rules apply simultaneously and the more specific rule (single IP) wins over the general rule (Any)", "is_true": false, "explanation": "NSGs do not use a 'most specific match' algorithm. Rules are evaluated in strict priority number order. Specificity is irrelevant — only priority number determines which rule applies." },
+      "d": { "text": "The conflicting rules cause the traffic to be dropped by default", "is_true": false, "explanation": "There is no 'conflict resolution' mode in NSGs. Rules are evaluated strictly in priority order. The first matching rule is applied with no ambiguity." }
+    },
+    "correct_answer": ["b"]
+  },
+  {
+    "question_id": 6,
+    "question_text": "A Windows VM that is Entra ID-joined is deployed and the admin enables Entra ID login (Microsoft.Compute.AADSSHLoginForLinux or AADLoginForWindows extension). A user tries to RDP using their Entra ID credentials but receives 'The sign-in method you're trying to use isn't allowed'. What is the most likely missing configuration?",
+    "options": {
+      "a": { "text": "The VM must be in an Availability Set to support Entra ID login", "is_true": false, "explanation": "Entra ID login for VMs has no requirement for Availability Sets. It works for standalone VMs, VMs in Availability Sets, and VMs in Availability Zones." },
+      "b": { "text": "The user must be assigned the 'Virtual Machine Administrator Login' or 'Virtual Machine User Login' RBAC role on the VM or its resource group", "is_true": true, "explanation": "Entra ID login for Windows VMs requires the connecting user to have either the 'Virtual Machine Administrator Login' role (local admin rights) or 'Virtual Machine User Login' role (standard user rights) assigned on the VM or an enclosing scope. Without this RBAC assignment, the VM extension blocks the sign-in even if the Entra ID credentials are valid." },
+      "c": { "text": "The user's Entra ID account must have Multi-Factor Authentication disabled for VM login to work", "is_true": false, "explanation": "Entra ID VM login works with MFA-enabled accounts. Conditional Access policies apply to the VM login just like any other Entra ID resource. MFA does not need to be disabled." },
+      "d": { "text": "The AADLoginForWindows extension must be installed after the VM is fully provisioned and restarted", "is_true": false, "explanation": "While the extension does need to be installed (which can be done at provisioning time via the portal/ARM template), the error 'sign-in method not allowed' specifically indicates missing RBAC role assignment, not an extension installation issue." }
+    },
+    "correct_answer": ["b"]
+  },
+  {
+    "question_id": 7,
+    "question_text": "An admin cannot RDP to a Windows VM and the Azure portal shows the VM is running. Boot Diagnostics screenshot shows the Windows desktop (normal boot). The admin checks the NSG and confirms RDP is allowed. IP Flow Verify shows the connection is allowed. What should be checked next?",
+    "options": {
+      "a": { "text": "Check whether the VM has been redeployed recently — redeployment changes the public IP", "is_true": false, "explanation": "Redeployment does change the public IP (for dynamic IPs), but the question states the NSG check and IP Flow Verify both show allowed traffic. A changed IP would not show as 'allowed' in IP Flow Verify if the wrong IP were being tested." },
+      "b": { "text": "Check whether Windows Firewall inside the VM is blocking RDP (port 3389), and whether the Remote Desktop Services (TermService) is running", "is_true": true, "explanation": "NSG and network path are confirmed OK by IP Flow Verify. The remaining suspects are guest OS-level: (1) Windows Firewall may be blocking port 3389 despite the NSG allowing it. (2) The Remote Desktop Services service (TermService) may be stopped or disabled. Use the Azure VM 'Run Command' feature or Serial Console to check the service status and firewall rules without needing RDP." },
+      "c": { "text": "Check whether the VM's public IP has moved to a different Azure region", "is_true": false, "explanation": "Public IPs are region-specific resources and do not 'move regions' spontaneously. This is not a real scenario." },
+      "d": { "text": "Increase the VM's size to add more CPU cores — RDP connections fail when the VM is CPU-constrained", "is_true": false, "explanation": "High CPU can slow RDP sessions but does not block the connection entirely. The boot diagnostics show a normal desktop, not a frozen or unresponsive VM. Guest OS firewall/service is the more targeted investigation after confirming NSG/network is OK." }
+    },
+    "correct_answer": ["b"]
+  },
+  {
+    "question_id": 8,
+    "question_text": "An admin uses 'Reset password' from the Azure portal (VMAccess Extension) on a running Windows VM. The operation succeeds but the user still cannot log in with the new password immediately. What is the most likely reason?",
+    "options": {
+      "a": { "text": "The VMAccess Extension requires a VM reboot before the password change takes effect", "is_true": false, "explanation": "Password changes applied via VMAccess Extension take effect without a reboot. The password is changed in the Windows SAM/Active Directory database and should be immediately effective for new logins." },
+      "b": { "text": "If the user was previously connected via RDP and has an active cached session, their old token is still valid — they must log off and attempt a new RDP connection", "is_true": true, "explanation": "Active RDP sessions maintain their authentication token. A password change does not terminate existing sessions. For the new password to take effect, the user must close their current session and reconnect. Additionally, if the user's RDP client cached their old credentials, they must clear them (Credential Manager) before the new password is recognized." },
+      "c": { "text": "VMAccess Extension resets only the local Administrator account — named user accounts cannot be reset via VMAccess", "is_true": false, "explanation": "VMAccess Extension can reset any local user account password, not just the built-in Administrator account. The username is specified in the reset request." },
+      "d": { "text": "The password change is queued and applied during the next Azure maintenance window", "is_true": false, "explanation": "VMAccess Extension operations are immediate — they run directly on the VM. Password changes are not queued or deferred." }
+    },
+    "correct_answer": ["b"]
+  },
+  {
+    "question_id": 9,
+    "question_text": "A Windows VM shows 'Remote Desktop can't connect to the remote computer' when a user tries to RDP. Azure Boot Diagnostics shows a normal login screen. The NSG allows port 3389. The admin uses 'Reset remote access configuration' via the portal. What does this operation actually do?",
+    "options": {
+      "a": { "text": "It reinstalls the Windows operating system on the VM", "is_true": false, "explanation": "Reset remote access does not reinstall the OS. It is a targeted reset of RDP service configuration using the VMAccess Extension." },
+      "b": { "text": "It uses the VMAccess Extension to reset the RDP configuration (Remote Desktop Services, registry settings, and Windows Firewall RDP rule) to default values without restarting the VM", "is_true": true, "explanation": "The 'Reset remote access configuration' operation (also callable via az vm user reset-ssh for Linux, or the Windows equivalent via VMAccess) resets: (1) Remote Desktop Services configuration in the registry. (2) Enables the RDP listener on port 3389. (3) Resets the Windows Firewall rule to allow TCP 3389. (4) Validates and repairs the RDP certificate. It does not require a VM restart for most cases." },
+      "c": { "text": "It removes the VM's current NSG and creates a new one with only RDP allowed", "is_true": false, "explanation": "Reset remote access does not modify NSGs. It operates entirely within the VM's guest OS via the VMAccess Extension." },
+      "d": { "text": "It deallocates and restarts the VM on a new physical host (redeploy)", "is_true": false, "explanation": "Redeployment is a separate operation ('Redeploy VM') that moves the VM to a new host. 'Reset remote access' is a targeted configuration fix that does not involve host changes or VM restarts." }
+    },
+    "correct_answer": ["b"]
+  },
+  {
+    "question_id": 10,
+    "question_text": "A Windows VM fails to boot and Azure Boot Diagnostics shows the error: 'Your PC ran into a problem and needs to restart. Stop Code: CRITICAL_PROCESS_DIED'. The admin suspects a Windows Update caused the issue. What Azure feature allows recovery without creating a new VM?",
+    "options": {
+      "a": { "text": "Azure Auto-recovery — Azure automatically rolls back failed Windows Updates", "is_true": false, "explanation": "Azure does not have an automatic Windows Update rollback mechanism. Recovery requires manual intervention." },
+      "b": { "text": "Use Azure VM Repair to attach the broken OS disk to a repair VM, fix the issue (e.g., uninstall the update), then reattach the fixed disk to the original VM", "is_true": true, "explanation": "Azure VM Repair (az vm repair create / az vm repair run / az vm repair restore) is the supported workflow for fixing broken Windows VMs: (1) Create a repair VM with the broken OS disk attached as a data disk. (2) Run fix commands (DISM, uninstall updates, chkdsk, etc.) against the attached disk. (3) Swap the repaired disk back to the original VM. This preserves the VM identity (NIC, IP, data disks) without rebuilding." },
+      "c": { "text": "Use the Azure Serial Console to boot into Windows Recovery Environment (WinRE) and roll back the update", "is_true": false, "explanation": "The Azure Serial Console on Windows provides access to Windows SAC (Special Administration Console) and cmd.exe, not a full WinRE environment. WinRE rollback can be attempted via Serial Console but is complex and limited. Azure VM Repair is the more reliable approach for disk-level repair." },
+      "d": { "text": "Restore the VM from the most recent Azure Backup recovery point", "is_true": false, "explanation": "Restoring from backup is valid but may result in data loss (the backup RPO gap). VM Repair is preferred when the disk data is intact and only the Windows installation needs fixing." }
+    },
+    "correct_answer": ["b"]
+  },
+  {
+    "question_id": 11,
+    "question_text": "A Windows VM is Hybrid Entra Joined (joined to both on-premises AD and Entra ID). A user reports they can log in with their domain credentials locally but cannot access Azure resources (Key Vault, Storage) from within the VM using their user identity. What is the most likely cause?",
+    "options": {
+      "a": { "text": "Hybrid Entra Joined VMs cannot be used to access Azure resources — only Entra ID Joined VMs support Azure resource authentication", "is_true": false, "explanation": "Hybrid Entra Joined VMs can authenticate to Azure services. The Entra ID PRT (Primary Refresh Token) enables SSO to Azure resources from Hybrid Joined devices." },
+      "b": { "text": "The Primary Refresh Token (PRT) may not be present on the VM — the Entra ID user must have successfully completed a device-based sign-in to receive a PRT for Azure SSO", "is_true": true, "explanation": "Hybrid Entra Joined Windows VMs use a PRT for seamless SSO to Azure resources. The PRT is issued when the user signs in interactively to a Windows session on the domain-joined device. If the user connected via RDP (using local admin), the PRT may not be available for their session. Run 'dsregcmd /status' on the VM to check if 'AzureADPrt: YES' is present for the user's session." },
+      "c": { "text": "The user needs to install the Microsoft Authentication Library (MSAL) on the VM to access Azure resources", "is_true": false, "explanation": "MSAL is a developer library for applications, not something users install to enable interactive authentication. Windows handles PRT-based authentication transparently." },
+      "d": { "text": "Hybrid Entra Join requires the VM to be running Windows 11 — Windows Server versions are not supported for Azure resource SSO", "is_true": false, "explanation": "Hybrid Entra Join is supported on Windows 10, Windows 11, and Windows Server 2016/2019/2022. Windows Server versions are fully supported for hybrid join and Azure resource access." }
+    },
+    "correct_answer": ["b"]
+  },
+  {
+    "question_id": 12,
+    "question_text": "An admin redeployed a Windows VM after RDP troubleshooting failed. After redeployment, the admin still cannot RDP. However, another IT team member successfully RDP'd from their computer. What is the most likely explanation for why the admin still cannot connect?",
+    "options": {
+      "a": { "text": "Redeployment created a new VM with a different OS version that requires a newer RDP client", "is_true": false, "explanation": "VM redeployment moves the VM to a new host but does not change the OS, software, or RDP version. The disk is preserved as-is." },
+      "b": { "text": "Redeployment assigned a new dynamic public IP to the VM — the admin is connecting to the old IP address in their RDP client", "is_true": true, "explanation": "By default, Azure public IPs are 'Dynamic' allocation — they are released when the VM is deallocated. Redeployment temporarily deallocates the VM, which releases the dynamic IP. After redeployment, a new (different) public IP is assigned. The admin's RDP client cached the old IP. Updating the IP in the RDP connection (or using a static IP/DNS name) resolves this." },
+      "c": { "text": "Redeployment resets the NSG rules to default, blocking the admin's specific IP range", "is_true": false, "explanation": "Redeployment does not modify NSG rules. NSG rules are separate Azure resources that persist independently of VM redeployment." },
+      "d": { "text": "The other IT member's computer has a VPN client that bypasses the NSG checks", "is_true": false, "explanation": "VPN clients route traffic through the corporate network but still hit Azure NSG rules. The more likely explanation is that the other person connected after the IP change (using the new IP) while the admin is still trying the old IP." }
+    },
+    "correct_answer": ["b"]
+  },
+  {
+    "question_id": 13,
+    "question_text": "A company requires that Windows VMs only accept RDP connections from within the corporate network (10.10.0.0/16). Currently, RDP is open to Any (0.0.0.0/0). How should the admin restrict RDP access most securely?",
+    "options": {
+      "a": { "text": "Change the NSG inbound RDP rule source from 'Any' to '10.10.0.0/16'", "is_true": false, "explanation": "Restricting the NSG to the corporate IP range is a good improvement over 'Any', but port 3389 is still exposed on the public internet — just limited to corporate IPs. A better approach combines NSG restriction with removal of the public IP or use of Azure Bastion/JIT." },
+      "b": { "text": "Remove the public IP from the VM, use Azure Bastion for access, and deny all inbound RDP in the NSG (port 3389 is not needed with Bastion)", "is_true": true, "explanation": "The most secure approach removes the attack surface entirely: no public IP means no direct internet exposure. Azure Bastion provides encrypted browser-based RDP over HTTPS through the Azure portal. The NSG should deny all inbound RDP (port 3389) since Bastion communicates with the VM over the VNet internally using the existing RDP protocol — the VM still needs to have RDP enabled, but the NSG doesn't need to expose 3389 publicly." },
+      "c": { "text": "Enable Just-In-Time VM access and limit allowed source ranges to 10.10.0.0/16", "is_true": false, "explanation": "JIT with source IP restriction is a good option and significantly better than open RDP. However, it still requires a public IP and exposes port 3389 during active JIT sessions. Bastion with no public IP eliminates this attack surface." },
+      "d": { "text": "Change the RDP port from 3389 to a custom port (e.g., 33890) via Windows Registry and update the NSG", "is_true": false, "explanation": "Changing the RDP port provides 'security through obscurity' only — port scanners easily discover non-standard RDP ports. This is not a security control recognized in any framework and adds operational complexity." }
+    },
+    "correct_answer": ["b"]
+  },
+  {
+    "question_id": 14,
+    "question_text": "A Windows VM is experiencing intermittent RDP disconnections every 15-20 minutes. The VM is healthy and the NSG allows RDP. Users receive error 'The RDP protocol component X.224 detected an error in the protocol stream and has disconnected the client'. What is the most likely cause?",
+    "options": {
+      "a": { "text": "The VM's RDP certificate has expired — Azure does not auto-renew RDP certificates", "is_true": false, "explanation": "Azure VMs use self-signed RDP certificates that are long-lived. An expired certificate would prevent connection establishment, not cause intermittent disconnections after sessions are established." },
+      "b": { "text": "Network instability or packet loss between the client and the Azure VM is causing the RDP protocol stream to be corrupted and reset", "is_true": true, "explanation": "Error X.224 is an RDP protocol stream error that occurs when the underlying TCP/IP connection has issues — packet loss, latency spikes, or network resets corrupt the RDP stream. This is often caused by: client-side ISP instability, corporate proxy interference with long-lived connections, or Azure network path issues. Using a more stable connection, enabling 'Use only RDP security layer' in Group Policy, or connecting via Azure Bastion (which uses HTTPS/WebSocket) can mitigate this." },
+      "c": { "text": "The Windows session timeout policy is set to 15 minutes for inactive sessions", "is_true": false, "explanation": "A session timeout policy would show a clean logout/disconnect message (Session timed out/disconnected) rather than an X.224 protocol error. The protocol stream error indicates a network-level issue, not a policy-based disconnect." },
+      "d": { "text": "The VM's NIC is configured with a Maximum Transmission Unit (MTU) that is too large, causing packet fragmentation on the RDP connection", "is_true": false, "explanation": "MTU mismatch can cause connectivity issues in some scenarios, but Azure VMs use standard MTU settings that work correctly. MTU issues are typically associated with VPN/ExpressRoute paths, not standard internet RDP sessions." }
+    },
+    "correct_answer": ["b"]
+  },
+  {
+    "question_id": 15,
+    "question_text": "A Windows VM is configured to allow RDP. An NSG is attached to the VM's NIC with a rule allowing RDP from 'VirtualNetwork' (the service tag). A user on the public internet tries to RDP but fails. A user on a VNet-peered network succeeds. Why does the internet user fail?",
+    "options": {
+      "a": { "text": "The 'VirtualNetwork' service tag includes all Azure regions — internet traffic is not Azure traffic", "is_true": false, "explanation": "The 'VirtualNetwork' service tag does include the local VNet, peered VNets, and VNets connected via service endpoints — but internet traffic originates outside Azure and is NOT included in the VirtualNetwork service tag." },
+      "b": { "text": "The 'VirtualNetwork' service tag covers traffic from Azure VNets (including peered VNets) but NOT traffic from the public internet — internet-sourced RDP traffic does not match the tag and falls through to the default DenyAll rule", "is_true": true, "explanation": "The 'VirtualNetwork' service tag represents: the local VNet address space, all directly peered VNets, VNets connected via VNet Gateway, and other Azure-backbone-connected VNets. It does NOT include the public internet. Internet-sourced traffic does not match this tag and hits the default DenyAllInbound rule (priority 65500)." },
+      "c": { "text": "The VM must have a public IP for internet traffic to reach it — the VirtualNetwork tag blocks internet traffic at the VM NIC level", "is_true": false, "explanation": "The public IP is a prerequisite for internet traffic to reach the VM, but the NSG rule is the reason internet traffic is blocked even if a public IP exists. The VirtualNetwork service tag simply doesn't cover internet source traffic." },
+      "d": { "text": "Service tags like 'VirtualNetwork' can only be used in subnet-level NSGs, not NIC-level NSGs", "is_true": false, "explanation": "Service tags can be used in both subnet-level and NIC-level NSG rules. There is no restriction on which NSG attachment level can use service tags." }
+    },
+    "correct_answer": ["b"]
+  },
+  {
+    "question_id": 16,
+    "question_text": "An admin receives an alert that a Windows VM is showing unusual outbound RDP traffic (connections from the VM to external IPs on port 3389). This could indicate the VM is being used as an RDP pivot/attack host. What is the immediate containment action?",
+    "options": {
+      "a": { "text": "Delete the VM immediately to stop the attack", "is_true": false, "explanation": "Deleting the VM destroys forensic evidence needed to investigate the compromise. Isolation (blocking network access) is the correct immediate containment step." },
+      "b": { "text": "Add an NSG outbound 'Deny' rule blocking all outbound traffic (or specifically port 3389 outbound) to stop the malicious activity while preserving the VM for forensic investigation", "is_true": true, "explanation": "Immediate containment: add a high-priority NSG outbound deny rule to block the malicious traffic (outbound RDP at minimum, or all outbound for full isolation). This stops the attack without destroying evidence. The VM remains accessible for forensic investigation (memory dump, disk snapshot, log collection). Security team can then assess the full compromise before remediation." },
+      "c": { "text": "Reset the administrator password via VMAccess Extension and the attack will stop", "is_true": false, "explanation": "If the attacker has established persistence (malware, scheduled tasks, backdoors), a password reset will not stop ongoing malicious activity. Network isolation is the correct containment step." },
+      "d": { "text": "Enable Microsoft Defender for Cloud on the subscription to automatically block the attack", "is_true": false, "explanation": "Enabling Defender for Cloud detects and alerts on threats but does not automatically block network traffic. You must take containment action manually or via automated response playbooks." }
+    },
+    "correct_answer": ["b"]
+  },
+  {
+    "question_id": 17,
+    "question_text": "A company deploys Windows VMs using Trusted Launch (Secure Boot + vTPM enabled). An admin notices that the Monitoring > Boot Integrity Monitoring section in the portal shows 'Failed' for one VM. What does this indicate?",
+    "options": {
+      "a": { "text": "The VM's OS disk is failing and needs to be replaced immediately", "is_true": false, "explanation": "Boot integrity monitoring measures the firmware and bootloader hash against known-good baselines. A disk failure would manifest differently (IO errors, disk health alerts) — not a boot integrity failure." },
+      "b": { "text": "The VM's firmware or bootloader has changed since the last known-good state — this may indicate a rootkit, bootkit, or unauthorized firmware change", "is_true": true, "explanation": "Trusted Launch's Boot Integrity Monitoring compares the VM's measured boot sequence (captured via vTPM) against the expected baseline. A 'Failed' status means something in the boot chain (UEFI firmware, bootloader, kernel/drivers) changed from the known-good state. This can indicate: (1) Legitimate change (e.g., Windows Update applied a new bootloader — these are common and expected), or (2) Security incident (rootkit, bootkit). The admin should investigate what changed and verify if the change is authorized." },
+      "c": { "text": "Secure Boot rejected a kernel driver signature — the offending driver must be removed for the VM to boot normally", "is_true": false, "explanation": "If Secure Boot rejected a driver signature, the VM would fail to boot or show a Secure Boot violation on the boot screen. A monitoring 'Failed' status in Azure indicates a measurement change detected by the vTPM, not an active boot rejection." },
+      "d": { "text": "The vTPM has been cleared, which always triggers a boot integrity failure and requires re-enabling Secure Boot", "is_true": false, "explanation": "vTPM clearing would clear TPM measurements but would require an admin action to perform. A monitoring failure from a routine measurement change (Windows Update) is far more common than an intentional vTPM clear." }
+    },
+    "correct_answer": ["b"]
+  },
+  {
+    "question_id": 18,
+    "question_text": "An admin tries to enable Accelerated Networking on a running Windows VM. The portal shows the option is greyed out. What are the requirements for Accelerated Networking?",
+    "options": {
+      "a": { "text": "Accelerated Networking requires the VM to be stopped (deallocated) before it can be enabled", "is_true": true, "explanation": "Enabling or disabling Accelerated Networking on an existing VM's NIC requires the VM to be stopped (deallocated) first. Accelerated Networking uses SR-IOV (Single Root I/O Virtualization) to bypass the hypervisor for network traffic — enabling this requires a NIC configuration change that can't be done while the VM is running." },
+      "b": { "text": "Accelerated Networking requires a Premium SSD OS disk", "is_true": false, "explanation": "Accelerated Networking is a network feature (SR-IOV) and has no dependency on disk type. Standard HDD, Standard SSD, and Premium SSD all work with Accelerated Networking." },
+      "c": { "text": "Accelerated Networking is only available for Linux VMs — Windows VMs do not support SR-IOV", "is_true": false, "explanation": "Accelerated Networking is supported on both Windows and Linux VMs. Windows requires drivers that come with Windows Server 2012 R2 or later (or manual driver installation for older versions)." },
+      "d": { "text": "Accelerated Networking requires the VM to have at least 8 vCPUs", "is_true": false, "explanation": "Accelerated Networking is available for VMs with 2 or more vCPUs. Specific requirements: 2+ vCPUs and a supported VM SKU. Many 2-4 vCPU VMs (D2s_v3, D4s_v3, etc.) support it." }
+    },
+    "correct_answer": ["a"]
+  },
+  {
+    "question_id": 19,
+    "question_text": "A Windows VM's C: drive shows 99% disk usage. The VM is sluggish and Windows Event Log shows 'The volume C: is running low on disk space'. An admin cannot RDP to the VM due to the disk issue. How can the admin free up space without RDP access?",
+    "options": {
+      "a": { "text": "Resize the OS disk from the portal — this immediately frees up space", "is_true": false, "explanation": "Resizing the OS disk increases the physical disk size but does not expand the NTFS volume or free up any existing space. The OS disk resize requires deallocating the VM and then extending the volume inside Windows." },
+      "b": { "text": "Use the Azure VM 'Run Command' feature in the portal to execute PowerShell commands to delete temp files, clear logs, or move data off the C: drive", "is_true": true, "explanation": "Azure Run Command allows executing PowerShell or Windows Command scripts on a VM via the Azure portal or API, without requiring RDP. Commands like 'Remove-Item C:\\Windows\\Temp\\* -Recurse -Force' or clearing WinSxS backup files can free enough space to restore VM performance and allow RDP access." },
+      "c": { "text": "Attach a new data disk and Windows will automatically migrate temp files to the new disk", "is_true": false, "explanation": "Attaching a new data disk does not automatically migrate anything. Windows does not auto-move files to new disks. Manual configuration is required after attachment." },
+      "d": { "text": "Use Azure Backup to restore a previous version of the VM with more free space", "is_true": false, "explanation": "Restoring from backup would roll back all data to the backup point — losing potentially days of work just to recover disk space. Run Command is the non-destructive solution." }
+    },
+    "correct_answer": ["b"]
+  },
+  {
+    "question_id": 20,
+    "question_text": "A company's security policy requires that all RDP connections to Azure VMs are logged with the source IP, user identity, and session duration. Which combination achieves this most comprehensively?",
+    "options": {
+      "a": { "text": "NSG flow logs — capture source IP for all TCP 3389 connections", "is_true": false, "explanation": "NSG flow logs capture network-layer information (source/destination IP, port, allow/deny) but do NOT capture user identity or session duration. They show network-level connection data only." },
+      "b": { "text": "Azure Bastion with diagnostic logs enabled, plus Windows Security Event Logs (Event ID 4624/4634) forwarded to Log Analytics via AMA", "is_true": true, "explanation": "Comprehensive RDP logging requires two sources: (1) Azure Bastion diagnostic logs record: user identity (UPN), target VM, connection timestamp, and session duration for Bastion-brokered RDP sessions. (2) Windows Security Event Logs (Event ID 4624=successful logon, 4634=logoff) inside the VM capture the actual authentication events with user identity, logon type, and source IP. Together these provide end-to-end RDP session auditing." },
+      "c": { "text": "Azure Activity Log — records all user-initiated operations including RDP sessions", "is_true": false, "explanation": "Azure Activity Log records Azure Resource Manager operations (starting/stopping/resizing VMs). It does NOT record individual RDP connection events or session details." },
+      "d": { "text": "NSG flow logs plus Entra ID Sign-in logs", "is_true": false, "explanation": "NSG flow logs provide network-layer data. Entra ID Sign-in logs record Entra ID authentication events — but RDP using local Windows accounts or on-prem AD accounts does not generate Entra ID sign-in log entries. This combination misses local account RDP sessions." }
+    },
+    "correct_answer": ["b"]
+  }
+]

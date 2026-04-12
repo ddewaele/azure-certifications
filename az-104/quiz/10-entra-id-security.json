@@ -1,0 +1,610 @@
+{
+  "meta": {
+    "title": "Entra ID – Conditional Access, MFA, Identity Protection & PIM",
+    "subject": "Microsoft Entra ID",
+    "version": "1.0.0",
+    "created": "2026-03-27"
+  },
+  "questions": [
+    {
+      "question_id": 1,
+      "question_text": "What is Microsoft Entra Conditional Access?",
+      "difficulty": "easy",
+      "topic": "Conditional Access",
+      "tags": ["conditional-access", "entra-id", "policy"],
+      "options": {
+        "a": {
+          "text": "A firewall rule engine for controlling network access to Azure resources",
+          "is_true": false,
+          "explanation": "Incorrect. Conditional Access is an identity-based policy engine — not a network firewall."
+        },
+        "b": {
+          "text": "A policy engine that evaluates signals (user, device, location, app) and enforces access decisions for cloud apps",
+          "is_true": true,
+          "explanation": "Correct. Conditional Access evaluates 'if-then' conditions: if a user signs in under certain conditions (e.g., from an unmanaged device, outside corporate network), then enforce controls (e.g., require MFA, block access, require compliant device)."
+        },
+        "c": {
+          "text": "A feature that restricts which Azure subscriptions a user can access",
+          "is_true": false,
+          "explanation": "Incorrect. Conditional Access targets sign-ins to applications and cloud services — subscription-level access is managed via Azure RBAC."
+        },
+        "d": {
+          "text": "A policy that automatically disables accounts inactive for more than 90 days",
+          "is_true": false,
+          "explanation": "Incorrect. Inactive account management is a separate governance process — not what Conditional Access does."
+        }
+      },
+      "correct_answer": ["b"]
+    },
+    {
+      "question_id": 2,
+      "question_text": "Which Entra ID license is required to use Conditional Access policies?",
+      "difficulty": "easy",
+      "topic": "Conditional Access",
+      "tags": ["conditional-access", "p1", "licensing"],
+      "options": {
+        "a": {
+          "text": "Entra ID Free",
+          "is_true": false,
+          "explanation": "Incorrect. Conditional Access is not available in the Free tier."
+        },
+        "b": {
+          "text": "Entra ID P1 or higher",
+          "is_true": true,
+          "explanation": "Correct. Conditional Access requires Entra ID P1 (included in P2 as well). It is not available in the Free tier or the basic Office 365 tier."
+        },
+        "c": {
+          "text": "Entra ID P2 only",
+          "is_true": false,
+          "explanation": "Incorrect. Conditional Access is a P1 feature — P2 is not required for standard Conditional Access policies."
+        },
+        "d": {
+          "text": "Any Azure subscription tier",
+          "is_true": false,
+          "explanation": "Incorrect. An Azure subscription does not automatically include Entra ID P1. The license must be purchased separately or included in a Microsoft bundle."
+        }
+      },
+      "correct_answer": ["b"]
+    },
+    {
+      "question_id": 3,
+      "question_text": "A company creates a Conditional Access policy that requires MFA when users sign in from outside the corporate network. Which Conditional Access condition is used to define 'outside the corporate network'?",
+      "difficulty": "medium",
+      "topic": "Conditional Access",
+      "tags": ["conditional-access", "named-locations", "mfa"],
+      "options": {
+        "a": {
+          "text": "Device compliance condition",
+          "is_true": false,
+          "explanation": "Incorrect. Device compliance checks whether a device meets Intune compliance policies — it does not define network location."
+        },
+        "b": {
+          "text": "Named Locations (configured with corporate IP ranges)",
+          "is_true": true,
+          "explanation": "Correct. Named Locations allow admins to define trusted IP ranges (e.g., corporate VPN or office IP addresses) as 'known' locations. A Conditional Access policy can then enforce MFA for sign-ins from locations that are NOT in the trusted named location list."
+        },
+        "c": {
+          "text": "Identity Protection sign-in risk level",
+          "is_true": false,
+          "explanation": "Incorrect. Sign-in risk is a P2 signal from Identity Protection evaluating suspicious patterns — it is not the same as a location-based named location check."
+        },
+        "d": {
+          "text": "User group assignment in the policy",
+          "is_true": false,
+          "explanation": "Incorrect. Group assignment controls who the policy applies to — not the network location condition."
+        }
+      },
+      "correct_answer": ["b"]
+    },
+    {
+      "question_id": 4,
+      "question_text": "What is the difference between Conditional Access 'grant controls' and 'session controls'?",
+      "difficulty": "medium",
+      "topic": "Conditional Access",
+      "tags": ["conditional-access", "grant-controls", "session-controls"],
+      "options": {
+        "a": {
+          "text": "Grant controls block or allow access; session controls limit what users can do during the session",
+          "is_true": true,
+          "explanation": "Correct. Grant controls determine whether access is allowed (e.g., require MFA, require compliant device, block access). Session controls restrict actions within an allowed session (e.g., limit download, require app-enforced restrictions, enforce sign-in frequency)."
+        },
+        "b": {
+          "text": "Grant controls apply to admin users; session controls apply to standard users",
+          "is_true": false,
+          "explanation": "Incorrect. Both control types can be applied to any user — the distinction is what they enforce (access decision vs. session limits)."
+        },
+        "c": {
+          "text": "They are the same thing — both either allow or deny access",
+          "is_true": false,
+          "explanation": "Incorrect. Grant controls and session controls are distinct — grant controls decide access, session controls constrain the authenticated session."
+        },
+        "d": {
+          "text": "Grant controls require P1; session controls require P2",
+          "is_true": false,
+          "explanation": "Incorrect. Both are available with Conditional Access at the P1 license level (some advanced session controls require Microsoft Defender for Cloud Apps integration)."
+        }
+      },
+      "correct_answer": ["a"]
+    },
+    {
+      "question_id": 5,
+      "question_text": "Which Conditional Access grant control enforces that only devices enrolled in Intune and marked as compliant can access a cloud app?",
+      "difficulty": "medium",
+      "topic": "Conditional Access",
+      "tags": ["conditional-access", "device-compliance", "intune"],
+      "options": {
+        "a": {
+          "text": "Require approved client app",
+          "is_true": false,
+          "explanation": "Incorrect. 'Require approved client app' enforces that only specific Intune-compatible apps (like Outlook mobile) can access data — not the same as requiring a compliant device."
+        },
+        "b": {
+          "text": "Require compliant device",
+          "is_true": true,
+          "explanation": "Correct. The 'Require compliant device' grant control checks whether the device accessing the app is marked as compliant in Microsoft Intune. Non-compliant or unregistered devices are blocked or redirected."
+        },
+        "c": {
+          "text": "Require Hybrid Azure AD joined device",
+          "is_true": false,
+          "explanation": "Incorrect. 'Require Hybrid Azure AD joined device' requires the device to be joined to both on-premises AD and Entra ID — different from Intune compliance status."
+        },
+        "d": {
+          "text": "Require multi-factor authentication",
+          "is_true": false,
+          "explanation": "Incorrect. Requiring MFA challenges the user for an additional verification factor — it does not check device compliance status."
+        }
+      },
+      "correct_answer": ["b"]
+    },
+    {
+      "question_id": 6,
+      "question_text": "What is Microsoft Entra Identity Protection?",
+      "difficulty": "medium",
+      "topic": "Identity Protection",
+      "tags": ["identity-protection", "p2", "risk-policy"],
+      "options": {
+        "a": {
+          "text": "A P1 feature that scans for weak passwords in the tenant",
+          "is_true": false,
+          "explanation": "Incorrect. Identity Protection is a P2 feature and focuses on risk detection, not password strength."
+        },
+        "b": {
+          "text": "A P2 feature that detects risky sign-ins and risky users, enabling automated risk-based responses",
+          "is_true": true,
+          "explanation": "Correct. Entra Identity Protection (P2) uses machine learning to detect compromised credentials and suspicious sign-in patterns. Admins can define user risk policies (e.g., force password change on high-risk users) and sign-in risk policies (e.g., require MFA for medium-risk sign-ins)."
+        },
+        "c": {
+          "text": "A service that blocks all sign-ins from high-risk countries automatically",
+          "is_true": false,
+          "explanation": "Incorrect. Geographic blocking can be configured via Conditional Access Named Locations — that is separate from Identity Protection's risk-based detection."
+        },
+        "d": {
+          "text": "A SIEM (Security Information and Event Management) tool for Entra logs",
+          "is_true": false,
+          "explanation": "Incorrect. Entra ID integrates with Microsoft Sentinel for SIEM. Identity Protection is specifically a risk-detection and automated response feature."
+        }
+      },
+      "correct_answer": ["b"]
+    },
+    {
+      "question_id": 7,
+      "question_text": "What are the three risk levels that Entra Identity Protection assigns to detected risky sign-ins?",
+      "difficulty": "medium",
+      "topic": "Identity Protection",
+      "tags": ["identity-protection", "risk-levels", "sign-in-risk"],
+      "options": {
+        "a": {
+          "text": "Critical, Warning, Informational",
+          "is_true": false,
+          "explanation": "Incorrect. These are alert severity levels used in Microsoft Defender/Sentinel — not Identity Protection risk levels."
+        },
+        "b": {
+          "text": "Low, Medium, High",
+          "is_true": true,
+          "explanation": "Correct. Entra Identity Protection classifies sign-in risk and user risk as Low, Medium, or High. Policies can be configured to take automated actions based on these levels (e.g., require MFA for Medium+ risk sign-ins)."
+        },
+        "c": {
+          "text": "Low, Elevated, Critical",
+          "is_true": false,
+          "explanation": "Incorrect. The three levels are Low, Medium, and High — not Elevated or Critical."
+        },
+        "d": {
+          "text": "Suspicious, Compromised, Blocked",
+          "is_true": false,
+          "explanation": "Incorrect. These are not the risk level classifications used by Identity Protection."
+        }
+      },
+      "correct_answer": ["b"]
+    },
+    {
+      "question_id": 8,
+      "question_text": "What is Privileged Identity Management (PIM) and which license is required?",
+      "difficulty": "easy",
+      "topic": "PIM",
+      "tags": ["pim", "p2", "privileged-access"],
+      "options": {
+        "a": {
+          "text": "A P1 feature for managing group memberships automatically",
+          "is_true": false,
+          "explanation": "Incorrect. PIM is a P2 feature, not P1. Dynamic group management is a P1 feature."
+        },
+        "b": {
+          "text": "A P2 feature enabling just-in-time, time-limited, and approval-based activation of privileged roles",
+          "is_true": true,
+          "explanation": "Correct. PIM (Entra ID P2) allows admins to configure privileged roles as eligible rather than permanently assigned. Users must activate the role (optionally requiring approval and justification) for a limited time window — reducing the attack surface from permanently active privileged accounts."
+        },
+        "c": {
+          "text": "A P1 feature that enforces MFA for all administrator sign-ins",
+          "is_true": false,
+          "explanation": "Incorrect. Enforcing MFA for admins is done via Conditional Access (P1) or Security Defaults (free). PIM is a P2 feature focused on role activation workflows."
+        },
+        "d": {
+          "text": "A free feature available to all Azure subscriptions",
+          "is_true": false,
+          "explanation": "Incorrect. PIM requires Entra ID P2 licensing."
+        }
+      },
+      "correct_answer": ["b"]
+    },
+    {
+      "question_id": 9,
+      "question_text": "In PIM, what is the difference between a 'permanent' and an 'eligible' role assignment?",
+      "difficulty": "medium",
+      "topic": "PIM",
+      "tags": ["pim", "eligible-assignment", "permanent-assignment"],
+      "options": {
+        "a": {
+          "text": "Permanent: the role is always active; Eligible: the user must activate the role when needed",
+          "is_true": true,
+          "explanation": "Correct. A permanent assignment means the user always has the role active. An eligible assignment means the user has the right to activate the role but must do so explicitly — providing justification, going through approval, and accepting a time-limited window."
+        },
+        "b": {
+          "text": "Permanent: requires P1; Eligible: requires P2",
+          "is_true": false,
+          "explanation": "Incorrect. Both assignment types are PIM features requiring P2. The distinction is about role state (always active vs. activated on demand)."
+        },
+        "c": {
+          "text": "They are the same — PIM always requires role activation regardless of assignment type",
+          "is_true": false,
+          "explanation": "Incorrect. Permanent assignments bypass PIM activation requirements. Eligible assignments require the activation workflow."
+        },
+        "d": {
+          "text": "Eligible roles cannot be used for Global Administrator — only for lesser roles",
+          "is_true": false,
+          "explanation": "Incorrect. PIM supports just-in-time activation for all Entra ID directory roles, including Global Administrator."
+        }
+      },
+      "correct_answer": ["a"]
+    },
+    {
+      "question_id": 10,
+      "question_text": "A PIM policy is configured so that a user must provide a business justification and get approval from a manager before activating the Global Administrator role. What PIM feature is this?",
+      "difficulty": "medium",
+      "topic": "PIM",
+      "tags": ["pim", "approval-workflow", "justification"],
+      "options": {
+        "a": {
+          "text": "Access reviews",
+          "is_true": false,
+          "explanation": "Incorrect. Access reviews periodically review and validate existing role assignments — they do not govern the activation request workflow."
+        },
+        "b": {
+          "text": "Activation policy with approval workflow",
+          "is_true": true,
+          "explanation": "Correct. PIM allows admins to configure an activation policy for each role that can require: justification, approval from designated approvers, MFA, and a maximum activation duration. This prevents unauthorised or accidental elevation of privilege."
+        },
+        "c": {
+          "text": "Conditional Access policy with PIM integration",
+          "is_true": false,
+          "explanation": "Incorrect. While Conditional Access and PIM can work together, the approval and justification workflow is a native PIM activation policy — not a Conditional Access feature."
+        },
+        "d": {
+          "text": "Identity Protection user risk policy",
+          "is_true": false,
+          "explanation": "Incorrect. Identity Protection user risk policies respond to detected compromised accounts — they do not manage role activation approval workflows."
+        }
+      },
+      "correct_answer": ["b"]
+    },
+    {
+      "question_id": 11,
+      "question_text": "An Identity Protection policy is configured to require a password change for users with a 'High' user risk. A user's account is flagged as High risk. What happens at their next sign-in?",
+      "difficulty": "medium",
+      "topic": "Identity Protection",
+      "tags": ["identity-protection", "user-risk-policy", "password-change"],
+      "options": {
+        "a": {
+          "text": "The user's account is automatically locked until an admin resets the risk",
+          "is_true": false,
+          "explanation": "Incorrect. The policy does not automatically lock the account — it prompts for a self-service password change."
+        },
+        "b": {
+          "text": "The user is forced to change their password via SSPR before proceeding",
+          "is_true": true,
+          "explanation": "Correct. When a user risk policy triggers for a High-risk user, the user is prompted to perform a self-service password reset via SSPR at sign-in. Successfully completing the password change also dismisses the user risk."
+        },
+        "c": {
+          "text": "The admin receives an email and must manually change the user's password",
+          "is_true": false,
+          "explanation": "Incorrect. The user risk policy enables self-remediation — the user changes their own password. Manual admin intervention is only needed if SSPR is not enabled."
+        },
+        "d": {
+          "text": "The user can continue normally — the risk flag is informational only",
+          "is_true": false,
+          "explanation": "Incorrect. A configured user risk policy actively enforces remediation — it is not merely informational."
+        }
+      },
+      "correct_answer": ["b"]
+    },
+    {
+      "question_id": 12,
+      "question_text": "What MFA verification methods does Entra ID support? Select all that apply.",
+      "difficulty": "medium",
+      "topic": "MFA",
+      "tags": ["mfa", "verification-methods", "authenticator"],
+      "options": {
+        "a": {
+          "text": "Microsoft Authenticator app (push notifications or OATH codes)",
+          "is_true": true,
+          "explanation": "Correct. The Microsoft Authenticator app is the recommended MFA method — supporting push notifications and time-based one-time passwords (TOTP)."
+        },
+        "b": {
+          "text": "SMS text message to a registered mobile number",
+          "is_true": true,
+          "explanation": "Correct. SMS-based OTP is supported as an MFA verification method, though it is considered less secure than app-based methods."
+        },
+        "c": {
+          "text": "Voice call to a registered phone number",
+          "is_true": true,
+          "explanation": "Correct. Voice call (automated phone call requiring the user to press a key to approve) is a supported MFA method."
+        },
+        "d": {
+          "text": "Fingerprint scan on any browser-connected device",
+          "is_true": false,
+          "explanation": "Incorrect. Biometric authentication (Windows Hello, FIDO2 keys) is supported via modern authentication flows, but a general 'browser fingerprint scan on any device' is not an Entra MFA verification method."
+        }
+      },
+      "correct_answer": ["a", "b", "c"]
+    },
+    {
+      "question_id": 13,
+      "question_text": "What are Azure AD Security Defaults and when are they enabled?",
+      "difficulty": "medium",
+      "topic": "MFA",
+      "tags": ["security-defaults", "mfa", "free-tier"],
+      "options": {
+        "a": {
+          "text": "A P2 feature that automatically applies Identity Protection risk policies",
+          "is_true": false,
+          "explanation": "Incorrect. Security Defaults are free-tier baseline protections — not a P2 feature."
+        },
+        "b": {
+          "text": "Free baseline security policies enabled by default for new tenants, requiring all users to register for MFA",
+          "is_true": true,
+          "explanation": "Correct. Security Defaults are pre-configured baseline security settings automatically enabled in new Azure AD/Entra ID tenants. They require all users to register for MFA, enforce MFA for admins, and block legacy authentication protocols — at no additional cost."
+        },
+        "c": {
+          "text": "A P1 Conditional Access policy template applied to all users automatically",
+          "is_true": false,
+          "explanation": "Incorrect. Security Defaults are a separate mechanism from Conditional Access — they work independently and require no P1 license."
+        },
+        "d": {
+          "text": "Default RBAC roles automatically assigned to users without explicit role assignments",
+          "is_true": false,
+          "explanation": "Incorrect. Security Defaults are about authentication security policies, not RBAC role assignments."
+        }
+      },
+      "correct_answer": ["b"]
+    },
+    {
+      "question_id": 14,
+      "question_text": "An organisation needs to review and validate all users who have the Privileged Role Administrator role assigned in Entra ID every 90 days. Which PIM feature enables this?",
+      "difficulty": "medium",
+      "topic": "PIM",
+      "tags": ["pim", "access-reviews"],
+      "options": {
+        "a": {
+          "text": "PIM activation policy",
+          "is_true": false,
+          "explanation": "Incorrect. Activation policies govern the process of activating an eligible role assignment — they do not perform periodic reviews of existing assignments."
+        },
+        "b": {
+          "text": "Entra ID Access Reviews",
+          "is_true": true,
+          "explanation": "Correct. Access Reviews (available with P2/PIM) allow organisations to schedule recurring reviews of privileged role assignments. Reviewers confirm whether each user still needs the role — users not reconfirmed can have their assignment removed automatically."
+        },
+        "c": {
+          "text": "Entra Connect Health reports",
+          "is_true": false,
+          "explanation": "Incorrect. Entra Connect Health monitors synchronisation infrastructure — it does not review privileged role assignments."
+        },
+        "d": {
+          "text": "Conditional Access audit logs",
+          "is_true": false,
+          "explanation": "Incorrect. Audit logs record sign-in and configuration events — they do not provide a review-and-approve workflow for role assignments."
+        }
+      },
+      "correct_answer": ["b"]
+    },
+    {
+      "question_id": 15,
+      "question_text": "Which Conditional Access assignment lets a policy apply to a sign-in attempt to 'any cloud app' rather than a specific application?",
+      "difficulty": "easy",
+      "topic": "Conditional Access",
+      "tags": ["conditional-access", "cloud-apps", "all-apps"],
+      "options": {
+        "a": {
+          "text": "Configuring the policy with 'All cloud apps' selected in the Cloud apps/actions assignment",
+          "is_true": true,
+          "explanation": "Correct. Conditional Access policies have a 'Cloud apps or actions' assignment where you can select 'All cloud apps'. This ensures the policy applies to every application sign-in, not just specific ones."
+        },
+        "b": {
+          "text": "Assigning the policy to all users in the Users/Groups assignment",
+          "is_true": false,
+          "explanation": "Incorrect. The Users/Groups assignment controls who the policy applies to — it does not determine which apps are targeted."
+        },
+        "c": {
+          "text": "Enabling 'Block all legacy authentication' in Security Defaults",
+          "is_true": false,
+          "explanation": "Incorrect. This is a Security Defaults feature, not a Conditional Access policy setting for targeting all cloud apps."
+        },
+        "d": {
+          "text": "Creating one policy per application and linking them with a policy set",
+          "is_true": false,
+          "explanation": "Incorrect. You do not need to create separate policies per app. A single policy with 'All cloud apps' covers all applications."
+        }
+      },
+      "correct_answer": ["a"]
+    },
+    {
+      "question_id": 16,
+      "question_text": "A Conditional Access policy is set to require MFA for sign-ins with sign-in risk level 'Medium or above'. Which license tier is required for risk-based Conditional Access?",
+      "difficulty": "medium",
+      "topic": "Conditional Access",
+      "tags": ["conditional-access", "identity-protection", "p2", "sign-in-risk"],
+      "options": {
+        "a": {
+          "text": "Entra ID Free",
+          "is_true": false,
+          "explanation": "Incorrect. Risk-based Conditional Access requires both Conditional Access (P1) and Identity Protection risk signals (P2)."
+        },
+        "b": {
+          "text": "Entra ID P1",
+          "is_true": false,
+          "explanation": "Incorrect. P1 includes Conditional Access but not sign-in risk signals, which come from Identity Protection — a P2 feature."
+        },
+        "c": {
+          "text": "Entra ID P2",
+          "is_true": true,
+          "explanation": "Correct. Risk-based Conditional Access conditions (sign-in risk, user risk) are signals provided by Entra Identity Protection, which is a P2 feature. Both Identity Protection (P2) and Conditional Access (P1, included in P2) are required."
+        },
+        "d": {
+          "text": "Microsoft Defender for Cloud Apps — no Entra license needed",
+          "is_true": false,
+          "explanation": "Incorrect. While Defender for Cloud Apps can provide additional session control signals, the sign-in risk condition in Conditional Access specifically comes from Entra Identity Protection (P2)."
+        }
+      },
+      "correct_answer": ["c"]
+    },
+    {
+      "question_id": 17,
+      "question_text": "How does PIM protect against 'standing privilege' — the risk of having permanently active admin accounts?",
+      "difficulty": "medium",
+      "topic": "PIM",
+      "tags": ["pim", "standing-privilege", "jit"],
+      "options": {
+        "a": {
+          "text": "By deleting admin role assignments after 90 days",
+          "is_true": false,
+          "explanation": "Incorrect. PIM does not automatically delete role assignments. Access Reviews can flag inactive assignments for removal, but PIM's core protection against standing privilege is just-in-time activation."
+        },
+        "b": {
+          "text": "By making admins 'eligible' for roles — they must actively activate the role with justification for a limited duration",
+          "is_true": true,
+          "explanation": "Correct. PIM's just-in-time model means elevated permissions are only active when explicitly requested and activated. An eligible admin has no elevated permissions until they activate the role — reducing the window of exposure if an account is compromised."
+        },
+        "c": {
+          "text": "By requiring admins to use a dedicated admin workstation (DAW) for all admin tasks",
+          "is_true": false,
+          "explanation": "Incorrect. Using a privileged access workstation is a security best practice, but it is not what PIM itself enforces."
+        },
+        "d": {
+          "text": "By scanning for unused admin accounts and alerting the security team",
+          "is_true": false,
+          "explanation": "Incorrect. PIM's Access Reviews can identify stale assignments, but the core just-in-time protection is via eligible assignments requiring activation."
+        }
+      },
+      "correct_answer": ["b"]
+    },
+    {
+      "question_id": 18,
+      "question_text": "What action should an admin take when Entra Identity Protection flags a user as a 'risky user' due to suspected credential compromise?",
+      "difficulty": "medium",
+      "topic": "Identity Protection",
+      "tags": ["identity-protection", "risky-user", "remediation"],
+      "options": {
+        "a": {
+          "text": "Delete the user account immediately",
+          "is_true": false,
+          "explanation": "Incorrect. Deleting a user account is destructive and not the appropriate remediation for suspected compromise."
+        },
+        "b": {
+          "text": "Dismiss the risk without investigation to avoid alerting the attacker",
+          "is_true": false,
+          "explanation": "Incorrect. Dismissing without investigation is poor security hygiene."
+        },
+        "c": {
+          "text": "Force a password reset, confirm MFA methods are not controlled by the attacker, and review sign-in logs",
+          "is_true": true,
+          "explanation": "Correct. The appropriate response to a high-risk user is: (1) force a password reset via SSPR or admin reset to invalidate stolen credentials, (2) verify MFA registration is not under attacker control, and (3) review sign-in logs to understand the scope of compromise. Identity Protection also allows admins to 'confirm user compromised' or 'dismiss user risk'."
+        },
+        "d": {
+          "text": "Upgrade the tenant to P2 — risky users can only be resolved with a P2 license",
+          "is_true": false,
+          "explanation": "Incorrect. While Identity Protection reporting is a P2 feature, admins can still reset passwords for any user regardless of license tier."
+        }
+      },
+      "correct_answer": ["c"]
+    },
+    {
+      "question_id": 19,
+      "question_text": "Which Conditional Access control would an organisation use to block all access from locations outside the EU, while allowing access with MFA from within the EU?",
+      "difficulty": "medium",
+      "topic": "Conditional Access",
+      "tags": ["conditional-access", "named-locations", "block", "mfa"],
+      "options": {
+        "a": {
+          "text": "One policy: Block all, applied globally — then a second policy: Allow with MFA for EU Named Locations",
+          "is_true": true,
+          "explanation": "Correct. Conditional Access evaluates all matching policies. Creating a 'Block all access' policy scoped to 'All locations except EU', combined with an 'Allow with MFA' policy scoped to EU Named Locations, achieves the desired outcome. The block policy covers non-EU; the allow+MFA policy covers EU."
+        },
+        "b": {
+          "text": "A single Azure Firewall rule blocking all non-EU IP traffic",
+          "is_true": false,
+          "explanation": "Incorrect. Azure Firewall controls network traffic, not identity-based cloud app access. Named Locations in Conditional Access are the correct tool for this."
+        },
+        "c": {
+          "text": "Configure the MFA registration policy in Identity Protection to require EU location",
+          "is_true": false,
+          "explanation": "Incorrect. The MFA registration policy in Identity Protection controls who must register for MFA — it does not block access by geography."
+        },
+        "d": {
+          "text": "This is not possible with Conditional Access — geographic blocking requires Azure Front Door WAF",
+          "is_true": false,
+          "explanation": "Incorrect. Geographic-based access control for Entra ID sign-ins is a core Conditional Access capability using Named Locations (Country/Region or IP range)."
+        }
+      },
+      "correct_answer": ["a"]
+    },
+    {
+      "question_id": 20,
+      "question_text": "A user activates the Global Administrator role in PIM and immediately makes a change. Later, an auditor asks for evidence of who activated the role, when, and why. Where is this information found?",
+      "difficulty": "medium",
+      "topic": "PIM",
+      "tags": ["pim", "audit-log", "activation-history"],
+      "options": {
+        "a": {
+          "text": "Azure Activity Log",
+          "is_true": false,
+          "explanation": "Incorrect. Azure Activity Log records control-plane operations on Azure resources — not Entra ID PIM role activation events."
+        },
+        "b": {
+          "text": "PIM audit history in the Entra admin center",
+          "is_true": true,
+          "explanation": "Correct. PIM maintains a detailed audit history of all role activations, including who activated the role, when, the justification provided, any approval workflow steps, and the activation duration. This is available in the Entra admin center under PIM > Azure AD roles > Audit history."
+        },
+        "c": {
+          "text": "Entra Connect Health logs",
+          "is_true": false,
+          "explanation": "Incorrect. Entra Connect Health monitors synchronisation service health — not PIM activation events."
+        },
+        "d": {
+          "text": "Microsoft Defender for Identity alerts",
+          "is_true": false,
+          "explanation": "Incorrect. Defender for Identity monitors on-premises AD for attack patterns — PIM activation history is in the PIM audit log, not Defender for Identity."
+        }
+      },
+      "correct_answer": ["b"]
+    }
+  ]
+}

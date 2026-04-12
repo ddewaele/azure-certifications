@@ -1,0 +1,222 @@
+[
+  {
+    "question_id": 1,
+    "question_text": "A company needs to store medical records in Azure Blob Storage that cannot be modified or deleted for 7 years to meet regulatory requirements. Which feature should be used?",
+    "options": {
+      "a": { "text": "Enable soft delete with a 7-year retention period", "is_true": false, "explanation": "Soft delete protects against accidental deletion with a grace period (max 365 days), but it does not make blobs immutable. Soft-deleted blobs can be permanently deleted after the grace period, and the data can be modified before deletion." },
+      "b": { "text": "Configure a time-based retention policy (WORM) on the container with a 7-year interval", "is_true": true, "explanation": "WORM (Write Once, Read Many) time-based retention policies lock blobs in an immutable state for the specified duration. Once locked, no user — including admins — can modify or delete the blobs until the retention period expires. This satisfies SEC 17a-4 and similar regulatory requirements." },
+      "c": { "text": "Apply a resource lock (CanNotDelete) on the storage account", "is_true": false, "explanation": "A CanNotDelete lock prevents the storage account from being deleted, but it does not prevent modification or deletion of blob data within the account. Blobs can still be overwritten or deleted." },
+      "d": { "text": "Enable versioning and configure lifecycle management to keep versions for 7 years", "is_true": false, "explanation": "Versioning preserves previous versions of blobs, but versions can be deleted by lifecycle management rules or manually. Versioning alone is not immutability — the WORM policy is required." }
+    },
+    "correct_answer": ["b"]
+  },
+  {
+    "question_id": 2,
+    "question_text": "A developer creates an Account SAS token with Read and Write permissions on a blob container, valid for 24 hours. 2 hours later, the security team discovers the token was shared publicly. What is the fastest way to revoke the token?",
+    "options": {
+      "a": { "text": "Delete the blob container the SAS was issued for", "is_true": false, "explanation": "Deleting the container destroys all data. This is destructive and disproportionate. Key rotation is the correct response." },
+      "b": { "text": "Regenerate (rotate) the storage account access key that was used to sign the SAS token", "is_true": true, "explanation": "Account SAS tokens are cryptographically signed with the storage account key. Rotating the key immediately invalidates every SAS token signed with that key. This is the standard and fastest revocation method." },
+      "c": { "text": "Set the SAS token's expiry date to the current time via the portal", "is_true": false, "explanation": "You cannot modify or revoke an already-issued Account SAS token. The token is self-contained and not tracked by Azure. Once issued, the only way to invalidate it before expiry is to rotate the signing key." },
+      "d": { "text": "Enable the storage account firewall to block all network access", "is_true": false, "explanation": "Firewall rules block specific IP ranges or networks, but this would also block legitimate access. It also does not invalidate the SAS token itself — if the attacker's IP is not blocked, they retain access." }
+    },
+    "correct_answer": ["b"]
+  },
+  {
+    "question_id": 3,
+    "question_text": "A lifecycle management policy is configured to move blobs to the cool tier after 30 days and delete them after 365 days, based on last-modified time. A critical blob was uploaded 6 months ago and has never been accessed. A user downloads the blob today. Will the lifecycle rule delete it in 6 months from today (i.e., reset the timer)?",
+    "options": {
+      "a": { "text": "Yes — lifecycle management resets the timer when a blob is accessed", "is_true": false, "explanation": "By default, lifecycle management rules based on 'daysAfterModificationGreaterThan' use the last-modified time, NOT the last-access time. Downloading a blob does not update the last-modified time." },
+      "b": { "text": "No — lifecycle management rules based on 'daysAfterModificationGreaterThan' use the last-modified time, not the last-accessed time; the blob will be deleted on its original schedule", "is_true": true, "explanation": "The last-modified time is set when the blob is created or overwritten, not when it is read. A download does not change the last-modified time. The blob will be deleted 365 days after it was originally uploaded, regardless of access patterns. To use last-access time, you must enable access tracking and use 'daysAfterLastAccessTimeGreaterThan'." },
+      "c": { "text": "Yes — Azure automatically enables last-access time tracking for all storage accounts", "is_true": false, "explanation": "Last-access time tracking must be explicitly enabled on the storage account. It is not enabled by default because it adds a small write operation for every blob read, increasing costs." },
+      "d": { "text": "No — lifecycle management only applies to blobs in the hot tier; cool tier blobs are excluded from further rules", "is_true": false, "explanation": "Lifecycle management policies can apply to blobs in any access tier. A policy can delete blobs that are already in cool or archive tier. Rules apply to all blobs matching the filter regardless of their current tier." }
+    },
+    "correct_answer": ["b"]
+  },
+  {
+    "question_id": 4,
+    "question_text": "An organization uses Azure File Sync with cloud tiering enabled. A Windows Server administrator notices that files with a cloud icon overlay on the server endpoint are failing to open, showing 'The network location cannot be reached'. The Azure Files share is accessible from other machines via the portal. What is the most likely cause?",
+    "options": {
+      "a": { "text": "The Azure File Sync agent on the server is outdated and needs to be updated", "is_true": false, "explanation": "An outdated agent causes sync issues and triggers warnings, but an outdated agent that was working before would not suddenly fail to recall tiered files unless connectivity changed. The error message 'network location cannot be reached' points to network connectivity." },
+      "b": { "text": "Outbound connectivity from the server to Azure Files (port 443) is blocked, preventing tiered file recall", "is_true": true, "explanation": "Azure File Sync uses port 443 (HTTPS) for both sync and tiered file recall. When a user opens a cloud-tiered stub file, the sync agent must download the file from Azure Files over port 443. If a firewall rule change blocked outbound 443 from the server, tiered file recall fails with a network connectivity error." },
+      "c": { "text": "The Azure Files share reached its quota limit, preventing further data from being read", "is_true": false, "explanation": "A quota limit prevents new data from being written to the share. It does not prevent reading or downloading existing data. Tiered file recall reads data from the share — quota limits would not block this." },
+      "d": { "text": "SMB port 445 is blocked between the server and Azure Files, preventing tiered file recall", "is_true": false, "explanation": "Azure File Sync does NOT use SMB (port 445) for tiered file recall. The sync agent uses HTTPS (port 443) for all communication with Azure. SMB 445 is needed only if you mount the Azure Files share directly as a network drive." }
+    },
+    "correct_answer": ["b"]
+  },
+  {
+    "question_id": 5,
+    "question_text": "A storage account has the 'Allow storage account key access' setting disabled. A developer tries to connect to Blob Storage using a connection string containing the account key and receives 'AuthenticationFailed'. Which authentication method should the developer use instead?",
+    "options": {
+      "a": { "text": "Generate a new account key — the current one must have expired", "is_true": false, "explanation": "The issue is not key expiry — the 'Allow storage account key access' setting is explicitly disabled at the account level, blocking ALL key-based authentication regardless of key validity." },
+      "b": { "text": "Use Entra ID authentication (e.g., DefaultAzureCredential or a managed identity) with a data role like Storage Blob Data Contributor", "is_true": true, "explanation": "When 'Allow storage account key access' is disabled, the storage account only accepts Entra ID authentication for data plane operations. The developer should use a managed identity, service principal, or user identity with a Storage Blob Data* role. Connection strings using account keys will always fail." },
+      "c": { "text": "Use a SAS token instead of the account key connection string", "is_true": false, "explanation": "Account SAS tokens are signed with the account key. If 'Allow storage account key access' is disabled, SAS tokens signed with the account key are also rejected. Only service/user delegation SAS tokens (signed with an Entra ID credential) work when key access is disabled." },
+      "d": { "text": "Re-enable 'Allow storage account key access' temporarily to generate a SAS token, then disable it again", "is_true": false, "explanation": "This workaround creates a security gap and still results in a key-signed SAS that won't work with key access disabled. The correct approach is to migrate to Entra ID-based authentication." }
+    },
+    "correct_answer": ["b"]
+  },
+  {
+    "question_id": 6,
+    "question_text": "A company needs to copy 10 TB of data from an on-premises file server to Azure Blob Storage as quickly as possible over a 1 Gbps internet connection. The migration must complete within 48 hours. Which tool and approach is most appropriate?",
+    "options": {
+      "a": { "text": "Use AzCopy with the 'sync' command from an on-premises machine", "is_true": false, "explanation": "AzCopy over a 1 Gbps connection can transfer roughly 400-500 GB per hour in ideal conditions, meaning 10 TB would take approximately 20-25 hours. While technically feasible within 48 hours, this is cutting it close and depends on consistent bandwidth. More importantly, the question asks about the 'most appropriate' approach given constraints." },
+      "b": { "text": "Use Azure Data Box to ship the data physically, bypassing the internet connection entirely", "is_true": false, "explanation": "Azure Data Box is ideal when internet transfer would take too long (typically weeks). For 10 TB over 1 Gbps, the transfer is feasible in well under 48 hours. Data Box takes several days for shipping and processing, making it slower in this scenario." },
+      "c": { "text": "Use AzCopy with multiple concurrent connections and parallelism flags to maximize throughput on the 1 Gbps link", "is_true": true, "explanation": "AzCopy is the right tool for this scale. Using '--parallel-level' and '--block-size-mb' flags optimizes throughput. A 1 Gbps link can theoretically sustain ~112 MB/s, allowing 10 TB in approximately 25 hours — well within 48 hours. AzCopy is purpose-built for bulk Azure storage transfers." },
+      "d": { "text": "Use the Azure portal's blob upload feature to upload files one by one", "is_true": false, "explanation": "The Azure portal is designed for small, individual file uploads. Uploading 10 TB file-by-file via the portal is impractical and would take far longer than 48 hours." }
+    },
+    "correct_answer": ["c"]
+  },
+  {
+    "question_id": 7,
+    "question_text": "A storage account uses ZRS (Zone-Redundant Storage). A datacenter fire destroys one availability zone in the region. What happens to data in the ZRS storage account?",
+    "options": {
+      "a": { "text": "All data is lost because ZRS only protects against hardware failures within a single zone", "is_true": false, "explanation": "ZRS specifically protects against zone-level failures. Data is synchronously replicated across 3 availability zones in the same region, so losing one zone does not result in data loss." },
+      "b": { "text": "The storage account remains fully accessible — ZRS stores synchronous copies in 3 separate availability zones and can tolerate the loss of one zone", "is_true": true, "explanation": "ZRS maintains 3 synchronous copies across 3 availability zones in a single region. The loss of one zone (including a datacenter fire) leaves 2 copies intact. The storage account remains fully available with no data loss and no failover required." },
+      "c": { "text": "A manual failover to the secondary region is required to restore access", "is_true": false, "explanation": "ZRS is single-region only — there is no secondary region to fail over to. Manual failover is a feature of GRS/GZRS accounts. ZRS survives zone failure without any failover action." },
+      "d": { "text": "The storage account enters a read-only mode until the destroyed zone is rebuilt", "is_true": false, "explanation": "ZRS does not enter read-only mode after zone failure. The remaining 2 copies continue to serve full read and write operations. Read-only mode occurs during GRS/GZRS failover scenarios." }
+    },
+    "correct_answer": ["b"]
+  },
+  {
+    "question_id": 8,
+    "question_text": "A developer uploads files to Azure Blob Storage using a user delegation SAS token. The SAS token was created with a 1-hour validity. An admin rotates the signing user's Entra ID credentials (password change) 30 minutes after the SAS was created. Does the SAS token remain valid for its full 1-hour duration?",
+    "options": {
+      "a": { "text": "Yes — user delegation SAS tokens are signed at creation time and cannot be revoked by credential changes", "is_true": false, "explanation": "User delegation SAS tokens are tied to the user key, not the Entra ID password. However, they CAN be revoked by revoking the user delegation key via 'az storage account revoke-delegation-keys'." },
+      "b": { "text": "No — changing the user's password automatically revokes all user delegation keys associated with that user, invalidating any SAS tokens they signed", "is_true": false, "explanation": "Password changes do not automatically revoke user delegation keys in Azure Storage. User delegation keys are separate from Entra ID credentials and must be explicitly revoked." },
+      "c": { "text": "Yes — user delegation SAS tokens remain valid until expiry unless the user delegation key is explicitly revoked via 'az storage account revoke-delegation-keys'", "is_true": true, "explanation": "User delegation SAS tokens are signed with a user delegation key, which is separate from the user's Entra ID password. Changing the password does not affect the user delegation key. To revoke these SAS tokens, an admin must explicitly revoke all user delegation keys for the storage account using the revoke-delegation-keys operation." },
+      "d": { "text": "No — user delegation SAS tokens are automatically invalidated when the signing user's session token expires", "is_true": false, "explanation": "User delegation SAS tokens have their own independent expiry. They are not tied to the user's Entra ID session token. Once created, they are self-contained and persist until their own expiry or explicit key revocation." }
+    },
+    "correct_answer": ["c"]
+  },
+  {
+    "question_id": 9,
+    "question_text": "A company stores backups in Azure Blob Storage using the archive tier. An incident requires immediate access to a backup file. What is the minimum time they should expect to wait before the data is readable?",
+    "options": {
+      "a": { "text": "Immediately — archive tier data is accessible on demand with no rehydration needed", "is_true": false, "explanation": "Archive tier blobs are offline and cannot be read directly. They must be rehydrated (moved) to hot or cool tier before they can be read. There is always a waiting period." },
+      "b": { "text": "1–15 minutes with high-priority rehydration", "is_true": false, "explanation": "High-priority rehydration is the fastest option for objects under 10 GB, completing in under 1 hour — not 1-15 minutes. There is no instant rehydration option." },
+      "c": { "text": "Under 1 hour with high-priority rehydration (for objects under 10 GB), or 1–15 hours with standard priority", "is_true": true, "explanation": "Archive tier rehydration has two priorities: (1) High priority: completes in under 1 hour for blobs under 10 GB. This is the fastest available option. (2) Standard priority: takes 1–15 hours. Both require initiating a Set Blob Tier or Copy Blob operation to hot or cool tier before the blob becomes readable." },
+      "d": { "text": "24–48 hours regardless of priority setting", "is_true": false, "explanation": "Standard rehydration takes 1-15 hours, and high-priority takes under 1 hour for small blobs. The 24-48 hour estimate is too conservative for archive rehydration." }
+    },
+    "correct_answer": ["c"]
+  },
+  {
+    "question_id": 10,
+    "question_text": "A team wants to enable object replication between two storage accounts in different regions. Which prerequisites must be met on BOTH accounts? (Select TWO)",
+    "options": {
+      "a": { "text": "Blob versioning must be enabled on both the source and destination storage accounts", "is_true": true, "explanation": "Object replication requires blob versioning on both accounts. Versioning is used to track blob state changes and identify which versions to replicate." },
+      "b": { "text": "The storage accounts must use the same redundancy type (e.g., both LRS or both GRS)", "is_true": false, "explanation": "Object replication does not require matching redundancy types. The source can be GRS and the destination LRS, or any combination." },
+      "c": { "text": "Change feed must be enabled on the source storage account", "is_true": true, "explanation": "Change feed provides a transaction log of all create, modify, and delete operations on blobs in the source account. Object replication reads this log to determine what changes to replicate to the destination. Without change feed on the source, replication cannot function." },
+      "d": { "text": "Both accounts must be in the same Azure subscription", "is_true": false, "explanation": "Object replication supports cross-subscription replication. The source and destination can be in different subscriptions (and even different tenants with additional configuration)." }
+    },
+    "correct_answer": ["a", "c"]
+  },
+  {
+    "question_id": 11,
+    "question_text": "A storage account has network rules set to 'Enabled from selected virtual networks and IP addresses'. An Azure Backup job fails with 'Access denied'. The backup vault and the storage account are in different VNets with no service endpoints configured. What is the simplest fix?",
+    "options": {
+      "a": { "text": "Add VNet peering between the backup vault's VNet and the storage account's VNet", "is_true": false, "explanation": "Azure Backup vaults are a managed service — they don't exist within a user VNet. Adding peering isn't the appropriate solution for allowing Azure Backup service access." },
+      "b": { "text": "Enable the 'Allow trusted Microsoft services to access this storage account' exception", "is_true": true, "explanation": "Azure Backup is a trusted Microsoft service. Enabling the 'Allow trusted Microsoft services' exception on the storage account's network rules allows Azure Backup (and other trusted services like Azure Monitor, Azure Site Recovery) to bypass the firewall without requiring service endpoints or IP rules." },
+      "c": { "text": "Add the Azure Backup service's IP range to the storage account's IP firewall rules", "is_true": false, "explanation": "Azure Backup runs on dynamic, large IP ranges across Azure datacenters. It is impractical to enumerate and maintain these IPs in firewall rules. The trusted services exception is designed exactly for this purpose." },
+      "d": { "text": "Change the storage account redundancy to GRS so that Backup can use the secondary endpoint", "is_true": false, "explanation": "Redundancy type has nothing to do with network access control. Changing to GRS would not bypass the firewall restrictions." }
+    },
+    "correct_answer": ["b"]
+  },
+  {
+    "question_id": 12,
+    "question_text": "An admin wants to enable large file shares (up to 100 TiB per share) on an existing StorageV2 storage account. Which constraint applies after enabling large file shares?",
+    "options": {
+      "a": { "text": "The storage account can no longer be used for blob storage after enabling large file shares", "is_true": false, "explanation": "Large file share support only affects the Files service on the storage account. Blob storage on the same account continues to function normally." },
+      "b": { "text": "The storage account replication can no longer be changed to GRS or GZRS after enabling large file shares", "is_true": true, "explanation": "Large file shares require LRS or ZRS replication. Once large file shares are enabled, changing to GRS or GZRS is blocked. This is an irreversible setting — you cannot disable large file shares once enabled, and the replication type constraint is permanent." },
+      "c": { "text": "Large file shares can only be enabled during storage account creation, not on an existing account", "is_true": false, "explanation": "Large file shares can be enabled on an existing StorageV2 account via the portal (Storage account > File shares > Large file share settings) or CLI. However, it is irreversible once enabled." },
+      "d": { "text": "Enabling large file shares automatically converts all existing file shares to the 100 TiB quota", "is_true": false, "explanation": "Enabling large file shares allows shares to be configured up to 100 TiB, but does not change existing share quotas. Existing shares retain their current quota until manually updated." }
+    },
+    "correct_answer": ["b"]
+  },
+  {
+    "question_id": 13,
+    "question_text": "A team uses AzCopy to synchronize a local folder to an Azure Blob container nightly. They run: `azcopy sync './data' 'https://account.blob.core.windows.net/container' --recursive`. A developer deletes 5 files from the local folder. After the next nightly sync, what happens to those 5 files in the Azure container?",
+    "options": {
+      "a": { "text": "The 5 files are automatically deleted from the Azure container to mirror the local folder", "is_true": false, "explanation": "By default, 'azcopy sync' does NOT delete destination files that no longer exist at the source. This is a safety feature to prevent accidental data loss." },
+      "b": { "text": "The 5 files remain in the Azure container — 'azcopy sync' does not delete destination files by default", "is_true": true, "explanation": "'azcopy sync' without the '--delete-destination' flag does not delete files at the destination that are absent at the source. Only new or modified files are copied. To enable deletion of destination-only files, use '--delete-destination=true'. This default protects against accidental mass deletion." },
+      "c": { "text": "AzCopy sync throws an error when it detects mismatched files between source and destination", "is_true": false, "explanation": "AzCopy sync does not error on mismatched files — files present only at the destination are simply ignored (not deleted, not errored). It completes successfully and reports 0 transfers if no source files changed." },
+      "d": { "text": "The files are moved to a soft-delete state in the container for 14 days before permanent deletion", "is_true": false, "explanation": "AzCopy does not use Azure Blob soft delete. Soft delete is a storage account feature that applies when blobs are explicitly deleted via the API. AzCopy sync doesn't trigger any deletion by default." }
+    },
+    "correct_answer": ["b"]
+  },
+  {
+    "question_id": 14,
+    "question_text": "A company has a storage account with a private endpoint in VNet-A. A VM in VNet-B (peered with VNet-A) tries to access the storage account. The VM can reach other resources in VNet-A but cannot resolve the storage account's FQDN to the private IP. What is missing?",
+    "options": {
+      "a": { "text": "The private endpoint must be created in VNet-B for VMs in VNet-B to use it", "is_true": false, "explanation": "A single private endpoint in VNet-A can serve requests from peered VNets. You do not need to create a separate private endpoint in every peered VNet." },
+      "b": { "text": "The Private DNS Zone for the storage account must also be linked to VNet-B", "is_true": true, "explanation": "Private DNS Zones that override public FQDN resolution for private endpoints must be explicitly linked to every VNet whose VMs need to resolve the private IP. If the zone is only linked to VNet-A, VMs in VNet-B (even though peered) will resolve the FQDN to the public IP, not the private endpoint IP." },
+      "c": { "text": "VNet peering must have 'Allow gateway transit' enabled to forward private DNS queries", "is_true": false, "explanation": "'Allow gateway transit' is for VPN/ExpressRoute gateways, not for DNS resolution. Private DNS Zone links are the correct mechanism for cross-VNet private endpoint DNS resolution." },
+      "d": { "text": "The VM in VNet-B must use a custom DNS server that points to VNet-A's private endpoint IP", "is_true": false, "explanation": "Configuring VMs to point directly to a private endpoint IP as a DNS server is not the correct approach. The Private DNS Zone linked to both VNets is the scalable, correct solution." }
+    },
+    "correct_answer": ["b"]
+  },
+  {
+    "question_id": 15,
+    "question_text": "A StorageV2 account has blob versioning and soft delete enabled. A script accidentally runs `az storage blob delete --container-name logs --name app.log`. What is the state of app.log after this command?",
+    "options": {
+      "a": { "text": "app.log is permanently deleted because the CLI delete command bypasses soft delete", "is_true": false, "explanation": "The Azure CLI 'az storage blob delete' command goes through the same Blob Storage API as any other client. It respects soft delete settings on the account." },
+      "b": { "text": "app.log is soft-deleted with the current version becoming the delete marker; previous versions remain accessible and can be used to restore", "is_true": true, "explanation": "When soft delete and versioning are both enabled, a delete operation creates a soft-delete marker on the current version. The previous versions of the blob remain in a protected state and can be used to restore the blob. The blob appears deleted but is actually recoverable within the soft delete retention period." },
+      "c": { "text": "app.log is moved to the 'Deleted blobs' section and permanently purged after the soft delete retention period; no versions are kept", "is_true": false, "explanation": "When versioning is enabled alongside soft delete, previous versions are retained independently of the soft delete state. The versions are not purged when the soft delete retention period ends — they follow their own lifecycle rules." },
+      "d": { "text": "The delete command fails because versioning prevents blob deletion", "is_true": false, "explanation": "Versioning does not prevent deletion. It preserves the history of the blob by keeping previous versions. The delete operation succeeds and creates a soft-delete marker." }
+    },
+    "correct_answer": ["b"]
+  },
+  {
+    "question_id": 16,
+    "question_text": "An Azure Files share is mounted on a Windows Server using Azure File Sync. A user maps a drive directly to the same Azure Files share using the UNC path over SMB. Both the sync endpoint and the direct SMB mount show the same files. The user edits a file via the direct SMB mount. Will Azure File Sync sync this change to the server endpoint?",
+    "options": {
+      "a": { "text": "No — changes made via direct SMB access bypass Azure File Sync and are never synced", "is_true": false, "explanation": "Azure File Sync syncs the Azure Files share bidirectionally. Changes made directly to the Azure Files share (via SMB, REST API, or portal) are detected by the sync agent on the server endpoint and synced down to the local server." },
+      "b": { "text": "Yes — Azure File Sync detects changes in the Azure Files share from any source (SMB, REST, portal) and syncs them to all server endpoints in the sync group", "is_true": true, "explanation": "Azure File Sync uses change notifications and periodic scans to detect all changes in the Azure Files share regardless of how they were made. Changes from direct SMB access, the Azure portal, AzCopy, or any other method are all synced to all registered server endpoints in the sync group." },
+      "c": { "text": "It depends on whether the file was cloud-tiered — tiered files cannot be synced via direct SMB changes", "is_true": false, "explanation": "Cloud tiering status of a file on the server endpoint is separate from changes in the Azure Files share. Changes in Azure Files are always synced to server endpoints regardless of tiering state." },
+      "d": { "text": "The sync agent must be restarted on the server to pick up changes made via direct SMB access", "is_true": false, "explanation": "Azure File Sync agents automatically poll for changes and receive change notifications from Azure Files. No manual restart is required to detect changes made via direct SMB access." }
+    },
+    "correct_answer": ["b"]
+  },
+  {
+    "question_id": 17,
+    "question_text": "A company stores application logs in Azure Blob Storage. Log files are written daily. After 90 days they should move to cool, after 180 days to archive, and be deleted after 2 years. The blobs have a prefix 'logs/'. Which lifecycle management rule configuration achieves this?",
+    "options": {
+      "a": { "text": "Create one rule targeting all blobs with conditions: move to cool after 90 days, move to archive after 180 days, delete after 730 days", "is_true": false, "explanation": "A single lifecycle rule can include multiple actions (tier to cool, tier to archive, delete) with different conditions, but the blob filter prefix must also be applied. Without the 'logs/' prefix filter, all blobs in the account would be affected." },
+      "b": { "text": "Create one rule with a blob prefix filter of 'logs/', with actions: tierToCool after 90 days, tierToArchive after 180 days, and delete after 730 days", "is_true": true, "explanation": "A single lifecycle management rule can contain multiple actions with different day thresholds, scoped to a blob prefix. This is the correct and efficient approach: one rule with prefix filter 'logs/', tierToCool at daysAfterModificationGreaterThan=90, tierToArchive at 180, delete at 730 (2 years)." },
+      "c": { "text": "Create four separate rules — one for each tier transition and one for deletion — each with the same prefix filter", "is_true": false, "explanation": "While multiple rules would work, it is not necessary. A single lifecycle rule supports multiple actions with different day thresholds. Using four separate rules for the same prefix is redundant." },
+      "d": { "text": "Lifecycle management cannot tier and delete blobs in the same policy — separate policies must be used for tiering and deletion", "is_true": false, "explanation": "A single lifecycle management rule can include both tier actions and a delete action. All actions can be combined within one rule with their respective day thresholds." }
+    },
+    "correct_answer": ["b"]
+  },
+  {
+    "question_id": 18,
+    "question_text": "A storage account is configured with Hierarchical Namespace (HNS) enabled for Azure Data Lake Storage Gen2 workloads. An admin tries to enable blob versioning on the account but the option is greyed out. Why?",
+    "options": {
+      "a": { "text": "Blob versioning requires Premium performance tier, which is incompatible with HNS", "is_true": false, "explanation": "Blob versioning requires Standard performance tier (not Premium). However, the incompatibility is with HNS, not with Premium." },
+      "b": { "text": "Hierarchical Namespace is incompatible with blob versioning because HNS uses real directory semantics with atomic renames that cannot be versioned at the individual file level", "is_true": true, "explanation": "HNS (Data Lake Storage Gen2) implements true directory structures with atomic operations like rename at the directory level. These operations cannot be versioned at the blob level the same way flat namespace blob versioning works. HNS uses a different API path (DFS endpoint vs blob endpoint) and does not support blob versioning, change feed, or blob-level soft delete." },
+      "c": { "text": "Blob versioning requires the storage account to use GRS redundancy, which is incompatible with HNS", "is_true": false, "explanation": "Blob versioning works with LRS, ZRS, GRS, and GZRS redundancy types. Redundancy is not the constraint here — HNS is." },
+      "d": { "text": "Blob versioning cannot be enabled on accounts that already have existing data", "is_true": false, "explanation": "Blob versioning can be enabled on storage accounts that already contain data. Existing blobs will not retroactively have versions created, but new operations will create versions going forward." }
+    },
+    "correct_answer": ["b"]
+  },
+  {
+    "question_id": 19,
+    "question_text": "An admin needs to move a storage account from one Azure subscription to another. The storage account contains critical production data. What is the supported method?",
+    "options": {
+      "a": { "text": "Delete and recreate the storage account in the new subscription, then copy the data using AzCopy", "is_true": false, "explanation": "While this would work technically, it involves downtime, data transfer costs, and risk. Azure supports moving storage accounts between subscriptions without recreating them." },
+      "b": { "text": "Use the Azure portal's 'Move' feature (Resource group > Move to another subscription) to move the storage account", "is_true": true, "explanation": "Azure supports moving storage accounts between subscriptions and resource groups using the resource move operation. This is a metadata-only operation — no data is copied. The storage account remains available during the move (though briefly locked). SAS tokens, connection strings, and private endpoints may need updating after the move." },
+      "c": { "text": "Storage accounts cannot be moved between subscriptions — they must be recreated", "is_true": false, "explanation": "Storage accounts are movable resources in Azure. They can be moved between resource groups and subscriptions using the resource move operation from the portal, CLI, or ARM API." },
+      "d": { "text": "Create a storage account replication policy (object replication) to the new subscription, then switch DNS to the new account", "is_true": false, "explanation": "Object replication asynchronously copies blob data but not files, queues, or tables. It also doesn't move the account — you'd end up with two separate accounts. The resource move operation is simpler and moves the entire account including all services." }
+    },
+    "correct_answer": ["b"]
+  },
+  {
+    "question_id": 20,
+    "question_text": "An Azure Storage account uses customer-managed keys (CMK) stored in Azure Key Vault for encryption at rest. The Key Vault's soft delete is enabled with a 90-day retention. An admin accidentally deletes the encryption key from Key Vault. What is the immediate impact on the storage account?",
+    "options": {
+      "a": { "text": "The storage account immediately becomes inaccessible — all read and write operations fail", "is_true": true, "explanation": "When the CMK is deleted (even with soft delete, the key is 'deleted' and inaccessible to services until recovered), Azure Storage loses access to the encryption key. Since all data at rest is encrypted with CMK, the storage account cannot encrypt or decrypt data and becomes inaccessible. Operations fail until the key is recovered from soft-deleted state." },
+      "b": { "text": "Azure Storage automatically falls back to Microsoft-managed keys to ensure continuity of service", "is_true": false, "explanation": "Azure Storage does not automatically fall back to Microsoft-managed keys when CMK becomes unavailable. CMK and Microsoft-managed keys are not interchangeable fallbacks. The data remains encrypted with the CMK and is inaccessible until the key is restored." },
+      "c": { "text": "The storage account enters read-only mode, allowing existing data to be read but preventing new writes", "is_true": false, "explanation": "The storage account does not enter read-only mode — it becomes fully inaccessible for both reads and writes. All operations require the encryption key to be available." },
+      "d": { "text": "The impact is delayed by 72 hours due to key caching in the storage service", "is_true": false, "explanation": "While Azure services do cache key references briefly, the impact of a deleted CMK is near-immediate (within minutes) rather than 72 hours. There is no 72-hour grace period." }
+    },
+    "correct_answer": ["a"]
+  }
+]

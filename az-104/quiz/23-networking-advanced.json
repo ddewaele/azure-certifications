@@ -1,0 +1,222 @@
+[
+  {
+    "question_id": 1,
+    "question_text": "An Azure Standard Internal Load Balancer has a backend pool of 3 VMs. One VM starts failing the health probe. What traffic distribution behavior occurs?",
+    "options": {
+      "a": { "text": "All traffic is stopped until the unhealthy VM recovers", "is_true": false, "explanation": "The Load Balancer only routes traffic to healthy backend instances. It does not stop all traffic when one instance fails — the healthy instances continue to serve requests." },
+      "b": { "text": "Traffic is redistributed only to the 2 healthy VMs; the unhealthy VM receives no new connections", "is_true": true, "explanation": "Load Balancer health probes continuously check backend instance health. When a probe fails (using the configured unhealthy threshold), the instance is marked as unhealthy and removed from the rotation. All new connections go only to the 2 healthy VMs. Existing connections to the unhealthy VM may be reset." },
+      "c": { "text": "The Load Balancer continues sending 1/3 of traffic to the unhealthy VM and logs the failed connections", "is_true": false, "explanation": "Azure Load Balancer does not send traffic to unhealthy instances. Health probes exist specifically to remove failing instances from the pool." },
+      "d": { "text": "The Load Balancer sends all traffic to the healthy VM with the lowest response time", "is_true": false, "explanation": "Azure Load Balancer uses a hash-based (5-tuple) distribution algorithm by default, not a least-response-time algorithm. Traffic Manager has a 'Performance' routing method based on latency, but not Load Balancer." }
+    },
+    "correct_answer": ["b"]
+  },
+  {
+    "question_id": 2,
+    "question_text": "A company uses Azure Traffic Manager with the 'Priority' routing method. The primary endpoint is an Azure App Service in East US (priority 1) and the failover is a secondary in West US (priority 2). The East US app is down. A user in Europe makes a DNS request to Traffic Manager. Which endpoint is returned?",
+    "options": {
+      "a": { "text": "The East US endpoint — Traffic Manager always routes to the highest priority regardless of health", "is_true": false, "explanation": "Traffic Manager checks endpoint health before routing. An unhealthy priority 1 endpoint is not used — Traffic Manager falls over to the next healthy priority." },
+      "b": { "text": "The West US endpoint — Traffic Manager detects the East US endpoint is unhealthy and falls over to the priority 2 endpoint", "is_true": true, "explanation": "With Priority routing, Traffic Manager routes all traffic to the highest-priority healthy endpoint. When Traffic Manager's health checks detect the East US endpoint is unhealthy, it fails over to the priority 2 West US endpoint. The user's geographic location (Europe) does not affect Priority routing decisions." },
+      "c": { "text": "No endpoint is returned — Traffic Manager returns an NXDOMAIN error when the primary is down", "is_true": false, "explanation": "Traffic Manager returns a NXDOMAIN only if ALL endpoints are unhealthy or if the profile is disabled. As long as the secondary endpoint is healthy, it is returned." },
+      "d": { "text": "A load-balanced response including both endpoints — the client can choose which to use", "is_true": false, "explanation": "Traffic Manager always returns a single endpoint in its DNS response (for Priority routing). It does not return multiple endpoints for the client to choose from." }
+    },
+    "correct_answer": ["b"]
+  },
+  {
+    "question_id": 3,
+    "question_text": "A company deploys an Azure Application Gateway (WAF v2) in front of a web application. The WAF is in 'Detection' mode. An attacker sends SQL injection requests to the application. What happens?",
+    "options": {
+      "a": { "text": "The SQL injection requests are blocked and the attacker receives HTTP 403", "is_true": false, "explanation": "In Detection mode, the WAF logs rule matches but does NOT block the requests. Only Prevention mode actively blocks detected threats." },
+      "b": { "text": "The SQL injection requests are forwarded to the backend application but are logged in the WAF diagnostics as detected rule violations", "is_true": true, "explanation": "WAF Detection mode is 'observe and log' mode. All requests pass through to the backend, but any rule matches (like SQL injection patterns) are logged in the WAF firewall logs. This mode is used to tune rules and identify false positives before switching to Prevention mode." },
+      "c": { "text": "The SQL injection requests trigger an alert but continue until 3 violations in a row are detected, then they are blocked", "is_true": false, "explanation": "There is no '3 strikes' threshold in WAF modes. In Detection mode, ALL requests pass regardless of how many violations are detected. In Prevention mode, matching requests are immediately blocked." },
+      "d": { "text": "The WAF automatically switches to Prevention mode after detecting 10 rule violations", "is_true": false, "explanation": "WAF mode (Detection vs Prevention) is a static configuration. It does not automatically switch between modes based on violation count." }
+    },
+    "correct_answer": ["b"]
+  },
+  {
+    "question_id": 4,
+    "question_text": "A company needs to assign a static outbound public IP for all traffic from VMs in a subnet, regardless of which VM it originates from. The VMs have no public IPs. Which Azure service should be deployed?",
+    "options": {
+      "a": { "text": "Azure Standard Load Balancer with an outbound rule", "is_true": false, "explanation": "A Load Balancer with outbound rules provides SNAT for VMs in the backend pool — but not all VMs in a subnet automatically. VMs must be explicitly added to the backend pool. Additionally, the Load Balancer must be Standard tier with a frontend IP." },
+      "b": { "text": "Azure NAT Gateway — attach it to the subnet and all VMs in that subnet use its static public IP(s) for outbound traffic", "is_true": true, "explanation": "Azure NAT Gateway is specifically designed to provide deterministic, scalable outbound NAT for an entire subnet. All VMs in the subnet (regardless of whether they have public IPs or are in a Load Balancer pool) automatically use the NAT Gateway's public IP(s) for outbound traffic. It supports up to 16 static public IP addresses." },
+      "c": { "text": "Create a User-Defined Route (UDR) to route all outbound traffic through a Network Virtual Appliance with a static IP", "is_true": false, "explanation": "Routing through an NVA is a valid architecture but requires maintaining the NVA, which adds operational overhead. NAT Gateway is the purpose-built, managed Azure service for this exact use case with no NVA management needed." },
+      "d": { "text": "Assign a static public IP directly to each VM's NIC", "is_true": false, "explanation": "Assigning individual public IPs to each VM would give each VM a different outbound IP, not a unified static IP. The requirement is for all VMs to share the same outbound IP, which NAT Gateway provides." }
+    },
+    "correct_answer": ["b"]
+  },
+  {
+    "question_id": 5,
+    "question_text": "An Azure VPN Gateway is configured with a site-to-site VPN to an on-premises network. The admin needs to route traffic for a new on-premises subnet (192.168.10.0/24) through the VPN. What must be updated?",
+    "options": {
+      "a": { "text": "Update the VPN Gateway SKU to support additional subnets", "is_true": false, "explanation": "VPN Gateway SKU determines bandwidth and feature capabilities, not the number of addressable subnets. Adding routes for new subnets does not require an SKU change." },
+      "b": { "text": "Update the Local Network Gateway's address space to include 192.168.10.0/24", "is_true": true, "explanation": "The Local Network Gateway represents the on-premises network in Azure. It contains the address space of the on-premises network that Azure should route through the VPN. Adding 192.168.10.0/24 to the Local Network Gateway tells Azure to route traffic for that subnet through the VPN tunnel. The on-premises VPN device also needs to be updated to route Azure VNet traffic back." },
+      "c": { "text": "Create a new VPN connection for the new subnet alongside the existing VPN connection", "is_true": false, "explanation": "A single VPN connection can handle multiple subnets through traffic selector updates or Local Network Gateway address space additions. Creating a new connection for each subnet is not the correct approach." },
+      "d": { "text": "Add a User-Defined Route (UDR) on the GatewaySubnet pointing 192.168.10.0/24 to the on-premises gateway IP", "is_true": false, "explanation": "UDRs on the GatewaySubnet are not recommended and can break VPN/ExpressRoute functionality. Routing for VPN-connected subnets is managed through the Local Network Gateway configuration and BGP, not through UDRs on GatewaySubnet." }
+    },
+    "correct_answer": ["b"]
+  },
+  {
+    "question_id": 6,
+    "question_text": "An admin uses Azure Network Watcher's 'IP Flow Verify' tool to check whether traffic from 10.0.0.4 (source) to 10.0.1.5 (destination) on TCP port 443 is allowed. The result is 'Access denied — rule DenyAll, NSG: myNSG'. What does this mean?",
+    "options": {
+      "a": { "text": "The traffic is blocked by the Azure platform default DenyAll rule and cannot be overridden", "is_true": false, "explanation": "NSG default rules can be overridden by adding higher-priority (lower number) allow rules. The default DenyAll rule (priority 65500) is the lowest priority and is always overridden by any explicitly added allow rule." },
+      "b": { "text": "No NSG rule explicitly allows this traffic — it falls through to the default 'deny all' rule in the NSG (priority 65500)", "is_true": true, "explanation": "Every NSG has a default 'DenyAllInBound' (65500) and 'DenyAllOutBound' (65500) rule. 'IP Flow Verify' returning 'Access denied — rule DenyAll' means no explicit allow rule matched before the default deny rule was evaluated. The admin needs to add an explicit allow rule for the required traffic." },
+      "c": { "text": "The NSG named 'myNSG' has a specific rule called 'DenyAll' that an admin created", "is_true": false, "explanation": "While an admin could create a rule named 'DenyAll', the standard default deny rule in Azure NSGs is named 'DenyAllInBound' (or DenyAllOutBound). The question indicates this is the default rule, not a custom rule." },
+      "d": { "text": "The result means the source IP (10.0.0.4) is not authorized in Entra ID and RBAC is blocking the traffic", "is_true": false, "explanation": "NSGs operate at the network layer (IP/port). NSG rules have nothing to do with Entra ID or RBAC. The denial is purely based on network rules." }
+    },
+    "correct_answer": ["b"]
+  },
+  {
+    "question_id": 7,
+    "question_text": "A company uses Azure Private DNS Zones. The zone 'internal.contoso.com' is linked to VNet-A with auto-registration enabled. A VM named 'web01' is deployed in VNet-A. An admin in VNet-B (not linked to the zone) tries to resolve 'web01.internal.contoso.com'. What is the result?",
+    "options": {
+      "a": { "text": "The resolution succeeds because Private DNS Zones are globally accessible within Azure", "is_true": false, "explanation": "Private DNS Zones are only resolvable from VNets that have a DNS link to that zone. Without a link, Azure's DNS does not serve records from the zone to that VNet." },
+      "b": { "text": "Resolution fails — VNet-B must be linked to the Private DNS Zone to resolve records from 'internal.contoso.com'", "is_true": true, "explanation": "Private DNS Zone resolution requires the VNet to be explicitly linked to the zone via a Virtual Network Link. VNet-B has no link to 'internal.contoso.com', so queries from VMs in VNet-B for that zone will return NXDOMAIN (not found) rather than the private IP." },
+      "c": { "text": "Resolution succeeds if VNet-A and VNet-B are peered — peering automatically shares DNS zone visibility", "is_true": false, "explanation": "VNet peering provides network connectivity but does NOT automatically share Private DNS Zone visibility. Each VNet must be individually linked to the Private DNS Zone to resolve its records." },
+      "d": { "text": "Auto-registration propagates zone records to all VNets in the same subscription", "is_true": false, "explanation": "Auto-registration automatically creates DNS records for VMs deployed in the linked VNet. It does not share or propagate zone visibility to other VNets. Each VNet needs its own explicit link." }
+    },
+    "correct_answer": ["b"]
+  },
+  {
+    "question_id": 8,
+    "question_text": "An admin configures Azure Application Gateway to handle SSL/TLS termination. The Application Gateway has an SSL certificate installed on the frontend listener. The backend VMs serve HTTP (not HTTPS). What must be configured on the Application Gateway backend HTTP settings?",
+    "options": {
+      "a": { "text": "Install the same SSL certificate on all backend VMs and configure the backend settings for HTTPS", "is_true": false, "explanation": "If the backend is serving HTTP (not HTTPS), configuring HTTPS in the backend settings would be incorrect and would cause connection failures from the Application Gateway to the backends." },
+      "b": { "text": "Configure the backend HTTP settings to use HTTP protocol (port 80) — Application Gateway handles SSL offloading and forwards plain HTTP to the backend", "is_true": true, "explanation": "SSL offloading (termination) means the Application Gateway decrypts HTTPS traffic from clients and forwards plain HTTP to the backend. The backend HTTP settings should specify HTTP protocol on port 80. This removes the SSL processing burden from backend servers." },
+      "c": { "text": "Enable 'End-to-end SSL' in the Application Gateway to re-encrypt traffic before sending to backends", "is_true": false, "explanation": "End-to-end SSL re-encrypts traffic from the Application Gateway to the backend (backend also serves HTTPS). If the backend is serving HTTP, end-to-end SSL would cause connection failures." },
+      "d": { "text": "Application Gateway requires backend VMs to be in the same VNet and automatically detects whether they serve HTTP or HTTPS", "is_true": false, "explanation": "Application Gateway does not automatically detect backend protocols. The backend pool can include VMs in peered VNets, App Services, or IPs. Protocol and port must be explicitly configured in the backend HTTP settings." }
+    },
+    "correct_answer": ["b"]
+  },
+  {
+    "question_id": 9,
+    "question_text": "A company's on-premises network connects to Azure via ExpressRoute. The on-premises DNS server resolves internal names. Azure VMs in the VNet need to resolve on-premises hostnames. The VNet currently uses Azure-provided DNS. What configuration is needed?",
+    "options": {
+      "a": { "text": "Add the on-premises DNS server IP to the VNet's custom DNS server list and configure the on-premises DNS to forward Azure Private DNS Zone queries to 168.63.129.16", "is_true": true, "explanation": "For hybrid DNS: Azure VMs must be able to reach the on-premises DNS server to resolve on-premises names (configure VNet custom DNS pointing to on-prem DNS IP). The on-premises DNS server must forward Azure Private DNS Zone queries to 168.63.129.16 (Azure's DNS resolver). This bidirectional forwarding is the standard hybrid DNS configuration." },
+      "b": { "text": "Create Azure Private DNS Zones for all on-premises zones and manually add records matching the on-premises DNS", "is_true": false, "explanation": "Manually replicating on-premises DNS records to Azure Private DNS Zones is error-prone and doesn't scale. Dynamic updates from on-premises (new servers, IP changes) would require manual sync. The proper solution is conditional forwarding." },
+      "c": { "text": "Deploy an Azure DNS Private Resolver with inbound and outbound forwarding rules", "is_true": false, "explanation": "Azure DNS Private Resolver is the modern approach and does support this scenario more elegantly, but the question asks what configuration is needed in the traditional approach. The custom DNS + conditional forwarding setup is the correct established pattern and the option that describes it accurately." },
+      "d": { "text": "ExpressRoute automatically provides DNS resolution for on-premises hostnames in the connected VNet", "is_true": false, "explanation": "ExpressRoute provides network connectivity at the IP level. DNS resolution is a separate service that requires explicit configuration regardless of the network connectivity method." }
+    },
+    "correct_answer": ["a"]
+  },
+  {
+    "question_id": 10,
+    "question_text": "An Azure Standard Load Balancer health probe is configured as HTTP on port 80, path '/health'. The backend VM is running and serving HTTP on port 80, but the health probe shows the VM as unhealthy. Which NSG rule is missing?",
+    "options": {
+      "a": { "text": "Allow inbound TCP 80 from any source to the VM's private IP", "is_true": false, "explanation": "An 'Any' source rule would work but is overly permissive. The precise requirement is to allow inbound traffic from the Load Balancer health probe source IP specifically." },
+      "b": { "text": "Allow inbound TCP 80 from the AzureLoadBalancer service tag to the VM (or its subnet)", "is_true": true, "explanation": "Azure Load Balancer health probes originate from the special IP 168.63.129.16, which maps to the 'AzureLoadBalancer' service tag. NSGs must explicitly allow inbound traffic on the health probe port from this service tag. If blocked, the LB marks the VM as unhealthy regardless of whether the app is actually running." },
+      "c": { "text": "Allow outbound TCP 80 from the VM to the Load Balancer's frontend IP", "is_true": false, "explanation": "Health probes are inbound to the VM (the Load Balancer probes the VM). The missing rule is inbound, not outbound. Outbound traffic from the VM to the LB frontend is not relevant to health probe configuration." },
+      "d": { "text": "Allow inbound TCP 443 from the AzureLoadBalancer service tag — health probes always use HTTPS", "is_true": false, "explanation": "The health probe is configured as HTTP on port 80. The NSG rule must allow the configured probe port (80), not HTTPS (443)." }
+    },
+    "correct_answer": ["b"]
+  },
+  {
+    "question_id": 11,
+    "question_text": "A VNet has address space 10.0.0.0/16. An admin tries to add a new subnet with range 172.16.0.0/24 to the VNet. The portal shows an error. Why?",
+    "options": {
+      "a": { "text": "Azure VNets only support IPv4 class A address spaces", "is_true": false, "explanation": "Azure VNets support any valid private IPv4 address space (RFC 1918: 10.0.0.0/8, 172.16.0.0/12, 192.168.0.0/16) and can even use public IP ranges (though not recommended). The restriction here is about subnet range containment." },
+      "b": { "text": "A subnet's address range must fall within the VNet's address space — 172.16.0.0/24 is not within 10.0.0.0/16", "is_true": true, "explanation": "Subnets must be subsets of the VNet's address space. The VNet is 10.0.0.0/16 (10.0.0.0 - 10.0.255.255). The proposed subnet 172.16.0.0/24 is in a completely different IP range and is not contained within the VNet's address space. The admin must either add 172.16.0.0/16 to the VNet's address space first, or choose a subnet within 10.0.0.0/16." },
+      "c": { "text": "The /24 subnet mask is too small for an Azure subnet — minimum is /16", "is_true": false, "explanation": "Azure subnets support /29 as the minimum size (5 usable IPs after Azure reserves 5 per subnet). /24 is perfectly valid. The issue is address space containment, not prefix length." },
+      "d": { "text": "The VNet already uses all available address space — no new subnets can be added", "is_true": false, "explanation": "A 10.0.0.0/16 VNet has 65,536 IP addresses. With no other subnets mentioned, there is plenty of space. The error is about 172.16.0.0/24 being outside the VNet's address space." }
+    },
+    "correct_answer": ["b"]
+  },
+  {
+    "question_id": 12,
+    "question_text": "An admin uses Azure Network Watcher 'Connection troubleshoot' to test connectivity from a VM to an external endpoint. The result shows 'Unreachable' with no specific NSG rule identified. What is a likely cause not shown in the Connection troubleshoot output?",
+    "options": {
+      "a": { "text": "The VM's operating system firewall (Windows Firewall / iptables) may be blocking the outbound connection", "is_true": true, "explanation": "Network Watcher Connection troubleshoot tests network-layer connectivity through Azure networking infrastructure (NSGs, UDRs). It does not inspect the guest OS firewall (Windows Firewall or Linux iptables). If the OS firewall blocks outbound traffic, Connection troubleshoot may show 'Unreachable' without identifying an NSG rule as the cause." },
+      "b": { "text": "The subscription does not have the Network Watcher provider registered", "is_true": false, "explanation": "If Network Watcher wasn't available, the Connection troubleshoot tool itself wouldn't run. The fact that it returned a result means Network Watcher is registered and functional." },
+      "c": { "text": "The target endpoint must be an Azure resource — Connection troubleshoot only works for intra-Azure traffic", "is_true": false, "explanation": "Connection troubleshoot can test connectivity to external IP addresses and FQDNs outside of Azure, not just internal Azure resources." },
+      "d": { "text": "The VM must have the Network Watcher extension installed to use Connection troubleshoot", "is_true": false, "explanation": "Some Network Watcher features (like packet capture) require the extension. Connection troubleshoot tests path from the VM but does not require the Network Watcher Agent extension to be installed on the VM." }
+    },
+    "correct_answer": ["a"]
+  },
+  {
+    "question_id": 13,
+    "question_text": "A company deploys an Azure Front Door to distribute traffic globally to two backend origins (East US and West Europe). They want users in Asia to always be routed to the nearest origin. Which routing method should be configured?",
+    "options": {
+      "a": { "text": "Priority routing — East US as priority 1, West Europe as priority 2", "is_true": false, "explanation": "Priority routing sends all traffic to the highest-priority healthy origin regardless of user location. Asian users would always be sent to East US, not to the nearest origin." },
+      "b": { "text": "Latency routing — routes each user to the origin with the lowest measured latency from their location", "is_true": true, "explanation": "Azure Front Door's latency-based routing (the default method) routes each request to the origin with the lowest measured network latency from the user's location. Asian users would be routed to East US or West Europe based on which has lower latency from Asia — typically the nearer one. This is the correct method for geographic proximity routing based on actual performance." },
+      "c": { "text": "Weighted routing with equal weights on both origins", "is_true": false, "explanation": "Weighted routing distributes traffic by percentage (e.g., 50/50) regardless of user location. Asian users would randomly hit either origin, not necessarily the nearest one." },
+      "d": { "text": "Session affinity — ensures users are always routed to the same origin they first connected to", "is_true": false, "explanation": "Session affinity (cookie-based) routes returning users to the same origin for session consistency. It doesn't consider geographic proximity for initial routing." }
+    },
+    "correct_answer": ["b"]
+  },
+  {
+    "question_id": 14,
+    "question_text": "A company has an Azure Load Balancer (Standard tier) with a backend pool of 5 VMs. A new requirement states that traffic from a specific client IP (203.0.113.10) must always reach the same backend VM. What should be configured?",
+    "options": {
+      "a": { "text": "Change the Load Balancer distribution mode from 5-tuple hash to source IP affinity (2-tuple or 3-tuple hash)", "is_true": true, "explanation": "By default, Azure Load Balancer uses a 5-tuple hash (source IP, source port, destination IP, destination port, protocol). Because source port changes per connection, the same client can hit different backends. Changing to source IP affinity (2-tuple: source IP + destination IP) ensures all traffic from 203.0.113.10 consistently maps to the same backend VM." },
+      "b": { "text": "Add an NSG rule that routes 203.0.113.10 to a specific VM's private IP", "is_true": false, "explanation": "NSGs filter traffic (allow/deny) but do not perform traffic routing or load balancing decisions. You cannot use NSG rules to direct traffic to a specific backend VM." },
+      "c": { "text": "Create a separate Load Balancer rule with a custom filter for the client IP", "is_true": false, "explanation": "Load Balancer rules define frontend IP/port to backend port mapping. They do not support source IP filtering for directing specific clients to specific backends. Source IP affinity changes the hash algorithm to achieve session stickiness." },
+      "d": { "text": "Enable Standard Load Balancer floating IP feature for the specific client", "is_true": false, "explanation": "Floating IP (also called Direct Server Return) allows the backend VM to see the frontend IP in packets. It is used for SQL AlwaysOn and similar scenarios, not for client-specific session affinity." }
+    },
+    "correct_answer": ["a"]
+  },
+  {
+    "question_id": 15,
+    "question_text": "An admin creates a new VNet (10.1.0.0/16) and peers it with an existing hub VNet (10.0.0.0/16) that has an ExpressRoute gateway. The spoke VNet needs to use the ExpressRoute circuit via the hub. Which peering setting must be enabled?",
+    "options": {
+      "a": { "text": "On the hub-to-spoke peering: enable 'Allow gateway transit'. On the spoke-to-hub peering: enable 'Use remote gateways'", "is_true": true, "explanation": "For gateway transit (using the hub's ExpressRoute or VPN gateway from a spoke): (1) 'Allow gateway transit' must be enabled on the hub's side of the peering (hub is 'allowing' its gateway to be shared). (2) 'Use remote gateways' must be enabled on the spoke's side of the peering (spoke is 'opting in' to using the hub's gateway). Both settings must be configured together." },
+      "b": { "text": "Enable 'Allow forwarded traffic' on both sides of the peering", "is_true": false, "explanation": "'Allow forwarded traffic' allows traffic that didn't originate in the peered VNet to be forwarded (NVA scenarios). It does not enable gateway transit for ExpressRoute or VPN access." },
+      "c": { "text": "Enable 'Use remote gateways' on the hub-to-spoke peering", "is_true": false, "explanation": "'Use remote gateways' is set on the side that wants to USE the gateway (the spoke). The hub sets 'Allow gateway transit'. These settings are on opposite sides of the peering." },
+      "d": { "text": "No additional settings are required — peered VNets automatically share gateways", "is_true": false, "explanation": "Gateway sharing via peering requires explicit configuration of 'Allow gateway transit' on the hub and 'Use remote gateways' on the spoke. It is not automatic." }
+    },
+    "correct_answer": ["a"]
+  },
+  {
+    "question_id": 16,
+    "question_text": "Azure Traffic Manager uses DNS to route traffic. A user resolves a Traffic Manager endpoint and gets the IP of the East US region. The East US endpoint then goes offline. How quickly is the user affected?",
+    "options": {
+      "a": { "text": "Immediately — Traffic Manager detects the failure and pushes an updated DNS response to the user", "is_true": false, "explanation": "Traffic Manager cannot 'push' DNS updates to clients. DNS is pull-based — clients cache responses for the TTL duration and do not receive proactive updates." },
+      "b": { "text": "After the DNS TTL expires on the Traffic Manager DNS response — the client re-queries Traffic Manager and receives a healthy endpoint", "is_true": true, "explanation": "Traffic Manager uses DNS TTL to control how long clients cache endpoint IPs. The default Traffic Manager TTL is 60 seconds. Once the cached DNS entry expires, the client re-queries Traffic Manager, which then returns a healthy endpoint. During the TTL window, the client continues using the cached (now offline) IP. This is a fundamental limitation of DNS-based failover." },
+      "c": { "text": "After 30 minutes — Traffic Manager's health probe interval is 30 minutes", "is_true": false, "explanation": "Traffic Manager health probe intervals are configurable: 30 seconds for Standard probing and 10 seconds for Fast probing (Premium). The 60-second TTL is the more relevant timing for how quickly clients notice the change." },
+      "d": { "text": "Traffic Manager maintains persistent TCP connections to route clients to healthy endpoints instantly", "is_true": false, "explanation": "Traffic Manager is a DNS-based service — it only handles DNS queries. It does not maintain TCP connections or proxy application traffic. All failover is DNS-based with TTL-controlled caching." }
+    },
+    "correct_answer": ["b"]
+  },
+  {
+    "question_id": 17,
+    "question_text": "An NSG has the following inbound rules (lowest priority number = evaluated first): Priority 100: Allow TCP 443 from Any. Priority 200: Allow TCP 80 from Any. Priority 300: Deny TCP 80 from 10.0.0.0/8. A request arrives from 10.0.0.5 on TCP port 80. What happens?",
+    "options": {
+      "a": { "text": "The request is denied — priority 300 blocks traffic from 10.0.0.0/8", "is_true": false, "explanation": "NSG rules are evaluated in priority order (lowest number first). Priority 200 (Allow TCP 80 from Any) is evaluated BEFORE priority 300 (Deny TCP 80 from 10.0.0.0/8). Once a matching rule is found, evaluation stops. Priority 200 matches (10.0.0.5 is within 'Any') and allows the traffic. Priority 300 is never reached." },
+      "b": { "text": "The request is allowed — priority 200 (Allow TCP 80 from Any) matches first and evaluation stops before reaching priority 300", "is_true": true, "explanation": "NSG rules are evaluated in ascending priority order and stop at the first match. Priority 100 (Allow 443) doesn't match port 80. Priority 200 (Allow 80 from Any) matches the request from 10.0.0.5 on port 80 — evaluation stops here and traffic is allowed. Priority 300 is never evaluated." },
+      "c": { "text": "The request is denied — more specific rules (priority 300 with subnet filter) override general rules (priority 200 with Any)", "is_true": false, "explanation": "NSG rules are NOT evaluated by specificity — they are evaluated strictly by priority number. The rule with the lowest priority number that matches is applied, regardless of how specific or general it is." },
+      "d": { "text": "Both priority 200 and 300 match — the conflicting rules cause the traffic to be dropped", "is_true": false, "explanation": "There are no conflicts or tie-breaking in NSG evaluation. Rules are evaluated in strict priority order and stop at the first match. Priority 200 matches first, and evaluation stops — priority 300 is never reached." }
+    },
+    "correct_answer": ["b"]
+  },
+  {
+    "question_id": 18,
+    "question_text": "A company wants to inspect and filter all outbound internet traffic from Azure VMs through a centralized Azure Firewall in a hub VNet. The VMs are in spoke VNets. What is required in the spoke VNets?",
+    "options": {
+      "a": { "text": "Configure VNet peering between spokes and the hub, and create a UDR on spoke subnets with a default route (0.0.0.0/0) pointing to the Azure Firewall's private IP", "is_true": true, "explanation": "Forcing spoke traffic through a hub Azure Firewall requires: (1) VNet peering between spokes and hub (for network connectivity). (2) A UDR on spoke subnets with a 0.0.0.0/0 route pointing to the Azure Firewall's private IP as the next hop. Without the UDR, Azure's default routing sends internet traffic directly from the spoke, bypassing the firewall." },
+      "b": { "text": "Add the Azure Firewall's public IP to the NSG allow list on each spoke subnet", "is_true": false, "explanation": "NSGs filter traffic at the NIC/subnet level but do not redirect or route traffic to another device. Adding the firewall's public IP to an NSG allow list does not route traffic through the firewall." },
+      "c": { "text": "Enable 'Allow gateway transit' on all spoke peering connections to the hub", "is_true": false, "explanation": "'Allow gateway transit' is for VPN/ExpressRoute gateway sharing, not for Azure Firewall traffic redirection. UDRs are required for forcing traffic through the firewall." },
+      "d": { "text": "Deploy Azure Firewall in each spoke VNet individually — centralized filtering through a hub requires ExpressRoute", "is_true": false, "explanation": "A centralized Azure Firewall in a hub VNet with spokes connected via VNet peering and UDRs is the standard hub-and-spoke security architecture. ExpressRoute is not required. Deploying a firewall in each spoke is costly and redundant." }
+    },
+    "correct_answer": ["a"]
+  },
+  {
+    "question_id": 19,
+    "question_text": "A company runs a web application behind Azure Application Gateway. The application uses cookie-based session state. Users report being randomly logged out during the day. The Application Gateway has 3 backend VMs. What Application Gateway feature should be enabled?",
+    "options": {
+      "a": { "text": "Enable cookie-based session affinity (sticky sessions) on the backend HTTP settings", "is_true": true, "explanation": "Cookie-based affinity (sticky sessions) in Application Gateway ensures users are always routed to the same backend VM for the duration of their session. Application Gateway inserts a cookie that identifies which backend VM the user's session is on. Without this, users' subsequent requests may hit different VMs that don't have their session state, causing logout." },
+      "b": { "text": "Enable WAF on the Application Gateway to protect session cookies from theft", "is_true": false, "explanation": "WAF protects against web attacks but does not help with session routing consistency. WAF would not prevent the random logout caused by load-balanced requests hitting stateful VMs without session affinity." },
+      "c": { "text": "Change the backend to a single VM to eliminate the multi-backend routing issue", "is_true": false, "explanation": "Reducing to a single VM creates a single point of failure and eliminates the scalability benefits of using multiple VMs. Session affinity is the correct solution that maintains scalability." },
+      "d": { "text": "Enable connection draining on the backend VMs to preserve in-flight sessions", "is_true": false, "explanation": "Connection draining gracefully handles backend VM removal during updates/maintenance by completing existing connections before removing the VM from the pool. It does not help with routing consistency for stateful application sessions." }
+    },
+    "correct_answer": ["a"]
+  },
+  {
+    "question_id": 20,
+    "question_text": "An admin needs to allow VMs in subnet 10.0.1.0/24 to connect to Azure SQL Database using the service endpoint, while blocking direct internet access. Which two configurations are required?",
+    "options": {
+      "a": { "text": "Enable the Microsoft.Sql service endpoint on the subnet (10.0.1.0/24) in the VNet settings, AND add the subnet to the Azure SQL firewall 'Virtual networks' rules", "is_true": true, "explanation": "Service endpoints require a two-part configuration: (1) Enable the service endpoint (Microsoft.Sql) on the subnet in VNet > Subnet settings — this creates an optimized route for Azure SQL traffic. (2) Add the subnet as a virtual network rule in Azure SQL's firewall — this tells Azure SQL to accept traffic from that subnet. Both steps are mandatory; either alone is insufficient." },
+      "b": { "text": "Create a private endpoint for Azure SQL in the subnet AND update the subnet's DNS to resolve the SQL FQDN to the private IP", "is_true": false, "explanation": "This describes the private endpoint configuration approach, which is different from service endpoints. Service endpoints do not use private IPs or DNS overrides — they use the service endpoint route and firewall rules." },
+      "c": { "text": "Add an NSG outbound rule allowing TCP 1433 from the subnet to the Azure SQL service tag", "is_true": false, "explanation": "An NSG allow rule for SQL (TCP 1433) to the Sql service tag helps but is not sufficient alone — the service endpoint must be enabled on the subnet AND the SQL firewall must be configured. NSG rules control which traffic can leave the subnet; service endpoints control the routing path and PaaS firewall access." },
+      "d": { "text": "Configure a UDR on the subnet with a route for Azure SQL IPs pointing to the Internet next hop type", "is_true": false, "explanation": "Service endpoints automatically add optimal routes for the service — no manual UDR is needed. In fact, service endpoint traffic takes the Azure backbone route, not the internet, even though the next hop type might show as 'Internet' in the effective routes (Azure uses this label for backbone-routed service endpoint traffic)." }
+    },
+    "correct_answer": ["a"]
+  }
+]

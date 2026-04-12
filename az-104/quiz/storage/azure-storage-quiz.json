@@ -1,0 +1,565 @@
+{
+  "meta": {
+    "title": "Azure Storage – Replication, Security & Access Control",
+    "subject": "Microsoft Azure",
+    "version": "1.0.0",
+    "created": "2026-03-30"
+  },
+  "questions": [
+    {
+      "question_id": 1,
+      "question_text": "Your team needs to implement an Azure Storage solution that ensures data durability with read access during a regional disaster. Which replication strategy should you choose?",
+      "difficulty": "medium",
+      "topic": "Storage Replication",
+      "tags": ["scenario", "replication", "disaster-recovery", "AZ-104"],
+      "options": {
+        "a": {
+          "text": "Locally redundant storage (LRS)",
+          "is_true": false,
+          "explanation": "Incorrect. LRS replicates data only within a single datacenter in one region. It provides no protection against regional disasters."
+        },
+        "b": {
+          "text": "Zone redundant storage (ZRS)",
+          "is_true": false,
+          "explanation": "Incorrect. ZRS replicates data across availability zones within a single region. It does not replicate to a secondary region and offers no read access during a full regional outage."
+        },
+        "c": {
+          "text": "Read-access geo-zone-redundant storage (RA-GZRS)",
+          "is_true": true,
+          "explanation": "Correct. RA-GZRS replicates data across availability zones in the primary region and asynchronously to a secondary region, while also providing read access to the secondary endpoint. This is the strongest option for both zone-level and regional resilience with continuous read availability."
+        }
+      },
+      "correct_answer": ["c"]
+    },
+    {
+      "question_id": 2,
+      "question_text": "Which configuration allows an organization to restrict Azure Storage account access to specific IP address ranges?",
+      "difficulty": "easy",
+      "topic": "Storage Security",
+      "tags": ["security", "networking", "access-control"],
+      "options": {
+        "a": {
+          "text": "Firewalls and virtual networks",
+          "is_true": true,
+          "explanation": "Correct. The 'Firewalls and virtual networks' settings in a storage account allow you to add allowed IP address ranges and virtual network rules, restricting access to known sources only."
+        },
+        "b": {
+          "text": "Access keys",
+          "is_true": false,
+          "explanation": "Incorrect. Access keys are used for authenticating requests to the storage account, not for restricting access by IP address or network."
+        },
+        "c": {
+          "text": "Service endpoints",
+          "is_true": false,
+          "explanation": "Incorrect. Service endpoints extend your virtual network identity to Azure services, but by themselves they do not restrict access to specific IP ranges — that is done through the firewall rules configuration."
+        }
+      },
+      "correct_answer": ["a"]
+    },
+    {
+      "question_id": 3,
+      "question_text": "A company requires a replication strategy that ensures data remains available even if a single zone within a region becomes unavailable. Which strategy should be chosen?",
+      "difficulty": "easy",
+      "topic": "Storage Replication",
+      "tags": ["replication", "availability-zones", "AZ-104"],
+      "options": {
+        "a": {
+          "text": "Locally redundant storage (LRS)",
+          "is_true": false,
+          "explanation": "Incorrect. LRS replicates data within a single datacenter. If that datacenter or zone becomes unavailable, data access is disrupted."
+        },
+        "b": {
+          "text": "Zone redundant storage (ZRS)",
+          "is_true": true,
+          "explanation": "Correct. ZRS synchronously replicates data across three availability zones within the primary region. If one zone fails, data remains accessible from the other zones."
+        },
+        "c": {
+          "text": "Geo-redundant storage (GRS)",
+          "is_true": false,
+          "explanation": "Incorrect. GRS replicates to a secondary region but does not specifically protect against single-zone failures within the primary region — LRS is used within the primary region for GRS."
+        }
+      },
+      "correct_answer": ["b"]
+    },
+    {
+      "question_id": 4,
+      "question_text": "Your company requires a storage solution that ensures data durability even during regional outages. Which Azure Storage replication strategy should you choose to meet this requirement?",
+      "difficulty": "medium",
+      "topic": "Storage Replication",
+      "tags": ["scenario", "replication", "disaster-recovery"],
+      "options": {
+        "a": {
+          "text": "Locally redundant storage (LRS)",
+          "is_true": false,
+          "explanation": "Incorrect. LRS only replicates within a single datacenter. A regional outage would render data unavailable or at risk of loss."
+        },
+        "b": {
+          "text": "Zone redundant storage (ZRS)",
+          "is_true": false,
+          "explanation": "Incorrect. ZRS replicates across availability zones within a region but does not protect against a full regional outage."
+        },
+        "c": {
+          "text": "Geo-zone redundant storage (GZRS)",
+          "is_true": true,
+          "explanation": "Correct. GZRS replicates data across three availability zones in the primary region and asynchronously copies data to a secondary region, ensuring durability even during a complete regional outage."
+        }
+      },
+      "correct_answer": ["c"]
+    },
+    {
+      "question_id": 5,
+      "question_text": "Which Azure configuration should be used to ensure that only specific subnets have access to a storage account?",
+      "difficulty": "easy",
+      "topic": "Storage Security",
+      "tags": ["networking", "access-control", "subnets"],
+      "options": {
+        "a": {
+          "text": "Firewalls and virtual networks",
+          "is_true": true,
+          "explanation": "Correct. The 'Firewalls and virtual networks' section of a storage account allows you to specify virtual network rules at the subnet level, restricting access to only those subnets."
+        },
+        "b": {
+          "text": "Encryption settings",
+          "is_true": false,
+          "explanation": "Incorrect. Encryption settings control how data is encrypted at rest and in transit. They do not control which subnets can access the storage account."
+        },
+        "c": {
+          "text": "Access keys",
+          "is_true": false,
+          "explanation": "Incorrect. Access keys authenticate callers but do not restrict access based on subnet or network location."
+        }
+      },
+      "correct_answer": ["a"]
+    },
+    {
+      "question_id": 6,
+      "question_text": "Your company experienced a regional outage that affected data availability. Which Azure Storage replication strategy should be implemented to prevent data loss in future regional outages?",
+      "difficulty": "medium",
+      "topic": "Storage Replication",
+      "tags": ["scenario", "replication", "disaster-recovery"],
+      "options": {
+        "a": {
+          "text": "Locally redundant storage (LRS)",
+          "is_true": false,
+          "explanation": "Incorrect. LRS only replicates within a single datacenter and provides no protection against regional outages."
+        },
+        "b": {
+          "text": "Geo-zone redundant storage (GZRS)",
+          "is_true": true,
+          "explanation": "Correct. GZRS combines zone-level and geo-redundancy, replicating data across availability zones in the primary region and to a paired secondary region, providing protection against both zone and regional failures."
+        },
+        "c": {
+          "text": "Zone redundant storage (ZRS)",
+          "is_true": false,
+          "explanation": "Incorrect. ZRS replicates across availability zones within a single region. If the entire region goes down, ZRS does not protect against data unavailability."
+        }
+      },
+      "correct_answer": ["b"]
+    },
+    {
+      "question_id": 7,
+      "question_text": "Your organization needs to restrict access to its Azure Storage account to specific subnets within a virtual network. Which configuration setting should you use in the Azure portal to achieve this?",
+      "difficulty": "easy",
+      "topic": "Storage Security",
+      "tags": ["networking", "access-control", "subnets", "portal"],
+      "options": {
+        "a": {
+          "text": "Enable 'Storage Service Encryption'",
+          "is_true": false,
+          "explanation": "Incorrect. Storage Service Encryption (SSE) controls data encryption at rest. It has no effect on which subnets can reach the storage account."
+        },
+        "b": {
+          "text": "Use the 'Firewalls and virtual networks' settings",
+          "is_true": true,
+          "explanation": "Correct. Under 'Firewalls and virtual networks' in the storage account settings, you can add virtual network rules that limit access to specific subnets."
+        },
+        "c": {
+          "text": "Configure the 'Access keys' settings",
+          "is_true": false,
+          "explanation": "Incorrect. Access keys provide shared-key authentication but do not restrict access by network location or subnet."
+        }
+      },
+      "correct_answer": ["b"]
+    },
+    {
+      "question_id": 8,
+      "question_text": "Which replication strategy offers the highest durability with data replicated across multiple regions?",
+      "difficulty": "easy",
+      "topic": "Storage Replication",
+      "tags": ["replication", "durability", "comparison"],
+      "options": {
+        "a": {
+          "text": "Locally redundant storage (LRS)",
+          "is_true": false,
+          "explanation": "Incorrect. LRS replicates only within a single datacenter, providing the lowest level of geographic redundancy."
+        },
+        "b": {
+          "text": "Zone redundant storage (ZRS)",
+          "is_true": false,
+          "explanation": "Incorrect. ZRS replicates across zones within a single region. It does not replicate to a second region."
+        },
+        "c": {
+          "text": "Geo-zone redundant storage (GZRS)",
+          "is_true": true,
+          "explanation": "Correct. GZRS offers the highest durability by replicating data across three availability zones in the primary region and asynchronously to a secondary region, protecting against both zone and full regional failures."
+        }
+      },
+      "correct_answer": ["c"]
+    },
+    {
+      "question_id": 9,
+      "question_text": "A company needs to restrict access to its Azure Storage account so that only specific virtual networks can access it. Which feature should be configured to achieve this?",
+      "difficulty": "easy",
+      "topic": "Storage Security",
+      "tags": ["networking", "access-control", "virtual-network"],
+      "options": {
+        "a": {
+          "text": "Azure Table Storage permissions",
+          "is_true": false,
+          "explanation": "Incorrect. Azure Table Storage permissions relate to entity-level access within Table Storage, not to network-level restrictions on the storage account."
+        },
+        "b": {
+          "text": "Custom domains",
+          "is_true": false,
+          "explanation": "Incorrect. Custom domains map a custom DNS name to the storage account endpoint. They have no effect on network access restrictions."
+        },
+        "c": {
+          "text": "Firewalls and virtual networks settings",
+          "is_true": true,
+          "explanation": "Correct. Configuring the 'Firewalls and virtual networks' settings allows you to select specific virtual networks and subnets that are permitted to access the storage account, blocking all other traffic."
+        }
+      },
+      "correct_answer": ["c"]
+    },
+    {
+      "question_id": 10,
+      "question_text": "What is the minimum number of synchronous copies that Locally Redundant Storage (LRS) maintains within an Azure datacenter?",
+      "difficulty": "easy",
+      "topic": "Storage Replication",
+      "tags": ["definition", "LRS", "replication"],
+      "options": {
+        "a": {
+          "text": "2 copies",
+          "is_true": false,
+          "explanation": "Incorrect. LRS maintains more than 2 copies to reach the 11 nines durability SLA."
+        },
+        "b": {
+          "text": "3 copies",
+          "is_true": true,
+          "explanation": "Correct. LRS synchronously writes three copies of your data within a single storage scale unit in one datacenter, providing 99.999999999% (11 nines) object durability."
+        },
+        "c": {
+          "text": "6 copies",
+          "is_true": false,
+          "explanation": "Incorrect. 6 copies is associated with GRS, which keeps 3 copies in the primary region and 3 in the secondary region."
+        },
+        "d": {
+          "text": "12 copies",
+          "is_true": false,
+          "explanation": "Incorrect. Azure does not maintain 12 copies for any standard replication tier."
+        }
+      },
+      "correct_answer": ["b"]
+    },
+    {
+      "question_id": 11,
+      "question_text": "Which TWO Azure Storage replication options provide read access to data in the secondary region without initiating a failover?",
+      "difficulty": "medium",
+      "topic": "Storage Replication",
+      "tags": ["replication", "secondary-read", "comparison"],
+      "options": {
+        "a": {
+          "text": "Read-access geo-redundant storage (RA-GRS)",
+          "is_true": true,
+          "explanation": "Correct. RA-GRS replicates data to a secondary region and exposes a read-only secondary endpoint, allowing read access without failover."
+        },
+        "b": {
+          "text": "Geo-redundant storage (GRS)",
+          "is_true": false,
+          "explanation": "Incorrect. GRS replicates to a secondary region but does NOT expose a read endpoint for the secondary — read access only becomes available after a failover."
+        },
+        "c": {
+          "text": "Read-access geo-zone-redundant storage (RA-GZRS)",
+          "is_true": true,
+          "explanation": "Correct. RA-GZRS adds zone redundancy on top of RA-GRS and also exposes a secondary read endpoint, allowing continuous reads without failover."
+        },
+        "d": {
+          "text": "Zone redundant storage (ZRS)",
+          "is_true": false,
+          "explanation": "Incorrect. ZRS replicates only within a single region across availability zones and has no secondary region or read endpoint."
+        }
+      },
+      "correct_answer": ["a", "c"]
+    },
+    {
+      "question_id": 12,
+      "question_text": "A developer uses a Shared Access Signature (SAS) to grant a client application temporary access to a specific blob container. What is the primary purpose of using SAS tokens for Azure Storage?",
+      "difficulty": "medium",
+      "topic": "Storage Access Control",
+      "tags": ["SAS", "access-control", "authentication"],
+      "options": {
+        "a": {
+          "text": "To replicate data to a secondary region automatically",
+          "is_true": false,
+          "explanation": "Incorrect. Data replication is controlled by the chosen redundancy tier (LRS, ZRS, GRS, etc.), not by SAS tokens."
+        },
+        "b": {
+          "text": "To grant delegated, time-limited access to storage resources without sharing account keys",
+          "is_true": true,
+          "explanation": "Correct. A SAS token provides granular, time-limited permissions to specific resources (blobs, queues, tables, files) without exposing the storage account key, following the principle of least privilege."
+        },
+        "c": {
+          "text": "To encrypt data at rest within the storage account",
+          "is_true": false,
+          "explanation": "Incorrect. Encryption at rest is handled by Azure Storage Service Encryption (SSE), not by SAS tokens."
+        },
+        "d": {
+          "text": "To configure network firewall rules for the storage account",
+          "is_true": false,
+          "explanation": "Incorrect. Firewall and network rules are configured in the 'Networking' section of the storage account, not via SAS tokens."
+        }
+      },
+      "correct_answer": ["b"]
+    },
+    {
+      "question_id": 13,
+      "question_text": "Which Azure Storage service is best suited for storing unstructured data such as images, videos, and log files as individual objects?",
+      "difficulty": "easy",
+      "topic": "Azure Storage Services",
+      "tags": ["blob-storage", "definition", "use-cases"],
+      "options": {
+        "a": {
+          "text": "Azure File Storage",
+          "is_true": false,
+          "explanation": "Incorrect. Azure File Storage provides fully managed file shares accessible via SMB or NFS protocols, suited for lift-and-shift scenarios of file servers — not optimised for unstructured object storage."
+        },
+        "b": {
+          "text": "Azure Queue Storage",
+          "is_true": false,
+          "explanation": "Incorrect. Azure Queue Storage is designed for storing and retrieving messages for asynchronous communication between application components."
+        },
+        "c": {
+          "text": "Azure Blob Storage",
+          "is_true": true,
+          "explanation": "Correct. Azure Blob Storage is Azure's object storage solution, optimised for storing massive amounts of unstructured data such as images, videos, documents, and logs."
+        },
+        "d": {
+          "text": "Azure Table Storage",
+          "is_true": false,
+          "explanation": "Incorrect. Azure Table Storage is a NoSQL key-value store suited for structured, schema-less datasets — not for binary or unstructured blob data."
+        }
+      },
+      "correct_answer": ["c"]
+    },
+    {
+      "question_id": 14,
+      "question_text": "An administrator wants to audit and log all requests made to an Azure Storage account for security investigations. Which feature should be enabled?",
+      "difficulty": "medium",
+      "topic": "Storage Monitoring & Diagnostics",
+      "tags": ["monitoring", "logging", "security", "scenario"],
+      "options": {
+        "a": {
+          "text": "Azure Storage Analytics logging",
+          "is_true": true,
+          "explanation": "Correct. Azure Storage Analytics (or diagnostic logs via Azure Monitor) captures detailed logs of every request — authenticated or anonymous, successful or failed — enabling forensic analysis and security investigations."
+        },
+        "b": {
+          "text": "Geo-redundant storage (GRS)",
+          "is_true": false,
+          "explanation": "Incorrect. GRS is a replication strategy for data durability. It does not provide audit logging of requests."
+        },
+        "c": {
+          "text": "Shared Access Signatures (SAS)",
+          "is_true": false,
+          "explanation": "Incorrect. SAS tokens control access delegation. While you can track SAS usage through logs, enabling SAS alone does not provide audit logging."
+        },
+        "d": {
+          "text": "Storage Service Encryption (SSE)",
+          "is_true": false,
+          "explanation": "Incorrect. SSE encrypts data at rest. It does not log or audit requests."
+        }
+      },
+      "correct_answer": ["a"]
+    },
+    {
+      "question_id": 15,
+      "question_text": "Which Azure Blob Storage access tier is most cost-effective for data that is accessed infrequently and must be stored for at least 30 days?",
+      "difficulty": "medium",
+      "topic": "Blob Storage Access Tiers",
+      "tags": ["access-tiers", "cost-optimisation", "blob-storage"],
+      "options": {
+        "a": {
+          "text": "Hot tier",
+          "is_true": false,
+          "explanation": "Incorrect. The Hot tier is optimised for frequently accessed data and has higher storage costs, making it unsuitable for infrequently accessed data."
+        },
+        "b": {
+          "text": "Cool tier",
+          "is_true": true,
+          "explanation": "Correct. The Cool tier is designed for infrequently accessed data with a minimum retention period of 30 days. It has lower storage costs than Hot but higher per-access costs."
+        },
+        "c": {
+          "text": "Archive tier",
+          "is_true": false,
+          "explanation": "Incorrect. The Archive tier is for data that is rarely accessed and requires a minimum retention of 180 days. Retrieval also involves rehydration delays of hours, making it unsuitable if timely access is still occasionally needed."
+        },
+        "d": {
+          "text": "Premium tier",
+          "is_true": false,
+          "explanation": "Incorrect. The Premium tier provides high-performance SSD-backed storage for latency-sensitive workloads — it is the most expensive tier, not the most cost-effective for infrequent access."
+        }
+      },
+      "correct_answer": ["b"]
+    },
+    {
+      "question_id": 16,
+      "question_text": "A security team wants to ensure that all data written to an Azure Storage account is automatically encrypted. Which feature provides this by default?",
+      "difficulty": "easy",
+      "topic": "Storage Encryption",
+      "tags": ["encryption", "security", "SSE"],
+      "options": {
+        "a": {
+          "text": "Azure Storage Service Encryption (SSE)",
+          "is_true": true,
+          "explanation": "Correct. SSE automatically encrypts all data written to Azure Storage using 256-bit AES encryption, and is enabled by default for all storage accounts — no configuration is required."
+        },
+        "b": {
+          "text": "Shared Access Signatures (SAS)",
+          "is_true": false,
+          "explanation": "Incorrect. SAS provides delegated access control, not encryption of data at rest."
+        },
+        "c": {
+          "text": "Azure Key Vault",
+          "is_true": false,
+          "explanation": "Incorrect. Azure Key Vault can be used to manage customer-managed keys for SSE, but SSE itself is the feature that performs the encryption — Key Vault alone does not encrypt storage data."
+        },
+        "d": {
+          "text": "Transport Layer Security (TLS)",
+          "is_true": false,
+          "explanation": "Incorrect. TLS encrypts data in transit between the client and the storage endpoint. It does not encrypt data at rest."
+        }
+      },
+      "correct_answer": ["a"]
+    },
+    {
+      "question_id": 17,
+      "question_text": "Which type of Azure Storage account provides the broadest compatibility with all storage services including Blob, File, Queue, and Table?",
+      "difficulty": "easy",
+      "topic": "Storage Account Types",
+      "tags": ["account-types", "definition"],
+      "options": {
+        "a": {
+          "text": "BlobStorage account",
+          "is_true": false,
+          "explanation": "Incorrect. BlobStorage accounts only support Blob Storage (block and append blobs). They are a legacy type and do not support Files, Queues, or Tables."
+        },
+        "b": {
+          "text": "General-purpose v2 (GPv2) account",
+          "is_true": true,
+          "explanation": "Correct. GPv2 is the recommended account type for most scenarios. It supports all four Azure Storage services — Blob, File, Queue, and Table — and supports all replication options and access tiers."
+        },
+        "c": {
+          "text": "General-purpose v1 (GPv1) account",
+          "is_true": false,
+          "explanation": "Incorrect. GPv1 is a legacy type that lacks support for newer features such as access tiers (Hot/Cool/Archive). Microsoft recommends upgrading to GPv2."
+        },
+        "d": {
+          "text": "FileStorage account",
+          "is_true": false,
+          "explanation": "Incorrect. FileStorage accounts are premium accounts designed exclusively for Azure Files with high-performance SSD storage. They do not support Blob, Queue, or Table services."
+        }
+      },
+      "correct_answer": ["b"]
+    },
+    {
+      "question_id": 18,
+      "question_text": "An organisation stores compliance documents in Azure Blob Storage and must ensure that the data cannot be deleted or overwritten for a minimum of 7 years. Which feature should be configured?",
+      "difficulty": "hard",
+      "topic": "Blob Storage Data Protection",
+      "tags": ["immutability", "compliance", "WORM", "scenario"],
+      "options": {
+        "a": {
+          "text": "Soft delete for blobs",
+          "is_true": false,
+          "explanation": "Incorrect. Soft delete retains deleted blobs for a configurable period so they can be restored. However, it does not prevent intentional deletion by an authorised administrator and does not enforce an immutability policy."
+        },
+        "b": {
+          "text": "Blob versioning",
+          "is_true": false,
+          "explanation": "Incorrect. Blob versioning preserves previous versions of a blob automatically, but it does not prevent deletion of all versions or enforce a time-based retention lock."
+        },
+        "c": {
+          "text": "Immutable blob storage with a time-based retention policy",
+          "is_true": true,
+          "explanation": "Correct. Immutable storage with a time-based retention policy enforces a WORM (Write Once, Read Many) state. Data cannot be deleted or modified until the retention interval expires, meeting compliance and regulatory requirements."
+        },
+        "d": {
+          "text": "Azure Backup for blobs",
+          "is_true": false,
+          "explanation": "Incorrect. Azure Backup creates point-in-time restore points for recovery purposes. It does not enforce immutability or prevent deletion of the live data."
+        }
+      },
+      "correct_answer": ["c"]
+    },
+    {
+      "question_id": 19,
+      "question_text": "Which TWO actions are required to enable a private endpoint for an Azure Storage account to prevent data from traversing the public internet?",
+      "difficulty": "hard",
+      "topic": "Storage Security",
+      "tags": ["private-endpoint", "networking", "security", "scenario"],
+      "options": {
+        "a": {
+          "text": "Create a private endpoint in the virtual network and link it to the storage account",
+          "is_true": true,
+          "explanation": "Correct. Creating a private endpoint provisions a private IP address within your VNet that maps to the storage account, enabling private connectivity."
+        },
+        "b": {
+          "text": "Enable geo-redundant storage (GRS) on the account",
+          "is_true": false,
+          "explanation": "Incorrect. GRS is a replication strategy and has no effect on whether traffic flows over the public internet or a private endpoint."
+        },
+        "c": {
+          "text": "Disable public network access on the storage account",
+          "is_true": true,
+          "explanation": "Correct. After creating the private endpoint, disabling public network access ensures that all traffic must flow through the private endpoint, preventing any data from traversing the public internet."
+        },
+        "d": {
+          "text": "Regenerate the storage account access keys",
+          "is_true": false,
+          "explanation": "Incorrect. Regenerating access keys rotates authentication credentials. It does not affect network routing or prevent public internet access."
+        }
+      },
+      "correct_answer": ["a", "c"]
+    },
+    {
+      "question_id": 20,
+      "question_text": "A company stores large datasets in Azure Blob Storage that are rarely accessed after 90 days. They want to minimise storage costs automatically. Which Azure feature should they configure?",
+      "difficulty": "medium",
+      "topic": "Blob Storage Lifecycle Management",
+      "tags": ["lifecycle-management", "cost-optimisation", "scenario", "blob-storage"],
+      "options": {
+        "a": {
+          "text": "Azure Blob Storage lifecycle management policies",
+          "is_true": true,
+          "explanation": "Correct. Lifecycle management policies let you define rules to automatically transition blobs to cooler tiers (e.g., Cool after 30 days, Archive after 90 days) or delete them after a specified period, reducing storage costs without manual intervention."
+        },
+        "b": {
+          "text": "Azure Storage replication policy",
+          "is_true": false,
+          "explanation": "Incorrect. Replication policies control redundancy and data durability across regions or zones. They do not manage data tiering or automatic deletion for cost reduction."
+        },
+        "c": {
+          "text": "Azure Blob soft delete",
+          "is_true": false,
+          "explanation": "Incorrect. Soft delete retains deleted blobs temporarily to enable recovery. It adds cost for deleted blobs rather than reducing storage costs."
+        },
+        "d": {
+          "text": "Azure Content Delivery Network (CDN)",
+          "is_true": false,
+          "explanation": "Incorrect. Azure CDN caches content at edge locations to improve delivery performance. It does not manage blob tiers or reduce storage costs for infrequently accessed data."
+        }
+      },
+      "correct_answer": ["a"]
+    }
+  ]
+}

@@ -1,0 +1,610 @@
+{
+  "meta": {
+    "title": "Entra ID – Microsoft Entra Domain Services",
+    "subject": "Microsoft Entra ID",
+    "version": "1.0.0",
+    "created": "2026-03-27"
+  },
+  "questions": [
+    {
+      "question_id": 1,
+      "question_text": "What is Microsoft Entra Domain Services?",
+      "difficulty": "easy",
+      "topic": "Entra Domain Services",
+      "tags": ["entra-ds", "managed-domain", "overview"],
+      "options": {
+        "a": {
+          "text": "A tool for syncing on-premises Active Directory to Entra ID",
+          "is_true": false,
+          "explanation": "Incorrect. That describes Entra Connect. Entra Domain Services is a managed domain service, not a sync tool."
+        },
+        "b": {
+          "text": "A managed domain service providing Kerberos, NTLM, LDAP, and Group Policy without deploying domain controllers",
+          "is_true": true,
+          "explanation": "Correct. Entra Domain Services is a PaaS offering that provides traditional AD DS services (Kerberos, NTLM, LDAP, domain join, Group Policy) in Azure without requiring customers to deploy or manage domain controllers."
+        },
+        "c": {
+          "text": "A backup service for on-premises Active Directory",
+          "is_true": false,
+          "explanation": "Incorrect. Entra Domain Services is not an AD backup solution."
+        },
+        "d": {
+          "text": "An upgrade path from Windows Server AD DS to Entra ID",
+          "is_true": false,
+          "explanation": "Incorrect. Entra Domain Services is a parallel managed service, not a migration or upgrade path."
+        }
+      },
+      "correct_answer": ["b"]
+    },
+    {
+      "question_id": 2,
+      "question_text": "Which legacy authentication protocols does Microsoft Entra Domain Services support? Select all that apply.",
+      "difficulty": "easy",
+      "topic": "Entra Domain Services",
+      "tags": ["entra-ds", "kerberos", "ntlm", "ldap"],
+      "options": {
+        "a": {
+          "text": "Kerberos",
+          "is_true": true,
+          "explanation": "Correct. Entra Domain Services supports Kerberos authentication, which is required by many legacy Windows applications."
+        },
+        "b": {
+          "text": "NTLM",
+          "is_true": true,
+          "explanation": "Correct. Entra Domain Services supports NTLM authentication for legacy apps that cannot use Kerberos."
+        },
+        "c": {
+          "text": "LDAP",
+          "is_true": true,
+          "explanation": "Correct. Entra Domain Services supports LDAP for directory queries — allowing legacy apps that use LDAP to work without modification."
+        },
+        "d": {
+          "text": "SAML 2.0",
+          "is_true": false,
+          "explanation": "Incorrect. SAML 2.0 is a modern web SSO protocol used by Entra ID itself — it is not a legacy protocol supported by Entra Domain Services for on-premises app compatibility."
+        }
+      },
+      "correct_answer": ["a", "b", "c"]
+    },
+    {
+      "question_id": 3,
+      "question_text": "Which Entra ID license is required to use Microsoft Entra Domain Services?",
+      "difficulty": "easy",
+      "topic": "Entra Domain Services",
+      "tags": ["entra-ds", "licensing", "p1"],
+      "options": {
+        "a": {
+          "text": "Entra ID Free",
+          "is_true": false,
+          "explanation": "Incorrect. Entra Domain Services requires a paid tier — it is not available in the Free tier."
+        },
+        "b": {
+          "text": "Entra ID P1 or P2",
+          "is_true": true,
+          "explanation": "Correct. Microsoft Entra Domain Services requires Entra ID P1 or P2. The service runs as part of the P1/P2 tier."
+        },
+        "c": {
+          "text": "Microsoft 365 Business Basic only",
+          "is_true": false,
+          "explanation": "Incorrect. Microsoft 365 Business Basic includes Entra ID Free features — not Entra Domain Services."
+        },
+        "d": {
+          "text": "Azure subscription — no Entra license needed beyond the subscription",
+          "is_true": false,
+          "explanation": "Incorrect. An Azure subscription alone does not grant access to Entra Domain Services. An Entra ID P1 or P2 license is explicitly required."
+        }
+      },
+      "correct_answer": ["b"]
+    },
+    {
+      "question_id": 4,
+      "question_text": "A developer needs to lift-and-shift a legacy .NET application that uses LDAP authentication to Azure VMs. The organisation does not want to manage domain controllers. What is the best solution?",
+      "difficulty": "easy",
+      "topic": "Entra Domain Services",
+      "tags": ["entra-ds", "lift-and-shift", "ldap"],
+      "options": {
+        "a": {
+          "text": "Deploy AD DS domain controllers as Azure IaaS VMs",
+          "is_true": false,
+          "explanation": "Incorrect. This would work technically, but requires the organisation to manage domain controllers — which the question explicitly says they want to avoid."
+        },
+        "b": {
+          "text": "Configure a site-to-site VPN and authenticate through on-premises AD",
+          "is_true": false,
+          "explanation": "Incorrect. This works but creates a dependency on on-premises infrastructure and VPN availability — not ideal for cloud workloads."
+        },
+        "c": {
+          "text": "Enable Microsoft Entra Domain Services in Azure",
+          "is_true": true,
+          "explanation": "Correct. Entra Domain Services provides managed LDAP, Kerberos, and NTLM services in Azure without deploying or managing domain controllers. It is the ideal solution for lifting legacy LDAP-dependent apps to Azure."
+        },
+        "d": {
+          "text": "Rewrite the application to use Entra ID REST API authentication",
+          "is_true": false,
+          "explanation": "Incorrect. Rewriting the application is a valid long-term approach but defeats the purpose of a lift-and-shift migration."
+        }
+      },
+      "correct_answer": ["c"]
+    },
+    {
+      "question_id": 5,
+      "question_text": "What is a key structural limitation of the Organizational Unit (OU) support in Entra Domain Services?",
+      "difficulty": "medium",
+      "topic": "Entra Domain Services",
+      "tags": ["entra-ds", "ou", "limitations"],
+      "options": {
+        "a": {
+          "text": "OUs are not supported at all",
+          "is_true": false,
+          "explanation": "Incorrect. Entra Domain Services does support OUs, but with significant limitations."
+        },
+        "b": {
+          "text": "OUs are supported but the structure is flat — nested OUs are not supported",
+          "is_true": true,
+          "explanation": "Correct. Entra Domain Services supports OUs but only in a flat structure. You cannot create nested OUs like you would in a traditional AD DS deployment."
+        },
+        "c": {
+          "text": "OUs can only contain computer objects, not users",
+          "is_true": false,
+          "explanation": "Incorrect. This is not a stated limitation. The key OU limitation is the flat structure."
+        },
+        "d": {
+          "text": "You can create nested OUs but only up to 2 levels deep",
+          "is_true": false,
+          "explanation": "Incorrect. The limitation is that nested OUs are not currently supported at all in Entra Domain Services."
+        }
+      },
+      "correct_answer": ["b"]
+    },
+    {
+      "question_id": 6,
+      "question_text": "Can schema extensions be added to a Microsoft Entra Domain Services managed domain?",
+      "difficulty": "medium",
+      "topic": "Entra Domain Services",
+      "tags": ["entra-ds", "schema", "limitations"],
+      "options": {
+        "a": {
+          "text": "Yes — schema extensions are supported and work the same as in AD DS",
+          "is_true": false,
+          "explanation": "Incorrect. Schema extension is explicitly listed as a limitation of Entra Domain Services."
+        },
+        "b": {
+          "text": "No — the schema cannot be extended in Entra Domain Services",
+          "is_true": true,
+          "explanation": "Correct. Extending the Entra Domain Services schema is not supported. This is one of the key limitations compared to deploying your own AD DS where full schema extensions are possible."
+        },
+        "c": {
+          "text": "Yes — but only with an Entra ID P2 license",
+          "is_true": false,
+          "explanation": "Incorrect. Schema extension is not a matter of licensing — it is an architectural limitation of the managed service."
+        },
+        "d": {
+          "text": "Yes — you can submit schema extension requests to Microsoft",
+          "is_true": false,
+          "explanation": "Incorrect. Customers cannot extend the Entra Domain Services schema, even via a request."
+        }
+      },
+      "correct_answer": ["b"]
+    },
+    {
+      "question_id": 7,
+      "question_text": "How is Entra Domain Services billed?",
+      "difficulty": "easy",
+      "topic": "Entra Domain Services",
+      "tags": ["entra-ds", "billing", "pricing"],
+      "options": {
+        "a": {
+          "text": "A flat monthly fee per tenant",
+          "is_true": false,
+          "explanation": "Incorrect. Entra Domain Services is billed per hour, not a flat monthly fee."
+        },
+        "b": {
+          "text": "Per user per month",
+          "is_true": false,
+          "explanation": "Incorrect. Entra DS is billed based on the size of the directory, not per user."
+        },
+        "c": {
+          "text": "Per hour, based on the size of the directory",
+          "is_true": true,
+          "explanation": "Correct. Entra Domain Services charges per hour based on the size of the managed domain (number of objects/users). You enable it via the Azure portal."
+        },
+        "d": {
+          "text": "Free — included with any Azure subscription",
+          "is_true": false,
+          "explanation": "Incorrect. Entra Domain Services has a separate per-hour charge and also requires Entra ID P1 licensing."
+        }
+      },
+      "correct_answer": ["c"]
+    },
+    {
+      "question_id": 8,
+      "question_text": "What are the Group Policy limitations in Microsoft Entra Domain Services?",
+      "difficulty": "medium",
+      "topic": "Entra Domain Services",
+      "tags": ["entra-ds", "gpo", "limitations"],
+      "options": {
+        "a": {
+          "text": "Group Policy is not supported at all in Entra Domain Services",
+          "is_true": false,
+          "explanation": "Incorrect. Entra Domain Services does support Group Policy — but only built-in GPOs, with limitations."
+        },
+        "b": {
+          "text": "Only built-in GPOs are available; you cannot use WMI filters or security-group filtering on GPOs",
+          "is_true": true,
+          "explanation": "Correct. Entra Domain Services provides built-in GPOs for computer and user accounts. However, WMI filter-based targeting and security-group filtering of GPOs are not supported. You also cannot target OUs with custom nested structure."
+        },
+        "c": {
+          "text": "Custom GPOs can be created but only applied at the domain level",
+          "is_true": false,
+          "explanation": "Incorrect. You can create custom GPOs and link them to the flat OU structure, but the limitation is specifically around WMI filters and security-group filtering."
+        },
+        "d": {
+          "text": "Group Policy works identically to on-premises AD DS",
+          "is_true": false,
+          "explanation": "Incorrect. There are several GPO limitations in Entra Domain Services compared to full AD DS."
+        }
+      },
+      "correct_answer": ["b"]
+    },
+    {
+      "question_id": 9,
+      "question_text": "A company has no on-premises Active Directory at all. Can they use Microsoft Entra Domain Services?",
+      "difficulty": "medium",
+      "topic": "Entra Domain Services",
+      "tags": ["entra-ds", "cloud-only"],
+      "options": {
+        "a": {
+          "text": "No — Entra Domain Services requires an on-premises AD DS deployment to sync from",
+          "is_true": false,
+          "explanation": "Incorrect. Entra Domain Services can operate as a cloud-only managed domain without any on-premises AD DS."
+        },
+        "b": {
+          "text": "Yes — Entra Domain Services can be used as a cloud-only service",
+          "is_true": true,
+          "explanation": "Correct. Entra Domain Services works in a cloud-only scenario. An organisation without on-premises AD can still enable the managed domain, create cloud users in Entra ID, and have those users use domain services (Kerberos, NTLM, LDAP) from the managed domain."
+        },
+        "c": {
+          "text": "No — Entra Domain Services requires Entra Connect to be installed on-premises",
+          "is_true": false,
+          "explanation": "Incorrect. Entra Connect is only needed if you want to sync on-premises identities. For a cloud-only scenario, Entra Domain Services works independently."
+        },
+        "d": {
+          "text": "Yes — but only for read-only LDAP queries",
+          "is_true": false,
+          "explanation": "Incorrect. Cloud-only Entra Domain Services is not limited to read-only LDAP. Full domain services are available."
+        }
+      },
+      "correct_answer": ["b"]
+    },
+    {
+      "question_id": 10,
+      "question_text": "Which two groups are NOT required when using Entra Domain Services, unlike a traditional AD DS deployment?",
+      "difficulty": "medium",
+      "topic": "Entra Domain Services",
+      "tags": ["entra-ds", "domain-admins", "enterprise-admins"],
+      "options": {
+        "a": {
+          "text": "Domain Admins and Enterprise Admins",
+          "is_true": true,
+          "explanation": "Correct. Because Microsoft manages the Entra Domain Services infrastructure, you do not need Domain Admins or Enterprise Admins groups. Microsoft handles all domain controller management, patching, and replication."
+        },
+        "b": {
+          "text": "Security groups and Distribution groups",
+          "is_true": false,
+          "explanation": "Incorrect. Security and distribution groups are standard Entra ID objects that you still create and manage. They are not eliminated by Entra Domain Services."
+        },
+        "c": {
+          "text": "Schema Admins and Guest accounts",
+          "is_true": false,
+          "explanation": "Incorrect. While Schema Admins are irrelevant (schema cannot be extended), this is not the intended answer. The key groups mentioned in the Microsoft Learn content are Domain Admins and Enterprise Admins."
+        },
+        "d": {
+          "text": "Global Administrators and Helpdesk Administrators",
+          "is_true": false,
+          "explanation": "Incorrect. These are Entra ID directory roles still used in your organisation — they are not related to Entra Domain Services managed domain roles."
+        }
+      },
+      "correct_answer": ["a"]
+    },
+    {
+      "question_id": 11,
+      "question_text": "What happens to on-premises users synced via Entra Connect when Entra Domain Services is enabled?",
+      "difficulty": "medium",
+      "topic": "Entra Domain Services",
+      "tags": ["entra-ds", "entra-connect", "sync"],
+      "options": {
+        "a": {
+          "text": "Synced users are automatically registered as new cloud-only identities",
+          "is_true": false,
+          "explanation": "Incorrect. Synced users retain their identity source from on-premises AD — they are not converted to cloud-only identities."
+        },
+        "b": {
+          "text": "Synced users can use the same on-premises credentials in Entra Domain Services",
+          "is_true": true,
+          "explanation": "Correct. When Entra Connect syncs on-premises users to Entra ID, and Entra Domain Services is enabled, users can use their organisational credentials (synced via PHS) in both the on-premises AD DS and the Entra Domain Services managed domain."
+        },
+        "c": {
+          "text": "Synced users must create a new separate password for Entra Domain Services",
+          "is_true": false,
+          "explanation": "Incorrect. With PHS, the password hash synced to Entra ID is also used by Entra Domain Services, so no separate password is needed."
+        },
+        "d": {
+          "text": "Synced users cannot access Entra Domain Services — only cloud-only users can",
+          "is_true": false,
+          "explanation": "Incorrect. Both cloud-only and synced users can use Entra Domain Services."
+        }
+      },
+      "correct_answer": ["b"]
+    },
+    {
+      "question_id": 12,
+      "question_text": "A company has SQL Server and SharePoint Server deployed on Azure VMs and wants them to use domain-joined authentication without managing domain controllers. What should they configure?",
+      "difficulty": "medium",
+      "topic": "Entra Domain Services",
+      "tags": ["entra-ds", "domain-join", "azure-vms"],
+      "options": {
+        "a": {
+          "text": "Deploy AD DS domain controllers in Azure and manage them manually",
+          "is_true": false,
+          "explanation": "Incorrect. This works but requires managing domain controllers — contradicting the requirement."
+        },
+        "b": {
+          "text": "Enable Entra Domain Services and join the VMs to the managed domain",
+          "is_true": true,
+          "explanation": "Correct. Entra Domain Services provides domain join, Kerberos, and domain authentication for Azure VMs — SQL Server and SharePoint VMs can be joined to the managed domain without any domain controllers to maintain."
+        },
+        "c": {
+          "text": "Use Entra ID application registrations for SQL Server and SharePoint auth",
+          "is_true": false,
+          "explanation": "Incorrect. Application registrations are for web/API app authentication — not for traditional Windows domain join scenarios."
+        },
+        "d": {
+          "text": "Configure a site-to-site VPN and use on-premises domain controllers",
+          "is_true": false,
+          "explanation": "Incorrect. While possible, this introduces dependency on on-premises infrastructure and VPN, which Entra Domain Services is specifically designed to avoid."
+        }
+      },
+      "correct_answer": ["b"]
+    },
+    {
+      "question_id": 13,
+      "question_text": "What type of computer object is supported in Entra Domain Services?",
+      "difficulty": "medium",
+      "topic": "Entra Domain Services",
+      "tags": ["entra-ds", "computer-object", "limitations"],
+      "options": {
+        "a": {
+          "text": "Full computer objects with all AD DS attributes including logon scripts and software installation",
+          "is_true": false,
+          "explanation": "Incorrect. Entra Domain Services only supports the base computer AD object — not the full set of attributes available in on-premises AD DS."
+        },
+        "b": {
+          "text": "Only the base computer Active Directory object — extended attributes are not supported",
+          "is_true": true,
+          "explanation": "Correct. Entra Domain Services supports only the base computer object. This means you cannot extend it with custom attributes or use all the AD DS computer management features."
+        },
+        "c": {
+          "text": "No computer objects — only user objects are supported",
+          "is_true": false,
+          "explanation": "Incorrect. Computer objects are supported — but only the base object, without schema extensions."
+        },
+        "d": {
+          "text": "Computer objects with full Group Policy enforcement including software deployment",
+          "is_true": false,
+          "explanation": "Incorrect. Software deployment via GPO and extended GPO targeting (WMI filters) are not supported in Entra Domain Services."
+        }
+      },
+      "correct_answer": ["b"]
+    },
+    {
+      "question_id": 14,
+      "question_text": "Which approach avoids VPN dependency AND eliminates the need to manage domain controllers for cloud-hosted legacy apps?",
+      "difficulty": "medium",
+      "topic": "Entra Domain Services",
+      "tags": ["entra-ds", "vpn-alternative"],
+      "options": {
+        "a": {
+          "text": "Deploy replica domain controllers as Azure VMs",
+          "is_true": false,
+          "explanation": "Incorrect. Replica DCs in Azure avoid VPN dependency for authentication, but still require customer management of domain controllers."
+        },
+        "b": {
+          "text": "Site-to-site VPN with on-premises domain controllers",
+          "is_true": false,
+          "explanation": "Incorrect. A VPN creates on-premises dependency and requires VPN infrastructure management."
+        },
+        "c": {
+          "text": "Microsoft Entra Domain Services",
+          "is_true": true,
+          "explanation": "Correct. Entra Domain Services provides domain services directly in Azure with no VPN required and no domain controllers to manage. Microsoft provides all the infrastructure."
+        },
+        "d": {
+          "text": "Azure ExpressRoute with on-premises domain controllers",
+          "is_true": false,
+          "explanation": "Incorrect. ExpressRoute provides a private connection but still depends on on-premises domain controllers and their management."
+        }
+      },
+      "correct_answer": ["c"]
+    },
+    {
+      "question_id": 15,
+      "question_text": "Who manages Active Directory replication in a Microsoft Entra Domain Services deployment?",
+      "difficulty": "easy",
+      "topic": "Entra Domain Services",
+      "tags": ["entra-ds", "replication", "managed-service"],
+      "options": {
+        "a": {
+          "text": "The customer's AD administrator",
+          "is_true": false,
+          "explanation": "Incorrect. Entra Domain Services is a managed service — customers do not manage AD replication."
+        },
+        "b": {
+          "text": "Microsoft manages replication as part of the service",
+          "is_true": true,
+          "explanation": "Correct. One of the key benefits of Entra Domain Services is that Microsoft manages domain controller deployment, patching, and AD replication. Customers have no operational responsibility for the underlying infrastructure."
+        },
+        "c": {
+          "text": "Entra Connect manages replication as part of the sync process",
+          "is_true": false,
+          "explanation": "Incorrect. Entra Connect handles identity synchronisation from on-premises AD to Entra ID — it does not manage Entra Domain Services replication."
+        },
+        "d": {
+          "text": "There is no replication — Entra Domain Services is single-instance only",
+          "is_true": false,
+          "explanation": "Incorrect. Entra Domain Services does replicate data internally for resilience — but this is fully managed by Microsoft."
+        }
+      },
+      "correct_answer": ["b"]
+    },
+    {
+      "question_id": 16,
+      "question_text": "How do you provision a Microsoft Entra Domain Services managed domain?",
+      "difficulty": "easy",
+      "topic": "Entra Domain Services",
+      "tags": ["entra-ds", "provisioning", "azure-portal"],
+      "options": {
+        "a": {
+          "text": "Install a domain controller agent on an Azure VM and register it",
+          "is_true": false,
+          "explanation": "Incorrect. Entra Domain Services is fully managed — there are no agents or VMs to install for the domain service itself."
+        },
+        "b": {
+          "text": "Through the Azure portal — enable Entra Domain Services for a virtual network",
+          "is_true": true,
+          "explanation": "Correct. Entra Domain Services is enabled through the Azure portal. You configure it for a virtual network in your Azure subscription — Microsoft provisions and manages the underlying domain controller infrastructure."
+        },
+        "c": {
+          "text": "Run a PowerShell script on an on-premises domain controller to extend it to Azure",
+          "is_true": false,
+          "explanation": "Incorrect. Entra Domain Services is a cloud-native managed service — not an extension of on-premises domain controllers."
+        },
+        "d": {
+          "text": "Open a Microsoft support ticket to request domain services provisioning",
+          "is_true": false,
+          "explanation": "Incorrect. Entra Domain Services is self-service — customers enable it via the Azure portal without opening support tickets."
+        }
+      },
+      "correct_answer": ["b"]
+    },
+    {
+      "question_id": 17,
+      "question_text": "A company wants to migrate their on-premises SharePoint farm to Azure VMs. SharePoint uses Windows Authentication (Kerberos/NTLM) against AD. The company wants NO on-premises dependencies after migration. What should they use?",
+      "difficulty": "medium",
+      "topic": "Entra Domain Services",
+      "tags": ["entra-ds", "sharepoint", "migration"],
+      "options": {
+        "a": {
+          "text": "Entra ID with application registration and OAuth",
+          "is_true": false,
+          "explanation": "Incorrect. Rewriting SharePoint to use OAuth/Entra ID native authentication is a major code change, not a lift-and-shift migration."
+        },
+        "b": {
+          "text": "Entra Domain Services for domain join and Kerberos/NTLM, with VMs joined to the managed domain",
+          "is_true": true,
+          "explanation": "Correct. Entra Domain Services provides Kerberos and NTLM authentication in Azure. SharePoint VMs can be joined to the managed domain, fulfilling the Windows Authentication requirement with no on-premises dependency."
+        },
+        "c": {
+          "text": "Azure Active Directory B2C for end-user authentication",
+          "is_true": false,
+          "explanation": "Incorrect. B2C is for customer-facing app authentication — not for SharePoint server farm internal Windows authentication."
+        },
+        "d": {
+          "text": "Entra Connect with ADFS in Azure",
+          "is_true": false,
+          "explanation": "Incorrect. Deploying ADFS in Azure still requires managing VM-based infrastructure — not the simplest solution and not necessary for SharePoint's Kerberos/NTLM needs."
+        }
+      },
+      "correct_answer": ["b"]
+    },
+    {
+      "question_id": 18,
+      "question_text": "Which statement correctly describes the difference between deploying AD DS on Azure VMs versus using Entra Domain Services?",
+      "difficulty": "medium",
+      "topic": "Entra Domain Services",
+      "tags": ["entra-ds", "ad-ds-vm", "comparison"],
+      "options": {
+        "a": {
+          "text": "Both require the customer to manage domain controllers and AD replication",
+          "is_true": false,
+          "explanation": "Incorrect. AD DS on VMs requires customer management; Entra Domain Services has Microsoft manage the infrastructure."
+        },
+        "b": {
+          "text": "AD DS on VMs: customer-managed IaaS; Entra Domain Services: Microsoft-managed PaaS with no DC management needed",
+          "is_true": true,
+          "explanation": "Correct. AD DS on Azure VMs is an IaaS deployment — the customer manages the OS, DC roles, patching, and replication. Entra Domain Services is a PaaS offering where Microsoft manages everything, and customers just configure the service."
+        },
+        "c": {
+          "text": "Entra Domain Services supports more AD DS features than running AD DS on Azure VMs",
+          "is_true": false,
+          "explanation": "Incorrect. AD DS on Azure VMs gives you the full feature set of a traditional AD DS deployment, including schema extensions and nested OUs. Entra Domain Services has more limitations."
+        },
+        "d": {
+          "text": "Neither option allows domain-joining Azure VMs",
+          "is_true": false,
+          "explanation": "Incorrect. Both options support domain-joining Azure VMs."
+        }
+      },
+      "correct_answer": ["b"]
+    },
+    {
+      "question_id": 19,
+      "question_text": "An application team reports that their app requires LDAP Secure (LDAPS) to connect to the domain. Is this supported by Entra Domain Services?",
+      "difficulty": "medium",
+      "topic": "Entra Domain Services",
+      "tags": ["entra-ds", "ldaps", "secure-ldap"],
+      "options": {
+        "a": {
+          "text": "No — Entra Domain Services only supports plain LDAP over port 389",
+          "is_true": false,
+          "explanation": "Incorrect. Entra Domain Services supports Secure LDAP (LDAPS) over port 636, which can be explicitly enabled in the configuration."
+        },
+        "b": {
+          "text": "Yes — Secure LDAP (LDAPS) can be enabled for Entra Domain Services",
+          "is_true": true,
+          "explanation": "Correct. Entra Domain Services supports LDAPS (Secure LDAP) over port 636. It must be explicitly enabled and requires a certificate. This allows encrypted LDAP connections from applications."
+        },
+        "c": {
+          "text": "LDAPS is automatically enabled and cannot be disabled",
+          "is_true": false,
+          "explanation": "Incorrect. LDAPS must be explicitly configured — it is not enabled by default."
+        },
+        "d": {
+          "text": "LDAPS is only available for on-premises AD DS, not for Entra Domain Services",
+          "is_true": false,
+          "explanation": "Incorrect. Entra Domain Services explicitly supports LDAPS as a configurable option."
+        }
+      },
+      "correct_answer": ["b"]
+    },
+    {
+      "question_id": 20,
+      "question_text": "When using Entra Domain Services with a hybrid environment, users log in to their domain-joined Azure VMs. Which password is used?",
+      "difficulty": "medium",
+      "topic": "Entra Domain Services",
+      "tags": ["entra-ds", "password", "hybrid"],
+      "options": {
+        "a": {
+          "text": "A separate password set specifically for Entra Domain Services",
+          "is_true": false,
+          "explanation": "Incorrect. Users do not need a separate password for Entra Domain Services."
+        },
+        "b": {
+          "text": "Their on-premises AD password, synced to Entra ID via PHS and used by Entra Domain Services",
+          "is_true": true,
+          "explanation": "Correct. In a hybrid scenario with Password Hash Sync, users use their on-premises AD credentials. The password hash is synced to Entra ID, which Entra Domain Services uses for authentication. Users have one password across on-premises AD, Entra ID, and Entra Domain Services."
+        },
+        "c": {
+          "text": "Their Microsoft Account (personal) password",
+          "is_true": false,
+          "explanation": "Incorrect. Microsoft personal accounts are not used for Entra Domain Services managed domain authentication in enterprise scenarios."
+        },
+        "d": {
+          "text": "They must use a PIN set up through Windows Hello",
+          "is_true": false,
+          "explanation": "Incorrect. Windows Hello is a modern authentication method for Entra-joined devices — it is not a prerequisite for Entra Domain Services domain authentication."
+        }
+      },
+      "correct_answer": ["b"]
+    }
+  ]
+}

@@ -1,0 +1,222 @@
+[
+  {
+    "question_id": 1,
+    "question_text": "An alert rule is configured to fire when CPU usage exceeds 80% for a VM. The VM's CPU has been at 95% for 30 minutes but no alert fired and no email was sent. What should be checked FIRST?",
+    "options": {
+      "a": { "text": "Check whether the alert rule has an action group attached — without one the alert fires but no notification is sent", "is_true": true, "explanation": "An alert rule without an attached action group will trigger internally (show as 'Fired' in the alerts list) but will send no notifications. The action group is what triggers emails, SMS, webhooks, etc." },
+      "b": { "text": "Check if the VM has been deallocated during the monitoring period", "is_true": false, "explanation": "A deallocated VM emits no metrics, so the alert would not fire. But the question says CPU is at 95% — the VM is clearly running." },
+      "c": { "text": "Check if the alert rule threshold is set too high — 80% may not be a meaningful threshold", "is_true": false, "explanation": "The threshold is the criterion for when to fire. The question says CPU is at 95% which clearly exceeds 80%. The threshold is not the problem." },
+      "d": { "text": "Enable Azure Defender for Servers to enable alert notifications", "is_true": false, "explanation": "Azure Defender for Servers is a security service. It is not required for Azure Monitor metric alerts to send notifications." }
+    },
+    "correct_answer": ["a"]
+  },
+  {
+    "question_id": 2,
+    "question_text": "A Log Analytics agent (MMA) is installed on a Windows VM. The Heartbeat table in the workspace shows the last heartbeat was 4 hours ago. What is the most likely cause?",
+    "options": {
+      "a": { "text": "The Heartbeat table is only updated once every 4 hours — this is normal", "is_true": false, "explanation": "The Log Analytics agent sends a heartbeat every minute by default. A 4-hour gap indicates the agent has stopped communicating." },
+      "b": { "text": "The Microsoft Monitoring Agent service has stopped on the VM, or the VM was deallocated", "is_true": true, "explanation": "Missing heartbeats indicate the agent service stopped or the VM is offline. Check the HealthService (Windows) or omsagent (Linux) service status, or verify if the VM was deallocated." },
+      "c": { "text": "The Log Analytics workspace was moved to a different region", "is_true": false, "explanation": "Workspace region changes do not affect heartbeat frequency. The agent configuration (Workspace ID and Key) would need to be updated if the workspace is recreated." },
+      "d": { "text": "Log Analytics is experiencing a global service outage", "is_true": false, "explanation": "While outages can affect data ingestion, the most likely cause of a single VM's heartbeat gap is local — the agent stopped or the VM is offline." }
+    },
+    "correct_answer": ["b"]
+  },
+  {
+    "question_id": 3,
+    "question_text": "An admin configures diagnostic settings on a storage account to send StorageRead logs to a Log Analytics workspace. After 30 minutes, the AzureDiagnostics table shows no entries for the storage account. What is the most likely cause?",
+    "options": {
+      "a": { "text": "Diagnostic settings take up to 7 days to start sending data to Log Analytics", "is_true": false, "explanation": "Diagnostic settings typically start sending data within 5–15 minutes. A 7-day delay does not exist." },
+      "b": { "text": "No read operations have been performed on the storage account — diagnostic logs only generate entries when the configured operation type occurs", "is_true": true, "explanation": "Diagnostic settings send logs for operations that actually happen. If no StorageRead operations have been performed since the setting was configured, the AzureDiagnostics table will have no StorageRead entries." },
+      "c": { "text": "The storage account must be in the same region as the Log Analytics workspace to send diagnostic logs", "is_true": false, "explanation": "Diagnostic settings can send logs to a Log Analytics workspace in any region. Cross-region diagnostic logging is supported." },
+      "d": { "text": "The Log Analytics workspace must have the Storage Analytics solution installed to receive storage diagnostic logs", "is_true": false, "explanation": "Storage diagnostic logs via diagnostic settings go to the AzureDiagnostics table without requiring a separate solution." }
+    },
+    "correct_answer": ["b"]
+  },
+  {
+    "question_id": 4,
+    "question_text": "An Azure Backup job for a VM fails with the error 'UserErrorGuestAgentStatusUnavailable'. What does this error indicate and how should it be resolved?",
+    "options": {
+      "a": { "text": "The Recovery Services vault does not have sufficient storage capacity", "is_true": false, "explanation": "Recovery Services vaults in Azure have unlimited storage capacity — they scale automatically. Storage capacity is not the cause." },
+      "b": { "text": "The Azure VM agent on the VM is not running or is outdated — the backup extension cannot communicate with the agent", "is_true": true, "explanation": "Azure Backup installs a backup extension on the VM using the VM agent. If the agent is not running or is outdated, the extension cannot run and backup fails with this error. Fix: update or reinstall the VM agent." },
+      "c": { "text": "The backup policy has an incorrect timezone configuration", "is_true": false, "explanation": "Timezone configuration affects when backups run, not whether they succeed. This error is agent-related." },
+      "d": { "text": "The VM's managed disks are encrypted with a customer-managed key that the vault cannot access", "is_true": false, "explanation": "CMK encryption issues produce different error codes related to Key Vault access. UserErrorGuestAgentStatusUnavailable specifically means the VM agent is not responding." }
+    },
+    "correct_answer": ["b"]
+  },
+  {
+    "question_id": 5,
+    "question_text": "An admin wants to know who deleted a resource group containing production resources at 3:00 AM last night. Which Azure service provides this information?",
+    "options": {
+      "a": { "text": "Azure Monitor Metrics", "is_true": false, "explanation": "Azure Monitor Metrics tracks numerical performance data (CPU, memory, IOPS). It does not record who performed management operations." },
+      "b": { "text": "Azure Activity Log", "is_true": true, "explanation": "The Activity Log records all Azure Resource Manager (ARM) operations including who (caller identity) performed what action on which resource and when. Deleting a resource group would appear as a 'Delete' operation with the caller's identity." },
+      "c": { "text": "Azure Advisor", "is_true": false, "explanation": "Azure Advisor provides recommendations for cost, security, and reliability. It does not record historical operations." },
+      "d": { "text": "Azure Security Center / Defender for Cloud", "is_true": false, "explanation": "While Defender for Cloud ingests Activity Log events for security analysis, the primary tool to look up who performed a specific action is the Activity Log directly." }
+    },
+    "correct_answer": ["b"]
+  },
+  {
+    "question_id": 6,
+    "question_text": "A log-based alert rule is configured to fire when a KQL query returns more than 0 results. The query runs every 5 minutes over a 15-minute lookback window. The condition fires but then immediately shows as 'Resolved'. What is happening?",
+    "options": {
+      "a": { "text": "Log alert rules can only fire once per hour — subsequent fires are suppressed", "is_true": false, "explanation": "Log alert rules fire based on evaluation frequency and do not have a built-in hourly suppression. You can configure a suppression (mute) period, but this is optional." },
+      "b": { "text": "The underlying condition is intermittent — the query returns results in one evaluation window but not the next, causing the alert to fire and then auto-resolve", "is_true": true, "explanation": "Log alert rules auto-resolve when the query returns 0 results in the next evaluation. If the condition is intermittent (e.g., log entries appear for 5 minutes then stop), the alert fires and resolves in subsequent evaluations." },
+      "c": { "text": "The alert rule is misconfigured — log alerts cannot auto-resolve and must be manually closed", "is_true": false, "explanation": "Log alert rules can auto-resolve. Stateful log alerts (a newer feature) do auto-resolve when the condition is no longer met." },
+      "d": { "text": "The action group suppressed the alert because the same alert fired within the last hour", "is_true": false, "explanation": "Action groups do not suppress alert firing — they handle notification delivery. Alert suppression is a separate setting on the alert rule." }
+    },
+    "correct_answer": ["b"]
+  },
+  {
+    "question_id": 7,
+    "question_text": "Azure Backup is configured for a VM. An admin needs to verify that a specific file can be recovered from yesterday's backup without restoring the entire VM. Which backup feature enables this?",
+    "options": {
+      "a": { "text": "Perform a full VM restore and then copy the file out", "is_true": false, "explanation": "A full VM restore is time-consuming and creates a new VM. For individual file recovery, file-level recovery is the correct approach." },
+      "b": { "text": "Use the 'File Recovery' feature which mounts the recovery point as a network drive on the target machine to browse and copy individual files", "is_true": true, "explanation": "Azure Backup's File Recovery feature generates a script that mounts the recovery point disks as a network drive on a Windows or Linux machine. You can then browse and copy individual files without restoring the entire VM." },
+      "c": { "text": "Download the VM backup as a VHD and mount it on a local workstation", "is_true": false, "explanation": "Azure VM backups are stored in the Recovery Services vault format, not as downloadable VHD files. This option is not available." },
+      "d": { "text": "Create a new VM from the recovery point and copy the file using AzCopy", "is_true": false, "explanation": "Creating a full VM from a recovery point is a valid restore option but is significantly more complex and time-consuming than file recovery for a single file." }
+    },
+    "correct_answer": ["b"]
+  },
+  {
+    "question_id": 8,
+    "question_text": "A metric alert for 'Percentage CPU > 80%' is configured on a VM Scale Set with 10 instances. The alert fires even though individual instances are only at 40% CPU each. Why?",
+    "options": {
+      "a": { "text": "Metric alerts on scale sets always use the sum of all instances", "is_true": false, "explanation": "The aggregation type depends on the alert configuration. The admin likely configured the wrong aggregation type." },
+      "b": { "text": "The alert uses 'Total' aggregation — the sum of all instances' CPU percentages (10 × 40% = 400%) exceeds the 80% threshold", "is_true": true, "explanation": "If the aggregation type is set to 'Total', CPU percentages are summed across all instances. 10 instances × 40% = 400% total, which far exceeds the 80% threshold. The correct aggregation for CPU percentage is 'Average'." },
+      "c": { "text": "The alert is malfunctioning — CPU metric alerts should be immune to aggregation issues", "is_true": false, "explanation": "Aggregation type selection is critical for the correct evaluation of metric alerts. This is a configuration issue, not a malfunction." },
+      "d": { "text": "The VM Scale Set must use autoscale rules instead of alert rules for CPU monitoring", "is_true": false, "explanation": "Metric alert rules and autoscale rules serve different purposes. Alerts notify; autoscale adjusts capacity. Both can monitor CPU on a scale set." }
+    },
+    "correct_answer": ["b"]
+  },
+  {
+    "question_id": 9,
+    "question_text": "After running an ASR (Azure Site Recovery) test failover, the test VM is running in the isolated test network. The production replication continues. Which step must be completed before running a real (actual) failover?",
+    "options": {
+      "a": { "text": "Stop the replication before running a real failover", "is_true": false, "explanation": "Stopping replication is not required before a failover. In a planned failover, you stop the source, then failover. In unplanned, you failover directly." },
+      "b": { "text": "Clean up the test failover — the test VM must be deleted before an actual failover can be initiated", "is_true": true, "explanation": "Azure Site Recovery requires the test failover to be cleaned up (test VM deleted) before an actual failover can proceed. The test failover cleanup is a required step in the ASR workflow." },
+      "c": { "text": "Commit the test failover to make it permanent", "is_true": false, "explanation": "Committing is done after an actual failover to confirm it is complete. It does not apply to test failovers." },
+      "d": { "text": "Re-protect the source VM before running the actual failover", "is_true": false, "explanation": "Re-protection is done AFTER a failover to reverse-replicate back to the original region (for eventual failback). It is not done before the failover." }
+    },
+    "correct_answer": ["b"]
+  },
+  {
+    "question_id": 10,
+    "question_text": "An admin configures Azure Monitor to collect Windows Event Logs from VMs using the Azure Monitor Agent (AMA). After configuration, the Event table in Log Analytics is empty. What is the most likely missing configuration?",
+    "options": {
+      "a": { "text": "The Log Analytics agent (MMA) must be installed in addition to AMA", "is_true": false, "explanation": "AMA replaces MMA. Having both is not required and Microsoft advises against running both simultaneously on the same machine." },
+      "b": { "text": "A Data Collection Rule (DCR) associating the VM with the AMA data collection configuration has not been created or associated with the VM", "is_true": true, "explanation": "The Azure Monitor Agent requires a Data Collection Rule (DCR) to know what data to collect and where to send it. Without a DCR associated with the VM, AMA collects nothing. This is a fundamental difference from the legacy MMA agent." },
+      "c": { "text": "Windows Event Logs can only be collected by the OMS agent, not AMA", "is_true": false, "explanation": "AMA supports Windows Event Log collection. It is a core feature of AMA data collection." },
+      "d": { "text": "The Log Analytics workspace must be in the same subscription as the VMs", "is_true": false, "explanation": "Log Analytics workspaces can collect data from resources in different subscriptions. Cross-subscription collection is supported." }
+    },
+    "correct_answer": ["b"]
+  },
+  {
+    "question_id": 11,
+    "question_text": "A VM backup is configured with a policy that retains daily recovery points for 30 days. An admin changes the policy to retain daily recovery points for only 7 days. What happens to the existing recovery points that are between 7 and 30 days old?",
+    "options": {
+      "a": { "text": "They are immediately deleted when the policy is updated", "is_true": false, "explanation": "Azure Backup does not immediately delete existing recovery points when a policy is made more restrictive." },
+      "b": { "text": "They are retained until their original expiry date (30 days from when they were created) — only new recovery points follow the 7-day retention", "is_true": true, "explanation": "When a backup policy retention is reduced, existing recovery points are not immediately deleted. They expire according to their original retention schedule. Only new backups taken after the policy change follow the new shorter retention." },
+      "c": { "text": "The policy change requires stopping and re-enabling backup to take effect", "is_true": false, "explanation": "Policy changes apply to future backups automatically. Stopping and re-enabling is not required." },
+      "d": { "text": "The existing recovery points are converted to 'On-demand' type and must be manually deleted", "is_true": false, "explanation": "Recovery point type does not change when a policy is updated. They remain as scheduled backup points and expire on their original schedule." }
+    },
+    "correct_answer": ["b"]
+  },
+  {
+    "question_id": 12,
+    "question_text": "An Application Gateway WAF is blocking legitimate user requests to a web application. The admin needs to investigate the blocks without affecting production traffic. What is the safest approach?",
+    "options": {
+      "a": { "text": "Disable the WAF temporarily to allow all traffic while investigating", "is_true": false, "explanation": "Disabling the WAF removes all protection and is not acceptable in production." },
+      "b": { "text": "Switch the WAF from Prevention mode to Detection mode — this logs blocked requests without actually blocking them", "is_true": true, "explanation": "WAF Detection mode logs what would be blocked without actually blocking it. This allows the admin to review the WAF logs to identify false positives and create exclusions, all without impacting production traffic." },
+      "c": { "text": "Increase the WAF rule priority to give user traffic higher priority than WAF rules", "is_true": false, "explanation": "WAF rules do not have priorities that can be adjusted per-request. WAF rules are applied to all traffic matching the conditions." },
+      "d": { "text": "Delete the WAF policy and recreate it with a different ruleset", "is_true": false, "explanation": "Deleting the WAF removes all custom rules and exclusions. This is destructive and does not help identify the false positive." }
+    },
+    "correct_answer": ["b"]
+  },
+  {
+    "question_id": 13,
+    "question_text": "After enabling soft delete on a Recovery Services vault, an admin accidentally stops backup and deletes backup data for a VM. After 10 days, the admin wants to restore from before the deletion. Is this possible?",
+    "options": {
+      "a": { "text": "No — once backup data is explicitly deleted, it cannot be recovered even with soft delete enabled", "is_true": false, "explanation": "Recovery Services vault soft delete specifically protects against accidental deletion of backup data. Deleted data is retained in a soft-deleted state for 14 days." },
+      "b": { "text": "Yes — soft delete retains deleted backup data for 14 days; the data can be restored by undeleting the backup item within that window", "is_true": true, "explanation": "When soft delete is enabled on a vault, deleting backup data (stop protection + delete data) moves it to a soft-deleted state for 14 days. During this period, the data can be restored by selecting the backup item and choosing 'Undelete'." },
+      "c": { "text": "Yes — but only if the VM is still running and the backup agent can reconnect", "is_true": false, "explanation": "Soft delete works independently of VM state. Deleted backup data can be recovered from the vault regardless of whether the source VM exists." },
+      "d": { "text": "No — soft delete only applies to accidental deletion; intentional deletion (stop + delete) is permanent", "is_true": false, "explanation": "Soft delete applies to all backup data deletion, whether accidental or intentional. The 14-day retention is enforced regardless of how the deletion was initiated." }
+    },
+    "correct_answer": ["b"]
+  },
+  {
+    "question_id": 14,
+    "question_text": "An Azure Site Recovery replication health shows 'RPO Breach Warning' for several VMs. What does this mean and what should be investigated?",
+    "options": {
+      "a": { "text": "The VMs have not been backed up within the required backup window", "is_true": false, "explanation": "RPO breaches are an ASR (replication) concept, not an Azure Backup concept. Azure Backup uses different health indicators." },
+      "b": { "text": "The replication lag has exceeded the configured RPO threshold — delta changes are not syncing fast enough to the target region", "is_true": true, "explanation": "An RPO breach means the gap between the last synchronized recovery point and the current time exceeds the target RPO. This is typically caused by insufficient network bandwidth, high VM I/O, or connectivity issues between the source and target Azure regions." },
+      "c": { "text": "The target region storage account has reached its capacity limit", "is_true": false, "explanation": "Storage capacity in the target region does not directly cause an RPO breach. A breach is about data lag, not storage." },
+      "d": { "text": "The Mobility Service agent on the VM needs a license renewal", "is_true": false, "explanation": "The Mobility Service does not have a separate license. It is part of the ASR service." }
+    },
+    "correct_answer": ["b"]
+  },
+  {
+    "question_id": 15,
+    "question_text": "A scheduled query alert is configured to fire when there are more than 5 failed login events (Event ID 4625) in a 15-minute window. The alert never fires even though failed logins are occurring. What table should the KQL query target?",
+    "options": {
+      "a": { "text": "AzureActivity", "is_true": false, "explanation": "AzureActivity logs ARM-level operations (who did what in Azure portal/API). Windows security events like login failures are not in this table." },
+      "b": { "text": "SecurityEvent", "is_true": true, "explanation": "Windows Security Events (including Event ID 4625 — failed login) are stored in the SecurityEvent table in Log Analytics. This requires the Security Events data collection to be enabled in the Log Analytics workspace or DCR." },
+      "c": { "text": "Heartbeat", "is_true": false, "explanation": "The Heartbeat table contains agent health signals (one per minute). It does not contain Windows Event Log entries." },
+      "d": { "text": "Event", "is_true": false, "explanation": "The Event table contains Windows Application and System event logs. Windows Security events go to SecurityEvent, not Event." }
+    },
+    "correct_answer": ["b"]
+  },
+  {
+    "question_id": 16,
+    "question_text": "An Azure Monitor alert fires for high memory on a VM. The action group is configured to send an email and call a Logic App webhook. The email is received but the Logic App is not triggered. What should be checked?",
+    "options": {
+      "a": { "text": "Logic Apps cannot be triggered by Azure Monitor action groups — use Azure Functions instead", "is_true": false, "explanation": "Azure Monitor action groups support Logic App webhooks as a direct integration option. Logic Apps can absolutely be triggered by alert action groups." },
+      "b": { "text": "Check if the Logic App HTTP trigger URL in the action group is correct and whether the Logic App is enabled — also verify whether the Logic App firewall allows incoming requests from Azure Monitor IPs", "is_true": true, "explanation": "The Logic App webhook URL may be wrong, outdated (Logic App was modified), or the Logic App may be disabled. Additionally, if the Logic App has an IP restriction, it must allow incoming requests from Azure Monitor using the ActionGroup service tag." },
+      "c": { "text": "Logic App webhooks in action groups require a premium Logic App plan", "is_true": false, "explanation": "Logic App webhooks work with the Consumption (serverless) plan. No premium plan is required for webhook triggering." },
+      "d": { "text": "The memory metric alert and Logic App must be in the same resource group", "is_true": false, "explanation": "Action groups can call Logic Apps in any resource group and subscription. There is no co-location requirement." }
+    },
+    "correct_answer": ["b"]
+  },
+  {
+    "question_id": 17,
+    "question_text": "Resource Health shows a VM as 'Degraded' rather than 'Available'. What does this indicate?",
+    "options": {
+      "a": { "text": "The VM's CPU has been above 90% for more than 5 minutes", "is_true": false, "explanation": "Resource Health reflects Azure platform-level health of the physical infrastructure hosting the VM. High CPU is a guest OS issue, not a platform health issue." },
+      "b": { "text": "Azure has detected a platform-level issue affecting the physical hardware or infrastructure hosting the VM — not caused by user actions", "is_true": true, "explanation": "Resource Health shows the health of the Azure platform resources (physical host, network fabric, storage). 'Degraded' means Azure detected an issue with the underlying hardware that may be impacting VM performance or availability." },
+      "c": { "text": "The VM has pending Windows Updates that must be installed", "is_true": false, "explanation": "Pending OS updates do not affect Resource Health. Resource Health monitors Azure infrastructure, not guest OS state." },
+      "d": { "text": "The VM's backup has failed more than 3 times consecutively", "is_true": false, "explanation": "Backup failures are shown in the Recovery Services vault, not in Resource Health. They are separate health dimensions." }
+    },
+    "correct_answer": ["b"]
+  },
+  {
+    "question_id": 18,
+    "question_text": "An admin needs to trigger an immediate compliance scan after assigning a new Azure Policy. Which command runs an on-demand compliance evaluation?",
+    "options": {
+      "a": { "text": "`az policy assignment create --trigger-scan`", "is_true": false, "explanation": "Policy assignment creation does not have a trigger-scan flag. Scan triggering is a separate command." },
+      "b": { "text": "`az policy state trigger-scan --resource-group myRG`", "is_true": true, "explanation": "This is the correct command to trigger an immediate compliance evaluation for resources in a resource group. Without this, the scan runs on its standard 24-hour schedule." },
+      "c": { "text": "`az monitor metrics alert trigger --policy myPolicy`", "is_true": false, "explanation": "This is not a valid Azure CLI command. Monitor metrics alerts and policy compliance scans are separate services." },
+      "d": { "text": "`az policy definition update --force-scan`", "is_true": false, "explanation": "Policy definition update modifies the policy definition content. There is no force-scan parameter." }
+    },
+    "correct_answer": ["b"]
+  },
+  {
+    "question_id": 19,
+    "question_text": "An admin sets up an alert to trigger when a VM is deleted. The alert should fire immediately when any VM in the subscription is deleted. Which alert type should be used?",
+    "options": {
+      "a": { "text": "Metric alert on the VM — monitor 'VM Availability' metric dropping to 0", "is_true": false, "explanation": "A VM that is deleted no longer emits metrics. The metric would stop, not hit 0. Also, you would need a separate alert for every VM." },
+      "b": { "text": "Activity Log alert filtering on Resource Type = Virtual Machines, Operation = Delete, at subscription scope", "is_true": true, "explanation": "Activity Log alerts monitor ARM control-plane operations. A delete operation on any VM in the subscription generates an Activity Log event. Scoping to subscription ensures any VM deletion triggers it." },
+      "c": { "text": "Log query alert using a KQL query against the AzureActivity table", "is_true": false, "explanation": "This would work technically, but it has a delay (query runs every 5+ minutes). Activity Log alerts fire in near-real time (within minutes) for ARM operations and are the correct tool for this use case." },
+      "d": { "text": "Service Health alert for VM availability", "is_true": false, "explanation": "Service Health alerts notify about Azure platform incidents and planned maintenance, not about individual resource deletions." }
+    },
+    "correct_answer": ["b"]
+  },
+  {
+    "question_id": 20,
+    "question_text": "After performing a planned failover of VMs from West Europe to North Europe using ASR, the admin needs to ensure that if West Europe comes back online, VMs can be failed back. What must be done after the failover completes?",
+    "options": {
+      "a": { "text": "Reinstall the ASR Mobility Service on the VMs in North Europe", "is_true": false, "explanation": "The Mobility Service is already installed from the original replication. Reinstallation is not required after failover." },
+      "b": { "text": "Re-protect the VMs in North Europe so that ASR starts replicating changes back to West Europe in reverse direction", "is_true": true, "explanation": "After a failover, the VMs are running in North Europe but replication has stopped. Re-protect reverses the replication direction — North Europe becomes the source, West Europe becomes the target. This enables eventual failback to West Europe." },
+      "c": { "text": "Configure a new Recovery Services vault in North Europe", "is_true": false, "explanation": "A new vault is not required. The existing vault manages the replication and re-protect operation from North Europe back to West Europe." },
+      "d": { "text": "Commit the failover and wait 7 days before re-protection is available", "is_true": false, "explanation": "You must commit the failover before re-protecting, but there is no 7-day waiting period. Re-protection can be initiated immediately after committing." }
+    },
+    "correct_answer": ["b"]
+  }
+]

@@ -1,0 +1,222 @@
+[
+  {
+    "question_id": 1,
+    "question_text": "An admin deploys a Windows Server 2022 VM with a Standard_D4s_v3 size. The VM has an OS disk (128 GB Premium SSD) and two data disks. After deployment, the admin notices the VM has a third disk visible in Disk Management labeled 'Temporary Storage'. What is true about this disk?",
+    "options": {
+      "a": { "text": "It is an additional managed disk automatically provisioned by Azure for the D4s_v3 SKU", "is_true": false, "explanation": "The temporary disk is not a managed disk and is not separately provisioned — it is local SSD storage physically attached to the host where the VM runs." },
+      "b": { "text": "It is ephemeral local storage on the physical host — data on this disk is lost when the VM is stopped/deallocated, rebooted to a new host, or resized", "is_true": true, "explanation": "Every Azure VM size that includes 'temp storage' (non-s suffix variants still have it; s-suffix = premium storage support not temp storage absence) provides local temporary storage on the physical host. On Windows this appears as the D: drive. It is lost on deallocation, host redeployment, VM resize to a different cluster, or host failure. It should only be used for truly ephemeral data (temp files, page file, scratch space)." },
+      "c": { "text": "The temporary disk persists across VM reboots but is lost on deallocation — it is safe to store application data there", "is_true": false, "explanation": "The temporary disk survives a simple OS-level reboot (the VM stays on the same physical host), but is lost on deallocation, resize, or host failure. It is NOT safe for any data that must be durable." },
+      "d": { "text": "The temporary disk can be snapshotted and backed up like a managed disk using Azure Backup", "is_true": false, "explanation": "The temporary disk is not a managed disk — it cannot be snapshotted, backed up, or detached. Azure Backup explicitly excludes the temporary disk from VM backups." }
+    },
+    "correct_answer": ["b"]
+  },
+  {
+    "question_id": 2,
+    "question_text": "An admin needs to deploy a Windows VM that supports Secure Boot and vTPM (virtual Trusted Platform Module). Which VM generation must be selected?",
+    "options": {
+      "a": { "text": "Generation 1 — it includes BIOS-based Secure Boot by default", "is_true": false, "explanation": "Generation 1 VMs use a legacy BIOS firmware. They do not support Secure Boot or vTPM. These are UEFI-based security features." },
+      "b": { "text": "Generation 2 — it uses UEFI firmware which supports Secure Boot, vTPM, and Trusted Launch security features", "is_true": true, "explanation": "Generation 2 VMs use UEFI (Unified Extensible Firmware Interface) instead of legacy BIOS. This enables Trusted Launch features including Secure Boot (prevents bootkit/rootkit attacks), vTPM (virtual TPM 2.0 for key storage and measured boot), and integrity monitoring. Generation cannot be changed after deployment." },
+      "c": { "text": "Either generation supports Secure Boot — it is enabled via a VM extension", "is_true": false, "explanation": "Secure Boot and vTPM are tied to the UEFI firmware in Generation 2. They are not available as extensions for Generation 1 VMs. Generation is a fundamental hardware configuration choice at deployment." },
+      "d": { "text": "Generation 2 is only required for Linux VMs — Windows VMs support Secure Boot on both generations", "is_true": false, "explanation": "Generation 2 is required for Secure Boot and vTPM on both Windows and Linux VMs. The generation requirement is related to UEFI firmware support, not the operating system." }
+    },
+    "correct_answer": ["b"]
+  },
+  {
+    "question_id": 3,
+    "question_text": "An admin attaches a 1 TB Premium SSD managed disk to a Windows VM as a data disk. In Windows Disk Management, the disk appears as 'Unknown' and 'Not Initialized'. What must the admin do before the disk can be used?",
+    "options": {
+      "a": { "text": "Restart the VM to allow Windows to detect and automatically initialize the new disk", "is_true": false, "explanation": "While a restart may help Windows detect the disk, it does not automatically initialize, partition, or format it. Manual initialization is required in Disk Management or using PowerShell." },
+      "b": { "text": "Initialize the disk (choose MBR or GPT), create a partition, and format it with NTFS before it can be used", "is_true": true, "explanation": "A newly attached Azure managed disk appears as raw uninitialized disk in Windows. The admin must: (1) Initialize with MBR (disks ≤ 2 TB) or GPT (disks > 2 TB, or Gen2/UEFI VMs). (2) Create a partition (simple volume). (3) Format with NTFS (or ReFS). Only then does Windows assign a drive letter and the disk becomes usable." },
+      "c": { "text": "Format the disk from the Azure portal before attaching it to the VM", "is_true": false, "explanation": "Azure manages disk provisioning at the block storage level — disk initialization and formatting is always done inside the guest OS after attachment. The Azure portal only handles attachment, not OS-level formatting." },
+      "d": { "text": "Run 'az storage disk format' to prepare the disk before it can be initialized in Windows", "is_true": false, "explanation": "There is no 'az storage disk format' CLI command. Disk formatting is done inside the VM's operating system, not via Azure CLI or portal operations." }
+    },
+    "correct_answer": ["b"]
+  },
+  {
+    "question_id": 4,
+    "question_text": "An admin configures disk caching on a Windows VM's data disk that hosts a SQL Server database. The disk contains both data files (.mdf) and transaction log files (.ldf). Which disk caching setting should be used for the data files disk?",
+    "options": {
+      "a": { "text": "Read/Write caching — maximizes both read and write performance for SQL workloads", "is_true": false, "explanation": "Read/Write caching can improve performance but caches write operations, which creates a risk of data loss if the host fails before cached writes are flushed to disk. This is dangerous for SQL transaction logs (though the question asks about data files)." },
+      "b": { "text": "ReadOnly caching — SQL data files benefit from cached reads while writes go directly to disk for data integrity", "is_true": true, "explanation": "ReadOnly caching is recommended for SQL Server data files (.mdf). SQL data files are read-heavy for query execution. ReadOnly caching accelerates read performance significantly. Writes bypass the cache and go directly to persistent storage, which is safe since SQL Server's durability guarantees rely on transaction log write-through behavior, not data file caching." },
+      "c": { "text": "None — all SQL Server disks should have caching disabled to ensure durability", "is_true": false, "explanation": "While caching=None is recommended for transaction log (.ldf) disks (because logs are write-heavy and sequentially written), data file disks benefit substantially from ReadOnly caching due to frequent random reads." },
+      "d": { "text": "ReadOnly caching is only available on Ultra Disk — Premium SSD defaults to Read/Write", "is_true": false, "explanation": "ReadOnly caching is available on both Standard SSD and Premium SSD managed disks. Ultra Disk actually does NOT support disk host caching — Ultra Disk always bypasses the cache." }
+    },
+    "correct_answer": ["b"]
+  },
+  {
+    "question_id": 5,
+    "question_text": "An admin deploys a Windows VM and needs to run a PowerShell script immediately after deployment to install IIS. The script is stored in Azure Blob Storage. Which is the most appropriate approach for a one-time post-deployment configuration?",
+    "options": {
+      "a": { "text": "Use Azure Automation State Configuration (DSC) to apply a configuration that ensures IIS is installed", "is_true": false, "explanation": "DSC is designed for ongoing desired state management — it continuously checks and enforces configuration. For a one-time post-deployment script run, DSC adds unnecessary complexity. Custom Script Extension is purpose-built for this scenario." },
+      "b": { "text": "Use the Custom Script Extension (CSE) to download and execute the PowerShell script from Blob Storage during or after VM deployment", "is_true": true, "explanation": "The Custom Script Extension downloads a script from a URI (Blob Storage URL) and executes it on the VM. It is ideal for one-time post-deployment tasks like software installation. CSE can be added in the ARM template, via portal, CLI, or PowerShell and runs once on invocation." },
+      "c": { "text": "RDP into the VM and manually run the PowerShell script after deployment", "is_true": false, "explanation": "Manual execution is not scalable, not repeatable for multiple VMs, and not automatable in deployment pipelines. Custom Script Extension automates this without requiring RDP access." },
+      "d": { "text": "Use the VM's Run Command feature in the portal to execute the script", "is_true": false, "explanation": "Run Command is an ad-hoc script execution tool for troubleshooting — it runs scripts interactively via the portal. It is not appropriate for automated deployment pipelines or repeatable post-deployment configuration. CSE is the correct deployment-time solution." }
+    },
+    "correct_answer": ["b"]
+  },
+  {
+    "question_id": 6,
+    "question_text": "A Windows VM was working normally but now fails to boot. Boot diagnostics shows a BSOD with stop code 0x0000007B (INACCESSIBLE_BOOT_DEVICE). What typically causes this error in an Azure VM context?",
+    "options": {
+      "a": { "text": "The VM's OS disk is corrupt and must be deleted and recreated", "is_true": false, "explanation": "INACCESSIBLE_BOOT_DEVICE rarely means the disk itself is corrupt. It usually means Windows cannot access the disk using its stored controller driver — most often triggered by disk controller changes." },
+      "b": { "text": "The VM was resized to a generation or controller type that requires a different storage driver than what is installed in Windows (e.g., moved from SCSI to IDE controller)", "is_true": true, "explanation": "Error 0x0000007B means Windows cannot find the boot disk because the storage controller driver is missing or wrong. In Azure, this commonly occurs when a VM is resized between generations (Gen1 ↔ Gen2) or when an OS disk is detached and reattached to a VM with a different controller type. The in-box driver for the new controller isn't loaded." },
+      "c": { "text": "The Windows page file was deleted, preventing Windows from loading the kernel", "is_true": false, "explanation": "A deleted page file causes performance issues and some applications may fail, but it does not cause a 0x0000007B boot failure. The page file is not required to boot Windows." },
+      "d": { "text": "The VM's temporary disk (D:) was lost on reallocation and Windows is trying to boot from it", "is_true": false, "explanation": "The boot disk is always the OS disk (C:). Windows does not boot from the temporary D: drive. The temporary disk loss would not cause a BSOD." }
+    },
+    "correct_answer": ["b"]
+  },
+  {
+    "question_id": 7,
+    "question_text": "An admin needs to reset the local administrator password on a Windows VM but has lost access to all accounts. The VM is running. Which Azure feature should be used?",
+    "options": {
+      "a": { "text": "Boot Diagnostics — use the serial console to reset the password", "is_true": false, "explanation": "The Azure Serial Console provides access to the Windows Special Administrative Console (SAC) and cmd.exe prompt, which can reset passwords — but it requires that the SAC channel and boot menu special settings are configured. This is a valid approach but more complex than the VMAccess extension." },
+      "b": { "text": "The VMAccess Extension — use 'az vm user reset-ssh' or the portal's 'Reset password' button under 'Help' > 'Reset password'", "is_true": true, "explanation": "The VMAccess Extension (VM Access) is the purpose-built tool for resetting Windows VM credentials. In the Azure portal, navigate to VM > Help > Reset password, enter a username and new password, then click 'Update'. This uses the VMAccess Extension behind the scenes. For Windows, it also has a 'Reset configuration' option to fix broken RDP configuration." },
+      "c": { "text": "Attach the OS disk to another VM as a data disk and edit the SAM database directly", "is_true": false, "explanation": "This is a highly complex, risky manual process that could corrupt the Windows registry. The VMAccess Extension is the safe, supported Azure approach that doesn't require detaching the OS disk." },
+      "d": { "text": "Delete and recreate the VM using the same OS disk — Azure automatically resets local accounts during reprovisioning", "is_true": false, "explanation": "Recreating a VM does not reset passwords on an existing OS disk. Azure only sets the administrator password you specify at VM creation time. Attaching an existing OS disk preserves all existing account credentials." }
+    },
+    "correct_answer": ["b"]
+  },
+  {
+    "question_id": 8,
+    "question_text": "A company wants to use Azure Disk Encryption (ADE) to encrypt all Windows VM disks. Which component is required in the Azure subscription before enabling ADE?",
+    "options": {
+      "a": { "text": "A storage account to store the encryption keys", "is_true": false, "explanation": "ADE does not store encryption keys in a storage account. Keys and secrets are stored in Azure Key Vault." },
+      "b": { "text": "An Azure Key Vault with the 'Azure Disk Encryption' access policy enabled (or RBAC with Key Vault Administrator)", "is_true": true, "explanation": "ADE requires an Azure Key Vault to store the BitLocker Encryption Key (BEK) and optionally the Key Encryption Key (KEK). The Key Vault must have the disk encryption access policy enabled (Get, Wrap Key, Unwrap Key, Sign, Verify permissions for the ADE application). Without this, ADE cannot wrap/unwrap encryption keys." },
+      "c": { "text": "An Azure Active Directory service principal with Contributor access to the VM", "is_true": false, "explanation": "ADE does not use a separate service principal to access the VM. The Azure Disk Encryption extension running inside the VM authenticates to Key Vault directly. A service principal is only needed in the legacy ADE (v1) model; current ADE uses managed identities." },
+      "d": { "text": "Premium SSD managed disks — ADE is only supported on premium storage tiers", "is_true": false, "explanation": "ADE supports Standard HDD, Standard SSD, and Premium SSD managed disks. The storage tier is not a constraint for ADE." }
+    },
+    "correct_answer": ["b"]
+  },
+  {
+    "question_id": 9,
+    "question_text": "An admin takes a snapshot of a Windows VM's OS disk while the VM is running. What type of consistency does this snapshot provide?",
+    "options": {
+      "a": { "text": "Application-consistent — VSS is used to quiesce all applications before the snapshot", "is_true": false, "explanation": "Taking a portal snapshot directly does NOT invoke VSS. Application-consistent snapshots require Azure Backup (which uses VSS on Windows) or a VM extension that triggers VSS before the snapshot." },
+      "b": { "text": "Crash-consistent — the snapshot captures the disk at an instant in time, equivalent to what would be recoverable after a sudden power loss", "is_true": true, "explanation": "A direct disk snapshot taken while the VM is running (without VSS coordination) is crash-consistent. It captures the disk state at a point in time but in-memory data and uncommitted database transactions are not flushed first. The resulting snapshot is equivalent to recovering from a hard power loss — the OS will run CHKDSK on boot, and any applications not using transactional storage may have inconsistent state." },
+      "c": { "text": "File-system-consistent — Windows automatically flushes the file system buffers before any snapshot", "is_true": false, "explanation": "Windows does NOT automatically flush all file system buffers for a disk snapshot. File-system-consistent snapshots require the Volume Shadow Copy Service (VSS) to be invoked, which Azure Backup does. Raw disk snapshots are crash-consistent." },
+      "d": { "text": "The VM must be stopped before taking a snapshot — running VM snapshots are not supported", "is_true": false, "explanation": "Azure supports taking snapshots of disks attached to running VMs. The snapshot will be crash-consistent (not application-consistent) but is supported and frequently used for backup purposes." }
+    },
+    "correct_answer": ["b"]
+  },
+  {
+    "question_id": 10,
+    "question_text": "A company has a Windows VM with a managed OS disk of 128 GB. The admin needs to expand it to 256 GB. After resizing the disk in Azure (portal or CLI), what additional step is needed inside the Windows OS?",
+    "options": {
+      "a": { "text": "Nothing — Windows automatically detects and uses the additional disk space", "is_true": false, "explanation": "Azure resizes the physical managed disk, but Windows does not automatically expand the NTFS volume to use the new space. The partition and volume must be extended manually." },
+      "b": { "text": "Extend the volume in Windows Disk Management or using 'Resize-Partition' in PowerShell to expand the NTFS partition to use the new space", "is_true": true, "explanation": "After Azure resizes the managed disk, Windows sees the larger disk but the partition and NTFS volume still occupy the original 128 GB. The admin must extend the volume: in Disk Management (right-click volume > Extend Volume) or in PowerShell using 'Resize-Partition'. This is a safe online operation — no reboot required for data disk volume extensions." },
+      "c": { "text": "Format the disk again to apply the new size — NTFS cannot be extended without reformatting", "is_true": false, "explanation": "NTFS volumes CAN be extended online without formatting. Formatting would delete all data on the disk. Extending the volume using Disk Management or Resize-Partition preserves all existing data." },
+      "d": { "text": "Detach and reattach the disk to trigger Windows to re-read the disk geometry", "is_true": false, "explanation": "Detach/reattach is not required and would cause unnecessary disruption. Windows can detect the new disk size without reattachment — just open Disk Management and the unallocated space will be visible and ready to extend into." }
+    },
+    "correct_answer": ["b"]
+  },
+  {
+    "question_id": 11,
+    "question_text": "An admin deploys a Windows VM and enables Azure Monitor Diagnostics Extension (WAD — Windows Azure Diagnostics). What data can this extension collect that the basic Azure Monitor platform metrics do NOT provide?",
+    "options": {
+      "a": { "text": "CPU percentage and network in/out — the same metrics available without any extension", "is_true": false, "explanation": "CPU percentage and network metrics are platform metrics available without any extension. They are collected by Azure infrastructure, not by the guest OS agent." },
+      "b": { "text": "Windows Event Log entries, Performance Monitor counters, IIS logs, and application-level crash dumps from inside the guest OS", "is_true": true, "explanation": "Platform metrics are collected at the hypervisor level (CPU, network from outside the VM). The WAD diagnostics extension runs inside the guest OS and can collect: Windows Event Logs (System, Application, Security), custom performance counters (PerfMon), ETW traces, IIS logs, application crash dumps, and other OS-level data that the hypervisor cannot see." },
+      "c": { "text": "Azure Activity Log events for the VM resource — operations performed on the VM via the portal or API", "is_true": false, "explanation": "Azure Activity Log records ARM-plane management operations (start, stop, resize). It is collected by Azure infrastructure and does not require a guest OS extension." },
+      "d": { "text": "VM availability and health state as reported by the Azure fabric controller", "is_true": false, "explanation": "VM availability and health state are Azure fabric-level signals visible in Azure Monitor and Resource Health without any guest OS extension." }
+    },
+    "correct_answer": ["b"]
+  },
+  {
+    "question_id": 12,
+    "question_text": "A Windows VM needs to be captured as a reusable image for deploying new VMs. The admin runs Sysprep with the `/generalize` flag and the VM shuts down. What is the next step in Azure?",
+    "options": {
+      "a": { "text": "Start the VM and take a disk snapshot, then create an image definition from the snapshot", "is_true": false, "explanation": "After Sysprep, starting the VM would trigger Windows OOBE setup (the generalization process has begun) — this would re-specialize the VM and make it unsuitable for image capture. The VM must remain deallocated for image capture." },
+      "b": { "text": "Deallocate the VM in Azure (if not already deallocated from Sysprep shutdown), then run 'az vm generalize' followed by 'az image create' or capture to an Azure Compute Gallery", "is_true": true, "explanation": "After Sysprep shuts down the VM: (1) Ensure the VM is deallocated in Azure (not just stopped-running). (2) Run 'az vm generalize' to mark the VM as generalized in Azure's metadata. (3) Capture the image using 'az image create' (managed image) or create an image version in Azure Compute Gallery. The VM cannot be started again after generalization — it becomes the image source only." },
+      "c": { "text": "Take a disk snapshot of the OS disk and share it as a gallery image", "is_true": false, "explanation": "A disk snapshot is crash-consistent and doesn't capture the generalization metadata. Azure distinguishes between specialized (single-VM restore) and generalized (template for many VMs) images. The generalize operation and VM capture are required to create a deployable image template." },
+      "d": { "text": "The VM can be started and used normally after Sysprep — generalize just removes the SID and creates a checkpoint", "is_true": false, "explanation": "After running Sysprep /generalize, the VM enters OOBE state. If started, Windows will complete the OOBE setup (entering a new computer name, admin password, etc.) and re-specialize the VM with new SIDs. The generalized image must be captured BEFORE starting the VM." }
+    },
+    "correct_answer": ["b"]
+  },
+  {
+    "question_id": 13,
+    "question_text": "An admin wants to install the Azure Monitor Agent (AMA) on all Windows VMs in a subscription and ensure new VMs are automatically covered. What is the recommended scalable approach?",
+    "options": {
+      "a": { "text": "Use Group Policy to deploy the AMA MSI package to all domain-joined VMs", "is_true": false, "explanation": "Group Policy can deploy software within a Windows domain, but it does not cover non-domain-joined Azure VMs and does not ensure new Azure VMs are automatically covered unless they join the domain and receive the policy. Azure Policy DINE is the Azure-native scalable approach." },
+      "b": { "text": "Assign the built-in Azure Policy 'Deploy Azure Monitor Agent for Windows VMs' (DINE effect) at the subscription level, then create and associate a Data Collection Rule", "is_true": true, "explanation": "Microsoft provides built-in DINE policies specifically for deploying AMA to Windows (and Linux) VMs. Assigning at subscription level ensures all existing VMs are remediated and all new VMs automatically receive the agent. The Data Collection Rule (DCR) specifies what data to collect and where to send it." },
+      "c": { "text": "Use Azure Automation Desired State Configuration (DSC) to enforce AMA installation on all VMs", "is_true": false, "explanation": "DSC can manage VM configuration including installing software, but it requires onboarding each VM to an Automation Account and DSC configuration. Azure Policy DINE is the simpler, more scalable approach for agent deployment." },
+      "d": { "text": "Enable VM Insights on each VM individually in the Azure Monitor blade", "is_true": false, "explanation": "Enabling VM Insights individually per VM is not scalable for a subscription with many VMs. Azure Policy DINE handles bulk deployment and new VM coverage automatically." }
+    },
+    "correct_answer": ["b"]
+  },
+  {
+    "question_id": 14,
+    "question_text": "A Windows VM is deployed with Ultra Disk for its data disk to handle high IOPS database workloads. The admin notices the disk caching option is not available for the Ultra Disk in the portal. Why?",
+    "options": {
+      "a": { "text": "Ultra Disk requires Premium SSD cache to be enabled separately via a feature flag", "is_true": false, "explanation": "There is no separate 'Premium SSD cache' feature for Ultra Disk. Ultra Disk simply does not support host-level disk caching." },
+      "b": { "text": "Ultra Disk does not support host caching — the caching option is always 'None' and cannot be changed; Ultra Disk achieves low latency through its architecture, not host caching", "is_true": true, "explanation": "Azure Ultra Disk is designed for sub-millisecond latency and high IOPS/throughput through its architecture (NVMe-based direct I/O path). Host caching (ReadOnly or ReadWrite) is not supported and would actually introduce latency inconsistency. The disk caching setting is locked to 'None' for Ultra Disks." },
+      "c": { "text": "Disk caching is only available for OS disks — data disks of any type do not support caching", "is_true": false, "explanation": "Standard HDD, Standard SSD, and Premium SSD data disks all support ReadOnly or ReadWrite caching (though recommendations vary). Only Ultra Disk lacks caching support among data disk types." },
+      "d": { "text": "The VM size does not support Ultra Disk — a different VM SKU is needed to enable disk caching", "is_true": false, "explanation": "Ultra Disk support is VM SKU-dependent (requires specific VM families), but if the disk is already attached, the SKU supports it. Caching is simply not a feature of Ultra Disk regardless of VM SKU." }
+    },
+    "correct_answer": ["b"]
+  },
+  {
+    "question_id": 15,
+    "question_text": "A Windows VM's OS disk is 30 GB and is nearly full. The application writes large log files to C:\\Logs. The admin wants to move the log files to a larger data disk without changing the application's log path. What is the best approach?",
+    "options": {
+      "a": { "text": "Extend the OS disk to 1 TB and let logs accumulate on C:", "is_true": false, "explanation": "Expanding the OS disk is expensive (OS disks are premium storage) and mixes OS and application data. Using a dedicated data disk for large log volumes is the best practice and more cost-effective." },
+      "b": { "text": "Attach a new data disk, format it, mount it at C:\\Logs using a mount point (rather than a drive letter) so the application continues to write to C:\\Logs without any configuration change", "is_true": true, "explanation": "Windows supports NTFS mount points — you can mount a volume at any empty NTFS folder path, including C:\\Logs. The application continues to write to C:\\Logs, but the data goes to the new data disk. No changes to application configuration are needed. This separates large log data onto cheaper/larger disk storage." },
+      "c": { "text": "Create a symbolic link (junction point) from C:\\Logs to D:\\Logs on the temporary disk", "is_true": false, "explanation": "The temporary disk (D:) is ephemeral and loses data on deallocation or host change. Using it for application logs would result in log loss. A persistent data disk must be used." },
+      "d": { "text": "Use Azure File Sync to tier the old log files to Azure Files, freeing up OS disk space", "is_true": false, "explanation": "Azure File Sync is for sync between Windows Server shares and Azure Files — it requires the share to be managed by File Sync and the server to have the File Sync agent. This doesn't address the ongoing log growth without a dedicated data disk." }
+    },
+    "correct_answer": ["b"]
+  },
+  {
+    "question_id": 16,
+    "question_text": "An admin needs to deploy 20 identical Windows VMs using an Azure Compute Gallery image. All VMs must be deployed in the same region as the image replica. What is an advantage of Azure Compute Gallery over a standard managed image?",
+    "options": {
+      "a": { "text": "Compute Gallery images can be deployed faster because they bypass the Azure Resource Manager", "is_true": false, "explanation": "All Azure resource deployments go through Azure Resource Manager. Compute Gallery does not bypass ARM — it uses it like all other resources." },
+      "b": { "text": "Azure Compute Gallery supports image versioning, multi-region replication, and high-scale deployments (up to 1000 concurrent VM deployments per region from a single image version)", "is_true": true, "explanation": "Compute Gallery (formerly Shared Image Gallery) provides: (1) Versioned images with version numbers (e.g., 1.0.0, 1.1.0). (2) Multi-region replication with configurable replica counts per region. (3) High-scale deployments — standard managed images are limited to ~20 concurrent deployments, while Gallery images support up to 1000 per region. (4) Sharing across subscriptions and tenants via RBAC." },
+      "c": { "text": "Compute Gallery images automatically update running VMs when a new image version is published", "is_true": false, "explanation": "Compute Gallery stores images for new VM deployments. It does not push updates to running VMs — that requires Azure Update Manager, VMSS rolling upgrades, or manual OS updates." },
+      "d": { "text": "Compute Gallery is required for Gen2 VMs — standard managed images only support Gen1", "is_true": false, "explanation": "Standard managed images support both Gen1 and Gen2. Compute Gallery is not a requirement for Gen2 — it is a best practice for scale and version management but not mandatory." }
+    },
+    "correct_answer": ["b"]
+  },
+  {
+    "question_id": 17,
+    "question_text": "A Windows Server VM running SQL Server experiences performance issues. An admin runs PerfInsights from the Azure portal. What does PerfInsights analyze?",
+    "options": {
+      "a": { "text": "Network packet captures to identify SQL Server network bottlenecks", "is_true": false, "explanation": "PerfInsights focuses on VM-level performance diagnostics (CPU, disk, memory, SQL-specific settings). It does not perform deep network packet capture analysis — Network Watcher handles network-level capture." },
+      "b": { "text": "VM performance counters (CPU, disk, memory), SQL Server configuration settings, disk configuration (IOPS/throughput), and produces a report with findings and recommendations", "is_true": true, "explanation": "PerfInsights (Performance Diagnostics) is an Azure tool for Windows VM performance troubleshooting. It collects: CPU/disk/memory performance counter data, storage disk configuration (IOPS limits, queue depth), SQL Server specific settings (if SQL is detected), event logs, and network configuration. It outputs an HTML report with identified issues and recommendations. Available via the portal under VM > Help > Performance diagnostics." },
+      "c": { "text": "The Azure subscription billing to identify which SQL Server queries incur the most cost", "is_true": false, "explanation": "PerfInsights is a performance tool — it analyzes system-level metrics and configurations. Azure Cost Management handles billing analysis. Query-level analysis requires SQL Server tools (Query Store, Extended Events)." },
+      "d": { "text": "Security vulnerabilities in the SQL Server installation using the Microsoft Security Baseline", "is_true": false, "explanation": "Security vulnerability scanning is handled by Microsoft Defender for SQL or Defender for Cloud. PerfInsights is a performance diagnostic tool, not a security scanner." }
+    },
+    "correct_answer": ["b"]
+  },
+  {
+    "question_id": 18,
+    "question_text": "An admin wants to swap the OS disk of a running Windows VM (replace the current OS disk with a different managed disk containing a newer Windows image) without redeploying the VM or losing the VM's NIC, IP, and attached data disks. Is this possible, and how?",
+    "options": {
+      "a": { "text": "Not possible — the OS disk is permanently bound to the VM and cannot be swapped", "is_true": false, "explanation": "Azure supports OS disk swap (disk swapping) since 2019. The VM's configuration (NIC, data disks, IP) is preserved during the swap." },
+      "b": { "text": "Yes — using 'az vm update --os-disk' or the portal's 'Swap OS disk' option while the VM is deallocated, preserving all NIC, IP, and data disk configurations", "is_true": true, "explanation": "Azure OS disk swap (az vm update --os-disk <new-disk-id> OR portal: VM > Disks > Swap OS disk) replaces the OS disk while keeping all other VM configurations intact: NICs, public/private IPs, data disks, VM name, resource group, and size. The VM must be deallocated (not just stopped) to perform the swap. This is useful for rolling back a failed Windows update or upgrading to a new OS image." },
+      "c": { "text": "Yes — the OS disk can be swapped while the VM is running using live migration", "is_true": false, "explanation": "OS disk swap requires the VM to be in a deallocated state. It cannot be performed on a running VM. Live migration is an Azure platform operation for transparent host maintenance, not for OS disk changes." },
+      "d": { "text": "Yes — but only if the original and replacement disks are both Premium SSD; HDD and Standard SSD are not supported for OS disk swap", "is_true": false, "explanation": "OS disk swap supports Standard HDD, Standard SSD, and Premium SSD disk types. There is no restriction requiring Premium SSD for this operation." }
+    },
+    "correct_answer": ["b"]
+  },
+  {
+    "question_id": 19,
+    "question_text": "A Windows VM is in an Availability Set. The admin wants to move it to an Availability Zone. What is the correct approach?",
+    "options": {
+      "a": { "text": "Edit the VM settings in the portal to change Availability Set to Availability Zone", "is_true": false, "explanation": "Availability Set and Availability Zone are fundamental placement properties set at VM creation. They cannot be changed on an existing VM through the portal settings." },
+      "b": { "text": "Use Azure Site Recovery to migrate (replicate) the VM to a zone-pinned location — ASR supports changing availability configuration during migration", "is_true": true, "explanation": "Azure Site Recovery 'Azure to Azure' migration allows you to replicate a VM and during failover (or test failover) specify a target Availability Zone rather than an Availability Set. This is the supported method for changing a VM's availability configuration without manual data copying. The migrated VM lands in the target zone." },
+      "c": { "text": "Stop the VM, change the availability zone in VM properties, then restart it", "is_true": false, "explanation": "There is no option to change the Availability Zone of an existing VM — zone is set at creation. Stopping the VM does not unlock this property." },
+      "d": { "text": "Delete the VM (keeping the disks), recreate it in the desired zone, and reattach all disks", "is_true": false, "explanation": "This approach works technically (the delete-keep-disks-recreate pattern) but is manual, error-prone, and results in a brief outage. Azure Site Recovery migration is the supported, less risky approach. However, if ASR is not available, the manual approach is the fallback." }
+    },
+    "correct_answer": ["b"]
+  },
+  {
+    "question_id": 20,
+    "question_text": "A Windows VM has the Azure Monitor Agent installed. An admin creates a Data Collection Rule (DCR) to collect Windows Security Event logs (Event ID 4625 — failed logons) and send them to a Log Analytics workspace. Which Log Analytics table will the Security Events appear in?",
+    "options": {
+      "a": { "text": "Syslog — Windows security events are stored alongside Linux syslog entries", "is_true": false, "explanation": "Syslog is the table for Linux system log entries. Windows Security Events are a separate event channel and stored in a different table." },
+      "b": { "text": "SecurityEvent — Windows Security Event Log entries (including logon events like 4625) are stored in the SecurityEvent table", "is_true": true, "explanation": "Windows Security Event Log entries are stored in the 'SecurityEvent' table in Log Analytics. Event ID 4625 (failed logon) is a Security channel event. Querying: SecurityEvent | where EventID == 4625. Note: collecting Security Events requires either the Security and Audit solution (legacy) or explicitly configuring the Windows Security Events data source in the DCR." },
+      "c": { "text": "Event — all Windows Event Log entries including Security events go to the Event table", "is_true": false, "explanation": "The 'Event' table in Log Analytics stores Windows System, Application, and other channels. Windows Security Event Log entries specifically go to the 'SecurityEvent' table. They are separate tables." },
+      "d": { "text": "AzureActivity — Azure management operations and VM sign-in events are stored in AzureActivity", "is_true": false, "explanation": "AzureActivity stores Azure Resource Manager operations (who created/modified/deleted Azure resources). It does not contain Windows OS-level security events like failed RDP logon attempts." }
+    },
+    "correct_answer": ["b"]
+  }
+]

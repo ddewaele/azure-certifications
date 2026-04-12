@@ -1,0 +1,222 @@
+[
+  {
+    "question_id": 1,
+    "question_text": "A user reports they cannot sign in to the Azure portal. The IT admin checks Entra ID and sees the account is enabled and the password is correct. What should the admin check next to determine why sign-in is failing?",
+    "options": {
+      "a": { "text": "Check whether the user's manager has approved their access", "is_true": false, "explanation": "Manager approval is not a standard Entra ID sign-in control. This is not a relevant check." },
+      "b": { "text": "Review the Entra ID Sign-in logs to identify which Conditional Access policy or error is blocking the sign-in", "is_true": true, "explanation": "The Sign-in logs are the primary diagnostic tool. They show the exact error, which Conditional Access policies applied, whether MFA was required, and whether a policy blocked the sign-in." },
+      "c": { "text": "Delete and recreate the user account", "is_true": false, "explanation": "Recreating the account is destructive and should never be the first step. It would lose all the user's group memberships and role assignments." },
+      "d": { "text": "Check the user's license assignment in the Microsoft 365 admin center", "is_true": false, "explanation": "License assignment does not block sign-in to Entra ID. Licenses control access to features, not basic authentication." }
+    },
+    "correct_answer": ["b"]
+  },
+  {
+    "question_id": 2,
+    "question_text": "An admin assigns the Contributor role to a user on a resource group at 2:00 PM. At 2:01 PM, the user tries to create a VM in that resource group but receives 'Authorization failed'. What is the most likely explanation?",
+    "options": {
+      "a": { "text": "Contributor cannot create VMs — only Owner can", "is_true": false, "explanation": "Contributor can create and manage all Azure resources including VMs. It only lacks the ability to assign roles." },
+      "b": { "text": "The role assignment has not yet propagated — RBAC changes can take up to 5 minutes to take effect", "is_true": true, "explanation": "RBAC role assignments take up to 5 minutes to propagate globally. The user should wait and retry." },
+      "c": { "text": "The user must log out and log back in before any role assignment takes effect", "is_true": false, "explanation": "While a new login refreshes the token, RBAC propagation is the more likely cause of a 1-minute delay. Re-login is not always required." },
+      "d": { "text": "The resource group has a ReadOnly lock preventing new resources from being created", "is_true": false, "explanation": "A ReadOnly lock blocks write operations including creating new resources. However, the question specifies the role was just assigned — propagation delay is the more likely cause at 1 minute." }
+    },
+    "correct_answer": ["b"]
+  },
+  {
+    "question_id": 3,
+    "question_text": "A user with the Contributor role on a storage account tries to read a blob but receives a 403 error. They are using Entra ID authentication (not an account key). What is the most likely cause?",
+    "options": {
+      "a": { "text": "The Contributor role does not grant data plane access to blob storage — a Storage Blob Data Reader or Contributor role is required", "is_true": true, "explanation": "Contributor is a management plane role. It manages the storage account resource but does not grant access to read or write blob data via Entra ID authentication. The Storage Blob Data Reader/Contributor roles are required for data access." },
+      "b": { "text": "The user's account is not licensed for Azure Storage", "is_true": false, "explanation": "Azure Storage does not require a user license. Licensing applies to features like Entra ID P1/P2, not storage access." },
+      "c": { "text": "The storage account firewall is blocking the user", "is_true": false, "explanation": "A firewall block would also prevent Contributor-level management operations. A 403 specifically on data operations while management works points to missing data plane permissions." },
+      "d": { "text": "Blob storage requires a SAS token — Entra ID authentication cannot be used for blobs", "is_true": false, "explanation": "Entra ID authentication IS supported for Azure Blob Storage. It is the recommended approach over account keys and SAS tokens." }
+    },
+    "correct_answer": ["a"]
+  },
+  {
+    "question_id": 4,
+    "question_text": "A resource group has a ReadOnly lock. An Azure Policy with the Modify effect is assigned to automatically add a missing tag to all resources in that group. Why will the policy remediation fail?",
+    "options": {
+      "a": { "text": "Azure Policy cannot run on locked resource groups", "is_true": false, "explanation": "Azure Policy can evaluate and attempt remediation on locked resources. The failure is due to the write operation being blocked by the lock." },
+      "b": { "text": "The Modify effect issues a write operation to add the tag, but a ReadOnly lock blocks all write operations on resources in the group", "is_true": true, "explanation": "The Modify effect performs a write operation (adding/changing tags). A ReadOnly lock blocks ALL write and delete operations regardless of RBAC role. The policy managed identity cannot write the tag even though it has the required role." },
+      "c": { "text": "The policy remediation task requires Owner permission, but the policy managed identity only has Contributor", "is_true": false, "explanation": "Adding a tag requires Contributor-level permission (or a Tag Contributor role), not Owner. The issue is the ReadOnly lock, not the permission level." },
+      "d": { "text": "Tags cannot be managed by Azure Policy — they can only be set manually", "is_true": false, "explanation": "Azure Policy has built-in Modify effect policies specifically for enforcing tags, such as 'Add or replace a tag on resources'." }
+    },
+    "correct_answer": ["b"]
+  },
+  {
+    "question_id": 5,
+    "question_text": "SSPR is enabled for all users and password writeback is configured. A user successfully resets their password via SSPR from their home computer. The next morning at the office, they log in to their Windows domain-joined computer with their old password and it works. Why?",
+    "options": {
+      "a": { "text": "SSPR does not work for hybrid synchronized users", "is_true": false, "explanation": "SSPR does work for hybrid users when password writeback is enabled. The scenario states writeback is configured." },
+      "b": { "text": "The cached credentials on the domain-joined computer still contain the old password", "is_true": true, "explanation": "Windows domain-joined computers cache credentials locally. If the computer was offline or not recently synced with the DC, it uses the cached credential, which still holds the old password." },
+      "c": { "text": "Password writeback is not supported with Entra Connect — only with Cloud Sync", "is_true": false, "explanation": "Password writeback is supported with both Entra Connect and Entra Connect Cloud Sync (since 2023)." },
+      "d": { "text": "The on-prem Active Directory domain controller has not yet received the password change because writeback failed", "is_true": false, "explanation": "This is possible but the question says writeback is configured and the reset succeeded. Cached credentials are the most common explanation for old passwords working on domain computers." }
+    },
+    "correct_answer": ["b"]
+  },
+  {
+    "question_id": 6,
+    "question_text": "An Entra Connect sync is configured with OU filtering to include only the 'Employees' OU. A user in the 'Contractors' OU signs in to a cloud app and authentication fails with 'account not found'. What is the expected behavior and why?",
+    "options": {
+      "a": { "text": "All on-premises AD users are always synced regardless of OU filtering", "is_true": false, "explanation": "OU filtering specifically controls which objects are synchronized. Objects in excluded OUs are not synced to Entra ID." },
+      "b": { "text": "The contractor user is not synced to Entra ID because the Contractors OU is excluded from the sync scope — they have no cloud identity", "is_true": true, "explanation": "OU filtering in Entra Connect determines which OUs are synchronized. Users in excluded OUs are not present in Entra ID and cannot authenticate to cloud resources." },
+      "c": { "text": "Contractor accounts are automatically converted to guest accounts in Entra ID", "is_true": false, "explanation": "Entra Connect does not automatically convert excluded users to guest accounts. They simply don't exist in Entra ID." },
+      "d": { "text": "The user needs to be added to a dynamic group to be synced to the cloud", "is_true": false, "explanation": "Entra Connect sync scope is controlled by OU/group/attribute filtering, not by dynamic group membership." }
+    },
+    "correct_answer": ["b"]
+  },
+  {
+    "question_id": 7,
+    "question_text": "Two Azure VNets (VNet-A: 10.0.0.0/16 and VNet-B: 10.1.0.0/16) are peered. VMs in VNet-A cannot communicate with VMs in VNet-B. The peering status shows 'Connected' on both sides. What should you check first?",
+    "options": {
+      "a": { "text": "Delete and recreate both peering links", "is_true": false, "explanation": "If peering is Connected on both sides, the peering itself is working. Recreating it will not fix a connectivity issue caused by NSG rules or routing." },
+      "b": { "text": "Check the NSG rules on both VNets' subnets — a Deny rule may be blocking traffic between the peered address spaces", "is_true": true, "explanation": "VNet peering Connected means the routing is established. But NSG rules can still block traffic. Check for NSG rules that deny traffic from the peer VNet's address range." },
+      "c": { "text": "Enable VNet peering on the Azure subscription level", "is_true": false, "explanation": "VNet peering is configured at the individual VNet level, not at the subscription level." },
+      "d": { "text": "The address spaces overlap — peering requires non-overlapping CIDRs", "is_true": false, "explanation": "10.0.0.0/16 and 10.1.0.0/16 do not overlap. If they did overlap, the peering could not be created in the first place and would not show as Connected." }
+    },
+    "correct_answer": ["b"]
+  },
+  {
+    "question_id": 8,
+    "question_text": "You delete one side of a VNet peering between VNet-A and VNet-B. What happens to the remaining peering link on VNet-B?",
+    "options": {
+      "a": { "text": "The remaining link is automatically deleted within 5 minutes", "is_true": false, "explanation": "Azure does not automatically delete the other side of a peering. It transitions to a different state." },
+      "b": { "text": "The remaining link on VNet-B transitions to a 'Disconnected' state and traffic between the VNets stops", "is_true": true, "explanation": "When one side of a peering is deleted, the remaining link becomes Disconnected. In this state, traffic cannot flow and you must delete the remaining link and recreate both sides." },
+      "c": { "text": "The remaining link stays Connected and traffic continues to flow using only one-directional peering", "is_true": false, "explanation": "Peering requires both links to be present for traffic to flow. A single link results in a Disconnected state." },
+      "d": { "text": "The remaining link upgrades to a VNet Gateway to maintain connectivity", "is_true": false, "explanation": "VNet peering and VNet Gateways are separate features. A dangling peering link does not convert to a Gateway." }
+    },
+    "correct_answer": ["b"]
+  },
+  {
+    "question_id": 9,
+    "question_text": "In a hub-spoke topology, VNet-Spoke1 is peered with VNet-Hub, and VNet-Spoke2 is also peered with VNet-Hub. A VM in Spoke1 tries to communicate with a VM in Spoke2. The communication fails. Why?",
+    "options": {
+      "a": { "text": "Spoke VNets cannot be peered with a hub that has more than one spoke", "is_true": false, "explanation": "There is no limit on the number of spokes connected to a hub." },
+      "b": { "text": "VNet peering is non-transitive — traffic from Spoke1 cannot flow through Hub to reach Spoke2 without additional routing (NVA + UDRs or a VPN Gateway)", "is_true": true, "explanation": "This is a fundamental property of VNet peering. Peering is point-to-point and non-transitive. Traffic between spokes must be routed through an NVA or VPN Gateway in the hub using UDRs." },
+      "c": { "text": "You must configure spoke-to-spoke peering directly between Spoke1 and Spoke2", "is_true": false, "explanation": "While a direct peering would work, it is not required if an NVA with UDRs is configured in the hub. The correct answer explains why transit through hub peering doesn't work without NVA/UDR." },
+      "d": { "text": "Hub-spoke topologies require Azure Virtual WAN — regular VNet peering does not support this", "is_true": false, "explanation": "Hub-spoke with regular VNet peering works, but requires UDRs and an NVA in the hub for spoke-to-spoke traffic. Azure Virtual WAN is not required." }
+    },
+    "correct_answer": ["b"]
+  },
+  {
+    "question_id": 10,
+    "question_text": "A VM in Azure cannot resolve the hostname of another VM in the same VNet by its computer name. Both VMs are in the same subnet. What is the most likely cause?",
+    "options": {
+      "a": { "text": "Azure DNS does not support hostname resolution — you must use IP addresses", "is_true": false, "explanation": "Azure provides automatic hostname resolution for VMs within the same VNet using the built-in DNS service." },
+      "b": { "text": "The VMs are using a custom DNS server that does not forward to the Azure DNS resolver (168.63.129.16)", "is_true": true, "explanation": "If a custom DNS server is configured on the VNet but it does not forward unknown queries to Azure's DNS resolver (168.63.129.16), internal name resolution fails. The custom DNS server must forward to 168.63.129.16 for Azure internal names." },
+      "c": { "text": "A private DNS zone with auto-registration must be linked to the VNet for hostname resolution to work", "is_true": false, "explanation": "Azure provides automatic hostname resolution within the same VNet without needing a private DNS zone. Private DNS zones are needed for custom domain names or cross-VNet resolution." },
+      "d": { "text": "VMs must be in the same availability set to resolve each other by hostname", "is_true": false, "explanation": "Availability sets have no bearing on DNS resolution. VMs in the same VNet can resolve each other's hostnames regardless of availability set." }
+    },
+    "correct_answer": ["b"]
+  },
+  {
+    "question_id": 11,
+    "question_text": "You add an inbound NSG rule to allow RDP (TCP 3389) from the internet with priority 200. However, RDP to the VM still fails. You notice there is an existing rule with priority 100 that denies all inbound traffic from 'Any' to 'Any'. Why does RDP still fail?",
+    "options": {
+      "a": { "text": "RDP requires the rule to be on the subnet NSG, not the NIC NSG", "is_true": false, "explanation": "RDP can be allowed on either the subnet NSG or the NIC NSG (or both). The rule location is not the issue here." },
+      "b": { "text": "NSG rules are evaluated from lowest to highest priority number; the Deny All rule at priority 100 matches before the Allow RDP rule at priority 200 and blocks traffic", "is_true": true, "explanation": "NSG rules are processed in order of priority number, lowest first. Priority 100 is evaluated before priority 200. The Deny All rule at 100 matches all traffic and blocks it before the Allow RDP rule at 200 is ever reached." },
+      "c": { "text": "An NSG cannot have both Allow and Deny rules — you must choose one type", "is_true": false, "explanation": "NSG rules can be either Allow or Deny. An NSG can contain a mix of both types, which is a normal and intended pattern." },
+      "d": { "text": "Priority 200 is reserved for system rules and cannot be used for custom rules", "is_true": false, "explanation": "There are no reserved priorities for custom rules. Custom rules can use any priority from 100 to 4096." }
+    },
+    "correct_answer": ["b"]
+  },
+  {
+    "question_id": 12,
+    "question_text": "A Load Balancer health probe is configured to check TCP port 80 on the backend VMs. All VMs show as 'Unhealthy' even though the web application is running. What is the most likely cause?",
+    "options": {
+      "a": { "text": "The application is listening on port 443, not port 80", "is_true": false, "explanation": "This could cause the probe to fail, but the question states the application is running. Check the NSG first before assuming a port mismatch." },
+      "b": { "text": "The NSG on the backend subnet is blocking the health probe traffic from the Azure Load Balancer service tag (168.63.129.16)", "is_true": true, "explanation": "The Load Balancer health probe source IP is 168.63.129.16. If an NSG denies traffic from this IP on the probe port, all VMs are marked Unhealthy. The NSG must allow inbound from the AzureLoadBalancer service tag." },
+      "c": { "text": "Load Balancer health probes require HTTPS — TCP probes are not supported", "is_true": false, "explanation": "Azure Load Balancer supports TCP, HTTP, and HTTPS health probes. TCP probes are valid." },
+      "d": { "text": "The backend VMs are not in the same availability set as the Load Balancer", "is_true": false, "explanation": "Standard SKU Load Balancer supports any VM in a VNet. Availability sets are not required." }
+    },
+    "correct_answer": ["b"]
+  },
+  {
+    "question_id": 13,
+    "question_text": "You create a VPN Gateway connection to an on-premises network. The VPN tunnel shows as 'Connected' but on-premises machines cannot reach VMs in Azure. What is the most likely configuration issue?",
+    "options": {
+      "a": { "text": "The VPN Gateway SKU is too small to handle the traffic volume", "is_true": false, "explanation": "VPN Gateway SKU affects throughput, not connectivity. A connected tunnel with routing issues would not be a SKU problem." },
+      "b": { "text": "The on-premises router does not have routes for the Azure VNet address space, or the traffic selectors on one side are incorrect", "is_true": true, "explanation": "A connected tunnel means IKE Phase 1 and 2 completed successfully. If traffic doesn't flow, the problem is routing — on-prem devices must have routes pointing Azure address ranges to the VPN. Traffic selectors must also match on both sides." },
+      "c": { "text": "VPN Gateways require a Site-to-Site VPN connection to be active 24 hours before traffic can flow", "is_true": false, "explanation": "There is no 24-hour wait. Once the VPN tunnel is Connected, traffic should flow immediately if routing is correct." },
+      "d": { "text": "The Azure VMs do not have public IP addresses, which prevents VPN connectivity", "is_true": false, "explanation": "VMs behind a VPN do not need public IPs. The VPN Gateway provides the connectivity — VMs use their private IPs." }
+    },
+    "correct_answer": ["b"]
+  },
+  {
+    "question_id": 14,
+    "question_text": "A Conditional Access policy is set to block access from any country outside of Belgium. A break-glass admin account in Ireland needs emergency access during a weekend outage. What should have been configured in advance to prevent the break-glass account from being blocked?",
+    "options": {
+      "a": { "text": "Create a second Conditional Access policy that allows access from Ireland", "is_true": false, "explanation": "A second Allow policy does not override a Block policy. With CA, if ANY policy blocks access, access is denied. Both policies would evaluate and the block would still apply." },
+      "b": { "text": "Exclude the break-glass account from the location-based Conditional Access policy", "is_true": true, "explanation": "Break-glass accounts must be explicitly excluded from all Conditional Access policies. CA policies with Block effect apply even to Global Admins unless explicitly excluded. Break-glass accounts should also not have MFA enforced by CA." },
+      "c": { "text": "Enable Security Defaults, which automatically exempts admin accounts from location restrictions", "is_true": false, "explanation": "Security Defaults do not provide location exemptions. Security Defaults and Conditional Access are mutually exclusive anyway — you cannot use both." },
+      "d": { "text": "Add Ireland to the Named Locations allowed list in the existing policy", "is_true": false, "explanation": "This would change the policy for all users, not just break-glass accounts. The correct approach is to exclude the break-glass accounts from the policy." }
+    },
+    "correct_answer": ["b"]
+  },
+  {
+    "question_id": 15,
+    "question_text": "A user activates a PIM eligible role but still cannot perform the action. It has been 10 minutes since activation. What should you check?",
+    "options": {
+      "a": { "text": "PIM activations require a second approval after the initial activation — check pending approvals", "is_true": false, "explanation": "If the initial activation was approved (or did not require approval), no second approval is needed. The activation was successful." },
+      "b": { "text": "The PIM activation was for the Entra ID role, but the required action is on an Azure resource — these are separate PIM role types", "is_true": true, "explanation": "PIM manages two separate sets of roles: Entra ID roles (directory operations) and Azure resource roles (RBAC). Activating an Entra ID role does not grant Azure resource permissions. The user may have activated the wrong role type." },
+      "c": { "text": "PIM role activations require a reboot of the client machine", "is_true": false, "explanation": "PIM role activations are immediate (after propagation). No reboot is required." },
+      "d": { "text": "PIM roles cannot be used to manage resource groups — only subscriptions", "is_true": false, "explanation": "PIM for Azure resources can assign roles at any scope: management group, subscription, resource group, or resource." }
+    },
+    "correct_answer": ["b"]
+  },
+  {
+    "question_id": 16,
+    "question_text": "An NSG is associated with both a subnet and a NIC. The subnet NSG allows RDP (port 3389) but the NIC NSG denies all inbound traffic. Can the VM be reached via RDP?",
+    "options": {
+      "a": { "text": "Yes — the subnet NSG takes precedence over the NIC NSG", "is_true": false, "explanation": "Neither NSG takes absolute precedence. For inbound traffic, the subnet NSG is evaluated first, then the NIC NSG. BOTH must allow the traffic." },
+      "b": { "text": "No — for inbound traffic both NSGs are evaluated; a Deny on the NIC NSG blocks RDP even if the subnet NSG allows it", "is_true": true, "explanation": "For inbound traffic, Azure evaluates the subnet NSG first, then the NIC NSG. Traffic must be allowed by BOTH. The NIC NSG Deny All overrides the subnet NSG Allow RDP." },
+      "c": { "text": "Yes — Allow rules always override Deny rules across NSG layers", "is_true": false, "explanation": "This is incorrect. Deny rules within an NSG are evaluated by priority. Across NSGs (subnet + NIC), both must allow the traffic." },
+      "d": { "text": "The behavior depends on which NSG was created first", "is_true": false, "explanation": "Creation order is irrelevant. The evaluation order is: for inbound — subnet NSG first, then NIC NSG. For outbound — NIC NSG first, then subnet NSG." }
+    },
+    "correct_answer": ["b"]
+  },
+  {
+    "question_id": 17,
+    "question_text": "A user tries to use IP flow verify in Network Watcher to diagnose why a VM cannot receive traffic. The test shows the traffic is 'Allowed' but the VM still doesn't respond. What does this tell you?",
+    "options": {
+      "a": { "text": "The NSG rules are allowing the traffic — the issue is inside the VM (application not running, host firewall, wrong port)", "is_true": true, "explanation": "IP flow verify only checks NSG rules. If it shows Allowed, the NSG is not the problem. The issue must be inside the VM: the application may not be running, the host firewall (Windows Firewall / iptables) may be blocking the port, or the service is listening on a different port." },
+      "b": { "text": "IP flow verify is inaccurate — you should ignore the result and check the NSG rules manually", "is_true": false, "explanation": "IP flow verify is accurate for NSG evaluation. If it shows Allowed, the NSG allows the traffic." },
+      "c": { "text": "The VM needs to be rebooted for NSG rules to take effect", "is_true": false, "explanation": "NSG rules take effect immediately and do not require a VM reboot." },
+      "d": { "text": "The issue is with the Azure Load Balancer, not the NSG", "is_true": false, "explanation": "The question describes direct connectivity to a VM. A Load Balancer is not mentioned in this context." }
+    },
+    "correct_answer": ["a"]
+  },
+  {
+    "question_id": 18,
+    "question_text": "A policy assignment with the 'Audit' effect is applied to a subscription. Resources that do not comply are showing as NonCompliant. However, resources are still being created without the required configuration. What change is needed?",
+    "options": {
+      "a": { "text": "Change the policy assignment scope from subscription to management group", "is_true": false, "explanation": "Changing scope does not change behavior. The Audit effect only logs — it never blocks resource creation regardless of scope." },
+      "b": { "text": "Change the policy effect from Audit to Deny to block non-compliant resource creation", "is_true": true, "explanation": "The Audit effect only logs non-compliance — it does not prevent the resource from being created. To actively block, the effect must be changed to Deny." },
+      "c": { "text": "Create a resource lock on the subscription to enforce compliance", "is_true": false, "explanation": "Resource locks control delete/modify operations, not policy compliance. A lock would prevent all changes, not just non-compliant ones." },
+      "d": { "text": "Enable Security Defaults to automatically enforce policy compliance", "is_true": false, "explanation": "Security Defaults is an Entra ID feature for MFA enforcement. It has nothing to do with Azure Policy compliance." }
+    },
+    "correct_answer": ["b"]
+  },
+  {
+    "question_id": 19,
+    "question_text": "A user in Belgium connects to an Azure VM and triggers an alert by trying to perform a privileged action. Identity Protection shows a sign-in risk of 'High' for the user. What happens if a user risk policy is configured to require password change for High risk?",
+    "options": {
+      "a": { "text": "The user's account is immediately disabled and the admin must re-enable it manually", "is_true": false, "explanation": "Identity Protection does not automatically disable accounts. It blocks access until the required action (password change or MFA) is completed." },
+      "b": { "text": "The user is required to perform an SSPR password change to self-remediate before they can access cloud resources", "is_true": true, "explanation": "When a user risk policy triggers for High risk, the user is prompted to change their password via SSPR as the remediation action. Once completed, the user risk is cleared and access is restored." },
+      "c": { "text": "All the user's active sessions are terminated immediately", "is_true": false, "explanation": "Identity Protection does not terminate active sessions. The risk affects new sign-in attempts." },
+      "d": { "text": "The user must wait 24 hours before the risk score decreases automatically", "is_true": false, "explanation": "Risk scores do not decrease by waiting. They are cleared by remediating the risk (password change, admin dismissal) or when the detection signal expires." }
+    },
+    "correct_answer": ["b"]
+  },
+  {
+    "question_id": 20,
+    "question_text": "You use Network Watcher's 'Next hop' feature to check the routing from VM-A (10.0.1.4) to VM-B (10.0.2.4) in a peered VNet. The result shows the next hop type is 'VirtualAppliance' with IP 10.0.0.10. But there is no NVA in your environment. What is the most likely explanation?",
+    "options": {
+      "a": { "text": "Azure automatically inserts an NVA for security between peered VNets", "is_true": false, "explanation": "Azure does not automatically insert NVAs. Any VirtualAppliance next hop in your route table was placed there by a User-Defined Route." },
+      "b": { "text": "A User-Defined Route (UDR) on the subnet has a route pointing to 10.0.0.10 as a virtual appliance — this route is overriding the expected peering system route", "is_true": true, "explanation": "UDRs take precedence over system routes including VNet peering routes. If a UDR was added that sends traffic to 10.0.0.10 (an IP that may not exist or has no NVA configured), traffic will be dropped or misrouted." },
+      "c": { "text": "The VNet peering is misconfigured and is routing traffic to the wrong gateway", "is_true": false, "explanation": "VNet peering system routes have next hop type 'VNetPeering', not 'VirtualAppliance'. If the result shows VirtualAppliance, a UDR is the source." },
+      "d": { "text": "The BGP route from the VPN Gateway is advertising 10.0.0.10 as a next hop", "is_true": false, "explanation": "BGP routes use next hop type 'VpnGateway', not 'VirtualAppliance'. The VirtualAppliance next hop is always from a UDR." }
+    },
+    "correct_answer": ["b"]
+  }
+]

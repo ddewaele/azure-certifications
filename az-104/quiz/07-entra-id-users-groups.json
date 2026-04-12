@@ -1,0 +1,610 @@
+{
+  "meta": {
+    "title": "Entra ID – User Management, Groups & B2B",
+    "subject": "Microsoft Entra ID",
+    "version": "1.0.0",
+    "created": "2026-03-27"
+  },
+  "questions": [
+    {
+      "question_id": 1,
+      "question_text": "An administrator needs to assign a Microsoft 365 license to a user but the assignment fails. What is the most likely missing property on the user account?",
+      "difficulty": "easy",
+      "topic": "User Management",
+      "tags": ["licensing", "usage-location", "users"],
+      "options": {
+        "a": {
+          "text": "Display name",
+          "is_true": false,
+          "explanation": "Incorrect. A missing display name would not prevent license assignment."
+        },
+        "b": {
+          "text": "Usage location",
+          "is_true": true,
+          "explanation": "Correct. Before assigning any Microsoft license to a user, the Usage Location property must be set. This is a legal requirement because Microsoft 365 service availability and terms vary by country/region."
+        },
+        "c": {
+          "text": "Manager",
+          "is_true": false,
+          "explanation": "Incorrect. The manager attribute is optional and does not affect license assignment."
+        },
+        "d": {
+          "text": "Job title",
+          "is_true": false,
+          "explanation": "Incorrect. Job title is informational and not required for license assignment."
+        }
+      },
+      "correct_answer": ["b"]
+    },
+    {
+      "question_id": 2,
+      "question_text": "Which Entra ID user type is created by syncing from an on-premises Active Directory using Entra Connect?",
+      "difficulty": "easy",
+      "topic": "User Types",
+      "tags": ["user-types", "synchronized-identity", "entra-connect"],
+      "options": {
+        "a": {
+          "text": "Cloud identity",
+          "is_true": false,
+          "explanation": "Incorrect. Cloud identities are created directly in Entra ID with no on-premises dependency."
+        },
+        "b": {
+          "text": "Guest user",
+          "is_true": false,
+          "explanation": "Incorrect. Guest users are external identities invited via B2B collaboration."
+        },
+        "c": {
+          "text": "Synchronized identity",
+          "is_true": true,
+          "explanation": "Correct. Synchronized identities originate in on-premises AD DS and are synced to Entra ID via Entra Connect. They can authenticate using password hash sync or pass-through authentication."
+        },
+        "d": {
+          "text": "Federated identity",
+          "is_true": false,
+          "explanation": "Incorrect. 'Federated identity' is not one of the three standard Entra ID user type classifications. Federated authentication is a method used with synchronized identities, not a user type itself."
+        }
+      },
+      "correct_answer": ["c"]
+    },
+    {
+      "question_id": 3,
+      "question_text": "Which Entra ID license is required to use dynamic membership rules for groups?",
+      "difficulty": "easy",
+      "topic": "Dynamic Groups",
+      "tags": ["dynamic-groups", "licensing", "p1"],
+      "options": {
+        "a": {
+          "text": "Entra ID Free",
+          "is_true": false,
+          "explanation": "Incorrect. Dynamic group membership is not available in the Free tier."
+        },
+        "b": {
+          "text": "Entra ID P1",
+          "is_true": true,
+          "explanation": "Correct. Dynamic membership rules require Entra ID P1 (or P2). The feature is not available in the Free or Office 365 tiers."
+        },
+        "c": {
+          "text": "Microsoft 365 Business Basic",
+          "is_true": false,
+          "explanation": "Incorrect. Microsoft 365 Business Basic includes Entra ID Free features — dynamic groups are not included."
+        },
+        "d": {
+          "text": "Azure subscription (any tier)",
+          "is_true": false,
+          "explanation": "Incorrect. An Azure subscription alone does not grant Entra ID P1 features. The P1 license must be explicitly purchased or included in an eligible Microsoft bundle."
+        }
+      },
+      "correct_answer": ["b"]
+    },
+    {
+      "question_id": 4,
+      "question_text": "An administrator creates a dynamic security group with the rule: (user.department -eq \"Finance\") -and (user.accountEnabled -eq true). What will happen when a Finance department employee is disabled?",
+      "difficulty": "medium",
+      "topic": "Dynamic Groups",
+      "tags": ["dynamic-groups", "membership-rules"],
+      "options": {
+        "a": {
+          "text": "Nothing — dynamic group membership is only evaluated at creation time",
+          "is_true": false,
+          "explanation": "Incorrect. Dynamic group membership is evaluated continuously as user attributes change."
+        },
+        "b": {
+          "text": "The disabled employee is automatically removed from the group",
+          "is_true": true,
+          "explanation": "Correct. When accountEnabled changes to false, the user no longer satisfies both conditions of the rule and is automatically removed from the dynamic group."
+        },
+        "c": {
+          "text": "The group is deleted because a member no longer matches",
+          "is_true": false,
+          "explanation": "Incorrect. The group persists; only the non-matching member is removed."
+        },
+        "d": {
+          "text": "The administrator receives an alert but must manually remove the user",
+          "is_true": false,
+          "explanation": "Incorrect. Dynamic groups handle membership changes automatically — no manual intervention is needed."
+        }
+      },
+      "correct_answer": ["b"]
+    },
+    {
+      "question_id": 5,
+      "question_text": "What type of Entra ID group supports collaboration features like shared mailboxes, calendars, SharePoint sites, and Teams channels?",
+      "difficulty": "easy",
+      "topic": "Group Types",
+      "tags": ["groups", "m365-group", "collaboration"],
+      "options": {
+        "a": {
+          "text": "Security group",
+          "is_true": false,
+          "explanation": "Incorrect. Security groups control access to resources and apps but do not provide collaboration features like shared mailboxes or SharePoint sites."
+        },
+        "b": {
+          "text": "Distribution group",
+          "is_true": false,
+          "explanation": "Incorrect. Distribution groups are for email distribution only — no resource access or collaboration services."
+        },
+        "c": {
+          "text": "Microsoft 365 group",
+          "is_true": true,
+          "explanation": "Correct. Microsoft 365 groups (formerly Office 365 groups) provide a suite of collaboration services including shared mailbox, calendar, SharePoint site, Teams channel, and Planner."
+        },
+        "d": {
+          "text": "Mail-enabled security group",
+          "is_true": false,
+          "explanation": "Incorrect. Mail-enabled security groups combine email with resource access control but do not create Teams channels or SharePoint sites."
+        }
+      },
+      "correct_answer": ["c"]
+    },
+    {
+      "question_id": 6,
+      "question_text": "A guest user (B2B) is invited to collaborate on a project. How does the guest authenticate when accessing your organisation's resources?",
+      "difficulty": "easy",
+      "topic": "B2B Collaboration",
+      "tags": ["b2b", "guest-user", "authentication"],
+      "options": {
+        "a": {
+          "text": "A new password is created in your tenant that the guest must use",
+          "is_true": false,
+          "explanation": "Incorrect. B2B collaboration is designed so your organisation does not manage guest passwords. The guest uses their own credentials."
+        },
+        "b": {
+          "text": "The guest uses credentials from their own organisation (home tenant)",
+          "is_true": true,
+          "explanation": "Correct. B2B guests authenticate using their own organisation's identity provider. Your tenant trusts that authentication — you never see or manage their password."
+        },
+        "c": {
+          "text": "The guest must enrol in your organisation's MFA before any access is granted",
+          "is_true": false,
+          "explanation": "Incorrect. While MFA can be required via Conditional Access, the guest uses their home organisation's credentials by default."
+        },
+        "d": {
+          "text": "Guests use a one-time passcode sent to their email for every sign-in",
+          "is_true": false,
+          "explanation": "Incorrect. Email OTP is a fallback for guests without an Entra or Microsoft account, not the standard flow for guests with an existing Entra ID tenant."
+        }
+      },
+      "correct_answer": ["b"]
+    },
+    {
+      "question_id": 7,
+      "question_text": "An administrator needs to create 500 user accounts in Entra ID efficiently. Which methods are supported for bulk user creation?",
+      "difficulty": "easy",
+      "topic": "User Management",
+      "tags": ["bulk-operations", "csv", "powershell"],
+      "options": {
+        "a": {
+          "text": "CSV upload via the Azure portal bulk create feature",
+          "is_true": true,
+          "explanation": "Correct. The Azure portal supports bulk user creation via a CSV file upload — one of the two main bulk creation methods."
+        },
+        "b": {
+          "text": "PowerShell or Azure CLI scripts using the Microsoft Graph API",
+          "is_true": true,
+          "explanation": "Correct. PowerShell (via the Microsoft Graph PowerShell SDK or AzureAD module) and Azure CLI can create users programmatically in bulk."
+        },
+        "c": {
+          "text": "Importing users from a SQL Server database directly via the portal",
+          "is_true": false,
+          "explanation": "Incorrect. There is no direct SQL import feature in the portal. You would need to extract data to CSV or use scripting."
+        },
+        "d": {
+          "text": "LDIF (LDAP Data Interchange Format) file import",
+          "is_true": false,
+          "explanation": "Incorrect. LDIF is an AD DS import format. Entra ID does not support LDIF imports."
+        }
+      },
+      "correct_answer": ["a", "b"]
+    },
+    {
+      "question_id": 8,
+      "question_text": "What is the User Principal Name (UPN) in Microsoft Entra ID?",
+      "difficulty": "easy",
+      "topic": "User Management",
+      "tags": ["upn", "user-properties"],
+      "options": {
+        "a": {
+          "text": "The user's globally unique object ID (GUID) in the directory",
+          "is_true": false,
+          "explanation": "Incorrect. The Object ID is a GUID — not the UPN. The UPN is a human-readable sign-in name."
+        },
+        "b": {
+          "text": "The email address format used as the primary sign-in name (e.g., user@contoso.com)",
+          "is_true": true,
+          "explanation": "Correct. The UPN is the primary sign-in identifier in Entra ID, formatted as username@domain (e.g., john.doe@contoso.com). It must be unique within the tenant."
+        },
+        "c": {
+          "text": "The user's SAM Account Name from Active Directory",
+          "is_true": false,
+          "explanation": "Incorrect. The SAM Account Name (e.g., DOMAIN\\username) is an AD DS concept. The UPN is a different format and is the sign-in name used in cloud environments."
+        },
+        "d": {
+          "text": "The proxy address used for email routing in Exchange Online",
+          "is_true": false,
+          "explanation": "Incorrect. Proxy addresses are used for email routing but are separate from the UPN (though they often share the same value)."
+        }
+      },
+      "correct_answer": ["b"]
+    },
+    {
+      "question_id": 9,
+      "question_text": "A company assigns a Microsoft 365 E3 license to a security group. A new employee joins and is added to the group. What happens to their license?",
+      "difficulty": "medium",
+      "topic": "Group-Based Licensing",
+      "tags": ["group-licensing", "p1", "license-assignment"],
+      "options": {
+        "a": {
+          "text": "The new employee must wait for the next billing cycle to receive the license",
+          "is_true": false,
+          "explanation": "Incorrect. Group-based licensing assigns licenses automatically when users join the group — it is not tied to billing cycles."
+        },
+        "b": {
+          "text": "The license is automatically assigned to the new employee when they join the group",
+          "is_true": true,
+          "explanation": "Correct. Group-based licensing automatically assigns and removes licenses based on group membership. When the employee joins the group, the license is assigned. When they leave, it is removed."
+        },
+        "c": {
+          "text": "An admin must manually check and assign the license after adding the user to the group",
+          "is_true": false,
+          "explanation": "Incorrect. That describes manual license assignment. Group-based licensing is automatic."
+        },
+        "d": {
+          "text": "Group-based licensing only works if the user already has a Usage Location set",
+          "is_true": false,
+          "explanation": "Incorrect — or rather partially misleading. Usage Location must be set, but this is a prerequisite for license assignment in general, not something unique to group-based licensing. If it's missing, the assignment will fail with an error, but the mechanism is still automatic."
+        }
+      },
+      "correct_answer": ["b"]
+    },
+    {
+      "question_id": 10,
+      "question_text": "Which group type allows email distribution but provides NO access control to Azure resources or applications?",
+      "difficulty": "easy",
+      "topic": "Group Types",
+      "tags": ["groups", "distribution-group"],
+      "options": {
+        "a": {
+          "text": "Security group",
+          "is_true": false,
+          "explanation": "Incorrect. Security groups are used for resource access control. They can optionally be mail-enabled but their primary purpose is access management."
+        },
+        "b": {
+          "text": "Microsoft 365 group",
+          "is_true": false,
+          "explanation": "Incorrect. Microsoft 365 groups provide collaboration services and can be used to assign app access."
+        },
+        "c": {
+          "text": "Distribution group",
+          "is_true": true,
+          "explanation": "Correct. Distribution groups (classic Exchange distribution lists) are purely for email — you cannot assign Azure RBAC roles or application access to them. Use a mail-enabled security group if you need both email and access control."
+        },
+        "d": {
+          "text": "Mail-enabled security group",
+          "is_true": false,
+          "explanation": "Incorrect. Mail-enabled security groups provide both email distribution AND resource access control."
+        }
+      },
+      "correct_answer": ["c"]
+    },
+    {
+      "question_id": 11,
+      "question_text": "An organisation wants to allow only users from specific external domains to be invited as B2B guests. Where is this configured?",
+      "difficulty": "medium",
+      "topic": "B2B Collaboration",
+      "tags": ["b2b", "external-identities", "allow-list"],
+      "options": {
+        "a": {
+          "text": "Azure Firewall allow rules",
+          "is_true": false,
+          "explanation": "Incorrect. Azure Firewall controls network traffic — it does not manage identity-based invitation restrictions."
+        },
+        "b": {
+          "text": "External Identities policies in the Entra admin center",
+          "is_true": true,
+          "explanation": "Correct. External Identities policies (under Entra admin center > External Identities > External collaboration settings) control who can invite guests and can restrict or allow specific external domains."
+        },
+        "c": {
+          "text": "Azure Policy with a 'Deny Guest' effect",
+          "is_true": false,
+          "explanation": "Incorrect. Azure Policy governs Azure resource configurations, not identity-level guest invitation controls."
+        },
+        "d": {
+          "text": "The Entra ID P2 Identity Protection policies",
+          "is_true": false,
+          "explanation": "Incorrect. Identity Protection monitors sign-in risk — it does not control which external domains can receive guest invitations."
+        }
+      },
+      "correct_answer": ["b"]
+    },
+    {
+      "question_id": 12,
+      "question_text": "A guest user accepts a B2B invitation but cannot access the shared SharePoint site. What is the first step to investigate?",
+      "difficulty": "medium",
+      "topic": "B2B Collaboration",
+      "tags": ["b2b", "invitation-redemption", "guest-access"],
+      "options": {
+        "a": {
+          "text": "Check whether the guest's account has been disabled in your tenant",
+          "is_true": false,
+          "explanation": "Incorrect. While worth checking, the most common B2B access issue after invitation acceptance is the absence of explicit permissions on the target resource."
+        },
+        "b": {
+          "text": "Verify the guest has been granted explicit permissions to the SharePoint site",
+          "is_true": true,
+          "explanation": "Correct. Accepting an invitation creates the guest account in your tenant, but does not automatically grant access to specific resources. The administrator must explicitly assign the guest to the SharePoint site, group, or application."
+        },
+        "c": {
+          "text": "Re-send the invitation email",
+          "is_true": false,
+          "explanation": "Incorrect. If the guest has already accepted the invitation, re-sending it is unlikely to resolve an access issue."
+        },
+        "d": {
+          "text": "Upgrade to Entra ID P1 to enable B2B collaboration",
+          "is_true": false,
+          "explanation": "Incorrect. B2B collaboration is available in the Entra ID Free tier. Licensing is not the issue here."
+        }
+      },
+      "correct_answer": ["b"]
+    },
+    {
+      "question_id": 13,
+      "question_text": "Which membership type is NOT supported by Microsoft 365 groups?",
+      "difficulty": "medium",
+      "topic": "Group Types",
+      "tags": ["m365-group", "dynamic-membership"],
+      "options": {
+        "a": {
+          "text": "Assigned membership (manually managed)",
+          "is_true": false,
+          "explanation": "Incorrect. Microsoft 365 groups support assigned (manual) membership."
+        },
+        "b": {
+          "text": "Dynamic membership based on user attributes",
+          "is_true": true,
+          "explanation": "Correct. Dynamic membership is only supported for Security groups, not Microsoft 365 groups. Microsoft 365 groups support assigned membership only."
+        },
+        "c": {
+          "text": "Owner-managed membership with approval workflows",
+          "is_true": false,
+          "explanation": "Incorrect. Microsoft 365 groups do support owner-managed membership where group owners approve join requests."
+        },
+        "d": {
+          "text": "Self-service join by end users",
+          "is_true": false,
+          "explanation": "Incorrect. End-user self-service group management (including requesting to join groups) is supported for Microsoft 365 groups with Entra ID P1."
+        }
+      },
+      "correct_answer": ["b"]
+    },
+    {
+      "question_id": 14,
+      "question_text": "What Entra ID feature allows end users to reset their own passwords without contacting the help desk?",
+      "difficulty": "easy",
+      "topic": "SSPR",
+      "tags": ["sspr", "password-reset"],
+      "options": {
+        "a": {
+          "text": "Privileged Identity Management (PIM)",
+          "is_true": false,
+          "explanation": "Incorrect. PIM manages privileged role assignments — not password resets."
+        },
+        "b": {
+          "text": "Self-Service Password Reset (SSPR)",
+          "is_true": true,
+          "explanation": "Correct. SSPR allows users to reset or unlock their own accounts using pre-registered authentication methods, reducing help desk tickets."
+        },
+        "c": {
+          "text": "Conditional Access",
+          "is_true": false,
+          "explanation": "Incorrect. Conditional Access controls sign-in conditions — it does not provide a password reset mechanism."
+        },
+        "d": {
+          "text": "Identity Protection",
+          "is_true": false,
+          "explanation": "Incorrect. Identity Protection monitors risky sign-ins — it can require password change on risk, but the self-service mechanism itself is SSPR."
+        }
+      },
+      "correct_answer": ["b"]
+    },
+    {
+      "question_id": 15,
+      "question_text": "An administrator wants to enable SSPR for only the Help Desk department initially, before rolling out to everyone. Which SSPR scope setting should they choose?",
+      "difficulty": "medium",
+      "topic": "SSPR",
+      "tags": ["sspr", "scope", "rollout"],
+      "options": {
+        "a": {
+          "text": "None",
+          "is_true": false,
+          "explanation": "Incorrect. 'None' disables SSPR entirely."
+        },
+        "b": {
+          "text": "Selected",
+          "is_true": true,
+          "explanation": "Correct. The 'Selected' scope allows the administrator to target a specific security group (e.g., Help Desk). This is the recommended approach for a phased rollout."
+        },
+        "c": {
+          "text": "All",
+          "is_true": false,
+          "explanation": "Incorrect. 'All' enables SSPR for every user in the tenant immediately — not a controlled pilot."
+        },
+        "d": {
+          "text": "Department",
+          "is_true": false,
+          "explanation": "Incorrect. 'Department' is not a valid SSPR scope option. The three options are None, Selected, and All."
+        }
+      },
+      "correct_answer": ["b"]
+    },
+    {
+      "question_id": 16,
+      "question_text": "What is required to enable SSPR password writeback to an on-premises Active Directory?",
+      "difficulty": "medium",
+      "topic": "SSPR",
+      "tags": ["sspr", "writeback", "entra-connect", "p1"],
+      "options": {
+        "a": {
+          "text": "Entra ID P2 license only",
+          "is_true": false,
+          "explanation": "Incorrect. SSPR writeback requires Entra ID P1 (P2 also works, as it's a superset), not exclusively P2."
+        },
+        "b": {
+          "text": "Entra ID P1 or P2 license AND Entra Connect installed and configured",
+          "is_true": true,
+          "explanation": "Correct. SSPR writeback requires both: (1) Entra ID P1 or higher for the feature access, and (2) Entra Connect to provide the communication channel between Entra ID and on-premises AD."
+        },
+        "c": {
+          "text": "Entra Connect only — no premium license needed for writeback",
+          "is_true": false,
+          "explanation": "Incorrect. Entra Connect is a necessary component, but the P1 license is also required."
+        },
+        "d": {
+          "text": "A site-to-site VPN between Azure and the on-premises network",
+          "is_true": false,
+          "explanation": "Incorrect. Entra Connect communicates outbound over HTTPS — a site-to-site VPN is not required for SSPR writeback."
+        }
+      },
+      "correct_answer": ["b"]
+    },
+    {
+      "question_id": 17,
+      "question_text": "When configuring SSPR, what does setting the 'Number of methods required to reset' to 2 mean for users?",
+      "difficulty": "medium",
+      "topic": "SSPR",
+      "tags": ["sspr", "auth-methods", "reset-requirements"],
+      "options": {
+        "a": {
+          "text": "Users must register at least 2 authentication methods and use both during password reset",
+          "is_true": true,
+          "explanation": "Correct. When set to 2, users must register at least 2 methods (e.g., mobile phone + email) and successfully verify with both during a reset. This increases security by requiring two factors."
+        },
+        "b": {
+          "text": "Users must reset their password twice to confirm the new password",
+          "is_true": false,
+          "explanation": "Incorrect. Entering a new password twice is just the standard password confirmation step — it is not what 'number of methods required' refers to."
+        },
+        "c": {
+          "text": "Only users with 2 licenses can use SSPR",
+          "is_true": false,
+          "explanation": "Incorrect. This setting has nothing to do with licensing."
+        },
+        "d": {
+          "text": "Users must use 2-factor authentication (MFA) before they can access SSPR",
+          "is_true": false,
+          "explanation": "Incorrect. The methods required refers to the SSPR verification challenge, not a pre-authentication MFA requirement."
+        }
+      },
+      "correct_answer": ["a"]
+    },
+    {
+      "question_id": 18,
+      "question_text": "A mail-enabled security group in Entra ID can be used for which TWO purposes?",
+      "difficulty": "medium",
+      "topic": "Group Types",
+      "tags": ["groups", "mail-enabled-security"],
+      "options": {
+        "a": {
+          "text": "Sending email to all group members",
+          "is_true": true,
+          "explanation": "Correct. Mail-enabled security groups have an email address and can receive distribution emails — similar to a distribution group."
+        },
+        "b": {
+          "text": "Controlling access to Azure resources and applications",
+          "is_true": true,
+          "explanation": "Correct. Mail-enabled security groups, like regular security groups, can be used in RBAC role assignments and app access policies."
+        },
+        "c": {
+          "text": "Providing a shared Teams channel for collaboration",
+          "is_true": false,
+          "explanation": "Incorrect. Shared Teams channels, SharePoint sites, and shared mailboxes are features of Microsoft 365 groups, not mail-enabled security groups."
+        },
+        "d": {
+          "text": "Using dynamic membership rules based on user attributes",
+          "is_true": false,
+          "explanation": "Incorrect. Dynamic membership is only supported for Security groups and Microsoft 365 groups — not mail-enabled security groups."
+        }
+      },
+      "correct_answer": ["a", "b"]
+    },
+    {
+      "question_id": 19,
+      "question_text": "What is the purpose of Administrative Units in Microsoft Entra ID?",
+      "difficulty": "hard",
+      "topic": "User Management",
+      "tags": ["administrative-units", "delegation", "scoped-admin"],
+      "options": {
+        "a": {
+          "text": "To organise Azure resources into logical billing boundaries",
+          "is_true": false,
+          "explanation": "Incorrect. Billing boundaries are defined by subscriptions, not Administrative Units."
+        },
+        "b": {
+          "text": "To restrict the scope of an administrator's permissions to a subset of users, groups, or devices",
+          "is_true": true,
+          "explanation": "Correct. Administrative Units enable scoped administration — for example, a Help Desk admin can be given the 'Password Administrator' role scoped only to users in a specific AU (e.g., one department or region), preventing them from resetting passwords for all users in the tenant."
+        },
+        "c": {
+          "text": "To replace Organizational Units from AD DS with an equivalent Entra ID container",
+          "is_true": false,
+          "explanation": "Incorrect. While there is a conceptual similarity, Administrative Units are specifically for delegation of admin permissions — not for general object organisation or GPO scoping."
+        },
+        "d": {
+          "text": "To group subscriptions under a common billing account",
+          "is_true": false,
+          "explanation": "Incorrect. Administrative Units operate at the Entra ID directory level for scoped admin delegation — not for subscription billing."
+        }
+      },
+      "correct_answer": ["b"]
+    },
+    {
+      "question_id": 20,
+      "question_text": "Which of the following accurately describes the difference between B2B and B2C in Microsoft Entra ID?",
+      "difficulty": "medium",
+      "topic": "B2B Collaboration",
+      "tags": ["b2b", "b2c", "external-identities"],
+      "options": {
+        "a": {
+          "text": "B2B is for external partner employees; B2C is for customer-facing applications with social/local identity support",
+          "is_true": true,
+          "explanation": "Correct. Entra ID B2B is designed for enterprise-to-enterprise collaboration (inviting partner org employees as guests). Entra External ID (B2C) is for customer-facing apps where end users can sign in with social accounts (Google, Facebook) or local accounts."
+        },
+        "b": {
+          "text": "B2B is for consumer sign-in; B2C is for business partner sign-in",
+          "is_true": false,
+          "explanation": "Incorrect. This is reversed. B2B = business partners; B2C = consumer/customer sign-in."
+        },
+        "c": {
+          "text": "Both B2B and B2C serve the same purpose with different pricing",
+          "is_true": false,
+          "explanation": "Incorrect. They serve fundamentally different use cases — B2B for workforce/partner identity, B2C for customer identity."
+        },
+        "d": {
+          "text": "B2B requires Entra ID P2; B2C requires P1",
+          "is_true": false,
+          "explanation": "Incorrect. B2B collaboration is available in the Free tier. Entra External ID (B2C) has its own pricing model separate from P1/P2."
+        }
+      },
+      "correct_answer": ["a"]
+    }
+  ]
+}

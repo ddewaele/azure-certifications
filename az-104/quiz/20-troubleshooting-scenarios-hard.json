@@ -1,0 +1,222 @@
+[
+  {
+    "question_id": 1,
+    "question_text": "A company uses Entra Connect with Pass-Through Authentication (PTA). The on-premises PTA agent server loses connectivity to the internet. Which of the following is the expected authentication behavior during the outage?",
+    "options": {
+      "a": { "text": "All Entra ID sign-ins fail immediately for all users", "is_true": false, "explanation": "Microsoft recommends deploying at least 2-3 PTA agents for redundancy. If any agent is healthy, authentication continues. Only if ALL agents lose connectivity will sign-ins fail." },
+      "b": { "text": "Sign-ins fail for on-premises synced accounts but cloud-only accounts continue to work normally", "is_true": true, "explanation": "PTA agents are only required to validate passwords for synced (on-premises) accounts. Cloud-only Entra ID accounts authenticate entirely in the cloud and are unaffected by PTA agent outages. Synced users will fail if all PTA agents are unreachable." },
+      "c": { "text": "Entra ID automatically falls back to Password Hash Sync during PTA agent outages", "is_true": false, "explanation": "There is no automatic failover from PTA to PHS. If PTA is configured and all agents go offline, synced user sign-ins fail. To have fallback, you must explicitly configure PHS alongside PTA as a backup." },
+      "d": { "text": "PTA agent uses local caching, so the last 24 hours of authentication requests succeed without connectivity", "is_true": false, "explanation": "PTA agents do not cache credentials. Every sign-in triggers a live validation request to the on-premises Active Directory via the agent. No caching exists at the PTA agent level." }
+    },
+    "correct_answer": ["b"]
+  },
+  {
+    "question_id": 2,
+    "question_text": "An admin creates an Azure Policy with the DeployIfNotExists (DINE) effect to automatically install the Azure Monitor Agent on all new VMs. A new VM is created but 30 minutes later the agent is still not installed. The policy compliance shows the VM as 'Non-compliant'. What is most likely missing?",
+    "options": {
+      "a": { "text": "The policy must be in 'Audit' mode before it can be switched to DINE mode", "is_true": false, "explanation": "There is no such requirement. DINE policies can be assigned directly without going through Audit mode first." },
+      "b": { "text": "The policy assignment's managed identity does not have the required role to deploy the extension on VMs", "is_true": true, "explanation": "DeployIfNotExists policies use a managed identity to perform the remediation deployment. This identity must be granted the appropriate RBAC role (typically Contributor or a custom role) on the scope where it needs to deploy resources. Without this permission, the policy evaluates and marks resources as non-compliant but cannot remediate." },
+      "c": { "text": "DINE policies only run once per day at midnight — the agent will install at the next evaluation cycle", "is_true": false, "explanation": "DINE policy remediation can be triggered on-demand via remediation tasks, or automatically when a resource is created (with some latency). It is not limited to once per day." },
+      "d": { "text": "The Azure Monitor Agent is incompatible with DINE deployment — it must be installed via VM extensions directly", "is_true": false, "explanation": "The Azure Monitor Agent is commonly deployed via DINE policies. In fact, Microsoft provides built-in DINE policies for AMA deployment in Azure Policy's built-in library." }
+    },
+    "correct_answer": ["b"]
+  },
+  {
+    "question_id": 3,
+    "question_text": "A company has a site-to-site VPN between their on-premises network (10.1.0.0/16) and Azure VNet (10.2.0.0/16). The VPN shows as 'Connected' in both portals. Traffic from Azure VMs to on-premises works. Traffic from on-premises to Azure VMs fails. What should the admin investigate first?",
+    "options": {
+      "a": { "text": "The Azure VPN Gateway is missing a route for the on-premises prefix in its routing table", "is_true": false, "explanation": "If Azure VMs can reach on-premises, the Azure VPN Gateway routing is working correctly. The asymmetry (one direction works, other doesn't) points to an on-premises configuration issue." },
+      "b": { "text": "The on-premises firewall or router is not routing traffic destined for 10.2.0.0/16 to the VPN device, or the VPN device is not advertising the Azure prefix to the internal network", "is_true": true, "explanation": "Asymmetric VPN connectivity — Azure-to-on-prem works but on-prem-to-Azure fails — typically means traffic from on-premises devices destined for Azure addresses isn't reaching or returning from the VPN tunnel. Check: (1) on-prem routing table has a route for 10.2.0.0/16 pointing to the VPN device, (2) the on-premises firewall allows outbound traffic to 10.2.0.0/16, (3) the VPN device's traffic selectors include the Azure prefix." },
+      "c": { "text": "An NSG on the Azure VM's subnet is blocking inbound traffic from the on-premises range", "is_true": false, "explanation": "This is a valid secondary check but not the first thing to investigate. If NSG was the issue, Azure-initiated traffic would also be affected by return traffic rules. The asymmetric behavior (Azure→on-prem works) is the key clue pointing to on-prem routing." },
+      "d": { "text": "The VPN connection type must be changed from IKEv2 to IKEv1 for on-premises-initiated traffic to work", "is_true": false, "explanation": "IKEv1 vs IKEv2 affects tunnel establishment, not directional traffic flow. If the tunnel is up and Connected, the IKE version is negotiated successfully. This would not cause directional asymmetry." }
+    },
+    "correct_answer": ["b"]
+  },
+  {
+    "question_id": 4,
+    "question_text": "An organization uses Azure Backup for 200 VMs. A compliance requirement states that backup data must not be deletable for 3 years. An admin wants to prevent accidental or malicious deletion of backup data. Which combination of settings achieves this most effectively?",
+    "options": {
+      "a": { "text": "Enable soft delete (14-day retention) and assign the Backup Operator RBAC role to all admins", "is_true": false, "explanation": "Soft delete provides only 14 days of protection after deletion. It does not prevent deletion — it only provides a recovery window. This does not meet a 3-year immutability requirement." },
+      "b": { "text": "Enable vault immutability (locked) and configure a backup policy with 3-year retention", "is_true": true, "explanation": "Immutable vault (locked state) prevents any changes to backup policy that would reduce retention, prevents stopping backup with data deletion, and cannot be disabled once locked. Combined with a 3-year retention policy, this ensures backup data is protected for the required period against even privileged admin actions." },
+      "c": { "text": "Apply a resource lock (Delete lock) on the Recovery Services vault", "is_true": false, "explanation": "A Delete lock prevents the vault resource from being deleted, but it does NOT prevent deletion of backup data (recovery points) within the vault. Backup data can still be deleted through the vault's backup management operations even with a resource lock." },
+      "d": { "text": "Configure geo-redundant storage (GRS) on the vault to ensure backup data is in two regions", "is_true": false, "explanation": "GRS provides geographic redundancy and disaster recovery for backup data, but it does not prevent deletion. If backup data is deleted in the primary region, it is also deleted in the secondary." }
+    },
+    "correct_answer": ["b"]
+  },
+  {
+    "question_id": 5,
+    "question_text": "A Log Analytics workspace receives data from 50 VMs via the Azure Monitor Agent (AMA). An admin writes a KQL query to find VMs that haven't sent a heartbeat in over 1 hour. The query returns 5 VMs. The admin checks those VMs in the portal and they are all running and healthy. Why might these VMs be missing from the Heartbeat table?",
+    "options": {
+      "a": { "text": "The AMA agent only sends heartbeats every 2 hours — a 1-hour window is too short", "is_true": false, "explanation": "The Azure Monitor Agent sends heartbeats to the Heartbeat table every 1 minute. A 1-hour gap is 60 missed heartbeats, which definitively indicates an agent issue." },
+      "b": { "text": "The 5 VMs may have AMA installed but lack a Data Collection Rule (DCR) that sends Heartbeat data to this workspace", "is_true": true, "explanation": "AMA requires a Data Collection Rule (DCR) to define what data to collect and where to send it. Unlike the legacy MMA, AMA does not automatically send Heartbeat data unless a DCR explicitly routes it to a workspace. The VMs could have AMA installed but no DCR associating them with this specific workspace." },
+      "c": { "text": "VMs with Accelerated Networking cannot run the Azure Monitor Agent simultaneously", "is_true": false, "explanation": "Accelerated Networking is a NIC feature that improves network performance. It has no interaction with or restriction on the Azure Monitor Agent." },
+      "d": { "text": "The Heartbeat table is only populated by the legacy MMA agent, not AMA", "is_true": false, "explanation": "Both MMA and AMA write to the Heartbeat table in Log Analytics. AMA absolutely populates the Heartbeat table — but only when a DCR is configured to route data to that workspace." }
+    },
+    "correct_answer": ["b"]
+  },
+  {
+    "question_id": 6,
+    "question_text": "A company stores sensitive documents in Azure Blob Storage. A developer generates a SAS token with Read permissions for a blob container valid for 30 days. The security team discovers the SAS token was accidentally committed to a public GitHub repository. How should the admin immediately revoke access?",
+    "options": {
+      "a": { "text": "Delete the blob container to invalidate all SAS tokens that reference it", "is_true": false, "explanation": "Deleting the container would delete the data as well. This is a destructive action that destroys the data, not just the access." },
+      "b": { "text": "Rotate the storage account access key that was used to sign the SAS token", "is_true": true, "explanation": "Account SAS tokens are signed using a storage account key. When you rotate (regenerate) that key, ALL SAS tokens signed by that key are immediately invalidated — including the leaked one. This is the standard emergency response for a leaked account SAS token." },
+      "c": { "text": "Change the storage account name to invalidate all existing SAS tokens", "is_true": false, "explanation": "You cannot change a storage account's name. This is not a valid action in Azure." },
+      "d": { "text": "Set the storage account network firewall to 'No access' to block all incoming requests", "is_true": false, "explanation": "Blocking all network access would also block legitimate users and applications. Key rotation targets the specific security issue without collateral damage." }
+    },
+    "correct_answer": ["b"]
+  },
+  {
+    "question_id": 7,
+    "question_text": "An admin is troubleshooting why a VM cannot reach an on-premises DNS server through an ExpressRoute circuit. The VNet has a custom DNS server configured (the on-premises DNS at 10.0.0.10). Azure VMs get their IP via DHCP but cannot resolve internal on-premises hostnames. The ExpressRoute circuit shows as Connected. What should the admin check?",
+    "options": {
+      "a": { "text": "Whether the VNet DNS server setting (10.0.0.10) is reachable from the VNet over the ExpressRoute circuit", "is_true": true, "explanation": "When a custom DNS server IP is configured on a VNet, VMs will send DNS queries to that IP. If the on-premises DNS server at 10.0.0.10 is not reachable via ExpressRoute (due to missing route, NSG, or firewall rule), DNS queries will silently fail. Verify: (1) the 10.0.0.0/x prefix is advertised from on-prem via ExpressRoute BGP, (2) NSGs allow DNS (port 53) from the VNet to the on-prem DNS IP." },
+      "b": { "text": "Whether Azure Private DNS Zones need to be created to forward queries to on-prem", "is_true": false, "explanation": "Azure Private DNS Zones are for resolving Azure-hosted private DNS names. For forwarding to on-premises DNS, the custom DNS server on the VNet should point to an on-premises DNS resolver — or a DNS forwarder in Azure. The VNet custom DNS is already configured; the issue is reachability." },
+      "c": { "text": "Whether the ExpressRoute circuit requires Private Peering to be enabled for DNS traffic", "is_true": false, "explanation": "ExpressRoute Private Peering is what connects the on-premises network to Azure VNets. If it's configured (circuit is Connected), this is the right peering type. DNS traffic over ExpressRoute doesn't need a special configuration separate from normal VNet connectivity." },
+      "d": { "text": "Whether the VM's guest OS DNS settings override the VNet-level DNS configuration", "is_true": false, "explanation": "VNet DNS settings are delivered via DHCP and typically override any static DNS set in the guest OS (for Azure VMs using DHCP). This is unlikely to be the cause, though it's a secondary check. Reachability of the DNS server is the primary suspect." }
+    },
+    "correct_answer": ["a"]
+  },
+  {
+    "question_id": 8,
+    "question_text": "A large enterprise uses Azure Policy to enforce a 'require tag: Environment' on all resource groups. The policy is assigned with the Deny effect at the management group level. An urgent deployment to production fails because a new resource group without the tag was created by an automated pipeline. How should the admin handle the immediate incident while maintaining long-term compliance?",
+    "options": {
+      "a": { "text": "Remove the policy assignment from the management group to allow the deployment to proceed", "is_true": false, "explanation": "Removing the policy assignment affects all subscriptions under the management group, breaking compliance globally. This is too broad a change for an isolated incident." },
+      "b": { "text": "Add an exclusion (exemption) for the specific subscription or resource group to the policy assignment to allow the immediate deployment, then work with the pipeline team to add proper tagging", "is_true": true, "explanation": "Azure Policy supports exemptions at specific scopes (subscription, resource group, or individual resource). Creating a time-bounded exemption for the specific failing scope allows the urgent deployment while keeping the policy active everywhere else. The long-term fix is updating the pipeline to include the required tag." },
+      "c": { "text": "Switch the policy effect from Deny to Audit temporarily, then switch back after deployment", "is_true": false, "explanation": "Changing the policy effect impacts ALL resources under the management group, not just the failing pipeline. This is a broader change than necessary and could allow non-compliant resources to be created across the entire management group during the window." },
+      "d": { "text": "Manually add the 'Environment' tag to the resource group that was created, which will satisfy the policy retroactively", "is_true": false, "explanation": "Adding the tag after creation satisfies compliance going forward, but it doesn't explain why the resource group was created without the tag in the first place — the Deny policy should have blocked creation. This answer misunderstands the scenario: the resource group creation itself was blocked, not post-creation compliance." }
+    },
+    "correct_answer": ["b"]
+  },
+  {
+    "question_id": 9,
+    "question_text": "After a failover to Azure using Azure Site Recovery, the failed-over VMs are running but the admin cannot commit the failover. The portal shows a warning that test failover is still active. What must the admin do before committing?",
+    "options": {
+      "a": { "text": "Stop replication on the source VMs before committing the failover", "is_true": false, "explanation": "Stopping replication is part of decommissioning the source, not a prerequisite for committing the failover. The commit action marks the failover as final." },
+      "b": { "text": "Clean up the test failover VMs before performing or committing the actual failover", "is_true": true, "explanation": "Azure Site Recovery requires that any active test failover be cleaned up before you can run or commit an actual (unplanned or planned) failover. The test failover creates VMs in an isolated network; these must be explicitly cleaned up via the 'Cleanup test failover' action in the ASR portal." },
+      "c": { "text": "Re-protect the failed-over VMs to start reverse replication before committing", "is_true": false, "explanation": "Re-protect is done AFTER committing the failover to set up reverse replication for failback. It is not a prerequisite for committing." },
+      "d": { "text": "Delete the original source VMs before the failover can be committed", "is_true": false, "explanation": "The source VMs do not need to be deleted to commit a failover. In fact, for planned failovers, the source is gracefully shut down, and for unplanned failovers, the source may already be down. Deletion is a post-failover decision." }
+    },
+    "correct_answer": ["b"]
+  },
+  {
+    "question_id": 10,
+    "question_text": "A company's Azure Monitor metric alert for a web app is configured with: Signal = HTTP 5xx errors, Aggregation = Total, Period = 1 minute, Threshold = 10, Frequency = 1 minute. The alert fires multiple times per hour even though the application team says errors are rare (2-3 per event). What is wrong with this alert configuration?",
+    "options": {
+      "a": { "text": "The frequency must be longer than the aggregation period to prevent overlapping evaluations", "is_true": false, "explanation": "Having frequency equal to period (1 min each) means non-overlapping windows. This is valid. The issue is with the aggregation type and threshold." },
+      "b": { "text": "Using 'Total' aggregation over 1-minute windows for a low-volume error metric will trigger the alert even for a single burst of 10+ errors; a longer evaluation window with a higher threshold or 'Count of violations' approach would be more appropriate", "is_true": true, "explanation": "With a 1-minute Total aggregation and threshold of 10, any minute with 10 or more 5xx errors fires the alert. If the app has sporadic bursts of 10-15 errors per minute (even if rare in aggregate), this will fire frequently. Options to reduce noise: use a longer window (5 or 15 minutes), use a higher threshold, use 'Average' instead of 'Total', or configure the alert to require N of M periods to fire (sliding window alert)." },
+      "c": { "text": "HTTP 5xx metric is not available for Azure App Service — only custom metrics support 5xx tracking", "is_true": false, "explanation": "Azure App Service natively exposes Http5xx as a platform metric in Azure Monitor. No custom instrumentation is needed." },
+      "d": { "text": "The alert action group fires too frequently because email cooldown is set to 1 minute", "is_true": false, "explanation": "Action group notification suppression (cooldown) is a separate feature. The question asks about the alert firing frequency, not notification delivery. The alert condition itself is triggering too frequently." }
+    },
+    "correct_answer": ["b"]
+  },
+  {
+    "question_id": 11,
+    "question_text": "A company migrates from Azure AD Connect (legacy) to Microsoft Entra Connect Cloud Sync. After migration, some user accounts in Entra ID show a new on-premises anchor attribute that doesn't match what Entra Connect had previously set, causing duplicate user objects. What is the most likely cause?",
+    "options": {
+      "a": { "text": "Cloud Sync uses a different immutableId / sourceAnchor attribute than Entra Connect by default", "is_true": true, "explanation": "Entra Connect (legacy Azure AD Connect) defaults to using ms-DS-ConsistencyGuid or objectGUID as the sourceAnchor/immutableId. Cloud Sync may use a different attribute (or the same one but interpreted differently). If the immutableId doesn't match, Entra ID creates new cloud objects instead of matching the existing ones, resulting in duplicates. The migration must explicitly plan for sourceAnchor continuity." },
+      "b": { "text": "Cloud Sync requires all users to be deleted from Entra ID and re-synced fresh", "is_true": false, "explanation": "This would be a catastrophic data loss approach. A proper migration preserves existing Entra ID objects by ensuring the same sourceAnchor/immutableId is used by the new sync tool." },
+      "c": { "text": "Cloud Sync does not support hybrid joined users — only cloud-only users can be managed by Cloud Sync", "is_true": false, "explanation": "Entra Connect Cloud Sync does sync on-premises AD users to Entra ID for hybrid scenarios. It is a full replacement for Entra Connect for supported scenarios." },
+      "d": { "text": "The user accounts were soft-deleted in Entra ID during the migration window, causing new accounts to be created", "is_true": false, "explanation": "Soft deletion of synced accounts typically happens when they leave the sync scope. The scenario describes a migration between sync tools with the same scope, not a scope change." }
+    },
+    "correct_answer": ["a"]
+  },
+  {
+    "question_id": 12,
+    "question_text": "A VM in Azure has two NICs: NIC1 (with a public IP, subnet 10.0.1.0/24, with NSG-A) and NIC2 (no public IP, subnet 10.0.2.0/24, with NSG-B). The subnet 10.0.1.0/24 also has NSG-C applied at the subnet level. An inbound request arrives on NIC1's public IP on port 443. In what order are NSGs evaluated for this inbound request?",
+    "options": {
+      "a": { "text": "NIC NSG (NSG-A) first, then subnet NSG (NSG-C)", "is_true": false, "explanation": "For inbound traffic, Azure evaluates the subnet NSG first, then the NIC NSG. The order is reversed for inbound vs outbound." },
+      "b": { "text": "Subnet NSG (NSG-C) first, then NIC NSG (NSG-A)", "is_true": true, "explanation": "For INBOUND traffic: Azure evaluates the subnet NSG (NSG-C on 10.0.1.0/24) first. If allowed, the NIC NSG (NSG-A on NIC1) is evaluated next. Both must allow the traffic. For OUTBOUND traffic, the order reverses: NIC NSG first, then subnet NSG. NSG-B on NIC2 and its subnet NSG are irrelevant for traffic arriving on NIC1." },
+      "c": { "text": "NSG-A, then NSG-B, then NSG-C in order of NIC index", "is_true": false, "explanation": "NSG-B is on NIC2 and is completely irrelevant to traffic received on NIC1. NSGs are evaluated per traffic path (per NIC and its associated subnet)." },
+      "d": { "text": "All three NSGs (NSG-A, NSG-B, NSG-C) are evaluated in parallel and the most restrictive rule wins", "is_true": false, "explanation": "NSGs are not evaluated in parallel. Each NSG processes rules independently in priority order, and NSGs on unrelated NICs are not involved in evaluating traffic on a specific NIC's path." }
+    },
+    "correct_answer": ["b"]
+  },
+  {
+    "question_id": 13,
+    "question_text": "An admin needs to recover a single file from a backup of a Linux VM without restoring the entire VM. Which Azure Backup approach supports this, and what is a key requirement for file recovery on Linux?",
+    "options": {
+      "a": { "text": "Use the 'Replace existing VM' restore option and navigate to the file after the VM is restored", "is_true": false, "explanation": "'Replace existing VM' restores the entire VM disk, replacing the current VM. This is not file-level recovery — it overwrites the running VM." },
+      "b": { "text": "Use 'File Recovery' to download and run a recovery script on a Linux VM, which requires Python 2.7+ to mount the backup snapshot", "is_true": true, "explanation": "Azure Backup supports file-level recovery via a recovery script. For Linux, the script requires Python 2.7 or higher to execute. The script mounts the backup snapshot as a disk on the recovery VM, allowing the admin to browse and copy specific files without restoring the entire VM." },
+      "c": { "text": "Mount the Azure Backup recovery point directly as an NFS share from the Recovery Services vault", "is_true": false, "explanation": "Azure Backup does not expose recovery points as NFS shares. The file recovery mechanism uses a downloadable script that creates an iSCSI connection to a temporary staging location." },
+      "d": { "text": "Use Azure Data Box to export the recovery point to a local storage device for file browsing", "is_true": false, "explanation": "Azure Data Box is for large-scale data transfer to/from Azure, not for VM backup file recovery. It has no integration with Recovery Services vault recovery points." }
+    },
+    "correct_answer": ["b"]
+  },
+  {
+    "question_id": 14,
+    "question_text": "An admin receives an alert that a critical application VM shows 'Degraded' in Resource Health. Azure Service Health shows no service incidents in the region. The VM is responding to pings from within the VNet. What should the admin check next to distinguish a platform issue from an application issue?",
+    "options": {
+      "a": { "text": "Check the VM's Resource Health history to see if Azure has flagged a platform-level event for this specific VM", "is_true": true, "explanation": "Resource Health > History shows a timeline of health events for the specific VM. If Azure infrastructure is causing the degradation (host hardware issues, unexpected VM reboots, hardware maintenance), it will appear here. This distinguishes between 'Azure platform caused the issue' vs 'the VM is fine but the application is broken'. Service Health shows region-wide incidents; Resource Health shows per-resource platform events." },
+      "b": { "text": "Run Azure Advisor to get optimization recommendations for the VM", "is_true": false, "explanation": "Azure Advisor provides proactive best-practice recommendations (cost, security, reliability, performance). It does not provide real-time health diagnostics or explain why a VM is currently degraded." },
+      "c": { "text": "Check the VM's Activity Log for any recent 'Write' or 'Delete' operations on the VM", "is_true": false, "explanation": "Activity Log shows ARM operations (management plane events). It would show if someone stopped/started/resized the VM. However, for distinguishing platform vs application issues when the VM is already running and responding to pings, Resource Health history is more targeted." },
+      "d": { "text": "Enable boot diagnostics and capture a screenshot to see the VM console", "is_true": false, "explanation": "Boot diagnostics / serial console are useful for troubleshooting VMs that won't start or have OS-level issues. If the VM is responding to pings within the VNet, the OS is running and boot diagnostics would show a normal desktop — not helpful for diagnosing a 'Degraded' health status." }
+    },
+    "correct_answer": ["a"]
+  },
+  {
+    "question_id": 15,
+    "question_text": "A Conditional Access policy requires compliant devices for access to all cloud apps. A user with a Windows 11 laptop enrolled in Intune reports they are repeatedly prompted to register their device even though it appears in the Intune device list. Sign-in logs show the policy blocking with 'Device is not compliant'. What should the admin check?",
+    "options": {
+      "a": { "text": "Whether the user has an Entra ID P2 license which is required for device compliance CA policies", "is_true": false, "explanation": "Device compliance Conditional Access requires Entra ID P1 (not P2). P2 adds risk-based policies. P1 is sufficient for device compliance policies. The blocking would suggest the policy is working — the device may just not be compliant." },
+      "b": { "text": "Whether the device's Intune compliance status is actually 'Compliant' or if there are pending compliance policies that show the device as 'Not compliant' or 'Grace period'", "is_true": true, "explanation": "A device appearing in the Intune device list does not mean it is compliant. Entra ID evaluates the compliance status from Intune, which must be 'Compliant'. If compliance policies have requirements (e.g., BitLocker enabled, minimum OS version, password required) that aren't met, the device is 'Not compliant' in Intune, and Conditional Access blocks access. Check Intune > Devices > [Device] > Device compliance to see the status and which policies are failing." },
+      "c": { "text": "Whether the Conditional Access policy must be re-evaluated manually after device enrollment", "is_true": false, "explanation": "Conditional Access is evaluated at every sign-in attempt, not just at enrollment time. The policy is being evaluated correctly — the 'Device is not compliant' message confirms the policy is working." },
+      "d": { "text": "Whether the device is Hybrid Entra Joined instead of Entra Joined, which is incompatible with Intune compliance policies", "is_true": false, "explanation": "Hybrid Entra Joined devices can absolutely be enrolled in Intune and have compliance policies applied. The join type is not the issue — the compliance status is." }
+    },
+    "correct_answer": ["b"]
+  },
+  {
+    "question_id": 16,
+    "question_text": "An organization stores application logs in Azure Blob Storage (hot tier) with a lifecycle management policy to move blobs to cool tier after 30 days and archive tier after 90 days. Compliance requires that logs older than 7 years be automatically deleted. An admin adds a delete rule for blobs older than 2555 days (7 years). Two months after configuration, blobs older than 7 years are still present. What is the likely cause?",
+    "options": {
+      "a": { "text": "Lifecycle management cannot delete blobs in archive tier — they must be rehydrated first", "is_true": false, "explanation": "Lifecycle management policies can delete blobs directly from archive tier without rehydration. This is one of the key advantages of lifecycle management over manual operations." },
+      "b": { "text": "Lifecycle management policy rules run once per day and evaluate based on blob last-modified time; if the policy was not configured 7 years ago, no blobs have reached the threshold yet relative to 'now'", "is_true": false, "explanation": "The question states 'blobs older than 7 years are still present' — meaning blobs that ARE 7+ years old exist but aren't being deleted. This points to a configuration issue." },
+      "c": { "text": "Blob versioning or legal hold is enabled on the container, preventing deletion by lifecycle management rules", "is_true": true, "explanation": "Lifecycle management rules cannot delete blobs that are protected by legal holds or immutability policies (time-based retention policies). If the container has a legal hold applied or a time-based retention policy (WORM), the lifecycle delete action will silently fail. The blobs appear present because deletion is blocked. Additionally, if blob versioning is enabled, lifecycle management needs separate rules for current versions vs. previous versions." },
+      "d": { "text": "The delete rule must be created in a separate lifecycle policy from the tiering rules — they cannot coexist in the same policy", "is_true": false, "explanation": "Lifecycle management supports multiple rules in the same policy, and rules can target different conditions (age, last-access, last-modified). Delete rules and tier rules can absolutely coexist in the same policy." }
+    },
+    "correct_answer": ["c"]
+  },
+  {
+    "question_id": 17,
+    "question_text": "A PIM (Privileged Identity Management) eligible role assignment for Global Administrator expires while a user has an active PIM activation for the role. What happens to the user's currently active Global Administrator session?",
+    "options": {
+      "a": { "text": "The active session is immediately terminated and the user is signed out", "is_true": false, "explanation": "Azure access tokens are not immediately revoked when role eligibility expires. Token revocation has latency. However, the active PIM activation would end, and upon next token refresh or sign-in, the role would not be present." },
+      "b": { "text": "The active Global Administrator permissions remain valid until the PIM activation window expires (not when the eligibility expires), after which the user will not be able to re-activate without a new eligibility assignment", "is_true": true, "explanation": "PIM separates eligibility (the right to activate) from active access (the activated role within its time window). If the eligibility expires while the user has an active activation, the current activation window runs to completion. However, once that activation window ends, the user cannot re-activate because the eligibility is gone. They would need a new eligibility assignment to get the role again." },
+      "c": { "text": "The user is automatically re-assigned a permanent (non-PIM) Global Administrator role to avoid service disruption", "is_true": false, "explanation": "PIM does not auto-convert to permanent roles. Eligibility expiration simply means the user can no longer activate the role — there is no automatic fallback to a permanent assignment." },
+      "d": { "text": "The user retains Global Administrator permanently because the active role supersedes PIM eligibility rules", "is_true": false, "explanation": "PIM activations are time-bound. Once the activation window ends (e.g., 8 hours), the role is removed regardless of eligibility status. Active PIM roles do not become permanent." }
+    },
+    "correct_answer": ["b"]
+  },
+  {
+    "question_id": 18,
+    "question_text": "A company runs a multi-tier application: web tier in subnet A, app tier in subnet B, data tier in subnet C. The security team wants to ensure the web tier can only communicate with the app tier on port 8080, and the app tier can only communicate with the data tier on port 1433. Which NSG configuration achieves this with the least administrative overhead?",
+    "options": {
+      "a": { "text": "Create NSGs with rules using explicit IP ranges for each subnet as source/destination", "is_true": false, "explanation": "Using explicit IP ranges works but creates brittle rules that break if subnets are resized or IPs change. It also increases administrative overhead compared to service tags or ASGs." },
+      "b": { "text": "Use Application Security Groups (ASGs) to tag VMs by tier and create NSG rules referencing ASGs as source and destination instead of IP addresses", "is_true": true, "explanation": "Application Security Groups (ASGs) let you group VMs by role (e.g., WebTier, AppTier, DataTier) and reference those groups in NSG rules. This decouples NSG rules from specific IPs: 'Allow WebTier to AppTier on 8080' and 'Allow AppTier to DataTier on 1433'. When VMs are added or IPs change, you update the ASG membership rather than rewriting NSG rules. This provides the least administrative overhead." },
+      "c": { "text": "Use VNet peering with gateway transit to isolate each tier in separate VNets", "is_true": false, "explanation": "Separating tiers into different VNets adds significant architectural complexity and doesn't simplify NSG management. Subnets within a single VNet with NSGs is the standard tiered application pattern." },
+      "d": { "text": "Apply Azure Policy to enforce that VMs in each subnet can only communicate on specified ports", "is_true": false, "explanation": "Azure Policy enforces configuration compliance and can deploy NSG rules, but it is not itself the mechanism for defining network allow/deny rules at runtime. NSGs with ASGs are the correct network enforcement tool." }
+    },
+    "correct_answer": ["b"]
+  },
+  {
+    "question_id": 19,
+    "question_text": "An organization deploys Azure Load Balancer (Standard SKU) with a backend pool of 5 VMs. After a planned maintenance window, 2 of the 5 VMs are replaced with new VMs. The load balancer health probes show the 2 new VMs as unhealthy, even though the application is running and listening on the correct port. The 2 new VMs respond to pings. What should the admin check?",
+    "options": {
+      "a": { "text": "Whether the new VMs have been added to the load balancer's backend pool", "is_true": false, "explanation": "If the VMs appear in the health probe status as 'unhealthy', they are in the backend pool — otherwise they wouldn't appear in the probe results at all." },
+      "b": { "text": "Whether an NSG on the new VMs' subnet or NIC blocks the Azure Load Balancer health probe source (168.63.129.16) or the AzureLoadBalancer service tag on the probed port", "is_true": true, "explanation": "Standard Load Balancer health probes originate from IP 168.63.129.16 (Azure's platform IP). NSG rules must explicitly allow inbound traffic from the AzureLoadBalancer service tag on the health probe port. The 2 replacement VMs may have a more restrictive NSG than the original VMs — one that doesn't include this allow rule. The fact that pings succeed confirms the VM OS is up, not that the NSG is correct." },
+      "c": { "text": "Whether the load balancer needs to be recreated after replacing backend pool VMs", "is_true": false, "explanation": "Load balancer backend pools are dynamically managed — VMs can be added, removed, or replaced without recreating the load balancer. No recreation is needed." },
+      "d": { "text": "Whether the new VMs need to have the load balancer's frontend IP configured as a loopback alias in the OS", "is_true": false, "explanation": "This was a requirement with Azure Classic load balancers (VIP on loopback). With Azure Resource Manager (ARM) load balancers (Standard and Basic SKU), no loopback IP configuration is needed in the guest OS." }
+    },
+    "correct_answer": ["b"]
+  },
+  {
+    "question_id": 20,
+    "question_text": "An admin is diagnosing why object replication between two storage accounts (source in East US, destination in West US) is not working. Object replication was enabled 3 days ago but no blobs appear in the destination container. Both storage accounts are StorageV2. What should the admin verify? (Select TWO)",
+    "options": {
+      "a": { "text": "Blob versioning must be enabled on BOTH the source and destination storage accounts for object replication to function", "is_true": true, "explanation": "Object replication requires blob versioning to be enabled on both the source and destination storage accounts. Versioning tracks the state of each blob version, which is how replication determines what to copy. Without versioning on both accounts, object replication cannot be configured or will silently fail." },
+      "b": { "text": "The destination storage account must be in the same Azure region as the source for object replication", "is_true": false, "explanation": "Object replication is designed for cross-region scenarios. The whole point is asynchronous replication between regions. Same-region is also supported but is not a requirement." },
+      "c": { "text": "Change feed must be enabled on the SOURCE storage account so that replication can track which blobs have changed", "is_true": true, "explanation": "Object replication requires change feed to be enabled on the source storage account. Change feed maintains a transaction log of all changes to blobs (creates, updates, deletes). Without change feed on the source, the replication service cannot determine which blobs to replicate." },
+      "d": { "text": "The replication policy must be re-created every 24 hours to remain active", "is_true": false, "explanation": "Object replication policies are persistent once created. They do not expire or require periodic recreation. A policy runs continuously until it is explicitly deleted." }
+    },
+    "correct_answer": ["a", "c"]
+  }
+]

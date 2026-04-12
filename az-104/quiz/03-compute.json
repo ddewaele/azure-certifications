@@ -1,0 +1,610 @@
+{
+  "meta": {
+    "title": "AZ-104 – Compute Resources",
+    "subject": "Azure Administration",
+    "version": "1.0.0",
+    "created": "2026-03-24"
+  },
+  "questions": [
+    {
+      "question_id": 1,
+      "question_text": "A company deploys two VMs in an Availability Set. The Availability Set is configured with 2 fault domains and 5 update domains. What does the fault domain configuration protect against?",
+      "difficulty": "medium",
+      "topic": "Virtual Machines",
+      "tags": ["vm", "availability-set", "az-104"],
+      "options": {
+        "a": {
+          "text": "Regional datacenter failure",
+          "is_true": false,
+          "explanation": "Incorrect. Availability Sets protect within a single datacenter — they do not protect against datacenter or zone-level failures. Use Availability Zones for that."
+        },
+        "b": {
+          "text": "Planned maintenance reboots",
+          "is_true": false,
+          "explanation": "Incorrect. Update domains protect against planned maintenance reboots — fault domains protect against hardware failures."
+        },
+        "c": {
+          "text": "Physical rack, power, and network hardware failures",
+          "is_true": true,
+          "explanation": "Correct. Fault domains separate VMs onto different physical racks with independent power supplies and network switches. This ensures a hardware failure on one rack does not affect VMs on another fault domain."
+        },
+        "d": {
+          "text": "Azure zone-level outages",
+          "is_true": false,
+          "explanation": "Incorrect. Availability Zones (not Availability Sets) protect against zone-level (datacenter-level) failures."
+        }
+      },
+      "correct_answer": ["c"]
+    },
+    {
+      "question_id": 2,
+      "question_text": "Which VM disk type provides the highest IOPS performance and is suitable for mission-critical I/O-intensive workloads?",
+      "difficulty": "medium",
+      "topic": "Virtual Machines",
+      "tags": ["vm", "disks", "az-104"],
+      "options": {
+        "a": {
+          "text": "Standard HDD",
+          "is_true": false,
+          "explanation": "Incorrect. Standard HDD provides up to 500 IOPS — suitable for dev/test but not mission-critical high-IOPS workloads."
+        },
+        "b": {
+          "text": "Standard SSD",
+          "is_true": false,
+          "explanation": "Incorrect. Standard SSD provides up to 6,000 IOPS — better than HDD but not the highest available."
+        },
+        "c": {
+          "text": "Premium SSD",
+          "is_true": false,
+          "explanation": "Incorrect. Premium SSD provides up to 20,000 IOPS — very good for production but not the absolute maximum."
+        },
+        "d": {
+          "text": "Ultra Disk",
+          "is_true": true,
+          "explanation": "Correct. Ultra Disk provides up to 160,000 IOPS and sub-millisecond latency — designed for mission-critical, I/O-intensive workloads like SAP HANA, top-tier databases, and transaction-heavy applications."
+        }
+      },
+      "correct_answer": ["d"]
+    },
+    {
+      "question_id": 3,
+      "question_text": "A company needs Azure App Service deployment slots. What is the minimum App Service plan tier that supports deployment slots?",
+      "difficulty": "medium",
+      "topic": "App Service",
+      "tags": ["app-service", "deployment-slots", "az-104"],
+      "options": {
+        "a": {
+          "text": "Free (F1)",
+          "is_true": false,
+          "explanation": "Incorrect. Free tier does not support deployment slots."
+        },
+        "b": {
+          "text": "Basic (B1)",
+          "is_true": false,
+          "explanation": "Incorrect. Basic tier does not support deployment slots."
+        },
+        "c": {
+          "text": "Standard (S1)",
+          "is_true": true,
+          "explanation": "Correct. Deployment slots are available from the Standard tier and above. Standard allows up to 5 slots; Premium allows up to 20 slots."
+        },
+        "d": {
+          "text": "Isolated (I1)",
+          "is_true": false,
+          "explanation": "Incorrect. Isolated does support slots, but it is not the minimum tier — Standard is the minimum."
+        }
+      },
+      "correct_answer": ["c"]
+    },
+    {
+      "question_id": 4,
+      "question_text": "During a deployment slot swap between staging and production in Azure App Service, which settings do NOT get swapped (remain with the slot)?",
+      "difficulty": "medium",
+      "topic": "App Service",
+      "tags": ["app-service", "deployment-slots", "az-104"],
+      "options": {
+        "a": {
+          "text": "Application settings marked as deployment slot settings (sticky)",
+          "is_true": true,
+          "explanation": "Correct. Settings marked as 'Deployment slot setting' (also called 'sticky' settings) stay with the slot and are not swapped. This is commonly used for connection strings or settings that differ between production and staging environments."
+        },
+        "b": {
+          "text": "Application code and content",
+          "is_true": false,
+          "explanation": "Incorrect. Application code and content ARE swapped — this is the primary purpose of slot swaps."
+        },
+        "c": {
+          "text": "Custom domain settings",
+          "is_true": false,
+          "explanation": "Incorrect. Custom domain bindings stay with the slot name by design (production slot keeps its domain), but they are a separate concept from sticky settings."
+        },
+        "d": {
+          "text": "Handler mappings",
+          "is_true": false,
+          "explanation": "Incorrect. Handler mappings are part of the site configuration and ARE swapped during a slot swap."
+        }
+      },
+      "correct_answer": ["a"]
+    },
+    {
+      "question_id": 5,
+      "question_text": "An administrator needs to deploy Azure Bastion to allow browser-based RDP access to VMs in a VNet. What is a required prerequisite?",
+      "difficulty": "medium",
+      "topic": "Virtual Machines",
+      "tags": ["bastion", "vm", "networking", "az-104"],
+      "options": {
+        "a": {
+          "text": "The VMs must have public IP addresses",
+          "is_true": false,
+          "explanation": "Incorrect. The purpose of Bastion is to eliminate the need for public IPs on VMs."
+        },
+        "b": {
+          "text": "A subnet named AzureBastionSubnet with a minimum /26 prefix must exist in the VNet",
+          "is_true": true,
+          "explanation": "Correct. Azure Bastion requires a dedicated subnet named exactly 'AzureBastionSubnet' with a minimum prefix length of /26. The subnet must be in the same VNet as the target VMs."
+        },
+        "c": {
+          "text": "The VMs must be running Windows Server 2019 or later",
+          "is_true": false,
+          "explanation": "Incorrect. Azure Bastion supports both Windows and Linux VMs — the OS version does not determine Bastion eligibility."
+        },
+        "d": {
+          "text": "The VMs must be in an Availability Set",
+          "is_true": false,
+          "explanation": "Incorrect. Bastion connectivity has no dependency on Availability Sets."
+        }
+      },
+      "correct_answer": ["b"]
+    },
+    {
+      "question_id": 6,
+      "question_text": "Which Azure container service requires NO cluster management, supports Dapr integration, and provides KEDA-based autoscaling including scale-to-zero?",
+      "difficulty": "medium",
+      "topic": "Containers",
+      "tags": ["container-apps", "aca", "az-104"],
+      "options": {
+        "a": {
+          "text": "Azure Container Instances (ACI)",
+          "is_true": false,
+          "explanation": "Incorrect. ACI is serverless but does not provide autoscale, Dapr, or KEDA capabilities."
+        },
+        "b": {
+          "text": "Azure Kubernetes Service (AKS)",
+          "is_true": false,
+          "explanation": "Incorrect. AKS can use KEDA and Dapr but requires cluster management (node pools, upgrades, etc.)."
+        },
+        "c": {
+          "text": "Azure Container Apps (ACA)",
+          "is_true": true,
+          "explanation": "Correct. Azure Container Apps is a serverless container platform with built-in Dapr support, KEDA-based autoscaling (including scale-to-zero), and no cluster or node management required."
+        },
+        "d": {
+          "text": "Azure Container Registry (ACR)",
+          "is_true": false,
+          "explanation": "Incorrect. ACR is a private container image registry — it does not run containers."
+        }
+      },
+      "correct_answer": ["c"]
+    },
+    {
+      "question_id": 7,
+      "question_text": "A Virtual Machine Scale Set (VMSS) is configured for autoscaling. The scale-out rule triggers when average CPU exceeds 75% for 5 minutes. After scaling out, what prevents the VMSS from immediately scaling back in?",
+      "difficulty": "medium",
+      "topic": "Virtual Machines",
+      "tags": ["vmss", "autoscale", "az-104"],
+      "options": {
+        "a": {
+          "text": "The minimum instance count setting",
+          "is_true": false,
+          "explanation": "Incorrect. The minimum instance count prevents the count from dropping below a threshold, but the question asks about what prevents immediate scale-in after a scale-out."
+        },
+        "b": {
+          "text": "The cooldown period",
+          "is_true": true,
+          "explanation": "Correct. After a scale-out event, the cooldown period (default 5 minutes) prevents additional autoscale actions from triggering immediately. This prevents rapid oscillation ('flapping') between scale-out and scale-in."
+        },
+        "c": {
+          "text": "The maximum instance count setting",
+          "is_true": false,
+          "explanation": "Incorrect. The maximum instance count limits how many instances can be added — it does not prevent scale-in."
+        },
+        "d": {
+          "text": "The update domain configuration",
+          "is_true": false,
+          "explanation": "Incorrect. Update domains relate to planned maintenance rolling updates — they do not control autoscale timing."
+        }
+      },
+      "correct_answer": ["b"]
+    },
+    {
+      "question_id": 8,
+      "question_text": "An administrator wants to run a custom script on a Linux VM immediately after deployment to install software. Which approach is most appropriate?",
+      "difficulty": "medium",
+      "topic": "Virtual Machines",
+      "tags": ["vm", "extensions", "custom-script", "az-104"],
+      "options": {
+        "a": {
+          "text": "Use Azure Bastion to SSH in and run the script manually",
+          "is_true": false,
+          "explanation": "Incorrect. This is a manual approach that does not scale and cannot be automated as part of deployment."
+        },
+        "b": {
+          "text": "Apply the Custom Script Extension to the VM",
+          "is_true": true,
+          "explanation": "Correct. The Custom Script Extension allows you to run shell scripts or commands on a VM after deployment — directly from an ARM template, Azure CLI, or the portal. It is the standard automated approach for post-deployment configuration."
+        },
+        "c": {
+          "text": "Redeploy the VM with a different OS image",
+          "is_true": false,
+          "explanation": "Incorrect. Redeploying with a different image does not run custom scripts — it replaces the OS."
+        },
+        "d": {
+          "text": "Configure the VM boot diagnostics",
+          "is_true": false,
+          "explanation": "Incorrect. Boot diagnostics provides console output and screenshots for troubleshooting — it cannot run scripts."
+        }
+      },
+      "correct_answer": ["b"]
+    },
+    {
+      "question_id": 9,
+      "question_text": "A company deploys VMs in Availability Zone 1 and Zone 2 in the East US region. What is the SLA for these VMs?",
+      "difficulty": "medium",
+      "topic": "Virtual Machines",
+      "tags": ["vm", "availability-zones", "sla", "az-104"],
+      "options": {
+        "a": {
+          "text": "99.9%",
+          "is_true": false,
+          "explanation": "Incorrect. 99.9% applies to single VMs using Premium SSD storage with no redundancy."
+        },
+        "b": {
+          "text": "99.95%",
+          "is_true": false,
+          "explanation": "Incorrect. 99.95% is the SLA for VMs in an Availability Set."
+        },
+        "c": {
+          "text": "99.99%",
+          "is_true": true,
+          "explanation": "Correct. VMs deployed across two or more Availability Zones provide a 99.99% SLA because the zones are physically separate datacenters within the region."
+        },
+        "d": {
+          "text": "100%",
+          "is_true": false,
+          "explanation": "Incorrect. No Azure service provides a 100% SLA."
+        }
+      },
+      "correct_answer": ["c"]
+    },
+    {
+      "question_id": 10,
+      "question_text": "When moving a VM to a different region using Azure Resource Mover, which of the following is true?",
+      "difficulty": "medium",
+      "topic": "Virtual Machines",
+      "tags": ["vm", "move", "az-104"],
+      "options": {
+        "a": {
+          "text": "The VM is moved in place with no data copies",
+          "is_true": false,
+          "explanation": "Incorrect. A region move creates new resources in the target region — the existing resources are not physically relocated."
+        },
+        "b": {
+          "text": "New resources are created in the target region and the original resources can then be deleted",
+          "is_true": true,
+          "explanation": "Correct. Azure Resource Mover creates equivalent new resources in the target region (new VM, new disks, new NIC, etc.). The original resources remain until you commit the move and choose to delete them."
+        },
+        "c": {
+          "text": "RBAC role assignments are automatically transferred to the new region",
+          "is_true": false,
+          "explanation": "Incorrect. RBAC assignments on the original resources do not automatically apply to the new resources in the target region — they must be reconfigured."
+        },
+        "d": {
+          "text": "The VM can be moved while it is in a running state without any downtime",
+          "is_true": false,
+          "explanation": "Incorrect. A cross-region move involves creating new resources and typically requires downtime or careful coordination to avoid data inconsistency."
+        }
+      },
+      "correct_answer": ["b"]
+    },
+    {
+      "question_id": 11,
+      "question_text": "Which App Service feature allows you to route a percentage of live traffic to a non-production slot for A/B testing?",
+      "difficulty": "medium",
+      "topic": "App Service",
+      "tags": ["app-service", "deployment-slots", "traffic-splitting", "az-104"],
+      "options": {
+        "a": {
+          "text": "Auto-healing",
+          "is_true": false,
+          "explanation": "Incorrect. Auto-healing automatically restarts the app when certain conditions are met — it is not related to traffic distribution."
+        },
+        "b": {
+          "text": "Traffic routing (percentage traffic)",
+          "is_true": true,
+          "explanation": "Correct. App Service allows you to send a specific percentage of traffic to a non-production slot while the rest goes to production. This enables A/B testing and gradual rollouts without a full swap."
+        },
+        "c": {
+          "text": "WebJobs",
+          "is_true": false,
+          "explanation": "Incorrect. WebJobs run background tasks within App Service — they do not control traffic distribution between slots."
+        },
+        "d": {
+          "text": "Azure Application Gateway",
+          "is_true": false,
+          "explanation": "Incorrect. Application Gateway can do URL-based routing but it is a separate service. The question is about the built-in App Service traffic splitting feature."
+        }
+      },
+      "correct_answer": ["b"]
+    },
+    {
+      "question_id": 12,
+      "question_text": "Which Azure Container Registry (ACR) SKU supports geo-replication to multiple Azure regions?",
+      "difficulty": "medium",
+      "topic": "Containers",
+      "tags": ["acr", "containers", "az-104"],
+      "options": {
+        "a": {
+          "text": "Basic",
+          "is_true": false,
+          "explanation": "Incorrect. Basic ACR is designed for development — it does not support geo-replication."
+        },
+        "b": {
+          "text": "Standard",
+          "is_true": false,
+          "explanation": "Incorrect. Standard ACR is for production workloads but does not include geo-replication."
+        },
+        "c": {
+          "text": "Premium",
+          "is_true": true,
+          "explanation": "Correct. Premium ACR supports geo-replication, private link, content trust (image signing), and higher throughput. Geo-replication is a Premium-only feature that allows pulling images from a local registry replica."
+        },
+        "d": {
+          "text": "All SKUs support geo-replication",
+          "is_true": false,
+          "explanation": "Incorrect. Only the Premium SKU supports geo-replication."
+        }
+      },
+      "correct_answer": ["c"]
+    },
+    {
+      "question_id": 13,
+      "question_text": "An administrator needs to enable 'Encryption at host' for Azure VMs to encrypt the temp disk and VM cache. What must be done first?",
+      "difficulty": "medium",
+      "topic": "Virtual Machines",
+      "tags": ["vm", "encryption", "security", "az-104"],
+      "options": {
+        "a": {
+          "text": "Create an Azure Key Vault",
+          "is_true": false,
+          "explanation": "Incorrect. Azure Key Vault is required for Azure Disk Encryption (ADE), not for Encryption at host."
+        },
+        "b": {
+          "text": "Register the EncryptionAtHost feature flag at the subscription level",
+          "is_true": true,
+          "explanation": "Correct. Encryption at host must be explicitly enabled at the subscription level using: az feature register --namespace Microsoft.Compute --name EncryptionAtHost. After registration, you can enable it when creating or updating VMs."
+        },
+        "c": {
+          "text": "Upgrade the VM to a Premium SSD disk",
+          "is_true": false,
+          "explanation": "Incorrect. Encryption at host works with all disk types — Premium SSD is not a requirement."
+        },
+        "d": {
+          "text": "Stop and deallocate the VM",
+          "is_true": false,
+          "explanation": "Incorrect. While enabling encryption at host on an existing VM may require deallocation, registering the feature flag at the subscription level is the first step — not deallocating a specific VM."
+        }
+      },
+      "correct_answer": ["b"]
+    },
+    {
+      "question_id": 14,
+      "question_text": "A Bicep file is compiled and deployed. What does it compile to before Azure processes the deployment?",
+      "difficulty": "medium",
+      "topic": "ARM Templates",
+      "tags": ["bicep", "arm", "iac", "az-104"],
+      "options": {
+        "a": {
+          "text": "Terraform configuration",
+          "is_true": false,
+          "explanation": "Incorrect. Bicep is Azure-specific — it does not compile to Terraform."
+        },
+        "b": {
+          "text": "Azure Resource Manager (ARM) JSON template",
+          "is_true": true,
+          "explanation": "Correct. Bicep is a domain-specific language that transpiles (compiles) to an ARM JSON template. Azure's deployment engine only understands ARM JSON — Bicep is a more readable, concise authoring experience on top of ARM."
+        },
+        "c": {
+          "text": "Azure CLI commands",
+          "is_true": false,
+          "explanation": "Incorrect. Bicep compiles to ARM JSON, not CLI commands."
+        },
+        "d": {
+          "text": "Kubernetes manifest YAML",
+          "is_true": false,
+          "explanation": "Incorrect. Bicep is for Azure resource deployments — it has nothing to do with Kubernetes YAML."
+        }
+      },
+      "correct_answer": ["b"]
+    },
+    {
+      "question_id": 15,
+      "question_text": "A burstable (B-series) VM has accumulated CPU credits over a quiet period. What happens when a CPU-intensive workload runs?",
+      "difficulty": "medium",
+      "topic": "Virtual Machines",
+      "tags": ["vm", "b-series", "burstable", "az-104"],
+      "options": {
+        "a": {
+          "text": "The VM is throttled immediately to the baseline CPU performance",
+          "is_true": false,
+          "explanation": "Incorrect. Throttling only happens when credits are exhausted — accumulated credits allow bursting above baseline."
+        },
+        "b": {
+          "text": "The VM spends accumulated CPU credits to burst above the baseline",
+          "is_true": true,
+          "explanation": "Correct. Burstable B-series VMs accumulate CPU credits when running below their baseline. During CPU-intensive workloads, they spend these credits to burst above the baseline CPU percentage. This makes them cost-effective for variable workloads."
+        },
+        "c": {
+          "text": "The VM automatically upgrades to a larger size",
+          "is_true": false,
+          "explanation": "Incorrect. VMs do not auto-resize — only VMSS autoscale adds or removes instances."
+        },
+        "d": {
+          "text": "The VM migrates to a dedicated host for better performance",
+          "is_true": false,
+          "explanation": "Incorrect. B-series VMs do not migrate to dedicated hosts automatically."
+        }
+      },
+      "correct_answer": ["b"]
+    },
+    {
+      "question_id": 16,
+      "question_text": "Which VMSS orchestration mode allows mixing different VM sizes and configurations within the same scale set?",
+      "difficulty": "medium",
+      "topic": "Virtual Machines",
+      "tags": ["vmss", "orchestration", "az-104"],
+      "options": {
+        "a": {
+          "text": "Uniform orchestration",
+          "is_true": false,
+          "explanation": "Incorrect. Uniform orchestration uses identical VMs from a single VM profile — no mixing of types or configurations."
+        },
+        "b": {
+          "text": "Flexible orchestration",
+          "is_true": true,
+          "explanation": "Correct. Flexible orchestration allows mixing different VM types, sizes, and configurations within the same scale set. It also supports zone spreading and individual VM management."
+        },
+        "c": {
+          "text": "Dynamic orchestration",
+          "is_true": false,
+          "explanation": "Incorrect. 'Dynamic orchestration' is not a VMSS orchestration mode — the two modes are Uniform and Flexible."
+        },
+        "d": {
+          "text": "Heterogeneous orchestration",
+          "is_true": false,
+          "explanation": "Incorrect. This is not a real VMSS orchestration mode name."
+        }
+      },
+      "correct_answer": ["b"]
+    },
+    {
+      "question_id": 17,
+      "question_text": "What is the primary difference between Azure Container Instances (ACI) and Azure Container Apps (ACA)?",
+      "difficulty": "medium",
+      "topic": "Containers",
+      "tags": ["aci", "aca", "containers", "az-104"],
+      "options": {
+        "a": {
+          "text": "ACI supports Kubernetes APIs while ACA does not",
+          "is_true": false,
+          "explanation": "Incorrect. Neither ACI nor ACA exposes Kubernetes APIs — that is AKS."
+        },
+        "b": {
+          "text": "ACI is for simple, short-lived workloads; ACA is for microservices with autoscale and event-driven scaling",
+          "is_true": true,
+          "explanation": "Correct. ACI is a simple serverless container hosting service suitable for quick tasks, CI/CD jobs, and short-lived workloads. ACA provides Dapr, KEDA autoscaling, revision management, and traffic splitting — designed for production microservice architectures."
+        },
+        "c": {
+          "text": "ACA requires a Kubernetes cluster while ACI does not",
+          "is_true": false,
+          "explanation": "Incorrect. Both ACI and ACA are serverless — neither requires a Kubernetes cluster managed by the customer."
+        },
+        "d": {
+          "text": "ACI supports persistent volumes while ACA does not",
+          "is_true": false,
+          "explanation": "Incorrect. ACA does support persistent storage; and ACI also supports some storage options. This is not the primary distinction."
+        }
+      },
+      "correct_answer": ["b"]
+    },
+    {
+      "question_id": 18,
+      "question_text": "An App Service plan is in the Standard tier. An administrator wants to scale out to handle increased load during business hours. Which scaling approach should they configure?",
+      "difficulty": "medium",
+      "topic": "App Service",
+      "tags": ["app-service", "autoscale", "az-104"],
+      "options": {
+        "a": {
+          "text": "Scale up to a larger App Service plan SKU",
+          "is_true": false,
+          "explanation": "Incorrect. Scaling up (vertical scaling) means upgrading to a larger plan size — it increases resources per instance. The question asks about handling load during specific hours, which suggests horizontal scaling."
+        },
+        "b": {
+          "text": "Configure autoscale rules with schedule-based and metric-based triggers",
+          "is_true": true,
+          "explanation": "Correct. Standard tier and above support autoscale. You can configure schedule-based rules (add instances during business hours) and metric-based rules (add instances when CPU exceeds a threshold) for optimal cost and performance."
+        },
+        "c": {
+          "text": "Move the App Service plan to the Isolated tier",
+          "is_true": false,
+          "explanation": "Incorrect. Isolated tier provides dedicated environment isolation — it is not required for autoscale, which is already available in Standard."
+        },
+        "d": {
+          "text": "Deploy additional App Service plans in different regions",
+          "is_true": false,
+          "explanation": "Incorrect. Deploying to multiple regions is for geo-distribution, not for scaling within the same region."
+        }
+      },
+      "correct_answer": ["b"]
+    },
+    {
+      "question_id": 19,
+      "question_text": "An administrator exports an ARM template from an existing resource group. What can they use this exported template for?",
+      "difficulty": "medium",
+      "topic": "ARM Templates",
+      "tags": ["arm", "iac", "az-104"],
+      "options": {
+        "a": {
+          "text": "Only as documentation — exported templates cannot be redeployed",
+          "is_true": false,
+          "explanation": "Incorrect. Exported ARM templates can be used to redeploy the same configuration to a new resource group or region."
+        },
+        "b": {
+          "text": "To redeploy the same infrastructure in a new resource group, subscription, or region",
+          "is_true": true,
+          "explanation": "Correct. Exported ARM templates capture the configuration of existing resources and can be parameterised and redeployed to create identical infrastructure in other resource groups, subscriptions, or regions. This is a key IaC scenario."
+        },
+        "c": {
+          "text": "Only to restore deleted resources",
+          "is_true": false,
+          "explanation": "Incorrect. ARM templates are for deploying and redeploying resources — resource restore uses backup and recovery services."
+        },
+        "d": {
+          "text": "To audit compliance against Azure Policy",
+          "is_true": false,
+          "explanation": "Incorrect. Azure Policy compliance is evaluated against live resources — not ARM templates."
+        }
+      },
+      "correct_answer": ["b"]
+    },
+    {
+      "question_id": 20,
+      "question_text": "A company wants to ensure that VM-level disk and host caches are encrypted in addition to the managed disks. Which feature provides this additional encryption layer?",
+      "difficulty": "medium",
+      "topic": "Virtual Machines",
+      "tags": ["vm", "encryption", "az-104"],
+      "options": {
+        "a": {
+          "text": "Azure Disk Encryption (ADE)",
+          "is_true": false,
+          "explanation": "Incorrect. ADE encrypts at the OS/volume level using BitLocker (Windows) or DM-Crypt (Linux) — it does not encrypt the host-level temp disk and VM cache."
+        },
+        "b": {
+          "text": "Server-side encryption with customer-managed keys",
+          "is_true": false,
+          "explanation": "Incorrect. SSE with CMK encrypts the managed disk at rest in Azure storage — it does not cover the host-level temp disk and VM cache."
+        },
+        "c": {
+          "text": "Encryption at host",
+          "is_true": true,
+          "explanation": "Correct. Encryption at host encrypts all data at the VM host level, including the temp disk and VM cache. Combined with managed disk encryption, it provides end-to-end encryption from the VM to Azure storage."
+        },
+        "d": {
+          "text": "Azure Security Center disk hardening",
+          "is_true": false,
+          "explanation": "Incorrect. Azure Security Center (now Microsoft Defender for Cloud) provides recommendations — it is not an encryption mechanism."
+        }
+      },
+      "correct_answer": ["c"]
+    }
+  ]
+}
