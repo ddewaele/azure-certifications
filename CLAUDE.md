@@ -4,7 +4,7 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 ## Project Overview
 
-Azure certification study repository with interactive CLI quizzes. Covers AZ-900, AI-900, AI-102, and AB-900 certifications. No external dependencies — pure Node.js + filesystem.
+Azure certification study repository with interactive CLI quizzes. Covers AZ-900, AZ-104, AI-900, AI-102, and AB-900 certifications. No external dependencies — pure Node.js + filesystem.
 
 ## Commands
 
@@ -14,6 +14,7 @@ node cli/cli.js <path-to-quiz-folder>
 
 # Examples
 node cli/cli.js az-900/quiz
+node cli/cli.js az-104/quiz
 node cli/cli.js ai-900/quiz
 node cli/cli.js ai-102/quiz
 node cli/cli.js ab-900/quiz
@@ -31,6 +32,7 @@ The repo is organized around **certifications**, each in its own top-level folde
 | Folder | Certification | Level |
 |--------|--------------|-------|
 | `az-900/` | Azure Fundamentals | Foundational |
+| `az-104/` | Azure Administrator Associate | Associate |
 | `ai-900/` | Azure AI Fundamentals | Foundational |
 | `ai-102/` | Azure AI Engineer Associate | Associate |
 | `ab-900/` | M365 Copilot & Agent Administration Fundamentals | Foundational |
