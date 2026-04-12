@@ -1,0 +1,610 @@
+{
+  "meta": {
+    "title": "Entra ID Fundamentals – Architecture, Tenants & AD DS Comparison",
+    "subject": "Microsoft Entra ID",
+    "version": "1.0.0",
+    "created": "2026-03-27"
+  },
+  "questions": [
+    {
+      "question_id": 1,
+      "question_text": "Microsoft Entra ID is classified as which type of cloud service model?",
+      "difficulty": "easy",
+      "topic": "Entra ID Architecture",
+      "tags": ["entra-id", "paas", "service-model"],
+      "options": {
+        "a": {
+          "text": "Infrastructure as a Service (IaaS)",
+          "is_true": false,
+          "explanation": "Incorrect. IaaS provides virtual machines and networking that the customer must manage. Entra ID is fully managed by Microsoft."
+        },
+        "b": {
+          "text": "Platform as a Service (PaaS)",
+          "is_true": true,
+          "explanation": "Correct. Entra ID is a PaaS offering. Microsoft manages all underlying infrastructure — customers configure and use the service but do not deploy or patch domain controllers."
+        },
+        "c": {
+          "text": "Software as a Service (SaaS)",
+          "is_true": false,
+          "explanation": "Incorrect. SaaS delivers end-user applications (like Outlook or Teams). Entra ID is a platform-level identity service, not a finished end-user application."
+        },
+        "d": {
+          "text": "Directory as a Service (DaaS)",
+          "is_true": false,
+          "explanation": "Incorrect. While 'Directory as a Service' is a descriptive term sometimes used in marketing, it is not the official cloud service model classification. PaaS is the correct answer."
+        }
+      },
+      "correct_answer": ["b"]
+    },
+    {
+      "question_id": 2,
+      "question_text": "Which protocol does Active Directory Domain Services (AD DS) use for authentication?",
+      "difficulty": "easy",
+      "topic": "AD DS vs Entra ID",
+      "tags": ["ad-ds", "kerberos", "authentication"],
+      "options": {
+        "a": {
+          "text": "OAuth 2.0",
+          "is_true": false,
+          "explanation": "Incorrect. OAuth 2.0 is used by Entra ID for authorization, not by AD DS."
+        },
+        "b": {
+          "text": "SAML",
+          "is_true": false,
+          "explanation": "Incorrect. SAML is used by Entra ID for authentication federation, not by traditional AD DS."
+        },
+        "c": {
+          "text": "Kerberos",
+          "is_true": true,
+          "explanation": "Correct. AD DS primarily uses the Kerberos protocol for authentication within a domain. Entra ID, by contrast, uses SAML, WS-Federation, and OpenID Connect."
+        },
+        "d": {
+          "text": "OpenID Connect",
+          "is_true": false,
+          "explanation": "Incorrect. OpenID Connect is a modern authentication protocol used by Entra ID and cloud applications, not by AD DS."
+        }
+      },
+      "correct_answer": ["c"]
+    },
+    {
+      "question_id": 3,
+      "question_text": "What protocol is used to query Microsoft Entra ID?",
+      "difficulty": "easy",
+      "topic": "AD DS vs Entra ID",
+      "tags": ["entra-id", "rest-api", "ldap"],
+      "options": {
+        "a": {
+          "text": "LDAP over port 389",
+          "is_true": false,
+          "explanation": "Incorrect. LDAP is used to query AD DS, not Entra ID. Entra ID does not expose an LDAP interface."
+        },
+        "b": {
+          "text": "REST API over HTTP/HTTPS",
+          "is_true": true,
+          "explanation": "Correct. Entra ID is queried using REST APIs (Microsoft Graph API) over HTTP/HTTPS. This is fundamentally different from AD DS which uses LDAP."
+        },
+        "c": {
+          "text": "SNMP",
+          "is_true": false,
+          "explanation": "Incorrect. SNMP is a network monitoring protocol and has no role in directory queries."
+        },
+        "d": {
+          "text": "Kerberos ticket requests",
+          "is_true": false,
+          "explanation": "Incorrect. Kerberos is AD DS's authentication protocol, not a query mechanism for Entra ID."
+        }
+      },
+      "correct_answer": ["b"]
+    },
+    {
+      "question_id": 4,
+      "question_text": "When you create a new Azure subscription using a Microsoft account, what is the default domain name assigned to the automatically created Entra ID tenant?",
+      "difficulty": "easy",
+      "topic": "Entra ID Tenants",
+      "tags": ["entra-id", "tenant", "domain"],
+      "options": {
+        "a": {
+          "text": "<prefix>.azure.com",
+          "is_true": false,
+          "explanation": "Incorrect. azure.com is the Azure portal domain, not a tenant default domain suffix."
+        },
+        "b": {
+          "text": "<prefix>.microsoft.com",
+          "is_true": false,
+          "explanation": "Incorrect. microsoft.com is reserved for Microsoft's own tenant and is not assigned to new subscriptions."
+        },
+        "c": {
+          "text": "<prefix>.onmicrosoft.com",
+          "is_true": true,
+          "explanation": "Correct. Every new Entra ID tenant is assigned a default DNS domain in the format <prefix>.onmicrosoft.com. Custom domains can be added later."
+        },
+        "d": {
+          "text": "<prefix>.azuread.net",
+          "is_true": false,
+          "explanation": "Incorrect. azuread.net is not the default suffix for Entra tenants."
+        }
+      },
+      "correct_answer": ["c"]
+    },
+    {
+      "question_id": 5,
+      "question_text": "What is the relationship between an Azure subscription and a Microsoft Entra ID tenant?",
+      "difficulty": "medium",
+      "topic": "Entra ID Tenants",
+      "tags": ["tenant", "subscription", "trust"],
+      "options": {
+        "a": {
+          "text": "One tenant can be associated with only one subscription",
+          "is_true": false,
+          "explanation": "Incorrect. A single Entra ID tenant can back multiple Azure subscriptions, allowing the same users and groups to manage resources across all of them."
+        },
+        "b": {
+          "text": "One subscription can be associated with multiple Entra tenants simultaneously",
+          "is_true": false,
+          "explanation": "Incorrect. At any given time, a subscription is associated with exactly one Entra tenant. The association can be changed, but only one tenant can be active at a time."
+        },
+        "c": {
+          "text": "A subscription must be associated with exactly one Entra tenant, but one tenant can back multiple subscriptions",
+          "is_true": true,
+          "explanation": "Correct. An Azure subscription is always linked to exactly one Entra ID tenant (its identity provider for RBAC). However, the same tenant can serve as the identity provider for many subscriptions."
+        },
+        "d": {
+          "text": "Subscriptions and tenants are completely independent with no required association",
+          "is_true": false,
+          "explanation": "Incorrect. Every Azure subscription must trust exactly one Entra ID tenant to authenticate users and manage access."
+        }
+      },
+      "correct_answer": ["c"]
+    },
+    {
+      "question_id": 6,
+      "question_text": "Entra ID does not support Organizational Units (OUs). What should an administrator use instead to apply settings or policies to specific groups of users?",
+      "difficulty": "medium",
+      "topic": "AD DS vs Entra ID",
+      "tags": ["ous", "group-policy", "entra-id", "intune"],
+      "options": {
+        "a": {
+          "text": "Group Policy Objects (GPOs) assigned to departments",
+          "is_true": false,
+          "explanation": "Incorrect. GPOs are an AD DS concept and are not available in Entra ID. Even Entra Domain Services has only limited GPO support."
+        },
+        "b": {
+          "text": "Security groups combined with Conditional Access policies and Microsoft Intune",
+          "is_true": true,
+          "explanation": "Correct. Without OUs, Entra ID uses security group membership to scope policies. Conditional Access controls sign-in conditions, and Intune handles device configuration — together they replace traditional OU-based GPO management."
+        },
+        "c": {
+          "text": "Nested management groups within the subscription",
+          "is_true": false,
+          "explanation": "Incorrect. Management groups are for organising subscriptions and applying governance at scale — they do not replace OUs for user or device policy scoping."
+        },
+        "d": {
+          "text": "Azure Policy assigned at the resource group level",
+          "is_true": false,
+          "explanation": "Incorrect. Azure Policy governs Azure resources (VMs, storage, etc.), not user identity settings or device configurations."
+        }
+      },
+      "correct_answer": ["b"]
+    },
+    {
+      "question_id": 7,
+      "question_text": "In Microsoft Entra ID, what is the difference between an Application object and a ServicePrincipal object?",
+      "difficulty": "medium",
+      "topic": "Entra ID Architecture",
+      "tags": ["application", "service-principal", "multi-tenant"],
+      "options": {
+        "a": {
+          "text": "They are interchangeable terms for the same object",
+          "is_true": false,
+          "explanation": "Incorrect. They are distinct object types with different purposes in Entra ID."
+        },
+        "b": {
+          "text": "An Application object is the definition; a ServicePrincipal is the per-tenant instance of that app",
+          "is_true": true,
+          "explanation": "Correct. The Application object holds the app definition (registered once, typically in the app owner's tenant). A ServicePrincipal is created in each tenant where the app is used — it is the runtime instance of the application in that specific tenant."
+        },
+        "c": {
+          "text": "A ServicePrincipal is the definition; an Application object is the per-tenant instance",
+          "is_true": false,
+          "explanation": "Incorrect. It is the other way around. The Application class holds the definition; the ServicePrincipal class holds the tenant-specific instance."
+        },
+        "d": {
+          "text": "Application objects are only used in on-premises AD DS; ServicePrincipals are cloud-only",
+          "is_true": false,
+          "explanation": "Incorrect. Both object types exist exclusively in Entra ID and are used to represent cloud and integrated applications."
+        }
+      },
+      "correct_answer": ["b"]
+    },
+    {
+      "question_id": 8,
+      "question_text": "A company deploys Active Directory Domain Services on an Azure virtual machine. Which statement is true about this deployment?",
+      "difficulty": "easy",
+      "topic": "AD DS vs Entra ID",
+      "tags": ["ad-ds", "azure-vm", "entra-id"],
+      "options": {
+        "a": {
+          "text": "This is functionally equivalent to using Microsoft Entra ID",
+          "is_true": false,
+          "explanation": "Incorrect. Running AD DS on an Azure VM is a traditional IaaS deployment — the customer manages the OS, patches, and replication. It is not equivalent to the managed Entra ID PaaS service."
+        },
+        "b": {
+          "text": "This deployment automatically integrates with the Azure subscription's Entra ID tenant",
+          "is_true": false,
+          "explanation": "Incorrect. Deploying AD DS on an Azure VM does not automatically integrate with or make use of the subscription's Entra ID tenant."
+        },
+        "c": {
+          "text": "This is an IaaS deployment; the customer manages the domain controllers and replication",
+          "is_true": true,
+          "explanation": "Correct. AD DS on an Azure VM is an IaaS pattern. The customer is responsible for the OS, domain controller software, patching, and AD replication — none of which are managed by Microsoft."
+        },
+        "d": {
+          "text": "Microsoft manages the domain controllers so the customer only handles user management",
+          "is_true": false,
+          "explanation": "Incorrect. With AD DS on IaaS VMs, Microsoft only provides the underlying compute/storage. All domain controller management is the customer's responsibility."
+        }
+      },
+      "correct_answer": ["c"]
+    },
+    {
+      "question_id": 9,
+      "question_text": "Which statement correctly describes the multi-tenant nature of Microsoft Entra ID?",
+      "difficulty": "medium",
+      "topic": "Entra ID Tenants",
+      "tags": ["multi-tenant", "isolation", "tenant"],
+      "options": {
+        "a": {
+          "text": "All organisations share a single Entra ID directory with no isolation between them",
+          "is_true": false,
+          "explanation": "Incorrect. Entra ID tenants are completely isolated from one another. Different organisations cannot see each other's users or data."
+        },
+        "b": {
+          "text": "Each Entra ID tenant is a fully isolated directory instance; one tenant cannot see another's data by default",
+          "is_true": true,
+          "explanation": "Correct. Entra ID is multi-tenant by design with strict data isolation between instances. Each tenant is a separate, isolated directory — one of millions hosted globally. Cross-tenant access is possible only through explicit mechanisms like B2B collaboration."
+        },
+        "c": {
+          "text": "Multi-tenant means one organisation can create only one tenant across all their subscriptions",
+          "is_true": false,
+          "explanation": "Incorrect. An organisation can create multiple tenants (e.g., for testing or separate divisions), and a single tenant can support multiple subscriptions."
+        },
+        "d": {
+          "text": "Multi-tenancy requires the Entra ID P2 license",
+          "is_true": false,
+          "explanation": "Incorrect. Multi-tenancy is an architectural characteristic of Entra ID at all license tiers, including the Free tier."
+        }
+      },
+      "correct_answer": ["b"]
+    },
+    {
+      "question_id": 10,
+      "question_text": "Which authorization protocol does Microsoft Entra ID use?",
+      "difficulty": "medium",
+      "topic": "AD DS vs Entra ID",
+      "tags": ["oauth", "authorization", "entra-id"],
+      "options": {
+        "a": {
+          "text": "Kerberos",
+          "is_true": false,
+          "explanation": "Incorrect. Kerberos is used for authorization/authentication in AD DS environments, not in Entra ID."
+        },
+        "b": {
+          "text": "RADIUS",
+          "is_true": false,
+          "explanation": "Incorrect. RADIUS is a network access authentication protocol, not Entra ID's authorization framework."
+        },
+        "c": {
+          "text": "OAuth 2.0",
+          "is_true": true,
+          "explanation": "Correct. Entra ID uses OAuth 2.0 for authorization. For authentication, it uses OpenID Connect, SAML, and WS-Federation."
+        },
+        "d": {
+          "text": "NTLM",
+          "is_true": false,
+          "explanation": "Incorrect. NTLM is a legacy Windows authentication protocol used in AD DS environments and partially supported in Entra Domain Services, but it is not Entra ID's authorization protocol."
+        }
+      },
+      "correct_answer": ["c"]
+    },
+    {
+      "question_id": 11,
+      "question_text": "How does the schema of Microsoft Entra ID differ from Active Directory Domain Services with respect to computers?",
+      "difficulty": "medium",
+      "topic": "AD DS vs Entra ID",
+      "tags": ["schema", "device", "computer-object"],
+      "options": {
+        "a": {
+          "text": "Entra ID supports traditional computer objects just like AD DS",
+          "is_true": false,
+          "explanation": "Incorrect. Entra ID does not have a 'computer' class as defined in AD DS."
+        },
+        "b": {
+          "text": "Entra ID has no concept of computers or devices at all",
+          "is_true": false,
+          "explanation": "Incorrect. Entra ID does support devices — but through the 'device' class, not through the traditional AD DS 'computer' class."
+        },
+        "c": {
+          "text": "Entra ID uses a 'device' class instead of the 'computer' class; joining is managed differently",
+          "is_true": true,
+          "explanation": "Correct. Entra ID's schema includes a 'device' class rather than the 'computer' class used in AD DS. The process of joining devices to Entra ID (Entra join or Entra registration) differs considerably from traditional domain joining."
+        },
+        "d": {
+          "text": "Entra ID uses the same computer class but requires the Entra ID P1 license to activate it",
+          "is_true": false,
+          "explanation": "Incorrect. The difference is architectural (different class), not a licensing limitation."
+        }
+      },
+      "correct_answer": ["c"]
+    },
+    {
+      "question_id": 12,
+      "question_text": "A developer registers an application in their company's Entra ID tenant and then shares it with partner organisations. What is created in each partner tenant to represent this application?",
+      "difficulty": "medium",
+      "topic": "Entra ID Architecture",
+      "tags": ["service-principal", "app-registration", "multi-tenant"],
+      "options": {
+        "a": {
+          "text": "A new Application object is replicated into each partner tenant",
+          "is_true": false,
+          "explanation": "Incorrect. The Application object (definition) stays in the home tenant. Partner tenants receive a ServicePrincipal object, not a replica of the Application object."
+        },
+        "b": {
+          "text": "A ServicePrincipal object is created in each partner tenant",
+          "is_true": true,
+          "explanation": "Correct. When an application is consented to or used in a tenant other than its home tenant, Entra ID creates a ServicePrincipal object in that tenant. The ServicePrincipal is the per-tenant instance of the application."
+        },
+        "c": {
+          "text": "A Managed Identity is assigned to each partner tenant",
+          "is_true": false,
+          "explanation": "Incorrect. Managed Identities are for Azure resources (VMs, functions, etc.) to authenticate to other services — not for representing app registrations in external tenants."
+        },
+        "d": {
+          "text": "An Enterprise Application is manually created by the partner admin from scratch",
+          "is_true": false,
+          "explanation": "Incorrect. While Enterprise Applications appear in the portal, the underlying Entra ID object created automatically when the app is consented to is a ServicePrincipal."
+        }
+      },
+      "correct_answer": ["b"]
+    },
+    {
+      "question_id": 13,
+      "question_text": "Which of the following is a characteristic of AD DS that does NOT apply to Microsoft Entra ID?",
+      "difficulty": "medium",
+      "topic": "AD DS vs Entra ID",
+      "tags": ["ad-ds", "entra-id", "comparison"],
+      "options": {
+        "a": {
+          "text": "Uses DNS for locating resources such as domain controllers",
+          "is_true": false,
+          "explanation": "Incorrect. While DNS-based service location (SRV records) is indeed a characteristic of AD DS, Entra ID also uses DNS — for custom domain verification and tenant routing. This is not a feature unique to AD DS that is absent from Entra ID."
+        },
+        "b": {
+          "text": "Uses a hierarchical X.500-based directory structure",
+          "is_true": true,
+          "explanation": "Correct. AD DS uses a hierarchical X.500-based structure with domains, OUs, and trees. Entra ID uses a flat structure with no OUs or hierarchical containers."
+        },
+        "c": {
+          "text": "Can federate with third-party identity providers",
+          "is_true": false,
+          "explanation": "Incorrect. Entra ID supports federation with many third-party identity providers. This is an Entra ID characteristic, not exclusive to AD DS."
+        },
+        "d": {
+          "text": "Stores user credentials",
+          "is_true": false,
+          "explanation": "Incorrect. Both AD DS and Entra ID store user credentials. This is not a distinguishing characteristic."
+        }
+      },
+      "correct_answer": ["b"]
+    },
+    {
+      "question_id": 14,
+      "question_text": "An organisation wants to restrict access to their Azure App Service web app so only users in their Entra ID tenant can sign in. Where in the Azure portal do they configure this?",
+      "difficulty": "medium",
+      "topic": "Entra ID as Cloud App Directory",
+      "tags": ["app-service", "authentication", "entra-id"],
+      "options": {
+        "a": {
+          "text": "The App Service's Networking blade",
+          "is_true": false,
+          "explanation": "Incorrect. The Networking blade controls IP restrictions and virtual network integration, not identity-based authentication."
+        },
+        "b": {
+          "text": "The App Service's Authentication/Authorization blade",
+          "is_true": true,
+          "explanation": "Correct. Azure App Service has a built-in Authentication/Authorization blade (Easy Auth) where you can configure Entra ID as the identity provider. This restricts access to users in the designated tenant without writing any authentication code."
+        },
+        "c": {
+          "text": "The Entra ID Conditional Access blade",
+          "is_true": false,
+          "explanation": "Incorrect. Conditional Access can supplement this but the initial App Service authentication provider configuration is done in the App Service's own Authentication blade."
+        },
+        "d": {
+          "text": "The Azure Firewall policy rules",
+          "is_true": false,
+          "explanation": "Incorrect. Azure Firewall operates at the network layer — it does not provide identity-based authentication for applications."
+        }
+      },
+      "correct_answer": ["b"]
+    },
+    {
+      "question_id": 15,
+      "question_text": "An administrator wants to enable single sign-on for their users across Microsoft 365, Azure, Dynamics 365, and Intune. What is the most practical approach?",
+      "difficulty": "medium",
+      "topic": "Entra ID as Cloud App Directory",
+      "tags": ["sso", "m365", "entra-id"],
+      "options": {
+        "a": {
+          "text": "Create a separate Entra ID tenant for each cloud service",
+          "is_true": false,
+          "explanation": "Incorrect. Separate tenants would create identity silos, requiring users to manage multiple credentials — the opposite of SSO."
+        },
+        "b": {
+          "text": "Use one shared Entra ID tenant as the identity provider for all services",
+          "is_true": true,
+          "explanation": "Correct. All Microsoft cloud services can share a single Entra ID tenant, enabling SSO across M365, Azure, Dynamics 365, Intune, and third-party apps — all with one identity."
+        },
+        "c": {
+          "text": "Deploy an on-premises ADFS server and federate all services to it",
+          "is_true": false,
+          "explanation": "Incorrect. While ADFS federation is possible, it is unnecessary complexity for modern cloud deployments and does not offer the same breadth of integration as native Entra ID."
+        },
+        "d": {
+          "text": "Purchase Entra ID P2 for all users — SSO across services is a P2-only feature",
+          "is_true": false,
+          "explanation": "Incorrect. SSO with Microsoft cloud services is available in the Free tier of Entra ID, not exclusively in P2."
+        }
+      },
+      "correct_answer": ["b"]
+    },
+    {
+      "question_id": 16,
+      "question_text": "Which AD DS feature used primarily for managing group policy scope does Entra ID NOT support?",
+      "difficulty": "easy",
+      "topic": "AD DS vs Entra ID",
+      "tags": ["ou", "gpo", "ad-ds"],
+      "options": {
+        "a": {
+          "text": "Security groups",
+          "is_true": false,
+          "explanation": "Incorrect. Entra ID fully supports security groups."
+        },
+        "b": {
+          "text": "Organizational Units (OUs)",
+          "is_true": true,
+          "explanation": "Correct. Entra ID does not include the Organizational Unit (OU) class. OUs in AD DS are primarily used for GPO scoping and delegation — neither of which applies in the same way in Entra ID."
+        },
+        "c": {
+          "text": "User accounts",
+          "is_true": false,
+          "explanation": "Incorrect. Entra ID fully supports user accounts — they are a fundamental object type."
+        },
+        "d": {
+          "text": "Application registrations",
+          "is_true": false,
+          "explanation": "Incorrect. Application registrations are a core feature of Entra ID."
+        }
+      },
+      "correct_answer": ["b"]
+    },
+    {
+      "question_id": 17,
+      "question_text": "What is the name automatically given to the Entra ID tenant created when you create a new Azure subscription?",
+      "difficulty": "easy",
+      "topic": "Entra ID Tenants",
+      "tags": ["tenant", "default-directory"],
+      "options": {
+        "a": {
+          "text": "Azure Tenant",
+          "is_true": false,
+          "explanation": "Incorrect. 'Azure Tenant' is not the default name given to the auto-created directory."
+        },
+        "b": {
+          "text": "Default Directory",
+          "is_true": true,
+          "explanation": "Correct. By default, when you create a new Azure subscription using a Microsoft account, the system automatically creates a new Entra ID tenant named 'Default Directory'."
+        },
+        "c": {
+          "text": "Primary Tenant",
+          "is_true": false,
+          "explanation": "Incorrect. 'Primary Tenant' is not the default naming convention."
+        },
+        "d": {
+          "text": "Root Directory",
+          "is_true": false,
+          "explanation": "Incorrect. 'Root Directory' is not the default name. 'Default Directory' is correct."
+        }
+      },
+      "correct_answer": ["b"]
+    },
+    {
+      "question_id": 18,
+      "question_text": "Which protocols does Microsoft Entra ID use for authentication? Select all that apply.",
+      "difficulty": "medium",
+      "topic": "AD DS vs Entra ID",
+      "tags": ["saml", "openid-connect", "ws-federation", "authentication"],
+      "options": {
+        "a": {
+          "text": "SAML",
+          "is_true": true,
+          "explanation": "Correct. SAML (Security Assertion Markup Language) is one of the authentication protocols supported by Entra ID, widely used for enterprise SSO with older SaaS applications."
+        },
+        "b": {
+          "text": "WS-Federation",
+          "is_true": true,
+          "explanation": "Correct. WS-Federation is supported by Entra ID for authentication, particularly with Microsoft services and legacy ADFS integrations."
+        },
+        "c": {
+          "text": "OpenID Connect",
+          "is_true": true,
+          "explanation": "Correct. OpenID Connect (OIDC) is a modern authentication protocol built on OAuth 2.0, widely used by Entra ID for application authentication."
+        },
+        "d": {
+          "text": "Kerberos",
+          "is_true": false,
+          "explanation": "Incorrect. Kerberos is AD DS's authentication protocol and is not used by Entra ID (though it is supported in Entra Domain Services for legacy app compatibility)."
+        }
+      },
+      "correct_answer": ["a", "b", "c"]
+    },
+    {
+      "question_id": 19,
+      "question_text": "A company wants to test Entra ID features without affecting their production tenant. What can they do?",
+      "difficulty": "medium",
+      "topic": "Entra ID Tenants",
+      "tags": ["tenant", "testing", "multiple-tenants"],
+      "options": {
+        "a": {
+          "text": "Create a separate resource group in the same tenant for testing",
+          "is_true": false,
+          "explanation": "Incorrect. Resource groups isolate Azure resources, not identity configurations. Entra ID settings are tenant-wide."
+        },
+        "b": {
+          "text": "Create a separate Entra ID tenant from the Azure portal for testing",
+          "is_true": true,
+          "explanation": "Correct. You can create additional Entra ID tenants from the Azure portal — they are independent of any subscription. A test tenant is completely isolated from the production tenant, so changes in one have no effect on the other."
+        },
+        "c": {
+          "text": "Use a different management group to isolate Entra ID settings",
+          "is_true": false,
+          "explanation": "Incorrect. Management groups organise subscriptions for governance but do not create separate Entra ID tenants."
+        },
+        "d": {
+          "text": "Entra ID cannot be tested without impacting the production environment",
+          "is_true": false,
+          "explanation": "Incorrect. Creating a second tenant is the standard approach for testing Entra ID features in isolation."
+        }
+      },
+      "correct_answer": ["b"]
+    },
+    {
+      "question_id": 20,
+      "question_text": "Which statement about the Entra ID schema extensibility is correct?",
+      "difficulty": "medium",
+      "topic": "Entra ID Architecture",
+      "tags": ["schema", "extensibility"],
+      "options": {
+        "a": {
+          "text": "The Entra ID schema cannot be extended in any way",
+          "is_true": false,
+          "explanation": "Incorrect. The Entra ID schema can be extended — it is more flexible than AD DS in this regard."
+        },
+        "b": {
+          "text": "Schema extensions in Entra ID are complex to implement and require Microsoft support",
+          "is_true": false,
+          "explanation": "Incorrect. This describes AD DS schema extensions, which are complex and risky. Entra ID extensions are easy and reversible."
+        },
+        "c": {
+          "text": "The Entra ID schema is easily extensible and extensions are fully reversible",
+          "is_true": true,
+          "explanation": "Correct. Unlike AD DS where schema extensions are permanent and complex, Entra ID's schema is designed to be easily extensible and extensions are fully reversible — making custom attributes safe to experiment with."
+        },
+        "d": {
+          "text": "Schema extensions in Entra ID require an AD DS forest at the same level",
+          "is_true": false,
+          "explanation": "Incorrect. Entra ID schema extensions are cloud-native and have no dependency on AD DS."
+        }
+      },
+      "correct_answer": ["c"]
+    }
+  ]
+}

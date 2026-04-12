@@ -1,0 +1,611 @@
+{
+  "meta": {
+    "title": "Entra ID – Hard: Troubleshooting, Edge Cases & Conflict Resolution",
+    "subject": "Microsoft Entra ID",
+    "difficulty": "hard",
+    "version": "1.0.0",
+    "created": "2026-03-28"
+  },
+  "questions": [
+    {
+      "question_id": 1,
+      "question_text": "An admin changes a user's on-premises password. The user immediately tries to sign in to a cloud app using the new password with PHS enabled. The sign-in fails but succeeds with the old password. Why?",
+      "difficulty": "hard",
+      "topic": "Hybrid Identity",
+      "tags": ["phs", "sync-delay", "password-change"],
+      "options": {
+        "a": {
+          "text": "PHS has not yet synced the new password hash — there is a propagation delay of about 2 minutes",
+          "is_true": true,
+          "explanation": "Correct. PHS processes password changes within approximately 2 minutes through a dedicated password sync cycle. During this brief window, the old password hash is still in Entra ID. The user should wait a moment and retry."
+        },
+        "b": {
+          "text": "PHS does not sync password changes — only the initial password is synced",
+          "is_true": false,
+          "explanation": "Incorrect. PHS continuously syncs password changes from on-premises AD to Entra ID."
+        },
+        "c": {
+          "text": "The user must reset the password through SSPR for the cloud to be updated",
+          "is_true": false,
+          "explanation": "Incorrect. On-premises password changes are automatically synced via PHS — SSPR is not required."
+        },
+        "d": {
+          "text": "An admin must trigger a manual sync from the Entra Connect server",
+          "is_true": false,
+          "explanation": "Incorrect. Password changes are synced automatically — manual sync is not needed for password hash updates."
+        }
+      },
+      "correct_answer": ["a"]
+    },
+    {
+      "question_id": 2,
+      "question_text": "A user is a member of Group A (assigned the Reader role on Subscription X) and Group B (assigned the Contributor role on Subscription X). The user also has a personal deny assignment (created by Azure Blueprints) that blocks Microsoft.Storage/storageAccounts/delete on Subscription X. Can the user delete a storage account?",
+      "difficulty": "hard",
+      "topic": "RBAC",
+      "tags": ["deny-assignment", "effective-permissions", "rbac"],
+      "options": {
+        "a": {
+          "text": "Yes — Contributor includes delete permissions and RBAC is additive",
+          "is_true": false,
+          "explanation": "Incorrect. Deny assignments take precedence over all role assignments, including Owner."
+        },
+        "b": {
+          "text": "No — the deny assignment blocks the delete action regardless of the user's role assignments",
+          "is_true": true,
+          "explanation": "Correct. The RBAC evaluation order is: deny assignments are evaluated first and always win. Even though the user has Contributor (which includes storage delete), the deny assignment explicitly blocks Microsoft.Storage/storageAccounts/delete. The user cannot delete storage accounts."
+        },
+        "c": {
+          "text": "Yes — deny assignments only apply to the Owner role",
+          "is_true": false,
+          "explanation": "Incorrect. Deny assignments apply to all principals — they are not limited to specific roles."
+        },
+        "d": {
+          "text": "Yes — the user can request an exemption from the deny assignment",
+          "is_true": false,
+          "explanation": "Incorrect. Deny assignments created by Blueprints cannot be overridden by user requests. They must be removed by modifying the Blueprint assignment."
+        }
+      },
+      "correct_answer": ["b"]
+    },
+    {
+      "question_id": 3,
+      "question_text": "An admin creates a dynamic group rule: (user.department -eq \"Sales\"). The group shows 50 members. The admin then changes it to (user.department -eq \"Sales\") -or (user.department -eq \"Marketing\"). How long might it take for the membership to update?",
+      "difficulty": "hard",
+      "topic": "Dynamic Groups",
+      "tags": ["dynamic-groups", "processing-time", "membership-update"],
+      "options": {
+        "a": {
+          "text": "Immediately — dynamic group membership updates are instant",
+          "is_true": false,
+          "explanation": "Incorrect. Dynamic group rule changes trigger a re-evaluation of all users, which takes time depending on tenant size."
+        },
+        "b": {
+          "text": "Up to 24 hours for large tenants; rule changes trigger a full re-evaluation of all users against the new rule",
+          "is_true": true,
+          "explanation": "Correct. When a dynamic group rule is modified, Entra ID must re-evaluate every user in the directory against the new rule. For large tenants this can take several hours, up to 24 hours in some cases. During this time the group membership is in a 'processing' state."
+        },
+        "c": {
+          "text": "Exactly 30 minutes — matching the Entra Connect sync cycle",
+          "is_true": false,
+          "explanation": "Incorrect. Dynamic group processing is independent of Entra Connect sync cycles. It depends on the directory size and Entra ID's processing capacity."
+        },
+        "d": {
+          "text": "The rule change is blocked until the current membership is manually cleared",
+          "is_true": false,
+          "explanation": "Incorrect. Rule changes are applied immediately — re-evaluation begins automatically. No manual clearing is needed."
+        }
+      },
+      "correct_answer": ["b"]
+    },
+    {
+      "question_id": 4,
+      "question_text": "A company uses PTA with Entra Connect. The on-premises AD account lockout policy locks a user after 5 failed attempts. The user attempts to sign in to a cloud app 5 times with the wrong password. Is the on-premises account locked?",
+      "difficulty": "hard",
+      "topic": "Authentication Methods",
+      "tags": ["pta", "account-lockout", "brute-force"],
+      "options": {
+        "a": {
+          "text": "No — PTA does not trigger on-premises lockout policies because the failed attempts are in the cloud",
+          "is_true": false,
+          "explanation": "Incorrect. With PTA, every cloud sign-in attempt is forwarded to the on-premises AD for validation."
+        },
+        "b": {
+          "text": "Yes — PTA forwards each authentication attempt to on-premises AD, and 5 failed attempts trigger the lockout policy",
+          "is_true": true,
+          "explanation": "Correct. PTA validates every sign-in against on-premises AD. Failed cloud sign-in attempts count toward the on-premises lockout threshold. This means cloud brute-force attacks can lock out on-premises accounts — a security consideration when using PTA. Smart Lockout in Entra ID can help mitigate this."
+        },
+        "c": {
+          "text": "Only if the user also attempts on-premises sign-in — cloud and on-premises counters are separate",
+          "is_true": false,
+          "explanation": "Incorrect. With PTA, cloud authentication requests are forwarded to on-premises AD, so they count toward the same lockout counter."
+        },
+        "d": {
+          "text": "The account is locked only in the cloud — on-premises AD is not affected by PTA failures",
+          "is_true": false,
+          "explanation": "Incorrect. PTA explicitly validates against on-premises AD, so the on-premises lockout policy is triggered."
+        }
+      },
+      "correct_answer": ["b"]
+    },
+    {
+      "question_id": 5,
+      "question_text": "A Conditional Access policy requires MFA for 'All cloud apps' and targets 'All users'. The policy has no exclusions. What critical risk does this create?",
+      "difficulty": "hard",
+      "topic": "Conditional Access",
+      "tags": ["conditional-access", "lockout-risk", "best-practice"],
+      "options": {
+        "a": {
+          "text": "No risk — MFA for all users on all apps is the gold standard",
+          "is_true": false,
+          "explanation": "Incorrect. While MFA everywhere is desirable, having no exclusions creates a lockout risk."
+        },
+        "b": {
+          "text": "If MFA is unavailable (service outage or all admin MFA devices are lost), all users including admins are locked out with no recovery path",
+          "is_true": true,
+          "explanation": "Correct. Without break glass accounts excluded from the policy, an MFA service outage or lost authenticator devices would lock out every user — including Global Administrators. Microsoft recommends always excluding at least 2 break glass accounts from MFA policies."
+        },
+        "c": {
+          "text": "Performance degradation — too many MFA prompts slow down Entra ID",
+          "is_true": false,
+          "explanation": "Incorrect. Entra ID is designed to handle MFA at scale. The risk is lockout, not performance."
+        },
+        "d": {
+          "text": "Guest users will be unable to sign in because they don't have MFA configured",
+          "is_true": false,
+          "explanation": "Incorrect. While guest MFA access is a consideration, the critical risk is total admin lockout."
+        }
+      },
+      "correct_answer": ["b"]
+    },
+    {
+      "question_id": 6,
+      "question_text": "An admin assigns a group-based license (M365 E5) to a security group. Some users in the group show 'Error' status for license assignment. The error message says 'Conflicting service plans'. What does this mean?",
+      "difficulty": "hard",
+      "topic": "Licensing",
+      "tags": ["group-licensing", "service-plan-conflict"],
+      "options": {
+        "a": {
+          "text": "The users already have a directly assigned license that includes conflicting service plans (e.g., duplicate Exchange Online plans from two different licenses)",
+          "is_true": true,
+          "explanation": "Correct. When a user has a directly assigned license with service plans that overlap with the group-based license, a conflict occurs. For example, if a user has M365 E3 (direct) and M365 E5 (group-based), both include Exchange Online Plan 2 — creating a conflict. Resolve by removing the direct assignment or disabling overlapping service plans."
+        },
+        "b": {
+          "text": "The group has too many members for the license pool",
+          "is_true": false,
+          "explanation": "Incorrect. Insufficient licenses show a different error ('Not enough licenses'). 'Conflicting service plans' specifically means overlapping plans."
+        },
+        "c": {
+          "text": "The users are in multiple groups that each assign the same license",
+          "is_true": false,
+          "explanation": "Incorrect. Assigning the same license via multiple groups does not create a conflict — Entra ID handles deduplication. Conflicts arise from different licenses with overlapping service plans."
+        },
+        "d": {
+          "text": "The users are guest accounts and cannot receive M365 licenses",
+          "is_true": false,
+          "explanation": "Incorrect. Guest accounts can receive licenses. The error specifically indicates service plan conflicts."
+        }
+      },
+      "correct_answer": ["a"]
+    },
+    {
+      "question_id": 7,
+      "question_text": "An Entra Connect sync fails with error 'Export to Azure AD failed: InvalidSoftMatch'. What typically causes this error?",
+      "difficulty": "hard",
+      "topic": "Entra Connect",
+      "tags": ["entra-connect", "sync-error", "soft-match"],
+      "options": {
+        "a": {
+          "text": "A cloud-only user exists with the same UPN or ProxyAddress as the on-premises user being synced, and Entra Connect cannot match them",
+          "is_true": true,
+          "explanation": "Correct. Entra Connect uses 'soft matching' to link on-premises objects with existing cloud objects using UPN or primary SMTP address. If there is a mismatch or ambiguity (e.g., same UPN but different immutableId), the sync fails with InvalidSoftMatch. Resolution: delete or modify the conflicting cloud object, or manually match them."
+        },
+        "b": {
+          "text": "The Entra Connect server ran out of disk space",
+          "is_true": false,
+          "explanation": "Incorrect. Disk space issues produce different errors, not InvalidSoftMatch."
+        },
+        "c": {
+          "text": "The Entra ID P1 license expired",
+          "is_true": false,
+          "explanation": "Incorrect. Licensing issues do not produce InvalidSoftMatch errors."
+        },
+        "d": {
+          "text": "The on-premises user's password does not meet cloud password complexity requirements",
+          "is_true": false,
+          "explanation": "Incorrect. Password issues cause password sync errors, not InvalidSoftMatch."
+        }
+      },
+      "correct_answer": ["a"]
+    },
+    {
+      "question_id": 8,
+      "question_text": "A ReadOnly resource lock is placed on a resource group. An admin tries to add a new tag to the resource group. What happens?",
+      "difficulty": "hard",
+      "topic": "Resource Locks",
+      "tags": ["resource-lock", "readonly", "tags"],
+      "options": {
+        "a": {
+          "text": "The tag is added successfully — tags are metadata and not affected by ReadOnly locks",
+          "is_true": false,
+          "explanation": "Incorrect. Adding or modifying tags is a write operation. ReadOnly locks block all write operations."
+        },
+        "b": {
+          "text": "The operation fails — ReadOnly locks block all write operations, including tag modifications",
+          "is_true": true,
+          "explanation": "Correct. ReadOnly locks prevent any modifications to the resource (or resource group), including adding, changing, or removing tags. The admin must remove the lock first, make the change, then reapply the lock."
+        },
+        "c": {
+          "text": "The tag is added to the resource group but not inherited by its resources",
+          "is_true": false,
+          "explanation": "Incorrect. The operation is blocked entirely by the lock — no tag is added."
+        },
+        "d": {
+          "text": "Only the Owner role can modify tags when a ReadOnly lock is in place",
+          "is_true": false,
+          "explanation": "Incorrect. ReadOnly locks block write operations for all roles, including Owner. The lock must be removed first."
+        }
+      },
+      "correct_answer": ["b"]
+    },
+    {
+      "question_id": 9,
+      "question_text": "A company has Azure Policy with a Modify effect that automatically adds the tag 'ManagedBy=IT' to every new resource. They also have a ReadOnly resource lock on a specific resource group. A user creates a VM in that resource group. What happens?",
+      "difficulty": "hard",
+      "topic": "Governance",
+      "tags": ["policy-modify", "resource-lock", "conflict"],
+      "options": {
+        "a": {
+          "text": "The VM is created and the tag is automatically added by the Modify policy",
+          "is_true": false,
+          "explanation": "Incorrect. The ReadOnly lock prevents tag modifications. The Modify policy cannot apply the tag to a resource in a ReadOnly-locked resource group."
+        },
+        "b": {
+          "text": "The VM creation fails because the ReadOnly lock prevents the Modify policy from adding the tag",
+          "is_true": true,
+          "explanation": "Correct. ReadOnly locks block all write operations, including those initiated by Azure Policy's Modify effect. Since the policy tries to add a tag (a write operation) and the lock prevents it, the entire resource creation operation fails. This is a known conflict between Modify policies and ReadOnly locks."
+        },
+        "c": {
+          "text": "The VM is created without the tag — the policy is silently skipped due to the lock",
+          "is_true": false,
+          "explanation": "Incorrect. Azure Policy Modify does not silently skip. If it cannot apply the modification, the operation fails."
+        },
+        "d": {
+          "text": "The lock is automatically temporarily lifted for the policy to apply the tag",
+          "is_true": false,
+          "explanation": "Incorrect. Resource locks are never automatically lifted — they are always enforced."
+        }
+      },
+      "correct_answer": ["b"]
+    },
+    {
+      "question_id": 10,
+      "question_text": "An admin configures SSPR with 'Email' and 'Mobile phone' as the available methods, requiring 2 methods. A user registers only their email. What happens when they try to reset their password?",
+      "difficulty": "hard",
+      "topic": "SSPR",
+      "tags": ["sspr", "registration", "insufficient-methods"],
+      "options": {
+        "a": {
+          "text": "The reset succeeds using only email — the 2-method requirement is not strictly enforced",
+          "is_true": false,
+          "explanation": "Incorrect. The 2-method requirement is strictly enforced during the reset process."
+        },
+        "b": {
+          "text": "The user is unable to complete the reset and is told they need additional verification methods registered",
+          "is_true": true,
+          "explanation": "Correct. If the policy requires 2 methods and the user has only registered 1, the SSPR portal cannot verify the user's identity sufficiently. The user is told they cannot reset and must register additional methods or contact an admin."
+        },
+        "c": {
+          "text": "SSPR automatically downgrades to 1 method if only 1 is registered",
+          "is_true": false,
+          "explanation": "Incorrect. SSPR does not auto-downgrade security requirements. The configured number of methods is enforced."
+        },
+        "d": {
+          "text": "The admin receives a notification to complete the second verification on behalf of the user",
+          "is_true": false,
+          "explanation": "Incorrect. SSPR is self-service — there is no mechanism for an admin to complete a verification step for the user."
+        }
+      },
+      "correct_answer": ["b"]
+    },
+    {
+      "question_id": 11,
+      "question_text": "A company transfers a subscription from Tenant A to Tenant B. What happens to the existing RBAC role assignments on the subscription?",
+      "difficulty": "hard",
+      "topic": "RBAC",
+      "tags": ["subscription-transfer", "rbac", "tenant-change"],
+      "options": {
+        "a": {
+          "text": "All RBAC role assignments are preserved and continue to work in Tenant B",
+          "is_true": false,
+          "explanation": "Incorrect. RBAC assignments reference security principals (users, groups) by their Entra ID object IDs. These IDs belong to Tenant A and do not exist in Tenant B."
+        },
+        "b": {
+          "text": "All RBAC role assignments are deleted — they must be recreated in the new tenant",
+          "is_true": true,
+          "explanation": "Correct. When a subscription is transferred to a different tenant, all RBAC role assignments are permanently deleted because the referenced security principals (users, groups, service principals) belong to the old tenant. The admin must recreate all role assignments using identities from Tenant B."
+        },
+        "c": {
+          "text": "RBAC assignments are migrated automatically to matching users in Tenant B",
+          "is_true": false,
+          "explanation": "Incorrect. There is no automatic mapping between users in different tenants. Assignments are deleted, not migrated."
+        },
+        "d": {
+          "text": "RBAC assignments are preserved for 30 days in a grace period",
+          "is_true": false,
+          "explanation": "Incorrect. There is no grace period — assignments are deleted as part of the transfer."
+        }
+      },
+      "correct_answer": ["b"]
+    },
+    {
+      "question_id": 12,
+      "question_text": "An Entra Connect admin enables OU filtering and accidentally deselects the 'Executives' OU. After the next sync cycle, what happens to the executive accounts in Entra ID?",
+      "difficulty": "hard",
+      "topic": "Entra Connect",
+      "tags": ["ou-filtering", "accidental-deletion", "sync"],
+      "options": {
+        "a": {
+          "text": "Nothing — Entra Connect never deletes objects from Entra ID",
+          "is_true": false,
+          "explanation": "Incorrect. When objects fall out of sync scope, Entra Connect will soft-delete them from Entra ID."
+        },
+        "b": {
+          "text": "The executive accounts are soft-deleted in Entra ID and moved to the Entra recycle bin (recoverable for 30 days)",
+          "is_true": true,
+          "explanation": "Correct. When previously synced objects fall out of the sync scope (due to OU filtering changes), Entra Connect soft-deletes them in Entra ID. They remain in the recycle bin for 30 days and can be restored. The admin should correct the filtering and run a sync to restore them before the 30-day window expires."
+        },
+        "c": {
+          "text": "The accounts are permanently deleted immediately with no recovery option",
+          "is_true": false,
+          "explanation": "Incorrect. Entra ID uses soft-delete for synced objects — they are recoverable for 30 days."
+        },
+        "d": {
+          "text": "The accounts are converted from synchronized identities to cloud-only identities",
+          "is_true": false,
+          "explanation": "Incorrect. Synced objects that fall out of scope are soft-deleted, not converted to cloud identities."
+        }
+      },
+      "correct_answer": ["b"]
+    },
+    {
+      "question_id": 13,
+      "question_text": "A user has the Owner role at the subscription level. An Azure Policy initiative is assigned at the management group level above the subscription. The user tries to create a resource that violates the policy. Who can exempt this resource from the policy?",
+      "difficulty": "hard",
+      "topic": "Azure Policy",
+      "tags": ["policy-exemption", "management-group", "scope"],
+      "options": {
+        "a": {
+          "text": "The subscription Owner can create a policy exemption at the subscription level",
+          "is_true": true,
+          "explanation": "Correct. Policy exemptions can be created at the subscription level (or resource group level) even when the policy is assigned at a higher scope. A subscription Owner with Microsoft.Authorization/policyExemptions/write permission can create an exemption for specific resources."
+        },
+        "b": {
+          "text": "Only a management group administrator can exempt resources from management-group-level policies",
+          "is_true": false,
+          "explanation": "Incorrect. Exemptions can be created at any scope at or below the policy assignment — a subscription-level admin can create exemptions within their subscription."
+        },
+        "c": {
+          "text": "Policy exemptions are not supported — the policy must be modified at the management group level",
+          "is_true": false,
+          "explanation": "Incorrect. Azure Policy supports exemptions as a first-class feature, allowing specific resources to be exempt without modifying the policy definition."
+        },
+        "d": {
+          "text": "The resource must be moved to a different subscription not covered by the management group policy",
+          "is_true": false,
+          "explanation": "Incorrect. Moving resources to avoid policy is an unnecessary workaround. Policy exemptions exist for this purpose."
+        }
+      },
+      "correct_answer": ["a"]
+    },
+    {
+      "question_id": 14,
+      "question_text": "An organisation configures Entra Connect with PHS as the primary method and also enables PTA as a secondary authentication method. When a user signs in, which method is used?",
+      "difficulty": "hard",
+      "topic": "Authentication Methods",
+      "tags": ["phs", "pta", "coexistence"],
+      "options": {
+        "a": {
+          "text": "PHS is always used for authentication because it was configured first",
+          "is_true": false,
+          "explanation": "Incorrect. PTA takes precedence when both are enabled."
+        },
+        "b": {
+          "text": "PTA is used for authentication; PHS serves as a backup if PTA agents are unavailable",
+          "is_true": false,
+          "explanation": "Incorrect on the backup — PHS does not automatically serve as a failover for PTA. However, PTA is indeed the active authentication method when enabled."
+        },
+        "c": {
+          "text": "PTA handles authentication when its agents are available; PHS is there for disaster recovery but requires a manual switch to activate",
+          "is_true": true,
+          "explanation": "Correct. When both PHS and PTA are enabled, PTA is the active authentication method. PHS syncs password hashes in the background as a DR measure, but switching to PHS for authentication requires a manual configuration change (converting the domain from federated/PTA to managed with PHS). There is no automatic failover."
+        },
+        "d": {
+          "text": "The user is prompted to choose between PHS and PTA at sign-in",
+          "is_true": false,
+          "explanation": "Incorrect. Users are never prompted to choose an authentication method — the tenant configuration determines which method is used."
+        }
+      },
+      "correct_answer": ["c"]
+    },
+    {
+      "question_id": 15,
+      "question_text": "A Conditional Access policy has been set to 'Report-only' mode. What does this mean?",
+      "difficulty": "hard",
+      "topic": "Conditional Access",
+      "tags": ["report-only", "what-if", "testing"],
+      "options": {
+        "a": {
+          "text": "The policy evaluates sign-ins and logs what would have happened, but does not enforce any controls",
+          "is_true": true,
+          "explanation": "Correct. Report-only mode evaluates the policy against every matching sign-in and logs whether it would have been allowed, challenged (MFA), or blocked — without actually enforcing the decision. This is essential for testing policies before enforcement to avoid unintended lockouts."
+        },
+        "b": {
+          "text": "The policy only applies to users who are running reports in the Azure portal",
+          "is_true": false,
+          "explanation": "Incorrect. Report-only mode is a policy state, not a user activity filter."
+        },
+        "c": {
+          "text": "The policy generates a compliance report but cannot be converted to an enforced policy",
+          "is_true": false,
+          "explanation": "Incorrect. Report-only policies can be switched to 'On' for enforcement at any time — this is the normal testing-to-production workflow."
+        },
+        "d": {
+          "text": "Report-only mode requires Entra ID P2",
+          "is_true": false,
+          "explanation": "Incorrect. Report-only mode is available with Conditional Access, which requires P1."
+        }
+      },
+      "correct_answer": ["a"]
+    },
+    {
+      "question_id": 16,
+      "question_text": "A company uses Entra Connect with PHS. They enable Entra Domain Services (Entra DS) in a virtual network. A legacy app running on an Azure VM in that VNet tries to authenticate using LDAP. What credential does the user provide?",
+      "difficulty": "hard",
+      "topic": "Entra Domain Services",
+      "tags": ["entra-ds", "ldap", "phs", "credentials"],
+      "options": {
+        "a": {
+          "text": "A separate credential created specifically for Entra DS",
+          "is_true": false,
+          "explanation": "Incorrect. With PHS enabled, Entra DS uses the same password hash synced from on-premises — no separate credential is needed."
+        },
+        "b": {
+          "text": "Their regular organisational password (the same one used for cloud and on-premises sign-in via PHS)",
+          "is_true": true,
+          "explanation": "Correct. Entra DS uses the password hashes stored in Entra ID (synced via PHS). Users authenticate with their normal organisational credentials. One password works across on-premises AD, Entra ID cloud apps, and Entra DS-powered LDAP applications."
+        },
+        "c": {
+          "text": "An OAuth token obtained from Entra ID",
+          "is_true": false,
+          "explanation": "Incorrect. LDAP authentication uses traditional username/password — not OAuth tokens."
+        },
+        "d": {
+          "text": "A certificate issued by Entra DS",
+          "is_true": false,
+          "explanation": "Incorrect. Standard LDAP authentication uses credentials, not certificates (though LDAPS uses certificates for transport encryption)."
+        }
+      },
+      "correct_answer": ["b"]
+    },
+    {
+      "question_id": 17,
+      "question_text": "SCENARIO: Contoso has two Conditional Access policies:\n- Policy 1: Require MFA for all users accessing SharePoint Online\n- Policy 2: Require compliant device for all users accessing SharePoint Online\nBoth are set to 'Grant access' with their respective controls. What must a user satisfy to access SharePoint?",
+      "difficulty": "hard",
+      "topic": "Conditional Access",
+      "tags": ["scenario", "conditional-access", "multiple-policies", "grant-controls"],
+      "options": {
+        "a": {
+          "text": "Either MFA or compliant device — the user can satisfy either policy",
+          "is_true": false,
+          "explanation": "Incorrect. When multiple policies match, ALL grant controls from ALL matching policies must be satisfied."
+        },
+        "b": {
+          "text": "Both MFA AND compliant device — all matching policies' grant controls must be satisfied",
+          "is_true": true,
+          "explanation": "Correct. Conditional Access evaluates all matching policies. When two separate policies each require different grant controls (MFA and compliant device), the user must satisfy BOTH. Grant controls from different policies are always combined with AND logic."
+        },
+        "c": {
+          "text": "Only MFA — Policy 1 was created first and takes priority",
+          "is_true": false,
+          "explanation": "Incorrect. Conditional Access policies do not have a priority order. All matching policies are evaluated and their controls are combined."
+        },
+        "d": {
+          "text": "Only compliant device — device compliance is a stronger control than MFA",
+          "is_true": false,
+          "explanation": "Incorrect. Conditional Access does not rank controls by strength. Both controls must be satisfied."
+        }
+      },
+      "correct_answer": ["b"]
+    },
+    {
+      "question_id": 18,
+      "question_text": "SCENARIO: An admin creates a custom RBAC role for a DevOps team. The role should allow managing VMs and reading storage but NOT allow deleting resource groups. The JSON definition includes:\n- Actions: ['Microsoft.Compute/*', 'Microsoft.Storage/*/read']\n- NotActions: ['Microsoft.Resources/subscriptions/resourceGroups/delete']\n\nA DevOps team member assigned this role tries to delete a resource group. Is the action blocked?",
+      "difficulty": "hard",
+      "topic": "Custom Roles",
+      "tags": ["scenario", "custom-role", "notactions", "effective-permissions"],
+      "options": {
+        "a": {
+          "text": "Yes — NotActions blocks the resource group delete action",
+          "is_true": false,
+          "explanation": "Incorrect — but for a subtle reason. NotActions subtracts from Actions. Since Microsoft.Resources/subscriptions/resourceGroups/delete was never in the Actions list to begin with (only Compute and Storage/read are in Actions), the NotActions entry is technically redundant. The user cannot delete resource groups because the Actions list never granted it."
+        },
+        "b": {
+          "text": "The user cannot delete resource groups, but because the Actions list never granted it in the first place — the NotActions entry is redundant",
+          "is_true": true,
+          "explanation": "Correct. The Actions list only includes Microsoft.Compute/* and Microsoft.Storage/*/read. Resource group deletion (Microsoft.Resources/*) was never granted, so the user cannot perform it regardless of NotActions. The NotActions entry is technically unnecessary here — it subtracts from Actions, but there is nothing to subtract."
+        },
+        "c": {
+          "text": "The user CAN delete resource groups — NotActions does not prevent actions that come from other role assignments",
+          "is_true": false,
+          "explanation": "Incorrect in this scenario because the user only has this one custom role assigned. If they had another role (e.g., Contributor), then yes, NotActions from the custom role would not block Contributor's permissions."
+        },
+        "d": {
+          "text": "The role definition fails validation because NotActions cannot reference Microsoft.Resources",
+          "is_true": false,
+          "explanation": "Incorrect. NotActions can reference any valid resource provider action. The definition is valid."
+        }
+      },
+      "correct_answer": ["b"]
+    },
+    {
+      "question_id": 19,
+      "question_text": "SCENARIO: A company enables Entra ID Password Protection with a custom banned password list including the word 'Contoso'. A user tries to set their password to 'C0nt0s0!2024'. Is this password accepted?",
+      "difficulty": "hard",
+      "topic": "Password Protection",
+      "tags": ["scenario", "banned-password", "normalisation"],
+      "options": {
+        "a": {
+          "text": "Yes — the password contains special characters and numbers, so it passes complexity rules",
+          "is_true": false,
+          "explanation": "Incorrect. Entra ID Password Protection normalises passwords before checking against the banned list."
+        },
+        "b": {
+          "text": "No — the password protection algorithm normalises common substitutions (0→o, etc.) and detects 'Contoso' as a banned word",
+          "is_true": true,
+          "explanation": "Correct. Entra ID Password Protection normalises the password by converting common character substitutions (0→o, $→s, @→a, 1→l, etc.) before comparing against the banned list. 'C0nt0s0' normalises to 'Contoso', which matches the banned word. The password is rejected."
+        },
+        "c": {
+          "text": "Yes — the banned list only checks for exact case-sensitive matches",
+          "is_true": false,
+          "explanation": "Incorrect. The banned password check is case-insensitive and applies normalisation for common character substitutions."
+        },
+        "d": {
+          "text": "Yes — appending '!2024' makes the password sufficiently different from the banned word",
+          "is_true": false,
+          "explanation": "Incorrect. Appending characters to a banned word base does not bypass the check. The normalised base 'Contoso' is still detected."
+        }
+      },
+      "correct_answer": ["b"]
+    },
+    {
+      "question_id": 20,
+      "question_text": "SCENARIO: An organisation has 3 Conditional Access policies:\n- Policy A: All users → All cloud apps → Grant: Require MFA\n- Policy B: Finance group → SharePoint → Grant: Require compliant device\n- Policy C: Executives group → All cloud apps → Block access from outside Named Locations\n\nA Finance executive on a compliant device in the office (inside Named Locations) accesses SharePoint. Which controls must they satisfy?",
+      "difficulty": "hard",
+      "topic": "Conditional Access",
+      "tags": ["scenario", "multiple-policies", "evaluation"],
+      "options": {
+        "a": {
+          "text": "MFA only",
+          "is_true": false,
+          "explanation": "Incorrect. All three policies match this user accessing SharePoint. All applicable grant controls must be satisfied."
+        },
+        "b": {
+          "text": "MFA and compliant device (Policy C does not block because the user is inside Named Locations)",
+          "is_true": true,
+          "explanation": "Correct. Policy A matches (all users, all apps) → MFA required. Policy B matches (Finance, SharePoint) → compliant device required. Policy C matches (Executives, all apps) but the block condition is 'outside Named Locations' — the user is inside, so the block does not apply. The user must satisfy MFA (Policy A) AND compliant device (Policy B)."
+        },
+        "c": {
+          "text": "Access is blocked by Policy C",
+          "is_true": false,
+          "explanation": "Incorrect. Policy C blocks access from outside Named Locations. The user is inside Named Locations, so the block condition is not met."
+        },
+        "d": {
+          "text": "Compliant device only — Policy B is the most specific policy and overrides others",
+          "is_true": false,
+          "explanation": "Incorrect. Conditional Access policies do not override each other based on specificity. All matching policies are combined."
+        }
+      },
+      "correct_answer": ["b"]
+    }
+  ]
+}

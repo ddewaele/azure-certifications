@@ -1,0 +1,610 @@
+{
+  "meta": {
+    "title": "AZ-104 – Mixed Review",
+    "subject": "Azure Administration",
+    "version": "1.0.0",
+    "created": "2026-03-24"
+  },
+  "questions": [
+    {
+      "question_id": 1,
+      "question_text": "A company needs to back up Azure Blobs and Azure Managed Disks. Which vault type should they use?",
+      "difficulty": "medium",
+      "topic": "Backup",
+      "tags": ["backup", "vault", "az-104"],
+      "options": {
+        "a": {
+          "text": "Recovery Services vault",
+          "is_true": false,
+          "explanation": "Incorrect. Recovery Services vault supports Azure VMs, Azure Files, SQL in VM, and SAP HANA — not Blobs or Managed Disks directly."
+        },
+        "b": {
+          "text": "Backup vault",
+          "is_true": true,
+          "explanation": "Correct. Backup vault (the newer vault type) supports Azure Blobs, Azure Managed Disks, Azure Database for PostgreSQL, and AKS. For blob and disk backup, Backup vault is the correct choice."
+        },
+        "c": {
+          "text": "Azure Storage account",
+          "is_true": false,
+          "explanation": "Incorrect. Azure Storage accounts store data but do not provide the backup policy, retention management, and restore capabilities of a backup vault."
+        },
+        "d": {
+          "text": "Either vault type supports all backup scenarios",
+          "is_true": false,
+          "explanation": "Incorrect. The vault types support different data sources — Backup vault for blobs/disks, Recovery Services vault for VMs/Azure Files."
+        }
+      },
+      "correct_answer": ["b"]
+    },
+    {
+      "question_id": 2,
+      "question_text": "Which Azure Monitor signal type would you use to trigger an alert when a virtual machine is deleted from a resource group?",
+      "difficulty": "medium",
+      "topic": "Azure Monitor",
+      "tags": ["monitor", "alerts", "az-104"],
+      "options": {
+        "a": {
+          "text": "Metric signal",
+          "is_true": false,
+          "explanation": "Incorrect. Metric signals trigger on numeric threshold violations (e.g., CPU > 80%) — not on resource lifecycle events."
+        },
+        "b": {
+          "text": "Log search signal",
+          "is_true": false,
+          "explanation": "Incorrect. Log search signals trigger based on KQL query results — while technically possible, the more direct approach for resource operations is an Activity log signal."
+        },
+        "c": {
+          "text": "Activity log signal",
+          "is_true": true,
+          "explanation": "Correct. Activity log signals trigger on Azure management operations — including resource create, update, and delete events. 'Delete Virtual Machine' is an activity log event that can directly trigger an alert."
+        },
+        "d": {
+          "text": "Resource health signal",
+          "is_true": false,
+          "explanation": "Incorrect. Resource health signals trigger when a resource's availability status changes — not when a resource is deleted."
+        }
+      },
+      "correct_answer": ["c"]
+    },
+    {
+      "question_id": 3,
+      "question_text": "An administrator assigns the Reader role to a user at the subscription level. The user reports they cannot view the resources in a specific resource group. What is the most likely reason?",
+      "difficulty": "medium",
+      "topic": "RBAC",
+      "tags": ["rbac", "az-104"],
+      "options": {
+        "a": {
+          "text": "The user needs a separate Reader assignment on the resource group",
+          "is_true": false,
+          "explanation": "Incorrect. RBAC roles assigned at a higher scope (subscription) are inherited by all child scopes including resource groups. A separate assignment is not needed."
+        },
+        "b": {
+          "text": "The resource group has a Deny assignment blocking the user",
+          "is_true": true,
+          "explanation": "Correct. A Deny assignment at the resource group level explicitly blocks permissions even if a role assignment at a higher scope grants them. Deny assignments take precedence over all role assignments."
+        },
+        "c": {
+          "text": "The user needs MFA before accessing resources",
+          "is_true": false,
+          "explanation": "Incorrect. MFA is an authentication requirement — if MFA was failing, the user would not be able to sign in at all."
+        },
+        "d": {
+          "text": "Subscription-level role assignments do not inherit to resource groups",
+          "is_true": false,
+          "explanation": "Incorrect. RBAC role assignments do inherit from subscription to resource groups — that is a fundamental feature of RBAC."
+        }
+      },
+      "correct_answer": ["b"]
+    },
+    {
+      "question_id": 4,
+      "question_text": "A company performs a test failover in Azure Site Recovery. Which of the following statements is true about the test failover?",
+      "difficulty": "medium",
+      "topic": "Site Recovery",
+      "tags": ["site-recovery", "dr", "az-104"],
+      "options": {
+        "a": {
+          "text": "Test failover stops replication to the target region",
+          "is_true": false,
+          "explanation": "Incorrect. Test failover is completely non-disruptive — replication continues uninterrupted during and after a test failover."
+        },
+        "b": {
+          "text": "Test failover creates a test VM in an isolated network and does not affect the production environment",
+          "is_true": true,
+          "explanation": "Correct. Test failover creates a copy of the VM in the target region's isolated test network. The production source VM continues running and replication is not interrupted. This validates DR readiness without any production impact."
+        },
+        "c": {
+          "text": "Test failover is a destructive operation that shuts down the source VM",
+          "is_true": false,
+          "explanation": "Incorrect. Only 'Planned failover' shuts down the source gracefully. Test failover is completely non-disruptive."
+        },
+        "d": {
+          "text": "After a test failover, the test VM must be manually deleted within 24 hours",
+          "is_true": false,
+          "explanation": "Incorrect. There is no automatic 24-hour deletion. The administrator must clean up the test failover ('Cleanup test failover') when testing is complete."
+        }
+      },
+      "correct_answer": ["b"]
+    },
+    {
+      "question_id": 5,
+      "question_text": "A Log Analytics workspace query returns no results for the Syslog table even though the Azure Monitor Agent is installed on Linux VMs. What is the most likely missing configuration?",
+      "difficulty": "medium",
+      "topic": "Azure Monitor",
+      "tags": ["monitor", "log-analytics", "ama", "az-104"],
+      "options": {
+        "a": {
+          "text": "The VM must be rebooted after agent installation",
+          "is_true": false,
+          "explanation": "Incorrect. While sometimes helpful, the root cause of no data is almost always a missing data collection rule, not requiring a reboot."
+        },
+        "b": {
+          "text": "A Data Collection Rule (DCR) must be created and associated with the VM",
+          "is_true": true,
+          "explanation": "Correct. The Azure Monitor Agent (AMA) requires a Data Collection Rule to define what data to collect and where to send it. Without a DCR that includes Syslog collection and routes data to the workspace, no Syslog data will appear."
+        },
+        "c": {
+          "text": "The Log Analytics workspace must be in the same region as the VM",
+          "is_true": false,
+          "explanation": "Incorrect. Log Analytics workspaces can receive data from VMs in different regions."
+        },
+        "d": {
+          "text": "The VM's public IP must be allowed in the workspace firewall",
+          "is_true": false,
+          "explanation": "Incorrect. Log Analytics workspaces do not use IP-based firewalls for inbound log data — agents connect outbound to the workspace endpoint."
+        }
+      },
+      "correct_answer": ["b"]
+    },
+    {
+      "question_id": 6,
+      "question_text": "An administrator needs to configure Azure Backup to retain monthly backups for 12 months and daily backups for 30 days. What is this configuration called?",
+      "difficulty": "medium",
+      "topic": "Backup",
+      "tags": ["backup", "retention", "az-104"],
+      "options": {
+        "a": {
+          "text": "Recovery point",
+          "is_true": false,
+          "explanation": "Incorrect. A recovery point is a single point-in-time snapshot — not the configuration of retention periods."
+        },
+        "b": {
+          "text": "Backup policy",
+          "is_true": true,
+          "explanation": "Correct. A backup policy defines the backup schedule (daily, weekly frequency) and the retention periods (how many days/weeks/months/years to keep each type of recovery point). This is the correct configuration to set."
+        },
+        "c": {
+          "text": "Replication policy",
+          "is_true": false,
+          "explanation": "Incorrect. Replication policy is an ASR concept for controlling how often recovery points are created during replication — not an Azure Backup retention configuration."
+        },
+        "d": {
+          "text": "Storage redundancy setting",
+          "is_true": false,
+          "explanation": "Incorrect. Storage redundancy (GRS/LRS) determines where vault data is replicated — not how long it is retained."
+        }
+      },
+      "correct_answer": ["b"]
+    },
+    {
+      "question_id": 7,
+      "question_text": "Which KQL query correctly counts the number of Azure activity log entries per caller (user/service) in the last 24 hours, sorted by most active first?",
+      "difficulty": "medium",
+      "topic": "Log Analytics",
+      "tags": ["kql", "log-analytics", "az-104"],
+      "options": {
+        "a": {
+          "text": "AzureActivity | where TimeGenerated > ago(24h) | count by Caller",
+          "is_true": false,
+          "explanation": "Incorrect. 'count by' is not valid KQL syntax. The correct syntax uses 'summarize' with 'count()'."
+        },
+        "b": {
+          "text": "AzureActivity | where TimeGenerated > ago(24h) | summarize Count = count() by Caller | order by Count desc",
+          "is_true": true,
+          "explanation": "Correct. This is valid KQL: filter to last 24 hours, summarize counts by Caller, and sort descending to see the most active caller first."
+        },
+        "c": {
+          "text": "SELECT COUNT(*), Caller FROM AzureActivity WHERE TimeGenerated > NOW() - 24h GROUP BY Caller",
+          "is_true": false,
+          "explanation": "Incorrect. KQL is not SQL — it does not use SELECT/FROM/WHERE/GROUP BY syntax."
+        },
+        "d": {
+          "text": "AzureActivity | last 24h | group Caller | count",
+          "is_true": false,
+          "explanation": "Incorrect. 'last 24h' and 'group' are not valid KQL operators — use 'where TimeGenerated > ago(24h)' and 'summarize'."
+        }
+      },
+      "correct_answer": ["b"]
+    },
+    {
+      "question_id": 8,
+      "question_text": "An administrator wants to configure autoscale for a VM Scale Set based on a custom application metric. What is required in addition to the autoscale rule?",
+      "difficulty": "medium",
+      "topic": "Compute",
+      "tags": ["vmss", "autoscale", "monitor", "az-104"],
+      "options": {
+        "a": {
+          "text": "The VMSS must be deployed in at least 3 Availability Zones",
+          "is_true": false,
+          "explanation": "Incorrect. Autoscale works regardless of zone configuration."
+        },
+        "b": {
+          "text": "The custom metric must be published to Azure Monitor",
+          "is_true": true,
+          "explanation": "Correct. Custom metrics must be published to Azure Monitor (via the Azure Monitor REST API or SDK) before they can be used in autoscale rules. The VMSS can then scale based on the custom metric values."
+        },
+        "c": {
+          "text": "An Application Gateway must be in front of the VMSS",
+          "is_true": false,
+          "explanation": "Incorrect. An Application Gateway is not required for custom metric-based autoscale."
+        },
+        "d": {
+          "text": "Log Analytics must be configured with a DCR before custom metrics work",
+          "is_true": false,
+          "explanation": "Incorrect. Custom metrics are published to the Azure Monitor Metrics store (not Log Analytics). A DCR is used for log collection with AMA."
+        }
+      },
+      "correct_answer": ["b"]
+    },
+    {
+      "question_id": 9,
+      "question_text": "An administrator configures a storage account with 'Allow shared key access' disabled. What is the effect?",
+      "difficulty": "medium",
+      "topic": "Storage",
+      "tags": ["storage", "security", "entra-id", "az-104"],
+      "options": {
+        "a": {
+          "text": "Access keys and SAS tokens signed with account keys are disabled; only Entra ID-based auth works",
+          "is_true": true,
+          "explanation": "Correct. Disabling shared key access prevents any authentication using storage account keys — this includes access key-based auth, Account SAS, and Service SAS (all signed with account keys). Only User Delegation SAS and Entra ID (Azure AD) authentication continue to work."
+        },
+        "b": {
+          "text": "Only the secondary key is disabled; primary key auth still works",
+          "is_true": false,
+          "explanation": "Incorrect. Disabling shared key access affects both keys — all key-based authentication is blocked."
+        },
+        "c": {
+          "text": "Access keys are rotated automatically every 90 days",
+          "is_true": false,
+          "explanation": "Incorrect. That is a separate feature (key rotation policy) — not what 'Allow shared key access: disabled' does."
+        },
+        "d": {
+          "text": "The storage account firewall is enabled with no allowed networks",
+          "is_true": false,
+          "explanation": "Incorrect. Disabling shared key access is an authentication control — it is unrelated to the network firewall configuration."
+        }
+      },
+      "correct_answer": ["a"]
+    },
+    {
+      "question_id": 10,
+      "question_text": "A company uses Azure Policy with a 'DeployIfNotExists' effect on a policy requiring Log Analytics agents on all VMs. When does the remediation deployment occur for existing non-compliant VMs?",
+      "difficulty": "medium",
+      "topic": "Azure Policy",
+      "tags": ["policy", "remediation", "az-104"],
+      "options": {
+        "a": {
+          "text": "Immediately when the policy is assigned",
+          "is_true": false,
+          "explanation": "Incorrect. DeployIfNotExists does not automatically remediate existing non-compliant resources — it triggers for new/updated resources at deployment time."
+        },
+        "b": {
+          "text": "At the next VM restart",
+          "is_true": false,
+          "explanation": "Incorrect. Remediation is not triggered by VM events — it requires a manual or automated remediation task."
+        },
+        "c": {
+          "text": "When a remediation task is created for the policy assignment",
+          "is_true": true,
+          "explanation": "Correct. DeployIfNotExists automatically deploys the required resource for new deployments, but existing non-compliant resources require a remediation task (manual in portal, or automated via Logic App/Event Grid trigger). The remediation task runs the deployIfNotExists effect on non-compliant resources."
+        },
+        "d": {
+          "text": "Only when the VM is recreated with a new ARM template",
+          "is_true": false,
+          "explanation": "Incorrect. Remediation tasks can target existing resources — you do not need to recreate the VM."
+        }
+      },
+      "correct_answer": ["c"]
+    },
+    {
+      "question_id": 11,
+      "question_text": "Which Azure Monitor component should you configure to suppress alerts during a planned 4-hour maintenance window without modifying the alert rule?",
+      "difficulty": "medium",
+      "topic": "Azure Monitor",
+      "tags": ["monitor", "alerts", "az-104"],
+      "options": {
+        "a": {
+          "text": "Action group",
+          "is_true": false,
+          "explanation": "Incorrect. Action groups define the notification and remediation actions — they cannot suppress alerts."
+        },
+        "b": {
+          "text": "Alert rule severity",
+          "is_true": false,
+          "explanation": "Incorrect. Severity is a classification level (0-4) — changing it would persist after the maintenance window."
+        },
+        "c": {
+          "text": "Alert processing rule",
+          "is_true": true,
+          "explanation": "Correct. Alert processing rules (formerly called action rules) allow you to suppress alerts during a specified time window — for example, during planned maintenance — without modifying the underlying alert rules. They can be scheduled, scoped, and filtered."
+        },
+        "d": {
+          "text": "Diagnostic settings",
+          "is_true": false,
+          "explanation": "Incorrect. Diagnostic settings control where resource logs and metrics are sent — they do not suppress alert firing."
+        }
+      },
+      "correct_answer": ["c"]
+    },
+    {
+      "question_id": 12,
+      "question_text": "A VM has a managed OS disk encrypted with Azure Disk Encryption (ADE). The VM is shut down and the disk is detached. Is the data still protected?",
+      "difficulty": "medium",
+      "topic": "Compute",
+      "tags": ["vm", "encryption", "az-104"],
+      "options": {
+        "a": {
+          "text": "No — ADE encryption requires the VM to be running to maintain protection",
+          "is_true": false,
+          "explanation": "Incorrect. ADE encrypts at the disk level (BitLocker/DM-Crypt) — the encryption persists regardless of VM state."
+        },
+        "b": {
+          "text": "Yes — the disk is encrypted at rest and remains protected whether attached or detached",
+          "is_true": true,
+          "explanation": "Correct. Azure Disk Encryption (ADE) encrypts the disk at the block level using BitLocker (Windows) or DM-Crypt (Linux). The encryption is persistent — the data is protected at rest regardless of whether the VM is running or the disk is attached."
+        },
+        "c": {
+          "text": "The encryption is removed when the disk is detached from the VM",
+          "is_true": false,
+          "explanation": "Incorrect. Detaching a disk does not affect encryption — the disk remains encrypted."
+        },
+        "d": {
+          "text": "Protection depends on whether the encryption key is stored in Azure Key Vault",
+          "is_true": false,
+          "explanation": "Incorrect. ADE does use Key Vault for key management, but the encryption itself persists on the disk regardless. The question is whether data is protected — it is."
+        }
+      },
+      "correct_answer": ["b"]
+    },
+    {
+      "question_id": 13,
+      "question_text": "A company needs to configure Azure Backup for an Azure SQL database running inside a VM (SQL in VM). Which vault supports this scenario?",
+      "difficulty": "medium",
+      "topic": "Backup",
+      "tags": ["backup", "sql", "az-104"],
+      "options": {
+        "a": {
+          "text": "Backup vault",
+          "is_true": false,
+          "explanation": "Incorrect. Backup vault supports Azure Blobs, Managed Disks, PostgreSQL, and AKS — not SQL Server in a VM."
+        },
+        "b": {
+          "text": "Recovery Services vault",
+          "is_true": true,
+          "explanation": "Correct. Recovery Services vault supports Azure VM backup, Azure Files, SQL Server in Azure VM, and SAP HANA in Azure VM. For SQL in VM, the Azure Backup agent connects to the SQL instance and takes application-consistent backups."
+        },
+        "c": {
+          "text": "Azure SQL Backup (built-in SQL feature)",
+          "is_true": false,
+          "explanation": "Incorrect. Azure SQL Database has built-in automated backups, but SQL Server installed in a VM is different — it requires Azure Backup with Recovery Services vault."
+        },
+        "d": {
+          "text": "Either vault type works for SQL in VM",
+          "is_true": false,
+          "explanation": "Incorrect. Only Recovery Services vault supports SQL Server in a VM — not Backup vault."
+        }
+      },
+      "correct_answer": ["b"]
+    },
+    {
+      "question_id": 14,
+      "question_text": "Which of the following correctly describes the RPO (Recovery Point Objective) in a disaster recovery context?",
+      "difficulty": "medium",
+      "topic": "Site Recovery",
+      "tags": ["site-recovery", "rpo", "rto", "az-104"],
+      "options": {
+        "a": {
+          "text": "The maximum time the system can be offline before business is impacted",
+          "is_true": false,
+          "explanation": "Incorrect. That describes RTO (Recovery Time Objective) — how long the system can be down."
+        },
+        "b": {
+          "text": "The maximum acceptable amount of data loss measured in time",
+          "is_true": true,
+          "explanation": "Correct. RPO is the maximum acceptable data loss expressed as time. An RPO of 1 hour means the organisation can tolerate losing up to 1 hour's worth of data — recovery points must be created at least every hour."
+        },
+        "c": {
+          "text": "The amount of time required to restore a backup",
+          "is_true": false,
+          "explanation": "Incorrect. Restore time contributes to RTO — not RPO. RPO is about data loss, not time to recover."
+        },
+        "d": {
+          "text": "The number of recovery points retained in the vault",
+          "is_true": false,
+          "explanation": "Incorrect. The number of recovery points is a backup policy setting — it is not the definition of RPO."
+        }
+      },
+      "correct_answer": ["b"]
+    },
+    {
+      "question_id": 15,
+      "question_text": "An administrator creates a budget in Azure Cost Management for $1,000/month and sets an alert at 90%. What happens when spending reaches $900?",
+      "difficulty": "medium",
+      "topic": "Cost Management",
+      "tags": ["cost-management", "budgets", "az-104"],
+      "options": {
+        "a": {
+          "text": "Azure automatically stops all new resource deployments",
+          "is_true": false,
+          "explanation": "Incorrect. Azure budget alerts are notifications only — they do not automatically stop deployments or spending."
+        },
+        "b": {
+          "text": "An email notification is sent to the configured alert recipients",
+          "is_true": true,
+          "explanation": "Correct. When spending reaches the threshold percentage, Azure Cost Management sends email notifications to configured recipients. It is a proactive warning only — no automated actions are taken unless an Action Group is configured with automation."
+        },
+        "c": {
+          "text": "The subscription is suspended until the next billing period",
+          "is_true": false,
+          "explanation": "Incorrect. Budgets trigger notifications, not subscription suspension."
+        },
+        "d": {
+          "text": "Azure Advisor automatically generates cost optimisation recommendations",
+          "is_true": false,
+          "explanation": "Incorrect. Azure Advisor recommendations are generated based on usage patterns, not triggered by budget threshold alerts."
+        }
+      },
+      "correct_answer": ["b"]
+    },
+    {
+      "question_id": 16,
+      "question_text": "An Azure Monitor metric alert for a VM is configured with a 5-minute window and 1-minute evaluation frequency. CPU is currently at 95% but was at 50% for the previous 4 minutes. Is the alert triggered?",
+      "difficulty": "medium",
+      "topic": "Azure Monitor",
+      "tags": ["monitor", "alerts", "metrics", "az-104"],
+      "options": {
+        "a": {
+          "text": "Yes — any reading above the threshold triggers the alert immediately",
+          "is_true": false,
+          "explanation": "Incorrect. The alert evaluates the condition over the entire window period — not just the most recent data point."
+        },
+        "b": {
+          "text": "It depends on the aggregation type — with 'Average', 95% one minute out of 5 may not exceed the threshold",
+          "is_true": true,
+          "explanation": "Correct. With a 5-minute window and Average aggregation, the metric is averaged over 5 minutes. If CPU was 50% for 4 minutes and 95% for 1 minute, the average would be approximately 59% — which may not exceed a threshold like 80%. The aggregation type (Average, Max, Min) determines whether the threshold is breached."
+        },
+        "c": {
+          "text": "No — alerts require the metric to be above threshold for the entire window period",
+          "is_true": false,
+          "explanation": "Incorrect. With 'Maximum' aggregation, a single high data point would be enough. With 'Average', it depends on the average over the window."
+        },
+        "d": {
+          "text": "The alert is triggered after 5 consecutive evaluation cycles exceed the threshold",
+          "is_true": false,
+          "explanation": "Incorrect. The number of consecutive violations before alerting is controlled by a different parameter — the default is typically 1 evaluation period exceeding the threshold (for the window aggregation)."
+        }
+      },
+      "correct_answer": ["b"]
+    },
+    {
+      "question_id": 17,
+      "question_text": "A user is assigned the Contributor role at the resource group level. They try to assign the Reader role to a colleague on the same resource group. What happens?",
+      "difficulty": "medium",
+      "topic": "RBAC",
+      "tags": ["rbac", "roles", "az-104"],
+      "options": {
+        "a": {
+          "text": "The assignment succeeds because Contributor has full access",
+          "is_true": false,
+          "explanation": "Incorrect. Contributor cannot manage access — that is a key distinction between Owner and Contributor."
+        },
+        "b": {
+          "text": "The assignment fails because Contributor cannot assign roles",
+          "is_true": true,
+          "explanation": "Correct. The Contributor role explicitly does NOT have Microsoft.Authorization/roleAssignments/write permission. Role assignment management requires Owner or User Access Administrator roles."
+        },
+        "c": {
+          "text": "The assignment succeeds but only for read-only roles",
+          "is_true": false,
+          "explanation": "Incorrect. Contributor cannot assign any roles — not even read-only ones."
+        },
+        "d": {
+          "text": "The assignment succeeds if the colleague is in the same Entra tenant",
+          "is_true": false,
+          "explanation": "Incorrect. The assignee's tenant membership has no bearing on whether the Contributor role can perform role assignments."
+        }
+      },
+      "correct_answer": ["b"]
+    },
+    {
+      "question_id": 18,
+      "question_text": "An administrator needs to restore individual files from a VM backup without creating a new VM. Which restore option should they use?",
+      "difficulty": "medium",
+      "topic": "Backup",
+      "tags": ["backup", "restore", "az-104"],
+      "options": {
+        "a": {
+          "text": "Restore VM",
+          "is_true": false,
+          "explanation": "Incorrect. Restore VM creates a new VM from the recovery point — it restores the entire machine, not individual files."
+        },
+        "b": {
+          "text": "Replace existing disk",
+          "is_true": false,
+          "explanation": "Incorrect. Replace existing disk replaces the OS or data disk of an existing VM — still not for individual file recovery."
+        },
+        "c": {
+          "text": "File recovery (Item Level Recovery)",
+          "is_true": true,
+          "explanation": "Correct. File recovery mounts the recovery point as a temporary drive on a target machine. You can then browse the recovery point and copy individual files or folders — without needing to restore the entire VM or disk."
+        },
+        "d": {
+          "text": "Cross-region restore",
+          "is_true": false,
+          "explanation": "Incorrect. Cross-region restore creates a VM or disk in a secondary region — it is for DR scenarios, not for individual file recovery."
+        }
+      },
+      "correct_answer": ["c"]
+    },
+    {
+      "question_id": 19,
+      "question_text": "A company configures Azure Update Manager to automatically patch VMs during a scheduled maintenance window. Which of the following best describes what Azure Update Manager replaces?",
+      "difficulty": "medium",
+      "topic": "Monitor and Maintain",
+      "tags": ["update-manager", "az-104"],
+      "options": {
+        "a": {
+          "text": "Azure Site Recovery",
+          "is_true": false,
+          "explanation": "Incorrect. Azure Site Recovery handles disaster recovery — Update Manager is not a replacement for ASR."
+        },
+        "b": {
+          "text": "Update Management in Azure Automation",
+          "is_true": true,
+          "explanation": "Correct. Azure Update Manager is the successor to Update Management in Azure Automation. It provides patching for Azure VMs and Arc-enabled servers without requiring an Automation account or Log Analytics workspace."
+        },
+        "c": {
+          "text": "Windows Server Update Services (WSUS)",
+          "is_true": false,
+          "explanation": "Incorrect. WSUS is an on-premises Windows Server role. While Update Manager can complement it, Update Manager is the cloud-based equivalent of the Automation Update Management feature — not WSUS."
+        },
+        "d": {
+          "text": "Azure Monitor Agent",
+          "is_true": false,
+          "explanation": "Incorrect. Azure Monitor Agent is for telemetry collection — it is not related to patching or update management."
+        }
+      },
+      "correct_answer": ["b"]
+    },
+    {
+      "question_id": 20,
+      "question_text": "A company has VMs in East US and needs to set up disaster recovery to West US using Azure Site Recovery. After replication is enabled, the administrator wants to validate the DR setup without impacting production. What should they run?",
+      "difficulty": "medium",
+      "topic": "Site Recovery",
+      "tags": ["site-recovery", "dr", "az-104"],
+      "options": {
+        "a": {
+          "text": "Planned failover",
+          "is_true": false,
+          "explanation": "Incorrect. Planned failover is a graceful production failover — it shuts down the source VM and is for actual migration or maintenance, not for validation testing."
+        },
+        "b": {
+          "text": "Unplanned failover",
+          "is_true": false,
+          "explanation": "Incorrect. Unplanned failover is for emergency scenarios (disaster) where the source is unavailable — it may result in data loss and is not appropriate for routine DR testing."
+        },
+        "c": {
+          "text": "Test failover",
+          "is_true": true,
+          "explanation": "Correct. Test failover creates a copy of the replicated VM in an isolated network in the target region. It validates that the VM can boot successfully in the DR region and that applications function correctly — all without impacting the source VM or replication."
+        },
+        "d": {
+          "text": "Failback",
+          "is_true": false,
+          "explanation": "Incorrect. Failback is the process of returning workloads to the original region after a failover — it cannot be used for initial DR testing."
+        }
+      },
+      "correct_answer": ["c"]
+    }
+  ]
+}

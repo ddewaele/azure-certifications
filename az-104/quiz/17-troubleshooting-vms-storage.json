@@ -1,0 +1,222 @@
+[
+  {
+    "question_id": 1,
+    "question_text": "A Windows VM in Azure has no public IP address. An admin needs to connect to it urgently. The VM's NSG only allows traffic from within the VNet. What is the most appropriate solution without modifying the NSG?",
+    "options": {
+      "a": { "text": "Assign a public IP to the VM and connect via RDP directly", "is_true": false, "explanation": "Assigning a public IP requires modifying the NSG to allow TCP 3389 from the internet — this was explicitly excluded." },
+      "b": { "text": "Connect via Azure Bastion, which provides browser-based RDP without a public IP on the VM", "is_true": true, "explanation": "Azure Bastion provides secure RDP/SSH connectivity through the Azure portal without a public IP on the VM. Traffic flows through the AzureBastionSubnet, not directly to the VM's NIC." },
+      "c": { "text": "Use the Azure serial console to establish an RDP session", "is_true": false, "explanation": "The serial console provides text-based console access for emergency situations, but it does not provide an RDP (graphical desktop) session." },
+      "d": { "text": "Enable Just-in-Time (JIT) VM access to temporarily allow RDP", "is_true": false, "explanation": "JIT temporarily opens an NSG rule for RDP, which requires a public IP or VPN. It modifies the NSG, which the question excludes." }
+    },
+    "correct_answer": ["b"]
+  },
+  {
+    "question_id": 2,
+    "question_text": "An admin tries to connect via RDP to a Windows Azure VM. The connection fails with 'Remote Desktop can't connect to the remote computer'. The VM shows as Running in the portal. What should be the FIRST troubleshooting step?",
+    "options": {
+      "a": { "text": "Reinstall Windows on the VM", "is_true": false, "explanation": "This is a destructive last resort. Many simpler causes should be checked first." },
+      "b": { "text": "Check the NSG rules to verify that TCP port 3389 is allowed inbound from the source IP", "is_true": true, "explanation": "A missing or blocked NSG rule is the most common cause of RDP failure when the VM is running. This is the logical first check." },
+      "c": { "text": "Redeploy the VM to a new host", "is_true": false, "explanation": "Redeployment should be tried after simpler checks fail. It also causes a temporary outage and may change the dynamic IP." },
+      "d": { "text": "Create a new VM from a backup", "is_true": false, "explanation": "Restoring from backup is not appropriate for a connectivity issue on a running VM." }
+    },
+    "correct_answer": ["b"]
+  },
+  {
+    "question_id": 3,
+    "question_text": "A Linux VM is unreachable via SSH. The NSG allows TCP 22 from all sources. The admin checks the boot diagnostics serial log and sees the kernel failed to mount the root filesystem with an 'invalid argument' error in fstab. What caused this?",
+    "options": {
+      "a": { "text": "The SSH service configuration file (/etc/ssh/sshd_config) has syntax errors", "is_true": false, "explanation": "An sshd_config error would cause the SSH service to fail to start, but the OS would still boot. An fstab error prevents boot entirely." },
+      "b": { "text": "An invalid entry in /etc/fstab is preventing the OS from completing the boot process", "is_true": true, "explanation": "When a required filesystem listed in fstab cannot be mounted, Linux drops to an emergency shell and the boot process stalls. This is a common cause of Linux VM boot failures." },
+      "c": { "text": "The NIC is misconfigured — the VM boots but has no network interface", "is_true": false, "explanation": "A NIC misconfiguration would result in a running VM with no network access. The serial log showing a filesystem mount error indicates an OS-level boot failure, not a NIC issue." },
+      "d": { "text": "The VM image is corrupted and must be redeployed from the marketplace", "is_true": false, "explanation": "An fstab error is an OS configuration problem, not image corruption. It can be fixed by editing fstab from a repair VM or via the serial console." }
+    },
+    "correct_answer": ["b"]
+  },
+  {
+    "question_id": 4,
+    "question_text": "A VM extension (Custom Script Extension) was deployed to 100 VMs but 12 of them show 'Provisioning failed'. What is the most efficient way to diagnose why those specific VMs failed?",
+    "options": {
+      "a": { "text": "Delete and recreate all 100 VMs", "is_true": false, "explanation": "This is destructive and unnecessary. Extension failures do not require VM recreation." },
+      "b": { "text": "Review the extension logs on the failed VMs: C:\\WindowsAzure\\Logs\\Plugins\\Microsoft.Compute.CustomScriptExtension (Windows) or /var/log/azure/custom-script (Linux)", "is_true": true, "explanation": "The Custom Script Extension writes detailed logs including the script output, exit code, and any errors. These logs are the most direct way to diagnose why the script failed on specific VMs." },
+      "c": { "text": "Check the Azure Activity Log for error messages", "is_true": false, "explanation": "The Activity Log records ARM-level operations and shows the extension failed, but does not contain the script execution details or exit codes needed to diagnose the failure." },
+      "d": { "text": "Redeploy all failed VMs from the base image", "is_true": false, "explanation": "Redeployment is not needed for extension failures. The script failure needs to be diagnosed and fixed, not the VM recreated." }
+    },
+    "correct_answer": ["b"]
+  },
+  {
+    "question_id": 5,
+    "question_text": "An admin needs to reset the password on a Linux VM but cannot connect via SSH. The VM agent is running. Which portal feature enables the password reset without SSH access?",
+    "options": {
+      "a": { "text": "Boot diagnostics — serial console", "is_true": false, "explanation": "The serial console provides CLI access to the VM but requires knowing the existing password (or root access). It does not reset credentials." },
+      "b": { "text": "VM > Reset password — which uses the VMAccess extension to reset credentials without SSH", "is_true": true, "explanation": "The Reset password feature in the Azure portal uses the VMAccess extension to inject a new password or SSH key into the VM's OS directly through the VM agent, without requiring network connectivity." },
+      "c": { "text": "Resource health — force restart option", "is_true": false, "explanation": "Resource health shows platform health and allows restarting the VM. It does not provide credential reset functionality." },
+      "d": { "text": "Azure Bastion — which can bypass SSH authentication", "is_true": false, "explanation": "Azure Bastion establishes an SSH session to the VM using the same credentials as regular SSH. It does not bypass authentication." }
+    },
+    "correct_answer": ["b"]
+  },
+  {
+    "question_id": 6,
+    "question_text": "A Windows VM is deployed on a B2s (burstable) instance. During business hours, the VM is extremely slow with CPU at 99%. In the evenings it performs normally. What is the most likely cause?",
+    "options": {
+      "a": { "text": "The VM is being attacked — high CPU is caused by malware", "is_true": false, "explanation": "Malware is possible but not the most likely cause of a predictable business-hours-only CPU pattern. Burstable VM CPU credit exhaustion is a more common and predictable pattern." },
+      "b": { "text": "The B-series VM has exhausted its CPU credits during sustained high load — when credits run out, performance throttles to baseline", "is_true": true, "explanation": "B-series VMs accumulate CPU credits when idle and spend them when busy. Sustained high load during business hours depletes credits, causing severe throttling. Check 'CPU Credits Remaining' metric to confirm." },
+      "c": { "text": "The VM size is too large for the workload and Azure is throttling it", "is_true": false, "explanation": "Azure does not throttle VMs for being oversized. The issue is the opposite — the VM size is too small (burstable SKU not suitable for sustained load)." },
+      "d": { "text": "Azure Advisor has flagged the VM and is limiting its performance until the recommendation is accepted", "is_true": false, "explanation": "Azure Advisor provides recommendations but does not limit VM performance. It is an advisory service only." }
+    },
+    "correct_answer": ["b"]
+  },
+  {
+    "question_id": 7,
+    "question_text": "A developer tries to upload a file to Azure Blob Storage and receives HTTP 403 AuthorizationFailure. They are using Entra ID authentication and have the Contributor role on the storage account. What should be done to fix this?",
+    "options": {
+      "a": { "text": "Regenerate the storage account key and update the connection string", "is_true": false, "explanation": "The developer is using Entra ID authentication, not an account key. Regenerating the key does not affect Entra ID auth." },
+      "b": { "text": "Assign the Storage Blob Data Contributor role to the developer on the container or storage account", "is_true": true, "explanation": "The Contributor role manages the storage account resource (management plane) but does not grant data plane access. The developer needs Storage Blob Data Contributor (or Reader) role to read/write blob data via Entra ID." },
+      "c": { "text": "Enable anonymous access on the blob container", "is_true": false, "explanation": "Enabling anonymous access is a security risk and is not appropriate for a developer who should be authenticating properly." },
+      "d": { "text": "Add the developer's IP address to the storage account firewall", "is_true": false, "explanation": "The error is 403 AuthorizationFailure (permissions), not a network block. A firewall block would also produce a 403 but the error code would be different (AuthorizationNetworkError)." }
+    },
+    "correct_answer": ["b"]
+  },
+  {
+    "question_id": 8,
+    "question_text": "A Windows file server needs to mount an Azure Files share but the mount command fails with 'System error 53 — Network path was not found'. The storage account and share exist and the connection string is correct. What is the most likely cause?",
+    "options": {
+      "a": { "text": "The storage account does not have a file share endpoint enabled", "is_true": false, "explanation": "If the share was created successfully, the file endpoint is active. A 'network path not found' error indicates a connectivity problem." },
+      "b": { "text": "TCP port 445 is blocked between the on-premises server and the storage account endpoint", "is_true": true, "explanation": "Azure Files uses SMB over TCP port 445. Many ISPs and corporate firewalls block outbound port 445. 'System error 53' specifically means the network path could not be found — typically port 445 is blocked." },
+      "c": { "text": "The storage account key has been rotated and the mount command uses the old key", "is_true": false, "explanation": "An expired or incorrect key would produce 'System error 86 — Incorrect password', not error 53." },
+      "d": { "text": "Azure Files requires Kerberos authentication — storage account key authentication is not supported", "is_true": false, "explanation": "Azure Files supports both storage account key authentication and identity-based (Kerberos) authentication. Account key auth is the simplest and most commonly used method for basic mounting." }
+    },
+    "correct_answer": ["b"]
+  },
+  {
+    "question_id": 9,
+    "question_text": "A SAS token was generated to give read access to a blob container. The token worked yesterday but now returns 403. The expiry date is set to next year. What is the most likely cause?",
+    "options": {
+      "a": { "text": "The SAS token needs to be refreshed every 24 hours regardless of expiry date", "is_true": false, "explanation": "SAS tokens are valid until the expiry date. There is no automatic 24-hour refresh requirement." },
+      "b": { "text": "The storage account key used to sign the SAS token was rotated after the SAS was issued — the signature is now invalid", "is_true": true, "explanation": "SAS tokens are signed with the storage account key. When a key is rotated, all SAS tokens signed with the old key become immediately invalid, regardless of their expiry date." },
+      "c": { "text": "The blob container was changed to private access — SAS tokens do not work on private containers", "is_true": false, "explanation": "SAS tokens work on private containers. The access level of the container only affects anonymous (unauthenticated) access. SAS tokens are an authenticated mechanism." },
+      "d": { "text": "SAS tokens expire after 24 hours for security reasons regardless of the configured expiry", "is_true": false, "explanation": "Azure does not impose a 24-hour maximum on SAS token expiry. The configured expiry date is the only limit." }
+    },
+    "correct_answer": ["b"]
+  },
+  {
+    "question_id": 10,
+    "question_text": "Soft delete is enabled on a storage account with a 14-day retention period. A developer accidentally deletes a blob container. Can the container be recovered?",
+    "options": {
+      "a": { "text": "No — soft delete only protects individual blobs, not containers", "is_true": false, "explanation": "Azure Storage supports soft delete for both blobs AND containers (configured separately). Container soft delete must be explicitly enabled." },
+      "b": { "text": "Yes — if container soft delete is enabled, the deleted container appears as 'deleted' and can be undeleted from the portal within the retention period", "is_true": true, "explanation": "Container soft delete retains deleted containers for the configured retention period. They appear with a 'deleted' status in Storage Browser and can be restored with 'Undelete container'." },
+      "c": { "text": "Yes — all deleted containers are automatically moved to a 'Deleted' folder in the storage account", "is_true": false, "explanation": "Soft-deleted containers don't appear in a folder — they appear with a specific deleted state when you filter for them in the portal or Storage Browser." },
+      "d": { "text": "No — once a container is deleted, all its blobs are permanently gone even with soft delete enabled", "is_true": false, "explanation": "Container soft delete preserves both the container metadata and its contents during the retention period." }
+    },
+    "correct_answer": ["b"]
+  },
+  {
+    "question_id": 11,
+    "question_text": "An Azure File Sync server endpoint shows sync errors. Files are not syncing from the on-premises server to the Azure file share. The Azure File Sync agent is running. What should you check first?",
+    "options": {
+      "a": { "text": "Check that the Azure Files share has not exceeded its quota", "is_true": false, "explanation": "A full share quota would cause sync to fail with a specific quota error, but it is not the most common first check." },
+      "b": { "text": "Check whether outbound TCP 443 is open from the server to the Azure File Sync service, and verify the agent version is up to date", "is_true": true, "explanation": "Azure File Sync requires outbound TCP 443 (HTTPS) to communicate with the sync service. A firewall blocking this port is a common cause. Outdated agent versions also frequently cause sync failures and are highlighted in the portal." },
+      "c": { "text": "Reinstall the Azure File Sync agent on the server", "is_true": false, "explanation": "Reinstallation would also clear server registration. This is a last resort, not a first check." },
+      "d": { "text": "Delete and recreate the sync group", "is_true": false, "explanation": "Recreating the sync group would require a full re-sync of all data. This is destructive and should not be the first step." }
+    },
+    "correct_answer": ["b"]
+  },
+  {
+    "question_id": 12,
+    "question_text": "A storage account has network rules set to 'Selected networks'. An automated Azure Backup job for a VM using managed disks suddenly fails with an authorization error. What is the most likely cause and fix?",
+    "options": {
+      "a": { "text": "The VM's managed disk subscription has reached its storage backup limit", "is_true": false, "explanation": "Azure managed disk backups go through Azure Backup service, not directly to a storage account with network rules. But if the VM has a staging storage account, firewall rules can interfere." },
+      "b": { "text": "The storage account firewall is blocking the Azure Backup service — enable 'Allow trusted Microsoft services' exception", "is_true": true, "explanation": "Azure Backup is a trusted Microsoft service. When a storage account has network rules, enabling the 'Allow trusted Microsoft services' exception allows Azure Backup, Azure Monitor, and other trusted services to bypass the firewall." },
+      "c": { "text": "Azure Backup does not support storage accounts with network rules enabled", "is_true": false, "explanation": "Azure Backup does support storage accounts with network rules — it requires the trusted services exception to be enabled." },
+      "d": { "text": "The backup policy must be reconfigured every time network rules change", "is_true": false, "explanation": "The backup policy does not need to change when network rules are modified. The trusted services exception is the correct fix." }
+    },
+    "correct_answer": ["b"]
+  },
+  {
+    "question_id": 13,
+    "question_text": "A VM admin tries to resize a managed data disk from 128 GB to 256 GB but the operation fails in the portal. The VM is currently running. What must be done first?",
+    "options": {
+      "a": { "text": "Create a snapshot of the disk before resizing", "is_true": false, "explanation": "Creating a snapshot is a best practice but is not required by Azure to perform the resize. The actual blocker is the VM's running state." },
+      "b": { "text": "Deallocate the VM before resizing the attached managed disk", "is_true": true, "explanation": "Resizing a managed disk requires the VM to be in a deallocated (stopped) state. A running VM holds the disk in use and Azure cannot resize it. After resizing, the partition inside the OS must also be extended." },
+      "c": { "text": "Detach the data disk, resize it, then reattach it", "is_true": false, "explanation": "Detaching an attached disk requires the VM to be stopped first. You cannot detach a disk from a running VM without potential data loss." },
+      "d": { "text": "Upgrade the storage account from LRS to GRS to support larger disk sizes", "is_true": false, "explanation": "Disk size is not related to storage account redundancy. Managed disks have a maximum size of 32 TiB regardless of redundancy type." }
+    },
+    "correct_answer": ["b"]
+  },
+  {
+    "question_id": 14,
+    "question_text": "During a review of a storage account, an admin notices that object replication is not configured even though versioning is enabled. The destination storage account is in a different region. What is a prerequisite that may be missing on the destination account?",
+    "options": {
+      "a": { "text": "The destination storage account must be in the same region as the source", "is_true": false, "explanation": "Object replication is specifically designed for cross-region replication. Both accounts can be in different regions." },
+      "b": { "text": "Blob versioning must also be enabled on the destination storage account", "is_true": true, "explanation": "Object replication requires blob versioning to be enabled on BOTH the source AND destination storage accounts. Without versioning on the destination, object replication cannot be configured." },
+      "c": { "text": "Object replication requires both accounts to use RA-GRS redundancy", "is_true": false, "explanation": "Object replication works between any two storage accounts regardless of their redundancy type (LRS, GRS, ZRS, etc.)." },
+      "d": { "text": "The destination account must have hierarchical namespace (HNS) enabled", "is_true": false, "explanation": "HNS (ADLS Gen2) is incompatible with versioning and object replication. The destination must NOT have HNS enabled." }
+    },
+    "correct_answer": ["b"]
+  },
+  {
+    "question_id": 15,
+    "question_text": "A developer accidentally ran `az storage container delete` on the wrong container and all blobs are gone. Soft delete for blobs was enabled with 7-day retention, but container soft delete was NOT enabled. Can the blobs be recovered?",
+    "options": {
+      "a": { "text": "Yes — blob soft delete protects against container deletion because the blobs still exist even if the container is gone", "is_true": false, "explanation": "When a container is deleted, all blobs inside it are also deleted. Without container soft delete, the container metadata and blob list is gone, even if individual blob soft delete was enabled." },
+      "b": { "text": "No — without container soft delete enabled, container deletion permanently removes all blobs inside it, bypassing blob-level soft delete", "is_true": true, "explanation": "Blob soft delete protects blobs when they are deleted individually, but container deletion is a different operation. Container soft delete must be enabled separately to protect against container-level deletions." },
+      "c": { "text": "Yes — blobs can be recovered from the 7-day blob soft delete retention by filtering for deleted blobs in the portal", "is_true": false, "explanation": "Once the container is deleted without container soft delete, the soft-deleted blobs are inaccessible because the container no longer exists to contain them." },
+      "d": { "text": "Yes — Azure maintains a 30-day recovery window for all deleted storage objects regardless of configuration", "is_true": false, "explanation": "Azure does not maintain automatic 30-day recovery for all storage objects. Recovery depends on soft delete configuration." }
+    },
+    "correct_answer": ["b"]
+  },
+  {
+    "question_id": 16,
+    "question_text": "A Windows Server 2022 VM shows the error 'BitLocker recovery key required' at boot after being migrated to a different Azure region. What is the most likely cause?",
+    "options": {
+      "a": { "text": "BitLocker is not supported in Azure — the disk encryption must be removed before migration", "is_true": false, "explanation": "Azure Disk Encryption (which uses BitLocker on Windows) is fully supported in Azure. The issue is BitLocker configuration, not support." },
+      "b": { "text": "The TPM measurement changed during migration — BitLocker locked the volume because the hardware identity is different on the new host", "is_true": true, "explanation": "If BitLocker was configured with TPM-only protection (no PIN/key), it measures the hardware at boot. Migration to a new physical host changes TPM measurements and BitLocker requires the recovery key." },
+      "c": { "text": "The VM must be decrypted and re-encrypted after every region migration", "is_true": false, "explanation": "This is not a general requirement. The BitLocker recovery key challenge is a TPM-related issue, not a migration policy requirement." },
+      "d": { "text": "BitLocker requires an Active Directory domain controller in the target region to unlock", "is_true": false, "explanation": "While AD-backed BitLocker key escrow is a feature, BitLocker does not require an AD DC to unlock. It uses either the TPM, a PIN, a recovery key, or a combination." }
+    },
+    "correct_answer": ["b"]
+  },
+  {
+    "question_id": 17,
+    "question_text": "Files on an Azure File Sync server endpoint appear on the server as small stub files instead of full content. Users complain they cannot open the files immediately. What is causing this?",
+    "options": {
+      "a": { "text": "The files are corrupted and need to be re-downloaded from the cloud endpoint", "is_true": false, "explanation": "Stub files are not corrupted files — they are intentional placeholder files created by cloud tiering. They download on access." },
+      "b": { "text": "Cloud tiering is enabled on the server endpoint — infrequently accessed files are tiered to the cloud and replaced with stubs that download on demand", "is_true": true, "explanation": "Cloud tiering in Azure File Sync replaces infrequently accessed files with small stub files to free up local disk space. When a user opens the file, it is recalled from the cloud. The initial open takes longer while the content downloads." },
+      "c": { "text": "The server endpoint has insufficient permissions to access the cloud endpoint", "is_true": false, "explanation": "Permission issues would cause sync errors and files not syncing at all — not the creation of stubs." },
+      "d": { "text": "The sync agent is running in read-only mode due to a license expiration", "is_true": false, "explanation": "Azure File Sync is included with Azure Files storage costs. There is no separate license that expires." }
+    },
+    "correct_answer": ["b"]
+  },
+  {
+    "question_id": 18,
+    "question_text": "An admin redeploys a VM to a new Azure host to resolve a connectivity issue. After redeployment, the VM's application loses connection to its database. What most likely changed?",
+    "options": {
+      "a": { "text": "The VM's OS was reinstalled during redeployment", "is_true": false, "explanation": "Redeployment moves the VM to a new host but preserves the OS disk. The OS is not reinstalled." },
+      "b": { "text": "The VM's dynamic public or private IP changed after redeployment, and the database whitelist or connection string still references the old IP", "is_true": true, "explanation": "Redeployment can change dynamic IPs. If the database has IP-based firewall rules or the application's connection string uses an IP address, the new IP may not be allowed." },
+      "c": { "text": "The VM's managed disks were detached during redeployment", "is_true": false, "explanation": "Redeployment preserves all attached disks. Data is not lost during redeployment." },
+      "d": { "text": "Redeployment resets all NSG rules to their defaults", "is_true": false, "explanation": "Redeployment does not modify NSG rules. The same NSGs remain associated with the NIC and subnet." }
+    },
+    "correct_answer": ["b"]
+  },
+  {
+    "question_id": 19,
+    "question_text": "A storage account lifecycle management policy was configured to move blobs to Cool tier after 30 days of no modification. It has been 72 hours since configuration and no blobs have been tiered. What is the explanation?",
+    "options": {
+      "a": { "text": "The policy is not enabled — it must be manually activated after configuration", "is_true": false, "explanation": "Lifecycle management policies are active immediately after being saved. There is no separate activation step." },
+      "b": { "text": "Lifecycle management policies are evaluated once every 24–48 hours and changes may take up to 72 hours to be visible — this behavior is normal", "is_true": true, "explanation": "Azure Storage lifecycle management policies are not applied instantly. The evaluation runs once daily and processing the entire account can take up to 24–48 hours depending on the number of blobs. No blobs tiering in 72 hours is within the normal processing window." },
+      "c": { "text": "The blobs must be manually tagged before the lifecycle policy can tier them", "is_true": false, "explanation": "Lifecycle policies can apply to all blobs in a container based on age, without any manual tagging (unless you use blob index tags as a filter condition)." },
+      "d": { "text": "Lifecycle management requires Azure File Sync to be configured before it can move blobs between tiers", "is_true": false, "explanation": "Azure File Sync is for file shares, not blob storage. Lifecycle management is an independent feature of blob storage." }
+    },
+    "correct_answer": ["b"]
+  },
+  {
+    "question_id": 20,
+    "question_text": "A VM agent on a Windows VM shows 'Not Ready' status in the Azure portal. This prevents extensions and backup from running. What is the recommended first fix?",
+    "options": {
+      "a": { "text": "Delete the VM and recreate it from a backup", "is_true": false, "explanation": "This is a last resort. The VM agent can often be repaired without recreating the VM." },
+      "b": { "text": "Download and reinstall the latest Windows Azure VM Agent (WindowsAzureVmAgent.msi) on the VM", "is_true": true, "explanation": "When the VM agent is not ready, the first fix is to reinstall it. You can do this by connecting via RDP (if available) or via serial console. The VM agent MSI is available from the Microsoft Download Center." },
+      "c": { "text": "Reset the VM to its factory settings from the Azure portal", "is_true": false, "explanation": "There is no 'factory reset' option in the Azure portal. This is not an Azure VM concept." },
+      "d": { "text": "Redeploy the VM and then the agent will reinstall automatically", "is_true": false, "explanation": "Redeployment moves the VM to a new host but does not reinstall the agent. If the agent is corrupted, it remains corrupted after redeployment." }
+    },
+    "correct_answer": ["b"]
+  }
+]

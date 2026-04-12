@@ -1,0 +1,222 @@
+[
+  {
+    "question_id": 1,
+    "question_text": "An admin wants to receive an email alert whenever any resource in a subscription is deleted. Which Azure Monitor alert type is most appropriate?",
+    "options": {
+      "a": { "text": "Metric alert on the subscription — filter for 'delete' operations", "is_true": false, "explanation": "Metric alerts monitor numerical time-series data (CPU %, request count, etc.). Resource deletion is not a metric — it is an event recorded in the Activity Log. Metric alerts cannot detect delete operations." },
+      "b": { "text": "Activity Log alert scoped to the subscription with condition 'Category: Administrative' and 'Operation: Delete'", "is_true": true, "explanation": "Activity Log alerts are designed to trigger on management-plane events such as resource deletions. Scope the alert to the subscription, set the signal to 'All Administrative operations' or filter for 'delete' operations. Every resource deletion generates an Activity Log entry and triggers the alert." },
+      "c": { "text": "Log Analytics alert with a KQL query on the AzureActivity table", "is_true": false, "explanation": "A Log Analytics log alert would also work (if Activity Log is forwarded to the workspace), but it requires the Activity Log diagnostic setting to be configured and has inherent latency. An Activity Log alert fires directly from the Activity Log without requiring a Log Analytics workspace setup." },
+      "d": { "text": "Azure Policy with the Audit effect to track all delete operations", "is_true": false, "explanation": "Azure Policy evaluates resource compliance and can block or log non-compliant configurations. It cannot send email alerts for delete operations. Azure Monitor alerts are the right tool for notifications." }
+    },
+    "correct_answer": ["b"]
+  },
+  {
+    "question_id": 2,
+    "question_text": "An organization uses management groups to organize their 15 Azure subscriptions. The corporate security team needs to apply a 'require TLS 1.2 minimum' policy to all subscriptions. Where should the policy be assigned for maximum efficiency?",
+    "options": {
+      "a": { "text": "Assign the policy to each subscription individually — management group policy assignment is only for Azure-built-in policies", "is_true": false, "explanation": "Custom and built-in policies can both be assigned at the management group level. There is no restriction to only built-in policies at that scope." },
+      "b": { "text": "Assign the policy to the root management group — it automatically applies to all subscriptions and resource groups under it", "is_true": true, "explanation": "Policy assignments at a management group scope inherit down to all child management groups, subscriptions, and resource groups. Assigning once at the root management group (or a parent group containing all 15 subscriptions) is the most efficient approach — no need to assign 15 times." },
+      "c": { "text": "Use Azure Blueprints to apply the policy simultaneously to all subscriptions", "is_true": false, "explanation": "Azure Blueprints can include policy assignments and deploy them to subscriptions, but it requires individual blueprint assignments per subscription. Management group policy inheritance is simpler for applying a single policy across all subscriptions." },
+      "d": { "text": "Assign the policy at each resource group level to ensure all resources are covered", "is_true": false, "explanation": "Assigning at resource group level would require assigning to every resource group in all 15 subscriptions — a massive number of assignments. Management group assignment is the efficient top-down approach." }
+    },
+    "correct_answer": ["b"]
+  },
+  {
+    "question_id": 3,
+    "question_text": "An admin creates an Azure Budget for a subscription with a monthly limit of $5,000 and alert thresholds at 80% and 100% of actual spend. The current month's spend reaches $4,200 (84%). What happens?",
+    "options": {
+      "a": { "text": "Azure automatically stops all resource deployments to prevent exceeding the budget", "is_true": false, "explanation": "Azure Budgets are purely notification tools. They do NOT stop, pause, or delete resources when thresholds are exceeded. Spending continues unimpeded beyond the threshold." },
+      "b": { "text": "The 80% threshold alert is triggered and configured recipients receive an email notification — no resources are automatically stopped", "is_true": true, "explanation": "Azure Budgets send notifications (email, action groups) when configured thresholds are hit. At 84% ($4,200/$5,000), the 80% alert fires. The 100% alert has not yet fired. Critically, no resources are stopped — Budgets are awareness tools, not enforcement tools. To automatically stop resources, you would need to configure an action group with an Azure Automation runbook or Logic App." },
+      "c": { "text": "Azure creates a support ticket for the subscription owner requesting cost review", "is_true": false, "explanation": "Azure does not automatically create support tickets for budget thresholds. Notifications go to configured email addresses or action groups." },
+      "d": { "text": "Both the 80% and 100% thresholds fire simultaneously because the 100% forecast may be exceeded", "is_true": false, "explanation": "Budget alerts have two modes: 'Actual' (fires when actual spend crosses the threshold) and 'Forecasted' (fires when projected spend is forecast to cross the threshold). The question specifies 'actual spend' at 84% — only the 80% actual threshold fires. The 100% threshold hasn't been reached yet in actual spend." }
+    },
+    "correct_answer": ["b"]
+  },
+  {
+    "question_id": 4,
+    "question_text": "An admin creates an Azure Monitor alert rule on a Log Analytics workspace with a KQL query that looks for critical application errors. The alert is set to fire when the query returns more than 0 results in a 5-minute window. The admin tests the query in Log Analytics and it returns 3 results from 10 minutes ago. However, the alert never fired. What is the most likely reason?",
+    "options": {
+      "a": { "text": "Log Analytics queries have a 15-minute minimum evaluation window for KQL alerts", "is_true": false, "explanation": "Log Analytics alert rules support evaluation windows as short as 1 minute. There is no 15-minute minimum." },
+      "b": { "text": "The alert rule evaluation window and the time range of the KQL query do not overlap — the 3 results from 10 minutes ago fall outside the 5-minute evaluation window", "is_true": true, "explanation": "Log alert rules evaluate the KQL query over the configured time window (5 minutes in this case). If the error events occurred 10 minutes ago and the query uses a relative time filter matching the alert's 5-minute window, those events fall outside the evaluated period. The alert only fires on events that occurred within the active evaluation window. The admin should verify the query's time filter aligns with the alert's lookback window." },
+      "c": { "text": "The action group must be attached for alert evaluation to begin — without it, the rule is created but not evaluated", "is_true": false, "explanation": "Alert rules evaluate independently of whether an action group is attached. Without an action group, the alert still fires and changes state — you just don't receive notifications. The alert evaluation is not blocked by missing action groups." },
+      "d": { "text": "KQL alerts require at least 24 hours of data in the workspace before they can evaluate", "is_true": false, "explanation": "KQL alert rules evaluate as soon as they are created using whatever data is in the workspace. There is no 24-hour warm-up period." }
+    },
+    "correct_answer": ["b"]
+  },
+  {
+    "question_id": 5,
+    "question_text": "An admin wants to view all Azure Policy compliance states across multiple subscriptions from a single view. Which tool provides this?",
+    "options": {
+      "a": { "text": "Azure Advisor — shows compliance recommendations across subscriptions", "is_true": false, "explanation": "Azure Advisor provides proactive recommendations for cost, security, reliability, operational excellence, and performance. It does not show Azure Policy compliance states." },
+      "b": { "text": "Azure Policy Compliance dashboard — accessible at the management group level to see policy compliance across all child subscriptions", "is_true": true, "explanation": "The Azure Policy blade has a Compliance section that can be scoped to a management group, showing aggregated compliance states across all subscriptions and resources under that group. This provides a single-pane-of-glass view for policy compliance." },
+      "c": { "text": "Microsoft Defender for Cloud's Regulatory Compliance blade", "is_true": false, "explanation": "Defender for Cloud's Regulatory Compliance blade maps security controls to specific regulatory frameworks (NIST, ISO 27001, etc.). It is valuable for compliance frameworks but is not the primary tool for viewing Azure Policy assignment compliance states." },
+      "d": { "text": "Azure Monitor Workbooks with a policy compliance template", "is_true": false, "explanation": "Azure Monitor Workbooks can visualize data from Log Analytics and other sources, and custom workbooks for policy compliance can be built. However, the built-in Azure Policy Compliance dashboard is the purpose-built tool for this view." }
+    },
+    "correct_answer": ["b"]
+  },
+  {
+    "question_id": 6,
+    "question_text": "A team needs to deploy an identical set of resources (VNet, storage account, key vault, and policy assignments) to 10 new subscriptions each month. The setup must be reproducible and consistent. Which Azure tool is best suited for this?",
+    "options": {
+      "a": { "text": "ARM templates deployed via a pipeline — templates handle all resource types including policy", "is_true": false, "explanation": "ARM templates can deploy resources and policy assignments. However, they do not natively handle subscription-level deployment combined with policy, RBAC, and resource groups in one atomic unit the way Blueprints does. Multiple deployments would be needed." },
+      "b": { "text": "Azure Blueprints — packages ARM templates, policy assignments, role assignments, and resource groups into a single deployable unit that can be versioned and assigned to subscriptions", "is_true": true, "explanation": "Azure Blueprints is designed exactly for this scenario: standardized subscription setup at scale. A blueprint can include resource groups, ARM templates, policy assignments, and RBAC role assignments. It can be versioned, published, and assigned to multiple subscriptions. Blueprint assignments are tracked, allowing audit of what was deployed where." },
+      "c": { "text": "Azure Automation Runbooks — schedule a runbook to deploy resources to each new subscription", "is_true": false, "explanation": "Automation Runbooks can deploy resources but are imperative scripts, not declarative packaged units. They require more maintenance and lack the governance tracking and version control that Blueprints provides." },
+      "d": { "text": "Terraform modules stored in a repository — run the module for each new subscription", "is_true": false, "explanation": "Terraform is a valid IaC approach for this scenario but is a third-party tool (not a native Azure service). For an AZ-104 exam question about Azure tools, Blueprints is the purpose-built Azure-native answer." }
+    },
+    "correct_answer": ["b"]
+  },
+  {
+    "question_id": 7,
+    "question_text": "A company wants to understand which Azure resources are costing the most across multiple subscriptions and identify opportunities to reduce cost. Which Azure tool provides cost analysis and optimization recommendations?",
+    "options": {
+      "a": { "text": "Azure Monitor Metrics — shows resource utilization that can help identify oversized resources", "is_true": false, "explanation": "Azure Monitor shows performance metrics but does not correlate them with cost data or provide cost optimization recommendations." },
+      "b": { "text": "Azure Cost Management + Billing for cost analysis, combined with Azure Advisor for right-sizing and reservation recommendations", "is_true": true, "explanation": "Azure Cost Management provides detailed cost breakdowns by subscription, resource group, resource, and tags — with filtering, grouping, and export. Azure Advisor's Cost recommendations (right-sizing, reserved instances, deallocating idle VMs) complement the analysis. Together they provide full cost visibility and actionable optimization." },
+      "c": { "text": "Azure Security Center (Defender for Cloud) — includes a cost dashboard in the overview", "is_true": false, "explanation": "Defender for Cloud focuses on security posture and threat protection, not cost management. It does not include a cost analysis dashboard." },
+      "d": { "text": "Azure Service Health — shows service outages that explain unexpected cost spikes", "is_true": false, "explanation": "Azure Service Health shows Azure platform health events (outages, maintenance). It does not show cost data or provide cost optimization recommendations." }
+    },
+    "correct_answer": ["b"]
+  },
+  {
+    "question_id": 8,
+    "question_text": "An admin wants to trigger an Azure Automation runbook whenever a VM is stopped (deallocated) in a subscription. Which Azure service should be used to detect the event and trigger the runbook?",
+    "options": {
+      "a": { "text": "Azure Monitor metric alert on 'VM deallocated count'", "is_true": false, "explanation": "VM deallocation is an event (an Activity Log entry), not a numeric metric. Metric alerts monitor numeric time-series data." },
+      "b": { "text": "Azure Event Grid — subscribe to Activity Log events for 'Deallocate Virtual Machine' operations and configure the Automation runbook as a webhook subscriber", "is_true": true, "explanation": "Azure Event Grid is the right tool for event-driven automation. It integrates with Activity Log (via the Microsoft.Resources event source) and can filter for specific operations like VM deallocation. The Automation runbook is configured as a webhook that Event Grid calls when the event fires. This is near-real-time (seconds latency) compared to polling-based approaches." },
+      "c": { "text": "Azure Logic Apps with a polling trigger that checks Azure Resource Manager every 5 minutes", "is_true": false, "explanation": "A Logic App with ARM polling would work but has up to 5-minute latency and makes continuous API calls whether or not events occur. Event Grid is the push-based, efficient alternative." },
+      "d": { "text": "Azure Policy with a DeployIfNotExists effect that triggers the runbook when VMs are deallocated", "is_true": false, "explanation": "DINE policies deploy resources when compliance conditions are met — they do not trigger runbooks or respond to VM state changes like deallocation. Azure Policy evaluates resource configurations, not operational events." }
+    },
+    "correct_answer": ["b"]
+  },
+  {
+    "question_id": 9,
+    "question_text": "An admin wants to check which user deleted a resource group named 'dev-resources' yesterday. Where should the admin look?",
+    "options": {
+      "a": { "text": "Azure Monitor Metrics — filter by resource group and look for delete events", "is_true": false, "explanation": "Azure Monitor Metrics tracks numeric data (CPU, memory, request counts). Management operations like resource group deletion are not metrics." },
+      "b": { "text": "The Activity Log — filter by Resource Group = 'dev-resources', Category = Administrative, Operation = 'Delete Resource Group'", "is_true": true, "explanation": "The Activity Log records all Azure Resource Manager operations including who performed them (caller identity), what they did (operation name), when, and the result. Filtering the Activity Log for the resource group deletion operation shows the exact user/service principal that initiated the delete, the timestamp, and the result." },
+      "c": { "text": "Azure AD Sign-in logs — filter by the user's account and look for portal login at the time of deletion", "is_true": false, "explanation": "Sign-in logs show authentication events (who logged in, when, from where). They do not show which Azure resources were modified after sign-in. The Activity Log is the authoritative record of resource operations." },
+      "d": { "text": "Azure Resource Graph — query deleted resources by timestamp", "is_true": false, "explanation": "Azure Resource Graph queries the current state of resources. Deleted resources are no longer in the graph. It does not maintain historical state or audit trail of who deleted what." }
+    },
+    "correct_answer": ["b"]
+  },
+  {
+    "question_id": 10,
+    "question_text": "A company deploys a custom Azure Policy definition with the 'Deny' effect to prevent creation of storage accounts outside of approved regions (East US and West Europe). An admin deploys a Bicep template that creates a storage account in North Europe. What is the expected result?",
+    "options": {
+      "a": { "text": "The deployment succeeds but the storage account is tagged as non-compliant in the policy dashboard", "is_true": false, "explanation": "The Deny effect BLOCKS the deployment before the resource is created. Non-compliant tagging only happens with the Audit effect." },
+      "b": { "text": "The deployment fails with an authorization error indicating the policy denied the resource creation", "is_true": true, "explanation": "The Deny effect prevents the ARM deployment from succeeding. The Bicep/ARM engine receives a 403 error with a message identifying the policy that denied the operation (policy name, assignment ID). The storage account is never created." },
+      "c": { "text": "The deployment succeeds and the storage account is created, but a remediation task is created to move it to an approved region", "is_true": false, "explanation": "Remediation tasks are associated with DeployIfNotExists and Modify effects, not Deny. Deny does not allow resource creation and then remediate — it blocks upfront." },
+      "d": { "text": "The deployment is queued and the admin receives an email approval request before the resource is created", "is_true": false, "explanation": "Azure Policy Deny effect is a synchronous, immediate block on the ARM API call. There is no approval queue or email workflow in Azure Policy itself." }
+    },
+    "correct_answer": ["b"]
+  },
+  {
+    "question_id": 11,
+    "question_text": "An admin wants to monitor a VM's CPU usage over the past 7 days and see the hourly average. Which Azure Monitor feature provides this?",
+    "options": {
+      "a": { "text": "Azure Monitor Metrics Explorer — plot 'Percentage CPU' metric with 1-hour time granularity over the last 7 days", "is_true": true, "explanation": "Azure Monitor Metrics Explorer provides interactive charting of platform metrics. The 'Percentage CPU' metric is available natively for all Azure VMs. You can set the time range to 7 days, choose 1-hour aggregation granularity, and visualize the average CPU. No Log Analytics workspace is required." },
+      "b": { "text": "Log Analytics with a KQL query on the Perf table — query average CPU over 7 days", "is_true": false, "explanation": "This is also valid if the Log Analytics agent is collecting performance data. However, it requires a Log Analytics workspace with the agent installed and configured. Metrics Explorer works out of the box without any additional configuration for platform VM metrics." },
+      "c": { "text": "Azure Resource Health — it shows CPU health history for the past 7 days", "is_true": false, "explanation": "Resource Health shows whether the Azure platform considers the resource healthy or degraded. It does not show detailed CPU utilization metrics or time-series performance data." },
+      "d": { "text": "Azure Advisor — it shows CPU utilization trends to identify right-sizing opportunities", "is_true": false, "explanation": "Azure Advisor uses CPU utilization data to recommend right-sizing, but it provides a summary recommendation (e.g., 'VM is underutilized — resize to smaller SKU'), not interactive time-series charts. Metrics Explorer is the right tool for detailed metric visualization." }
+    },
+    "correct_answer": ["a"]
+  },
+  {
+    "question_id": 12,
+    "question_text": "A company has a subscription where multiple teams deploy resources. Resources frequently don't have required tags, making cost allocation difficult. The company wants to AUTOMATICALLY add the 'Department' tag (with value from another existing tag or a default) rather than blocking deployment. Which Azure Policy effect achieves this?",
+    "options": {
+      "a": { "text": "Deny effect — prevents resource creation without the tag", "is_true": false, "explanation": "Deny blocks deployment but doesn't automatically add the tag. Teams would need to add the tag manually before deploying. The requirement is automatic addition, not blocking." },
+      "b": { "text": "Modify effect — automatically adds or changes resource tags during create and update operations", "is_true": true, "explanation": "The Modify effect allows Azure Policy to add, replace, or remove resource tags (and other properties) during resource creation and update. A 'Modify' policy can add 'Department: IT' (or derive from another tag) automatically, without blocking the deployment. This is the correct effect for automated tag management." },
+      "c": { "text": "DeployIfNotExists effect — deploys a resource to add the tag if it is missing", "is_true": false, "explanation": "DeployIfNotExists deploys a full resource (like a diagnostic setting or VM extension) when a condition isn't met. For adding tags to existing resources, Modify is the appropriate effect. DINE would be overkill and inappropriate for tag management." },
+      "d": { "text": "Append effect — adds the tag as an additional field to the resource", "is_true": false, "explanation": "The Append effect adds fields to resources during creation but cannot modify existing property values and is limited in its capabilities. For tag management, the Modify effect is recommended as it handles both creation and update scenarios more completely." }
+    },
+    "correct_answer": ["b"]
+  },
+  {
+    "question_id": 13,
+    "question_text": "An admin needs to find all Azure resources across 5 subscriptions that have a specific tag value ('Environment: Production'). The fastest approach uses which tool?",
+    "options": {
+      "a": { "text": "Azure Cost Management — filter costs by the 'Environment: Production' tag", "is_true": false, "explanation": "Cost Management can filter costs by tag, but it shows cost data, not a list of all resources with the tag. It also may not show resources with zero cost." },
+      "b": { "text": "Azure Resource Graph Explorer — write a KQL query against the 'Resources' table filtering by tag", "is_true": true, "explanation": "Azure Resource Graph is designed for cross-subscription, cross-resource-group resource queries at scale. A query like `Resources | where tags['Environment'] == 'Production'` runs against all subscriptions in the management group and returns results in seconds, regardless of scale. It is the fastest and most scalable approach for cross-subscription resource discovery." },
+      "c": { "text": "Azure portal resource filter — use the global search with tag filter for 'Environment: Production'", "is_true": false, "explanation": "The portal's tag filter in the 'All resources' view works but has limitations on cross-subscription queries and can be slow with many resources. Resource Graph Explorer provides programmatic, scalable querying." },
+      "d": { "text": "Run 'az resource list --tag Environment=Production' for each subscription separately", "is_true": false, "explanation": "This CLI approach requires running the command per subscription and merging results. Resource Graph provides a single query across all subscriptions, which is significantly faster and more efficient." }
+    },
+    "correct_answer": ["b"]
+  },
+  {
+    "question_id": 14,
+    "question_text": "An organization wants to ensure that all resource deployments are tracked to a specific Azure DevOps project for auditing. Tags will be used: 'Project' and 'Owner'. If these tags are missing, the deployment should be blocked. The policy should also automatically add a 'DeployedBy: AzurePolicy' tag. Which combination of policy effects achieves this?",
+    "options": {
+      "a": { "text": "One Deny policy for missing 'Project' tag, one Deny policy for missing 'Owner' tag, and one Modify policy to add 'DeployedBy: AzurePolicy'", "is_true": true, "explanation": "Multiple policies can be assigned to achieve this: Deny policies (one per required tag) block deployments missing the required tags. A separate Modify policy adds the 'DeployedBy' tag automatically. Policy effects are evaluated independently — all assigned policies apply. This is the correct combination." },
+      "b": { "text": "A single policy with both Deny and Modify effects applied simultaneously", "is_true": false, "explanation": "A single Azure Policy definition can only have one effect. You cannot combine Deny and Modify in a single policy definition. Multiple policies (or a policy initiative) must be used." },
+      "c": { "text": "One Audit policy listing all three tag requirements", "is_true": false, "explanation": "Audit logs non-compliant resources but does not block deployment or automatically add tags. Neither requirement (blocking and auto-adding) is met by Audit." },
+      "d": { "text": "DeployIfNotExists policy that deploys a tag resource if tags are missing", "is_true": false, "explanation": "Tags are properties of resources, not separate resources. DINE deploys subordinate resources (like diagnostic settings), not tag properties. Modify is the correct effect for adding/changing tags." }
+    },
+    "correct_answer": ["a"]
+  },
+  {
+    "question_id": 15,
+    "question_text": "A company wants to prevent users from creating resources outside of specific Azure regions. They assign an Azure Policy 'Allowed locations' with a list of approved regions at the management group level. An existing VM in a non-approved region is discovered during compliance scan. What happens to the existing VM?",
+    "options": {
+      "a": { "text": "The VM is automatically deleted because it violates the Deny policy", "is_true": false, "explanation": "Azure Policy never automatically deletes existing resources. Policy Deny effects only block NEW resource creation/updates. Existing resources that violate a policy are marked as non-compliant but are not modified or deleted." },
+      "b": { "text": "The VM is marked as 'Non-compliant' in the policy dashboard but is not affected — Deny policies do not retroactively act on existing resources", "is_true": true, "explanation": "Azure Policy Deny effect is prospective only — it blocks future create/update operations. Existing resources that don't comply are flagged as 'Non-compliant' in the compliance dashboard. The resources continue to run unaffected. Manual remediation (or a DINE/Modify policy) is required to bring existing resources into compliance." },
+      "c": { "text": "The VM is blocked from receiving updates or configuration changes until it is moved to an approved region", "is_true": false, "explanation": "A Deny policy on location only evaluates create/update operations that would change the resource location. Since VM location cannot be changed after creation, and the Deny policy applies to new creation, the VM can still receive other updates (resizing, tagging) that don't violate the policy conditions." },
+      "d": { "text": "The VM is moved to the nearest approved region automatically via a policy remediation task", "is_true": false, "explanation": "VM location cannot be changed after creation. Policy remediation tasks are for DINE/Modify effects to deploy or modify resources. A Deny policy for locations has no remediation capability, and even if it did, VM relocation is not a supported operation." }
+    },
+    "correct_answer": ["b"]
+  },
+  {
+    "question_id": 16,
+    "question_text": "An admin creates a Log Analytics workspace and wants to start receiving diagnostic logs from an Azure Key Vault. What is the minimum required configuration step?",
+    "options": {
+      "a": { "text": "Install the Log Analytics agent on the Key Vault's underlying infrastructure", "is_true": false, "explanation": "Azure Key Vault is a PaaS service — there is no underlying VM to install an agent on. Diagnostic logs for PaaS services are sent via the diagnostic settings mechanism, not via an agent." },
+      "b": { "text": "Configure a diagnostic setting on the Key Vault to send selected log categories to the Log Analytics workspace", "is_true": true, "explanation": "For any Azure PaaS resource (Key Vault, Storage, SQL, App Service, etc.), the only configuration needed to send logs to Log Analytics is creating a diagnostic setting on the resource. Select the desired log categories (AuditEvent, AzurePolicyEvaluationDetails, etc.) and the target workspace." },
+      "c": { "text": "Enable Defender for Key Vault to automatically send all logs to Log Analytics", "is_true": false, "explanation": "Microsoft Defender for Key Vault provides threat detection for Key Vault. It does not automatically configure Log Analytics log collection — diagnostic settings are still required for general log forwarding." },
+      "d": { "text": "Create an alert rule in Azure Monitor targeting the Key Vault to start log collection", "is_true": false, "explanation": "Alert rules define conditions to trigger notifications based on already-collected data. Creating an alert rule does not initiate log collection. Diagnostic settings are the mechanism for routing logs to a workspace." }
+    },
+    "correct_answer": ["b"]
+  },
+  {
+    "question_id": 17,
+    "question_text": "An admin suspects a misconfiguration was introduced to a network security group but doesn't know when or by whom. Which Azure capability helps identify the specific change, who made it, and when?",
+    "options": {
+      "a": { "text": "Azure Network Watcher — Effective Security Rules view shows all current NSG rules", "is_true": false, "explanation": "Effective Security Rules shows the current state of NSG rules but does not show history or who made changes. It answers 'what are the rules now?' not 'who changed them and when?'." },
+      "b": { "text": "Activity Log — filter by Resource = the NSG and Operation = 'Write' to see all changes with caller identity and timestamp", "is_true": true, "explanation": "The Activity Log records every Azure Resource Manager write operation, including who performed it (caller UPN or service principal), when, what changed, and the result. Filtering the Activity Log for NSG write operations shows every rule addition, modification, or deletion with full caller attribution." },
+      "c": { "text": "Azure Advisor — it maintains a history of configuration changes for optimization purposes", "is_true": false, "explanation": "Azure Advisor provides proactive recommendations (right-sizing, security posture) based on current configuration. It does not maintain a history of configuration changes or provide audit trail information." },
+      "d": { "text": "Azure Policy Compliance — shows the timeline of policy violations for the NSG", "is_true": false, "explanation": "Azure Policy Compliance tracks whether resources meet policy definitions. It does not show who made specific configuration changes or maintain a general change history." }
+    },
+    "correct_answer": ["b"]
+  },
+  {
+    "question_id": 18,
+    "question_text": "A company has spent 90% of their monthly Azure budget on the 15th of the month. The CFO asks for a forecast of total spend for the month. Which Azure tool provides spending forecasts?",
+    "options": {
+      "a": { "text": "Azure Monitor — it can project future metric values based on historical trends", "is_true": false, "explanation": "Azure Monitor metrics can be visualized and some have anomaly detection, but Azure Monitor does not provide cost forecasting. Cost forecasting is in Azure Cost Management." },
+      "b": { "text": "Azure Cost Management — the Cost Analysis view includes a forecast based on current spend trends", "is_true": true, "explanation": "Azure Cost Management's Cost Analysis view includes a forecasted spend projection based on current spending trajectory. The 'Accumulated costs' chart shows actual spend to date alongside a forecasted total for the billing period. Budget alerts also support 'Forecasted' threshold notifications." },
+      "c": { "text": "Azure Pricing Calculator — input current resource usage to calculate monthly costs", "is_true": false, "explanation": "The Azure Pricing Calculator estimates costs for planned deployments by entering resource configurations manually. It does not connect to actual subscription spending or generate forecasts based on real usage data." },
+      "d": { "text": "Azure Advisor Cost tab — it shows projected annual savings, which can be used to calculate the forecast", "is_true": false, "explanation": "Azure Advisor Cost recommendations show potential savings from right-sizing, reserved instances, etc. They represent optimization opportunities, not a forecast of current month's actual spend trajectory." }
+    },
+    "correct_answer": ["b"]
+  },
+  {
+    "question_id": 19,
+    "question_text": "An admin notices in Azure Advisor that a VM has average CPU usage below 5% over the past 30 days. What does Azure Advisor recommend, and what action can the admin take?",
+    "options": {
+      "a": { "text": "Advisor recommends deleting the VM immediately", "is_true": false, "explanation": "Azure Advisor does not recommend deleting resources. It suggests right-sizing or shutting down, but the decision and action remain with the admin." },
+      "b": { "text": "Advisor recommends resizing or shutting down the underutilized VM, and the admin can act on this directly from the Advisor recommendation", "is_true": true, "explanation": "Azure Advisor Cost recommendations flag underutilized VMs (typically < 5% average CPU) and suggest either resizing to a smaller SKU or shutting down. Advisors show the estimated monthly savings and provide a direct 'Resize' or 'Shut down' action button that can be executed from within the Advisor blade without navigating away." },
+      "c": { "text": "Advisor creates an auto-shutdown schedule for the VM based on the detected usage pattern", "is_true": false, "explanation": "Azure Advisor provides recommendations and links to take action, but it does not autonomously create auto-shutdown schedules. The admin must review and act on recommendations." },
+      "d": { "text": "Advisor enables automatic vertical scaling to the smallest available VM size", "is_true": false, "explanation": "Azure Advisor provides recommendations only — it does not automatically apply changes to resources. The admin must choose to act on the recommendation." }
+    },
+    "correct_answer": ["b"]
+  },
+  {
+    "question_id": 20,
+    "question_text": "An admin wants to ensure that all VMs created in a subscription automatically have the Azure Monitor Agent (AMA) installed. The policy should deploy the agent if it is missing, without blocking VM creation. Which Azure Policy effect should be used?",
+    "options": {
+      "a": { "text": "Audit — logs VMs without AMA for manual review and installation", "is_true": false, "explanation": "Audit logs non-compliance but does not deploy the agent. Manual action would still be required for each non-compliant VM." },
+      "b": { "text": "DeployIfNotExists (DINE) — checks if AMA is installed and deploys it via a remediation task if missing", "is_true": true, "explanation": "DINE is designed for deploying sub-resources (like VM extensions) when they are missing. The built-in AMA DINE policies deploy the Azure Monitor Agent extension to Windows and Linux VMs when the extension is not present. The policy uses a managed identity to perform the deployment and does not block VM creation." },
+      "c": { "text": "Deny — prevents VM creation if AMA is not specified in the deployment template", "is_true": false, "explanation": "A Deny policy would block all VM deployments that don't include the AMA extension in the ARM template. This adds friction for all VM deployments and would break existing deployment pipelines. DINE is the less disruptive approach." },
+      "d": { "text": "Modify — changes the VM configuration at creation time to include the AMA extension", "is_true": false, "explanation": "The Modify effect changes tags and some resource properties but is not designed for deploying subordinate resources like VM extensions. DINE is the correct effect for deploying resources (extensions, diagnostic settings) alongside parent resources." }
+    },
+    "correct_answer": ["b"]
+  }
+]

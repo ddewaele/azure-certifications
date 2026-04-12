@@ -1,0 +1,222 @@
+[
+  {
+    "question_id": 1,
+    "question_text": "A company has the following setup: Hub VNet with Azure Firewall, Spoke VNet A (app servers), and Spoke VNet B (database servers). VNet A and B are peered to the hub. The security team wants ALL traffic between A and B to go through the Azure Firewall for inspection. Currently, traffic between A and B bypasses the firewall. What is needed?",
+    "options": {
+      "a": { "text": "Enable 'Allow forwarded traffic' on the hub-spoke peering connections and create Azure Firewall rules", "is_true": false, "explanation": "'Allow forwarded traffic' allows NVA-forwarded traffic to traverse peerings, but without UDRs pointing to the firewall, traffic still takes the direct peering path between A and B." },
+      "b": { "text": "Create UDRs on both Spoke A and Spoke B subnets with routes pointing the other spoke's address space to the Azure Firewall's private IP, and create corresponding Azure Firewall network/application rules to allow the required traffic", "is_true": true, "explanation": "VNet peering is non-transitive but A-to-B traffic via the hub can be routed through the firewall using UDRs. On Spoke A's subnets: add a route for Spoke B's address range with next hop = Azure Firewall's private IP (VirtualAppliance). On Spoke B's subnets: add a route for Spoke A's address range with next hop = Azure Firewall. The firewall then inspects and permits/denies the traffic per its rule sets." },
+      "c": { "text": "Deploy the Azure Firewall in both spoke VNets to intercept cross-spoke traffic before it reaches the hub", "is_true": false, "explanation": "Deploying firewalls in every spoke is expensive, unscalable, and architecturally wrong for hub-spoke design. The hub Firewall should inspect all inter-spoke traffic with proper UDR configuration." },
+      "d": { "text": "Remove the spoke-to-spoke peering and force all traffic through ExpressRoute", "is_true": false, "explanation": "Spoke A and B are peered to the hub, not directly to each other. Removing hub peerings would break all connectivity. ExpressRoute is for on-premises connectivity, not inter-spoke routing." }
+    },
+    "correct_answer": ["b"]
+  },
+  {
+    "question_id": 2,
+    "question_text": "A company migrates a web application to Azure. The app stores session state in an in-memory cache on each web server. The app is deployed across a VMSS behind an Azure Application Gateway. Users report being randomly logged out. Load is balanced across 5 instances. What is the correct solution?",
+    "options": {
+      "a": { "text": "Enable WAF on the Application Gateway to block session hijacking attempts", "is_true": false, "explanation": "WAF blocks external attacks, not internal load balancing behavior. The session loss is caused by requests routing to different VMSS instances that don't share in-memory session state." },
+      "b": { "text": "Enable cookie-based session affinity on the Application Gateway backend HTTP settings to route each user's requests to the same VM instance", "is_true": false, "explanation": "Session affinity is a valid short-term fix but is not the correct architectural solution. If the affined VM is removed during scale-in, all its sessions are still lost. The exam expects you to identify both the quick fix and the better solution." },
+      "c": { "text": "Migrate session state to a shared external cache (Azure Cache for Redis) and enable cookie-based affinity as a short-term workaround", "is_true": true, "explanation": "The root cause is stateful in-memory sessions on individual VMs, which is incompatible with horizontal scaling. The correct solution is to externalize session state to Azure Cache for Redis (or Azure SQL) so all VMSS instances share the same session store. Cookie-based affinity is a workaround but fails during scale-in events. Externalizing state makes the app truly stateless and scale-compatible." },
+      "d": { "text": "Use a single large VM instead of VMSS to avoid multi-instance session routing issues", "is_true": false, "explanation": "A single VM creates a single point of failure, eliminates scalability, and does not address the architectural issue. This is the worst option from an availability and scalability perspective." }
+    },
+    "correct_answer": ["c"]
+  },
+  {
+    "question_id": 3,
+    "question_text": "A company wants to migrate an on-premises Active Directory environment to Entra ID. They have 50,000 users, 200 groups, and some users with smart card authentication requirements. Which hybrid identity configuration is appropriate?",
+    "options": {
+      "a": { "text": "Password Hash Sync (PHS) — sync all users and hashes to Entra ID", "is_true": false, "explanation": "PHS is the simplest option and handles most scenarios, but smart card authentication requires on-premises certificate-based auth (ADFS). PHS cannot support smart card sign-ins to Entra ID." },
+      "b": { "text": "Pass-Through Authentication (PTA) — on-premises agents validate credentials without syncing hashes", "is_true": false, "explanation": "PTA validates username/password credentials against on-prem AD but does not support smart card (certificate-based) authentication. Smart cards require a full ADFS federation." },
+      "c": { "text": "Active Directory Federation Services (ADFS) with Entra Connect sync — ADFS handles smart card auth; cloud apps get SAML/WS-Fed tokens from ADFS", "is_true": true, "explanation": "Smart card authentication requires the on-premises ADFS infrastructure because it involves Kerberos/certificate-based authentication against AD CA infrastructure. ADFS issues SAML/WS-Fed tokens that Entra ID trusts via federation. This is the only supported path for smart card auth to cloud apps. Entra Connect still syncs user objects so they exist in both directories." },
+      "d": { "text": "Entra Connect Cloud Sync — a lightweight sync agent handles both sync and smart card authentication", "is_true": false, "explanation": "Entra Connect Cloud Sync does not support smart card/certificate-based authentication. It is a cloud-managed sync tool. Smart card auth still requires ADFS." }
+    },
+    "correct_answer": ["c"]
+  },
+  {
+    "question_id": 4,
+    "question_text": "An organization has a subscription with a $10,000/month budget. A runaway automated process creates 500 VMs in one hour, consuming $8,000. The budget alert fires at 80%. The admin wants to PREVENT this from happening again. Which combination of controls should be implemented? (Select TWO)",
+    "options": {
+      "a": { "text": "Configure a Budget alert with an action group that triggers a Logic App or Automation Runbook to notify the team when 50% is reached", "is_true": false, "explanation": "Notification only does not prevent the runaway process. The team would be notified but the process would continue creating resources." },
+      "b": { "text": "Apply an Azure Policy to limit the maximum number of VM instances deployable per resource group or subscription", "is_true": true, "explanation": "Azure Policy can enforce resource count limits and restrict VM SKUs/regions. A policy limiting total VM count per resource group prevents a single automated process from creating hundreds of VMs. This is a proactive governance control." },
+      "c": { "text": "Configure a Budget alert that triggers an Azure Automation Runbook to remove the Contributor role from the service principal used by the automation process when spend reaches 60%", "is_true": true, "explanation": "Combining a Budget alert action group with an Automation Runbook provides automated spending enforcement. Revoking the service principal's permissions when a threshold is hit stops the runaway process. This is the proactive automated response to budget violations." },
+      "d": { "text": "Enable Azure Defender for Resource Manager to block bulk resource deployments", "is_true": false, "explanation": "Defender for Resource Manager detects suspicious management plane activity and sends alerts, but it does not block resource deployments or enforce spending limits. It provides security detection, not budget enforcement." }
+    },
+    "correct_answer": ["b", "c"]
+  },
+  {
+    "question_id": 5,
+    "question_text": "A multi-tier application has: web VMs (subnet 10.0.1.0/24, NSG-Web), app VMs (subnet 10.0.2.0/24, NSG-App), and database VMs (subnet 10.0.3.0/24, NSG-DB). NSG-DB has an inbound rule: Allow TCP 1433 from 10.0.0.0/16 (Any source in the VNet). A web VM at 10.0.1.10 tries to connect to the DB on port 1433. The NSG-App on the app subnet has a rule: Deny All Outbound. Can the web VM connect to the DB?",
+    "options": {
+      "a": { "text": "No — NSG-App's Deny All Outbound blocks traffic leaving the app subnet, which also blocks traffic transiting through it from the web subnet", "is_true": false, "explanation": "NSGs evaluate traffic based on the NIC/subnet where the NSG is attached. NSG-App controls traffic to/from the app VMs. Traffic from the web subnet to the DB subnet does NOT traverse the app subnet — it goes directly between subnets via the VNet fabric." },
+      "b": { "text": "Yes — web VM traffic to the DB goes directly between web subnet and DB subnet; NSG-App only applies to app VM traffic, not to traffic transiting the VNet", "is_true": true, "explanation": "Azure VNet subnets communicate directly — traffic between subnets does not 'traverse' other subnets. NSG-App only inspects traffic originating from or destined to the 10.0.2.0/24 subnet (app VMs). Traffic from 10.0.1.10 (web) to 10.0.3.x (DB) only passes through NSG-Web (outbound from web VM's NIC/subnet) and NSG-DB (inbound to DB's subnet/NIC). NSG-App is irrelevant." },
+      "c": { "text": "No — the default VNet routing sends all inter-subnet traffic through a central router where NSG-App applies", "is_true": false, "explanation": "Azure VNet does not have a central router that traffic passes through. NSGs are attached to specific subnets and NICs. Inter-subnet traffic goes through the subnet NSG of the source and the subnet NSG of the destination only." },
+      "d": { "text": "It depends on whether NSG-Web has an outbound rule allowing TCP 1433 to 10.0.3.0/24", "is_true": false, "explanation": "This is partially true (NSG-Web's outbound rules do apply to web VM traffic), but the question asks specifically whether the NSG-App Deny All Outbound blocks the connection. It does not — NSG-App only applies to app VM interfaces." }
+    },
+    "correct_answer": ["b"]
+  },
+  {
+    "question_id": 6,
+    "question_text": "A company deploys 200 VMs across 10 resource groups. They want to centralize all VM diagnostic logs in a single Log Analytics workspace using the Azure Monitor Agent. What is the most scalable deployment approach?",
+    "options": {
+      "a": { "text": "Install the AMA extension manually on each of the 200 VMs via the portal", "is_true": false, "explanation": "Manual installation on 200 VMs is impractical and error-prone. This does not scale and creates ongoing operational burden for new VMs." },
+      "b": { "text": "Assign Azure Policy (DeployIfNotExists) at the subscription or management group level to automatically deploy AMA and associate a Data Collection Rule with all VMs", "is_true": true, "explanation": "The scalable approach is Azure Policy DINE assignments at subscription/management group level: (1) Deploy AMA extension to Windows/Linux VMs. (2) Associate a Data Collection Rule (DCR) that routes data to the central workspace. New VMs automatically get the agent and DCR association. Microsoft provides built-in DINE policies for this exact scenario." },
+      "c": { "text": "Create a single Data Collection Rule and manually associate it with each of the 200 VMs", "is_true": false, "explanation": "Manually associating a DCR with 200 VMs is manageable once but does not handle new VMs automatically. Policy-based deployment ensures new VMs are also covered." },
+      "d": { "text": "Use Azure Automation State Configuration (DSC) to install and configure AMA on all VMs", "is_true": false, "explanation": "DSC can manage VM configuration states but is more complex to set up than Azure Policy for this specific use case. Azure Policy with DINE is the Azure-native, purpose-built mechanism for automated agent deployment." }
+    },
+    "correct_answer": ["b"]
+  },
+  {
+    "question_id": 7,
+    "question_text": "A company stores customer data in Azure Blob Storage with LRS redundancy. A regional disaster destroys the Azure datacenter. The company needs to recover. What is the impact and what could they have done differently to improve RTO?",
+    "options": {
+      "a": { "text": "LRS data is automatically replicated to a secondary region; recovery is automatic with zero RTO", "is_true": false, "explanation": "LRS replicates data within a single datacenter only (3 copies in one zone/datacenter). There is no secondary region with LRS. A datacenter destruction means all 3 LRS copies are lost." },
+      "b": { "text": "LRS data is permanently lost if the datacenter is destroyed — upgrading to GRS or GZRS with read access (RA-GRS/RA-GZRS) would have provided a secondary region replica for recovery", "is_true": true, "explanation": "LRS keeps 3 copies within a single datacenter. A total datacenter loss destroys all copies. To protect against regional disasters, GRS (6 copies: 3 primary + 3 secondary region) or GZRS should be used. RA-GRS/RA-GZRS additionally allows reads from the secondary region before failover, reducing RTO. A failover operation converts the secondary to primary." },
+      "c": { "text": "LRS stores copies across 3 datacenters in the region — one datacenter failure only loses 1 of 3 copies; the remaining 2 copies in other datacenters are still accessible", "is_true": false, "explanation": "LRS stores all 3 copies within a SINGLE datacenter (specifically a single availability set within one datacenter). It does NOT distribute copies across multiple datacenters. ZRS distributes across multiple availability zones/datacenters." },
+      "d": { "text": "LRS automatically triggers a cross-region failover when it detects the primary datacenter is offline", "is_true": false, "explanation": "LRS does not have a secondary region and therefore cannot perform cross-region failover. Cross-region failover is a feature of GRS and GZRS accounts only, and even then requires manual initiation (except for Microsoft-initiated failover in rare cases)." }
+    },
+    "correct_answer": ["b"]
+  },
+  {
+    "question_id": 8,
+    "question_text": "A company uses Conditional Access to require MFA for all sign-ins. The CEO uses a Yubikey hardware security key for MFA. During a security incident, all MFA methods for the CEO need to be bypassed immediately so they can sign in to investigate. How should this be handled?",
+    "options": {
+      "a": { "text": "Temporarily disable the CEO's Conditional Access policy assignment", "is_true": false, "explanation": "Disabling a CA policy affects all users in its scope, not just the CEO. This is too broad a change for an individual exception." },
+      "b": { "text": "Create a Conditional Access Named Location for the CEO's current IP and exclude that location from the MFA policy", "is_true": false, "explanation": "An IP-based exclusion requires knowing the CEO's IP in advance, can be spoofed, and is not a proper emergency access mechanism. Named locations are for trusted networks, not emergency bypass." },
+      "c": { "text": "Use a pre-configured emergency access (break-glass) account that is excluded from all Conditional Access policies and is not subject to MFA requirements", "is_true": true, "explanation": "Emergency access accounts (break-glass accounts) are a best practice: cloud-only accounts with long random passwords, excluded from all CA policies, stored in a physical safe, monitored with alerts. For the CEO's situation, the break-glass account can be used temporarily. Microsoft explicitly recommends having at least 2 break-glass accounts excluded from MFA and CA policies for disaster recovery." },
+      "d": { "text": "Reset the CEO's MFA methods in Entra ID to remove the Yubikey requirement", "is_true": false, "explanation": "Resetting MFA methods removes the Yubikey, but the CEO still needs to register a new MFA method before they can sign in (registration itself requires being signed in or using a temporary access pass). This doesn't provide immediate bypass." }
+    },
+    "correct_answer": ["c"]
+  },
+  {
+    "question_id": 9,
+    "question_text": "A company deploys Azure Kubernetes Service (AKS). The security team requires that the Kubernetes API server is not accessible from the public internet — only from the company's on-premises network (connected via ExpressRoute). Which AKS feature achieves this?",
+    "options": {
+      "a": { "text": "Configure AKS authorized IP ranges to include only the on-premises IP range", "is_true": false, "explanation": "Authorized IP ranges restrict who can access the public API server endpoint, but the API server still has a public IP. If the IP range is compromised or changes, access could be unintentionally exposed. The requirement is to have NO public endpoint." },
+      "b": { "text": "Deploy AKS with a Private Cluster configuration — the API server gets a private IP accessible only within the VNet (and by extension, via ExpressRoute from on-premises)", "is_true": true, "explanation": "AKS Private Cluster assigns the API server a private IP within the VNet using a private endpoint. There is no public endpoint — kubectl and CI/CD tools must route through the VNet. Since the company's on-premises network connects via ExpressRoute to the VNet, on-premises access to the private API server endpoint works naturally." },
+      "c": { "text": "Apply NSG rules on the AKS node subnet to block inbound traffic from the internet on port 443", "is_true": false, "explanation": "NSGs on node subnets control traffic to worker nodes, not to the AKS API server. The API server is a managed control plane component — its access is controlled via AKS private cluster configuration, not NSG rules on node subnets." },
+      "d": { "text": "Enable Azure Firewall in the AKS VNet and route all inbound API server traffic through it", "is_true": false, "explanation": "Azure Firewall controls outbound traffic from AKS nodes and inbound to specific workloads. It does not make the AKS API server private. The API server's public vs. private status is determined by the Private Cluster configuration at AKS creation time." }
+    },
+    "correct_answer": ["b"]
+  },
+  {
+    "question_id": 10,
+    "question_text": "A production application experiences intermittent 503 errors from Azure Application Gateway. The backend VMs are healthy and serve requests normally when accessed directly. Which diagnostics should the admin check FIRST?",
+    "options": {
+      "a": { "text": "Check the Application Gateway Access Logs and Backend Health in the portal for failed requests and backend pool status", "is_true": true, "explanation": "503 from Application Gateway means the gateway itself is refusing or cannot forward requests (different from 502 which means backend is unreachable). The Access Logs show request-level details including response codes. Backend Health shows real-time health probe status. Together these reveal whether the issue is request routing, capacity, WAF blocks, or health probe failures. This is the right first diagnostic step." },
+      "b": { "text": "Restart the Application Gateway to clear any cached connections", "is_true": false, "explanation": "Restarting an Application Gateway is a disruptive action that causes a brief outage. It is not a diagnostic step — it is a last-resort remediation. Investigating logs first is always the correct approach." },
+      "c": { "text": "Scale up the Application Gateway to a larger instance size to increase connection capacity", "is_true": false, "explanation": "Scaling up without diagnosing the cause may not fix the issue and wastes money. Capacity issues would typically manifest as consistent errors under high load, not 'intermittent' 503s. Diagnose first." },
+      "d": { "text": "Check the NSG rules on the Application Gateway subnet for blocked inbound connections from clients", "is_true": false, "explanation": "NSG issues would cause consistent failures for traffic from blocked IP ranges, not intermittent 503s with healthy backends. The Access Logs and Backend Health are more directly indicative of the root cause." }
+    },
+    "correct_answer": ["a"]
+  },
+  {
+    "question_id": 11,
+    "question_text": "An admin needs to provide a vendor with temporary read-only access to specific blobs in a storage container. The access must expire in 48 hours, and the vendor must not be able to enumerate (list) the container contents. Which is the most appropriate solution?",
+    "options": {
+      "a": { "text": "Add the vendor as a Guest user in Entra ID and assign the Storage Blob Data Reader role on the specific container", "is_true": false, "explanation": "Storage Blob Data Reader at the container level grants read AND list permissions. The vendor could enumerate all blobs. Additionally, managing guest accounts for 48-hour access and then cleaning them up is operationally heavier than using a SAS token." },
+      "b": { "text": "Generate a Service SAS token for specific blob(s) with Read permission only, valid for 48 hours, and share the SAS URL with the vendor", "is_true": true, "explanation": "A Service SAS token can be scoped to specific blobs (not the container) with only the 'Read' permission and a 48-hour expiry. The vendor receives a URL with the token appended — they can read the specific blob(s) but cannot list container contents (no 'List' permission). This is the minimal-privilege, time-bound approach." },
+      "c": { "text": "Set the container's access level to 'Blob' (anonymous read access for blobs)", "is_true": false, "explanation": "Anonymous access makes blobs readable by anyone — not just the vendor. This violates the principle of least privilege and exposes the data to the entire internet." },
+      "d": { "text": "Create a Stored Access Policy on the container with 48-hour expiry and share it with the vendor", "is_true": false, "explanation": "A Stored Access Policy defines constraints for SAS tokens but is not itself an access credential. The vendor still needs a SAS token that references the policy. A Stored Access Policy is useful for being able to revoke access by modifying the policy, which is a good practice to add to option B." }
+    },
+    "correct_answer": ["b"]
+  },
+  {
+    "question_id": 12,
+    "question_text": "A company's Azure environment has 500 subscriptions organized under management groups. The security team needs to ensure that all new subscriptions automatically have Azure Defender for Servers enabled. Which approach requires the least ongoing maintenance?",
+    "options": {
+      "a": { "text": "Create a runbook that runs daily to check and enable Defender for Servers on any subscription missing it", "is_true": false, "explanation": "A daily runbook introduces latency (up to 24 hours before a new subscription is secured) and requires ongoing maintenance of the runbook code and schedule." },
+      "b": { "text": "Assign an Azure Policy (DeployIfNotExists) at the root management group that deploys the Defender for Servers configuration to all subscriptions, including new ones", "is_true": true, "explanation": "A DINE policy at the management group level automatically applies to new subscriptions added under that group. Microsoft Defender for Cloud (formerly Security Center) has built-in DINE policies for enabling Defender plans. This requires zero ongoing maintenance — new subscriptions inherit the policy and Defender is deployed automatically." },
+      "c": { "text": "Configure an alert in Azure Monitor that fires when a new subscription is detected, triggering a Logic App to enable Defender", "is_true": false, "explanation": "This approach works but is more complex to build and maintain than a policy assignment. Policy DINE is the purpose-built mechanism for this type of automated deployment." },
+      "d": { "text": "Enable Defender for Servers at the management group level — the setting automatically propagates to all child subscriptions", "is_true": false, "explanation": "Defender for Servers is enabled at the subscription level. There is no native management group-level toggle that automatically enables Defender in child subscriptions. Azure Policy is the mechanism for automated subscription-level configuration." }
+    },
+    "correct_answer": ["b"]
+  },
+  {
+    "question_id": 13,
+    "question_text": "A company runs Azure Site Recovery for VM replication from East US to West US. After a planned maintenance, an admin performs a test failover successfully. The test failover VMs are running in an isolated test network. Production VMs continue to replicate normally. Two weeks later, a real disaster occurs and the admin initiates an actual failover. The portal shows an error preventing the failover. What is the most likely cause?",
+    "options": {
+      "a": { "text": "The replication has drifted too far from the source due to the two-week gap since the test failover", "is_true": false, "explanation": "Two weeks of normal replication would not cause a failover error. ASR continuously syncs delta changes. Replication health would show warnings/errors if there were sync issues." },
+      "b": { "text": "The test failover was never cleaned up — ASR requires test failover cleanup before running an actual failover", "is_true": true, "explanation": "Azure Site Recovery requires that any active test failover be cleaned up before you can initiate an actual (planned or unplanned) failover. 'Clean up test failover' removes the test VMs and marks the test as complete. If this step was skipped, ASR blocks actual failover with an error indicating the test failover is still active." },
+      "c": { "text": "The Recovery Services vault's soft delete feature locked the replicated VM configuration after 14 days", "is_true": false, "explanation": "Soft delete in Recovery Services vault applies to backup items that have been explicitly deleted. It does not lock replication configurations or affect ASR failover operations after any time period." },
+      "d": { "text": "The isolated test network used during test failover was deleted, invalidating the failover configuration", "is_true": false, "explanation": "If the test failover cleanup was properly performed, the test network deletion would have been part of that cleanup. Even if the test network was separately deleted, this would affect future test failovers but would not block actual failovers." }
+    },
+    "correct_answer": ["b"]
+  },
+  {
+    "question_id": 14,
+    "question_text": "An application team deploys an Azure App Service web app and wants zero-downtime deployment. They use deployment slots. During a slot swap, users report a brief period of errors. What is the most likely cause of errors during a swap?",
+    "options": {
+      "a": { "text": "The swap process deletes the staging slot before creating the new production slot, causing a brief outage", "is_true": false, "explanation": "Slot swaps in Azure App Service do NOT delete and recreate slots. The swap is done by routing table changes and is designed to be seamless." },
+      "b": { "text": "The production slot's application is being warmed up after the swap but is still responding with errors during warmup — the staging slot should have been fully warmed up before swapping", "is_true": true, "explanation": "During a swap, Azure performs a warm-up of the staging slot (sending requests to staging's new configuration) before routing production traffic. If the app in staging isn't configured with a warm-up path, or if the app takes time to initialize after receiving production settings, users may hit errors during the swap window. Always configure a warm-up URL and use 'auto swap' with health checks enabled to ensure the new version is ready before traffic is switched." },
+      "c": { "text": "Slot swaps are not atomic — there is always a 30-second window where traffic is split between both slots", "is_true": false, "explanation": "Azure App Service slot swaps are designed to be seamless. While the swap is in progress, Azure warms up the new slot, then performs a quick routing switch. There is no guaranteed 30-second split window." },
+      "d": { "text": "The staging slot must be on a separate App Service Plan to support zero-downtime swaps", "is_true": false, "explanation": "Staging and production slots share the same App Service Plan. Slots do not require separate plans — in fact, they are specifically designed to share resources within one plan to minimize cost." }
+    },
+    "correct_answer": ["b"]
+  },
+  {
+    "question_id": 15,
+    "question_text": "A company's Log Analytics workspace receives logs from 100 VMs using the Azure Monitor Agent. An admin writes a KQL query to find VMs that had any critical Windows event (EventLevelName == 'Critical') in the last 24 hours. The query returns empty results, but the admin knows critical events occurred. What should be checked? (Select TWO)",
+    "options": {
+      "a": { "text": "Whether the Data Collection Rule (DCR) associated with the VMs is configured to collect Windows Event logs and specifically the 'System' or 'Application' channel where critical events are recorded", "is_true": true, "explanation": "AMA only collects data sources explicitly defined in the associated DCR. If the DCR is not configured to collect Windows Event logs (or is configured for only specific channels/levels), critical events from other channels will not appear in the workspace. Check DCR data sources configuration." },
+      "b": { "text": "Whether the VMs are running Windows Server 2022 — only Windows Server 2019 and earlier support AMA event collection", "is_true": false, "explanation": "Azure Monitor Agent supports Windows Server 2012 R2 and later, including Windows Server 2022. There is no version restriction preventing event collection on Windows Server 2022." },
+      "c": { "text": "Whether the KQL query uses the 'Event' table (for Windows Event logs) and the correct field name 'EventLevelName' (vs. 'Level' or other field names)", "is_true": true, "explanation": "Windows Event logs land in the 'Event' table in Log Analytics. The field for severity is 'EventLevelName' with values like 'Critical', 'Error', 'Warning'. If the query uses wrong table names or field names (e.g., 'Syslog' for Windows, or 'Level' instead of 'EventLevelName'), it will return no results even when events exist. Always verify table and field names in Log Analytics Schema." },
+      "d": { "text": "Whether the Log Analytics workspace is in the same Azure region as the VMs", "is_true": false, "explanation": "Azure Monitor Agent supports cross-region log ingestion to a Log Analytics workspace. The workspace and VMs do not need to be in the same region." }
+    },
+    "correct_answer": ["a", "c"]
+  },
+  {
+    "question_id": 16,
+    "question_text": "An organization manages 20 Azure subscriptions under two management groups: 'Production' and 'Development'. They want: (a) Production subscriptions to require VMs only in specific SKUs, (b) Development subscriptions to allow all SKU types but cap VM count at 10 per resource group, (c) Both to require a 'CostCenter' tag. What is the most efficient policy structure?",
+    "options": {
+      "a": { "text": "Create 20 separate policy assignments, one per subscription", "is_true": false, "explanation": "Twenty separate assignments for policies that group logically by management group is highly inefficient and hard to maintain. Management group-level assignments are the correct approach." },
+      "b": { "text": "Create a policy initiative (set) with all three policies; assign the initiative once to each management group with different parameters for SKU restrictions and VM counts", "is_true": true, "explanation": "Policy initiatives (sets) bundle multiple policies. Assigning the initiative to each management group with different parameter values (allowed SKUs = restricted for Production, all for Dev; max VM count = unlimited for Prod, 10 for Dev) achieves all requirements with minimal assignments. The CostCenter tag policy has the same parameters for both groups. This is the most efficient structure." },
+      "c": { "text": "Use Azure Blueprints to deploy policy assignments to each subscription individually", "is_true": false, "explanation": "Blueprints can work but require per-subscription assignments, which for 20 subscriptions means 20 blueprint assignments. Management group policy inheritance is simpler." },
+      "d": { "text": "Assign three separate policies at the root management group level, using scope exclusions to differentiate Production and Development behavior", "is_true": false, "explanation": "Using scope exclusions to differentiate behavior is the wrong pattern — you'd exclude Production subscriptions from the Dev-specific policy and vice versa, creating many exclusion records. Using management group-level assignments with parameterized initiatives is cleaner." }
+    },
+    "correct_answer": ["b"]
+  },
+  {
+    "question_id": 17,
+    "question_text": "A Windows VM in Azure boots into BitLocker recovery mode after being moved to a new host (due to Azure host maintenance). The VM's boot disk is encrypted with BitLocker using TPM. The BitLocker recovery key was backed up to Active Directory. The VM is in Azure (no on-premises AD). What is the most direct recovery path?",
+    "options": {
+      "a": { "text": "Delete the VM and restore from the latest Azure Backup recovery point", "is_true": false, "explanation": "Deleting and restoring from backup is a last resort with potential data loss (RPO gap). The VM is recoverable without restoration if the BitLocker recovery key is available." },
+      "b": { "text": "Retrieve the BitLocker recovery key from Entra ID (which stores BitLocker keys when the VM is Entra ID joined) or from Azure Key Vault if ADE was used alongside BitLocker", "is_true": true, "explanation": "For Azure VMs with BitLocker: if the VM is Entra ID joined, BitLocker recovery keys are escrowed to Entra ID and retrievable from the Devices blade. If Azure Disk Encryption (ADE) was used, the key is in Key Vault. Retrieve the 48-digit recovery key and enter it in the BitLocker recovery screen to unlock and boot the VM." },
+      "c": { "text": "Disable BitLocker by detaching the OS disk and attaching it to a new VM as a data disk", "is_true": false, "explanation": "An encrypted OS disk cannot simply be decrypted by attaching to another VM — you still need the recovery key or the original encryption key. Without the key, the data is inaccessible regardless of how it's attached." },
+      "d": { "text": "Contact Microsoft Support — BitLocker recovery in Azure can only be performed by Microsoft engineers", "is_true": false, "explanation": "BitLocker recovery is a self-service process using the recovery key. Microsoft Support does not have access to customer BitLocker keys. The admin must retrieve and enter the recovery key." }
+    },
+    "correct_answer": ["b"]
+  },
+  {
+    "question_id": 18,
+    "question_text": "A company has two Azure subscriptions (Sub-A and Sub-B) in the same Entra ID tenant. A VM in Sub-A needs to access a Key Vault in Sub-B using its managed identity. The VM's managed identity is assigned a 'Key Vault Secrets User' role on the Key Vault in Sub-B. The VM cannot access the Key Vault. What is the most likely additional requirement?",
+    "options": {
+      "a": { "text": "Managed identities cannot be used across subscriptions — a service principal must be used instead", "is_true": false, "explanation": "Managed identities are Entra ID objects and work across subscriptions within the same tenant. RBAC assignments can reference managed identities from any subscription in the tenant." },
+      "b": { "text": "The Key Vault's network firewall may be blocking access from the VM's VNet, which is in a different subscription", "is_true": true, "explanation": "If the Key Vault in Sub-B has network restrictions (firewall with selected networks), it may not include the VM's VNet from Sub-A. Cross-subscription private endpoints and firewall rules require explicit VNet configuration. The RBAC assignment is correct — the network access is the remaining barrier. Add the VM's VNet to the Key Vault's allowed networks (or use a private endpoint)." },
+      "c": { "text": "The RBAC role assignment must be made on the VM's subscription (Sub-A), not on the Key Vault's subscription (Sub-B)", "is_true": false, "explanation": "RBAC role assignments are made on the resource being accessed (the Key Vault in Sub-B), not on the caller's subscription. The assignment in Sub-B is correct." },
+      "d": { "text": "Cross-subscription Key Vault access requires the Key Vault to have a Purge Protection enabled", "is_true": false, "explanation": "Purge Protection prevents permanent deletion of a Key Vault and its contents after soft delete. It is a data protection feature completely unrelated to cross-subscription access control." }
+    },
+    "correct_answer": ["b"]
+  },
+  {
+    "question_id": 19,
+    "question_text": "An admin needs to recover a file from an Azure Backup of a Windows VM taken 3 days ago, without restoring the full VM. The admin clicks 'File Recovery' in the Azure Backup blade. What is the correct sequence of steps?",
+    "options": {
+      "a": { "text": "(1) Select recovery point → (2) Download and run the recovery script on the target Windows machine → (3) Browse the mounted backup as a drive → (4) Copy the required files → (5) Unmount/eject the recovery volume", "is_true": true, "explanation": "The Azure Backup File Recovery process for Windows: (1) Select the recovery point (3 days ago). (2) Download the executable recovery script — it contains the iSCSI connection credentials. (3) Run the script as Administrator on a Windows machine (can be the original VM or another). It mounts the backup volumes as additional drives. (4) Browse the drives and copy the needed files. (5) Click 'Unmount Disks' in the portal or run the unmount command to release the recovery volumes (must be done within 12 hours)." },
+      "b": { "text": "(1) Restore the full VM to a staging resource group → (2) Access the file on the restored VM → (3) Copy the file to the original VM → (4) Delete the staging VM", "is_true": false, "explanation": "This is the full VM restore approach, which is slower, more expensive, and unnecessary for single-file recovery. The File Recovery feature is exactly designed to avoid this workflow." },
+      "c": { "text": "(1) Select recovery point → (2) Mount the recovery point directly in the Azure portal file browser → (3) Download the specific file", "is_true": false, "explanation": "Azure Backup does not have an in-portal file browser for backup contents. The File Recovery workflow requires downloading and running a script that mounts the recovery point on a local machine." },
+      "d": { "text": "(1) Create a new VM from the recovery point snapshot → (2) Use RDP to access the VM → (3) Copy the file", "is_true": false, "explanation": "Recovery points are not the same as snapshots that can directly create VMs. This workflow also restores the entire VM when only a file is needed." }
+    },
+    "correct_answer": ["a"]
+  },
+  {
+    "question_id": 20,
+    "question_text": "A company architect designs a disaster recovery solution for a critical Azure application. The RTO requirement is 1 hour and RPO is 15 minutes. The application uses VMs with managed disks and an Azure SQL database. Which combination of services meets these requirements?",
+    "options": {
+      "a": { "text": "Azure Backup for VMs (daily backups) + Azure SQL geo-replication", "is_true": false, "explanation": "Azure Backup with daily backups has an RPO of up to 24 hours — far exceeding the 15-minute RPO requirement for VMs. Daily backups cannot meet 15-minute RPO." },
+      "b": { "text": "Azure Site Recovery for VMs (replication interval ~5 minutes, RPO typically under 15 min) + Azure SQL active geo-replication (RPO typically under 5 seconds)", "is_true": true, "explanation": "ASR replicates VM disk changes to the secondary region with RPO typically well under 15 minutes (often 5 minutes or less). RTO with ASR can be under 1 hour when using recovery plans with pre-configured scripts. Azure SQL active geo-replication maintains a continuously updated secondary database with RPO of seconds. Together, both services meet the 1-hour RTO and 15-minute RPO requirements." },
+      "c": { "text": "Azure Backup for VMs (hourly snapshots) + Azure SQL auto-failover group", "is_true": false, "explanation": "Azure Backup with hourly snapshots gives an RPO of up to 1 hour for VMs, which exceeds the 15-minute RPO requirement. SQL auto-failover groups meet the RPO, but VM backup does not." },
+      "d": { "text": "Azure Site Recovery for VMs + Azure SQL Backup (geo-redundant) with point-in-time restore", "is_true": false, "explanation": "Azure SQL geo-redundant backups with point-in-time restore typically have an RPO of 5-7 minutes (the log backup frequency) and RTO of minutes to hours depending on database size. While this might marginally meet the requirements, active geo-replication (option B) provides a live secondary with near-zero RPO, which is clearly the better fit." }
+    },
+    "correct_answer": ["b"]
+  }
+]

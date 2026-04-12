@@ -1,0 +1,222 @@
+[
+  {
+    "question_id": 1,
+    "question_text": "A company deploys a Virtual Machine Scale Set (VMSS) with a custom autoscale rule: scale out by 2 instances when CPU > 70% for 5 minutes, scale in by 1 when CPU < 30% for 10 minutes. The VMSS has a minimum of 2 and maximum of 10 instances. Currently at 4 instances with CPU at 80%. After 5 minutes, how many instances will the VMSS have?",
+    "options": {
+      "a": { "text": "6 instances — the scale-out rule adds 2 instances", "is_true": true, "explanation": "The scale-out condition is met: CPU > 70% for 5 minutes. The rule adds 2 instances to the current 4, resulting in 6 instances. This is within the maximum of 10." },
+      "b": { "text": "10 instances — VMSS scales to maximum during high CPU", "is_true": false, "explanation": "VMSS only scales by the configured increment (2 instances per scale-out event), not directly to the maximum. Multiple scale-out events would be needed to reach 10." },
+      "c": { "text": "5 instances — VMSS always scales by 1 instance at a time", "is_true": false, "explanation": "The scale-out rule is configured to add 2 instances, not 1. The scale-in rule uses 1 instance decrements, but scale-out is specifically set to 2." },
+      "d": { "text": "4 instances — the cooldown period prevents immediate scaling", "is_true": false, "explanation": "Cooldown applies after a scale event to prevent rapid oscillation. At the initial trigger (no recent scale events), the cooldown is not active and scaling proceeds as configured." }
+    },
+    "correct_answer": ["a"]
+  },
+  {
+    "question_id": 2,
+    "question_text": "A Windows VM in Azure uses a B2s instance (burstable). The VM is used for a batch processing job that runs for 4 hours at 100% CPU. After 2 hours, users report the job is running very slowly. What is the most likely cause?",
+    "options": {
+      "a": { "text": "The VM's data disk IOPS are throttled after 2 hours of continuous access", "is_true": false, "explanation": "Disk IOPS throttling is based on disk size and type, not time duration. Standard HDD/SSD disks have burst limits but B-series CPU credit depletion is a much more common and well-known exam scenario." },
+      "b": { "text": "The B2s VM's CPU credit balance has been depleted — the VM is now throttled to its baseline CPU performance (20% for B2s)", "is_true": true, "explanation": "B-series (burstable) VMs operate on a CPU credit model. The B2s has a baseline of 40% CPU credit accrual rate but a baseline utilization of 20%. Running at 100% CPU rapidly depletes credits. Once credits are exhausted (~2 hours depending on starting balance), the VM is throttled to its baseline CPU performance, causing significant slowdown for CPU-intensive workloads." },
+      "c": { "text": "The VM is experiencing memory pressure because B2s has only 4 GB RAM", "is_true": false, "explanation": "Memory pressure would cause gradual degradation and swapping throughout the workload, not a sudden slowdown at precisely the 2-hour mark. The timing strongly suggests CPU credit exhaustion." },
+      "d": { "text": "Azure is performing a live migration of the VM host for maintenance", "is_true": false, "explanation": "Live migrations cause brief (seconds) pauses, not a sustained slowdown lasting hours. The progressive slowdown correlating with extended 100% CPU usage is the B-series credit pattern." }
+    },
+    "correct_answer": ["b"]
+  },
+  {
+    "question_id": 3,
+    "question_text": "A company runs a stateless web application on a VMSS with uniform orchestration. They want zero-downtime updates when deploying new application versions. Which upgrade policy should be configured?",
+    "options": {
+      "a": { "text": "Manual — admin controls which instances are upgraded and when", "is_true": false, "explanation": "Manual upgrade requires admin intervention for each instance, which provides control but doesn't achieve automated zero-downtime rolling updates." },
+      "b": { "text": "Automatic — Azure upgrades all instances simultaneously as fast as possible", "is_true": false, "explanation": "Automatic upgrade applies updates to all instances concurrently. This causes downtime if all instances are rebooted simultaneously. It is not a zero-downtime approach." },
+      "c": { "text": "Rolling — Azure upgrades instances in batches, keeping a percentage of instances available at all times", "is_true": true, "explanation": "Rolling upgrade policy upgrades instances in configurable batches (e.g., 20% at a time) while keeping the rest running. Combined with a Load Balancer health probe, this achieves zero-downtime updates by ensuring sufficient healthy instances remain available throughout the upgrade." },
+      "d": { "text": "Blue-green — VMSS creates a second scale set and switches traffic via the load balancer", "is_true": false, "explanation": "Blue-green deployment is a valid zero-downtime strategy, but it is not a built-in VMSS upgrade policy. VMSS upgrade policies are Manual, Automatic, and Rolling." }
+    },
+    "correct_answer": ["c"]
+  },
+  {
+    "question_id": 4,
+    "question_text": "An admin needs to deploy a containerized application that requires 4 CPU cores and 8 GB memory, runs for exactly 2 hours per day, and has no persistent state. The team wants minimal management overhead. Which Azure service is most appropriate?",
+    "options": {
+      "a": { "text": "Azure Kubernetes Service (AKS) with a single-node cluster", "is_true": false, "explanation": "AKS adds significant management overhead (node pool management, upgrades, networking) for a simple stateless container that runs briefly. The node runs 24/7, incurring unnecessary cost for a 2-hour daily workload." },
+      "b": { "text": "Azure Container Instances (ACI) — serverless containers that start on demand with per-second billing", "is_true": true, "explanation": "ACI is ideal for stateless, short-running containers with no persistent state. It starts in seconds, charges only for the time it runs (per second), requires zero infrastructure management, and supports specific CPU/memory requests. For a 2-hour/day workload, ACI is far more cost-effective than maintaining a VM or AKS cluster." },
+      "c": { "text": "Azure App Service with a container deployment on a P2v3 plan", "is_true": false, "explanation": "App Service plans run continuously and bill per hour regardless of whether the app is processing requests. For a 2-hour daily workload with no state, App Service is more expensive and provides more features than needed." },
+      "d": { "text": "Azure Virtual Machines with Docker installed", "is_true": false, "explanation": "A VM requires management overhead (OS patching, VM sizing, shutdown/start scheduling) and runs 24/7 unless explicitly deallocated each day. This is the highest management option and most expensive for a 2-hour workload." }
+    },
+    "correct_answer": ["b"]
+  },
+  {
+    "question_id": 5,
+    "question_text": "A company deploys VMs in an Availability Set with 3 fault domains and 5 update domains. They have 10 VMs. During planned maintenance, how many VMs are guaranteed to remain available at minimum?",
+    "options": {
+      "a": { "text": "8 VMs — Azure only reboots 2 at a time", "is_true": false, "explanation": "During planned maintenance, Azure processes one update domain at a time. With 5 update domains and 10 VMs, approximately 2 VMs per update domain. Only 1 update domain is affected at a time." },
+      "b": { "text": "9 VMs — only 1 update domain (approximately 2 VMs) is taken down at a time during planned maintenance", "is_true": true, "explanation": "During planned maintenance, Azure updates one update domain at a time. With 5 update domains and 10 VMs, each update domain contains approximately 2 VMs (10/5). Azure guarantees at minimum the VMs in all other update domains remain available. So at worst, 2 VMs are down simultaneously, leaving 8 available — or if 10/5 = exactly 2 per UD, 8 remain. However, the guarantee is that at minimum all VMs outside the current update domain are available." },
+      "c": { "text": "7 VMs — the 3 fault domains can each have 1 VM offline simultaneously", "is_true": false, "explanation": "Fault domains protect against unplanned hardware failures (power, switch failures), not planned maintenance. Update domains are the relevant concept for planned maintenance windows." },
+      "d": { "text": "5 VMs — Azure takes down half the VMs at once during maintenance", "is_true": false, "explanation": "Azure does not take down half the VMs during maintenance. Update domains are processed one at a time, meaning only a fraction (1 update domain worth) of VMs are affected at any moment." }
+    },
+    "correct_answer": ["b"]
+  },
+  {
+    "question_id": 6,
+    "question_text": "A company runs a critical database VM and needs to maximize availability. They want protection from both hardware failures within a datacenter AND datacenter-level failures. Which deployment option provides this?",
+    "options": {
+      "a": { "text": "Availability Set with 3 fault domains", "is_true": false, "explanation": "Availability Sets distribute VMs across fault domains within a single datacenter. They protect against rack-level hardware failures but do NOT protect against datacenter-level failures or entire zone outages." },
+      "b": { "text": "Deploy two VMs in different Availability Zones within the same region", "is_true": true, "explanation": "Availability Zones are physically separate datacenters within a region (separate power, cooling, networking). Deploying VMs across zones protects against both hardware failures within a zone AND entire zone (datacenter) outages. This provides the highest SLA (99.99%) compared to Availability Sets (99.95%)." },
+      "c": { "text": "Availability Set with 5 update domains", "is_true": false, "explanation": "Update domains control planned maintenance sequencing, not fault isolation for hardware failures. An Availability Set with 5 update domains provides no additional protection against datacenter failures." },
+      "d": { "text": "Deploy the VM with Premium SSD managed disks", "is_true": false, "explanation": "Premium SSD improves disk performance and has a higher SLA, but disk type has no bearing on VM availability or protection against datacenter failures. VM placement (Availability Zones) is what provides datacenter-level protection." }
+    },
+    "correct_answer": ["b"]
+  },
+  {
+    "question_id": 7,
+    "question_text": "An admin deploys an Azure App Service web app on a Standard S1 plan. The team needs the ability to test a new version of the app before routing production traffic to it. Which feature should be used?",
+    "options": {
+      "a": { "text": "Create a second App Service Plan and deploy the test version there, then swap the plans", "is_true": false, "explanation": "App Service Plans cannot be 'swapped'. This approach would require DNS changes and doesn't provide controlled traffic routing. Deployment slots are the purpose-built feature for this." },
+      "b": { "text": "Use deployment slots to deploy the new version to a staging slot and perform a slot swap when ready", "is_true": true, "explanation": "Deployment slots (available on Standard tier and above) allow you to deploy a new app version to a staging slot with its own URL. You can warm up the staging slot, test it thoroughly, then perform a zero-downtime swap that promotes staging to production. The swap also allows rollback by swapping back." },
+      "c": { "text": "Use Azure Traffic Manager to split traffic between the old and new versions by weighting", "is_true": false, "explanation": "Traffic Manager works at the DNS level across different endpoints (regions, services). For A/B testing within a single App Service, deployment slots with traffic percentage splitting (Traffic Manager within the slot settings) is the native solution." },
+      "d": { "text": "Enable deployment slots requires upgrading to Premium P1v3 plan — Standard S1 is insufficient", "is_true": false, "explanation": "Deployment slots are available on Standard tier (S1, S2, S3) and above. Standard S1 supports up to 5 deployment slots. Premium offers more slots but Standard is sufficient for basic staging/production workflows." }
+    },
+    "correct_answer": ["b"]
+  },
+  {
+    "question_id": 8,
+    "question_text": "A developer needs to run a custom PowerShell script on 50 Azure VMs immediately after they are provisioned. The scripts are stored in Azure Blob Storage. Which VM extension is designed for this purpose?",
+    "options": {
+      "a": { "text": "Azure Monitor Agent extension — it runs scripts to configure monitoring", "is_true": false, "explanation": "The Azure Monitor Agent extension installs the AMA for log and metric collection. It does not execute arbitrary custom scripts." },
+      "b": { "text": "Custom Script Extension (CSE) — downloads and runs scripts from a storage URI during or after VM provisioning", "is_true": true, "explanation": "The Custom Script Extension is designed exactly for this: it downloads a script from a specified URI (Blob Storage, GitHub, etc.) and executes it on the VM. It can be deployed via ARM templates, the portal, CLI, or PowerShell and runs once on demand or at provisioning time." },
+      "c": { "text": "VM Access Extension — provides script execution capabilities alongside credential reset", "is_true": false, "explanation": "The VM Access Extension is used to reset VM credentials (passwords, SSH keys) and fix RDP/SSH configuration. It does not execute arbitrary custom scripts." },
+      "d": { "text": "Desired State Configuration (DSC) Extension — runs PowerShell scripts to configure VM state", "is_true": false, "explanation": "DSC Extension applies PowerShell DSC configurations (declarative state, not imperative scripts). While it uses PowerShell under the hood, it's designed for idempotent configuration management, not running one-time imperative scripts." }
+    },
+    "correct_answer": ["b"]
+  },
+  {
+    "question_id": 9,
+    "question_text": "A company has Azure VMs that need to access Azure resources (Key Vault, Storage) securely without managing credentials in code. Which identity approach should be used?",
+    "options": {
+      "a": { "text": "Create a service principal, store its client secret in environment variables on each VM", "is_true": false, "explanation": "Storing secrets in environment variables on VMs is insecure — environment variables can be read by any process on the VM. Managing and rotating secrets across many VMs adds operational overhead. Managed identities eliminate this need." },
+      "b": { "text": "Assign a system-assigned managed identity to each VM and grant it the required roles on the target resources", "is_true": true, "explanation": "System-assigned managed identities are created and managed by Azure, tied to the VM lifecycle. The VM can acquire tokens automatically from the Azure Instance Metadata Service (IMDS) without any credentials in code. Granting the managed identity RBAC roles on Key Vault or Storage allows secure, credential-free access." },
+      "c": { "text": "Use the VM's local administrator account to authenticate to Azure services", "is_true": false, "explanation": "Local OS accounts have no direct relationship to Azure RBAC or service authentication. Azure services use Entra ID identities, not OS accounts, for authentication." },
+      "d": { "text": "Store the storage account key in Azure Key Vault and have the VM retrieve it at startup", "is_true": false, "explanation": "This still requires the VM to authenticate to Key Vault to retrieve the secret — which brings you back to the same credentials problem. Managed identity is the solution: the VM authenticates to Key Vault using its managed identity, not a stored secret." }
+    },
+    "correct_answer": ["b"]
+  },
+  {
+    "question_id": 10,
+    "question_text": "An admin runs `az vm resize --resource-group myRG --name myVM --size Standard_D4s_v3` on a running VM. What happens to the VM during this operation?",
+    "options": {
+      "a": { "text": "The VM is resized live with no interruption if the new size is available on the same host cluster", "is_true": false, "explanation": "VM resizing always requires a reboot. Some resizes can be done without deallocating (in-place resize) but always involve a restart. However, if the new size is not available in the current cluster, deallocation is required." },
+      "b": { "text": "The VM is rebooted (restarted) to apply the new size; if the new size requires a different host cluster, the VM must first be deallocated", "is_true": true, "explanation": "Resizing a running VM forces a restart. If the target size is available in the same Azure cluster, the resize can proceed with just a reboot. If it requires a different cluster (e.g., changing VM families), the VM must be deallocated first, which releases the host assignment and allows allocation on a different cluster." },
+      "c": { "text": "The VM is live-migrated with zero downtime, similar to host maintenance", "is_true": false, "explanation": "Azure's live migration for host maintenance is transparent to the VM. VM resizing is different — it requires a restart because the VM's virtual hardware configuration changes (CPU, memory, etc.)." },
+      "d": { "text": "The resize is queued and applied during the next planned maintenance window", "is_true": false, "explanation": "VM resizing is an on-demand operation initiated by the admin. It is not queued for maintenance windows. The resize happens immediately (with a reboot or deallocation requirement)." }
+    },
+    "correct_answer": ["b"]
+  },
+  {
+    "question_id": 11,
+    "question_text": "A company wants to run multiple containers that need to communicate with each other over localhost. The containers share the same lifecycle and need a single public IP. Which Azure service and configuration supports this?",
+    "options": {
+      "a": { "text": "Azure Kubernetes Service with a multi-container deployment", "is_true": false, "explanation": "AKS is a valid option but adds significant cluster management overhead for a simple multi-container group. ACI container groups are the simpler option for this specific pattern." },
+      "b": { "text": "Azure Container Instances with a container group — multiple containers share the same network namespace and communicate over localhost", "is_true": true, "explanation": "ACI container groups are the multi-container equivalent of a Kubernetes pod. Containers in the same group share the same network namespace (can communicate via localhost), same lifecycle, and share a single public IP. This is the purpose-built ACI feature for sidecar and multi-container patterns." },
+      "c": { "text": "Azure App Service with multiple containers in a Docker Compose configuration", "is_true": false, "explanation": "App Service supports multi-container deployments via Docker Compose on Linux plans. However, containers communicate via Docker internal networking (service names), not localhost. App Service also adds HTTP-focused features not needed for a simple container group pattern." },
+      "d": { "text": "Azure Container Apps with Dapr sidecar enabled", "is_true": false, "explanation": "Azure Container Apps is a serverless container platform built on Kubernetes. While it supports sidecar patterns, it is more complex than ACI and designed for microservices with scaling and traffic management needs. For a simple same-lifecycle, shared-IP multi-container scenario, ACI container groups are more appropriate." }
+    },
+    "correct_answer": ["b"]
+  },
+  {
+    "question_id": 12,
+    "question_text": "A Linux VM has a data disk attached at /dev/sdc. An admin runs `sudo fdisk /dev/sdc` to partition the disk and creates a new partition. After mounting and writing data, the admin reboots the VM. After reboot, the partition is no longer mounted. What was missing?",
+    "options": {
+      "a": { "text": "The partition must be formatted with NTFS for Azure to auto-mount it on reboot", "is_true": false, "explanation": "Linux VMs use Linux filesystems (ext4, xfs). NTFS is a Windows filesystem. Azure does not auto-mount any partitions on Linux VMs regardless of filesystem type." },
+      "b": { "text": "The mount entry must be added to /etc/fstab for the mount to persist across reboots", "is_true": true, "explanation": "/etc/fstab is the Linux configuration file that defines permanent filesystem mounts. Without an entry in /etc/fstab, a mount made with the 'mount' command is temporary and is lost on reboot. The entry should use the disk UUID (not /dev/sdc which can change) to ensure reliable mounting." },
+      "c": { "text": "The data disk must be detached and reattached in the Azure portal to register the partition", "is_true": false, "explanation": "Disk attachment is an Azure operation that makes the disk available to the VM. Partition mounting is an OS operation managed by /etc/fstab. Detaching and reattaching in the portal does not create persistent mounts." },
+      "d": { "text": "The VM must have the 'az vm disk attach --persist' flag set to auto-mount disks after reboot", "is_true": false, "explanation": "There is no '--persist' flag for 'az vm disk attach'. Azure attaches the disk at the Azure level, but OS-level persistent mounting is always managed through /etc/fstab on Linux." }
+    },
+    "correct_answer": ["b"]
+  },
+  {
+    "question_id": 13,
+    "question_text": "An admin deploys a VM using an ARM template and wants to pass sensitive parameters (database passwords) to the template. Which approach is most secure?",
+    "options": {
+      "a": { "text": "Embed the passwords as plain text in the parameters file and encrypt the file locally", "is_true": false, "explanation": "Plain text in parameters files is a security risk — files get committed to source control, shared in deployments, and stored in deployment history. Azure Deployment Manager stores parameter values (including secure strings) in deployment history, but plain text parameters are visible there." },
+      "b": { "text": "Use Azure Key Vault references in the ARM template parameters file to retrieve secrets at deployment time", "is_true": true, "explanation": "ARM template parameters files support Key Vault references using the 'reference' property. The secret is retrieved from Key Vault at deployment time and never appears in the parameters file, source code, or deployment history logs. This is the recommended secure approach for passing secrets to ARM templates." },
+      "c": { "text": "Use a 'secureString' parameter type in the ARM template to encrypt the value during transmission", "is_true": false, "explanation": "The 'secureString' type prevents the value from being displayed in deployment logs and portal outputs, but the value still exists in the parameters file/command. Key Vault references are more secure because the secret itself is never written to a file." },
+      "d": { "text": "Store passwords in a storage account blob and have the VM retrieve them using the Custom Script Extension", "is_true": false, "explanation": "Storing passwords in a storage account blob requires managing access to that blob, and the retrieval script would need credentials. Key Vault is the purpose-built service for secrets management." }
+    },
+    "correct_answer": ["b"]
+  },
+  {
+    "question_id": 14,
+    "question_text": "A company uses Azure Spot VMs for batch processing workloads. An admin needs to handle spot VM evictions gracefully. Which configuration should be used?",
+    "options": {
+      "a": { "text": "Set the eviction policy to 'Stop/Deallocate' so the VM is deallocated (not deleted) on eviction, allowing work to resume when spot capacity is available", "is_true": true, "explanation": "Spot VM eviction policy of 'Stop/Deallocate' preserves the VM and its disks when Azure needs the capacity back. The VM is simply stopped, and when spot capacity is available again, it can be restarted and work can resume (if the application checkpoints its state). The alternative 'Delete' policy permanently destroys the VM and disks on eviction." },
+      "b": { "text": "Set the max price to $0 to get the lowest possible spot price and avoid eviction", "is_true": false, "explanation": "Setting max price to $0 would cause immediate eviction since the current price is always above $0. Max price should be set to the on-demand price (or -1 for 'never evict based on price, only on capacity')." },
+      "c": { "text": "Use Reserved Instances for spot VMs to lock in capacity and prevent eviction", "is_true": false, "explanation": "Reserved Instances and Spot VMs are separate purchasing models. Spot VMs are inherently preemptible — Reserved Instances apply to on-demand or dedicated capacity, not spot. You cannot reserve spot capacity." },
+      "d": { "text": "Enable Accelerated Networking on the spot VM to prevent eviction due to high network latency", "is_true": false, "explanation": "Accelerated Networking improves network performance. Spot VM evictions are based on Azure's capacity needs or when the current spot price exceeds your max price — network performance has no bearing on eviction decisions." }
+    },
+    "correct_answer": ["a"]
+  },
+  {
+    "question_id": 15,
+    "question_text": "A company runs an App Service web app and wants to configure automatic scaling based on HTTP queue depth. The app currently runs on a Standard S2 plan. What scaling option is available?",
+    "options": {
+      "a": { "text": "App Service autoscale is not available on Standard plans — Premium is required", "is_true": false, "explanation": "Autoscale (scale out to multiple instances based on rules) is available on Standard, Premium, and Isolated plans. The Standard plan fully supports autoscale." },
+      "b": { "text": "Configure Azure Monitor autoscale rules on the App Service Plan to scale instance count based on metrics like HTTP queue length", "is_true": true, "explanation": "App Service Plans support Azure Monitor autoscale rules. You can scale out (add instances) and scale in (remove instances) based on metrics including HTTP Queue Length, CPU percentage, Memory percentage, and custom metrics. HTTP Queue Length specifically measures pending HTTP requests awaiting processing — an excellent scale-out trigger." },
+      "c": { "text": "Only scale-up (changing tier) is supported — horizontal scaling (adding instances) requires AKS", "is_true": false, "explanation": "App Service supports both scale-up (changing plan size) and scale-out (adding instances). Scale-out (horizontal scaling) is a native App Service feature — no AKS is needed." },
+      "d": { "text": "HTTP queue depth is not a supported metric for autoscale — only CPU and memory are available", "is_true": false, "explanation": "HTTP Queue Length IS a supported App Service autoscale metric, along with CPU, Memory, Data In, Data Out, and others. It's one of the recommended metrics for request-based scaling." }
+    },
+    "correct_answer": ["b"]
+  },
+  {
+    "question_id": 16,
+    "question_text": "An admin needs to capture a generalized image of a Windows VM to use as a template for new VMs. What must be done to the VM BEFORE capturing the image?",
+    "options": {
+      "a": { "text": "Run Sysprep (/oobe /generalize /shutdown) on the VM to remove machine-specific configuration and generalize the image", "is_true": true, "explanation": "Sysprep removes machine-specific information (SID, computer name, certificates, event logs) from a Windows VM, preparing it for image capture. The /generalize flag makes the image deployable to multiple VMs. The VM must be shut down after Sysprep completes. Capturing without Sysprep creates a 'specialized' image (single use, preserves machine identity) not suitable as a general template." },
+      "b": { "text": "Take a snapshot of the OS disk before capturing to ensure consistency", "is_true": false, "explanation": "While snapshots are a good practice, they are not the required step before image capture. Sysprep (generalization) is the mandatory step for Windows VM templates." },
+      "c": { "text": "Deallocate the VM in Azure before running Sysprep on it", "is_true": false, "explanation": "Sysprep is run inside the VM's Windows OS while it is running. The VM must be running to execute Sysprep. After Sysprep completes and shuts down the VM, you then proceed to capture the image in Azure (which requires the VM to be deallocated)." },
+      "d": { "text": "Remove all data disks from the VM before capturing the OS disk image", "is_true": false, "explanation": "Azure Compute Gallery (and managed images) supports capturing VMs with data disks attached. Data disks do not need to be removed. However, if you only want to capture the OS disk as a template, you can choose to include or exclude data disks during capture." }
+    },
+    "correct_answer": ["a"]
+  },
+  {
+    "question_id": 17,
+    "question_text": "A VMSS is deployed with a load balancer. The autoscale is configured to add 1 instance when CPU > 80% and remove 1 instance when CPU < 20%. At 3 AM, load drops to 5% CPU. The VMSS scales in to 1 instance. At 8 AM, CPU spikes to 90%. What happens?",
+    "options": {
+      "a": { "text": "The scale-out rule immediately triggers and adds 1 instance, bringing the count to 2", "is_true": false, "explanation": "The scale-out rule uses a cooldown period (default 5 minutes) after the last scale event. If the cooldown has expired (3 AM to 8 AM is well past 5 minutes), scaling proceeds. The answer needs to account for the cooldown being expired." },
+      "b": { "text": "After the CPU remains above 80% for the rule's evaluation period, autoscale adds 1 instance. The cooldown from the 3 AM scale-in event has long since expired", "is_true": true, "explanation": "Autoscale rules have a cooldown period (default 5 minutes) to prevent rapid oscillation. The 3 AM scale-in event's cooldown is long expired by 8 AM. When CPU hits 90% and stays above 80% for the configured evaluation period, the scale-out rule fires normally and adds 1 instance." },
+      "c": { "text": "The VMSS cannot scale out after scaling in — a manual override is required to re-enable scale-out", "is_true": false, "explanation": "Autoscale rules work continuously in both directions. There is no 'lock' after scale-in events. The cooldown period is the only temporary restriction, and it expires after a few minutes." },
+      "d": { "text": "The VMSS scales out to maximum (10) immediately because the CPU spike is sudden", "is_true": false, "explanation": "Autoscale adds instances according to the rule increment (1 instance per trigger), not directly to maximum. Rapid scale-out requires multiple sequential triggers, each separated by the cooldown period." }
+    },
+    "correct_answer": ["b"]
+  },
+  {
+    "question_id": 18,
+    "question_text": "An admin wants to deploy an AKS cluster for a production microservices application. Which node pool configuration provides the best balance of availability and cost efficiency?",
+    "options": {
+      "a": { "text": "A single node pool with 3 nodes in a single availability zone", "is_true": false, "explanation": "A single availability zone provides no protection against zone-level failures. If the zone goes down, all 3 nodes are lost and the application goes offline." },
+      "b": { "text": "A system node pool spanning 3 availability zones with at least 1 node per zone, plus a user node pool for workloads spanning all 3 zones", "is_true": true, "explanation": "The recommended AKS production configuration uses zone-redundant node pools (--zones 1 2 3). The system node pool runs Kubernetes system components and must be highly available. User node pools run application workloads. Spreading across 3 zones ensures the cluster survives any single zone failure. This is the standard AKS production guidance." },
+      "c": { "text": "Use spot node pools for all workloads to minimize cost while maintaining availability via multiple instances", "is_true": false, "explanation": "Spot VMs are evictable at any time. Using spot for all nodes — including system nodes — risks losing all cluster capacity simultaneously during Azure capacity constraints. Spot nodes are appropriate for supplementary/batch user workloads, not for system components." },
+      "d": { "text": "Use Availability Sets for AKS nodes to ensure fault domain distribution within a single zone", "is_true": false, "explanation": "AKS supports Availability Zones (zone-redundant) for node pools. Availability Sets are an older mechanism for within-datacenter redundancy. Azure recommends Availability Zones for AKS node pools for maximum availability." }
+    },
+    "correct_answer": ["b"]
+  },
+  {
+    "question_id": 19,
+    "question_text": "An admin deploys an Azure VM using the Azure portal with no public IP address. The VM needs to run Windows Updates. Which outbound connectivity path does the VM use by default?",
+    "options": {
+      "a": { "text": "The VM cannot access the internet without a public IP — Windows Updates will fail", "is_true": false, "explanation": "Azure VMs have default outbound internet access even without a public IP (via Azure's default SNAT). However, this default outbound access is being deprecated for new VNets and is not recommended for production." },
+      "b": { "text": "Azure provides default outbound SNAT (Source NAT) for VMs without a public IP, allowing internet access for updates", "is_true": true, "explanation": "By default, Azure VMs in a subnet without an explicit outbound path (public IP, NAT Gateway, load balancer outbound rule) use Azure's default outbound access via implicit SNAT. This allows outbound internet connectivity for updates. Note: default outbound access is being deprecated for new VNets created after September 2025; NAT Gateway or explicit public IP is recommended." },
+      "c": { "text": "The VM uses the Azure Bastion host as its outbound internet gateway", "is_true": false, "explanation": "Azure Bastion is a service for secure remote access (RDP/SSH) to VMs in a browser. It is not a NAT gateway or internet egress service for VM traffic." },
+      "d": { "text": "Windows Update traffic is automatically routed through Azure's internal update service without needing internet access", "is_true": false, "explanation": "Azure does not provide a proxy Windows Update service. Azure VMs connect to Microsoft's public Windows Update servers (update.microsoft.com) via the internet. Azure Update Manager helps schedule and manage updates but does not proxy the download traffic." }
+    },
+    "correct_answer": ["b"]
+  },
+  {
+    "question_id": 20,
+    "question_text": "A company needs to ensure that all VMs in a subscription are tagged with 'CostCenter' at deployment time. New VMs deployed without this tag should be blocked. Which combination achieves this?",
+    "options": {
+      "a": { "text": "Azure Policy with the 'Audit' effect on a 'require tag' rule", "is_true": false, "explanation": "The 'Audit' effect logs non-compliant resources but does NOT block deployment. VMs without the tag would still be created." },
+      "b": { "text": "Azure Policy with the 'Deny' effect on a policy requiring the 'CostCenter' tag on all Microsoft.Compute/virtualMachines resources", "is_true": true, "explanation": "A Deny effect policy blocks the deployment if the specified condition is not met. Assigning a policy that requires the 'CostCenter' tag with Deny effect on the subscription will prevent any VM from being created without that tag, returning a 403 error with the policy violation message." },
+      "c": { "text": "Azure Blueprints with a resource group template that includes a required tags policy", "is_true": false, "explanation": "Azure Blueprints can include Policy assignments, but the enforcement comes from the Policy (Deny effect), not from Blueprints itself. The answer should focus on the Policy Deny effect as the enforcement mechanism." },
+      "d": { "text": "RBAC — restrict the Contributor role so it cannot create VMs without tags", "is_true": false, "explanation": "RBAC controls who can perform actions but cannot enforce conditions on the content of those actions (like requiring tags). Azure Policy is the right tool for enforcing resource configuration requirements like mandatory tags." }
+    },
+    "correct_answer": ["b"]
+  }
+]

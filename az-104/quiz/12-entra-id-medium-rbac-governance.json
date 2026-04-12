@@ -1,0 +1,611 @@
+{
+  "meta": {
+    "title": "Entra ID – Medium: RBAC, Custom Roles & Governance",
+    "subject": "Microsoft Entra ID",
+    "difficulty": "medium",
+    "version": "1.0.0",
+    "created": "2026-03-28"
+  },
+  "questions": [
+    {
+      "question_id": 1,
+      "question_text": "An Azure RBAC role assignment consists of three components. Which combination is correct?",
+      "difficulty": "medium",
+      "topic": "RBAC",
+      "tags": ["rbac", "role-assignment", "security-principal"],
+      "options": {
+        "a": {
+          "text": "Security principal, role definition, and scope",
+          "is_true": true,
+          "explanation": "Correct. Every RBAC role assignment has: a security principal (who — user, group, service principal, or managed identity), a role definition (what — the set of permissions), and a scope (where — management group, subscription, resource group, or resource)."
+        },
+        "b": {
+          "text": "Username, password, and resource group",
+          "is_true": false,
+          "explanation": "Incorrect. RBAC assignments do not involve passwords — they map principals to permissions at a scope."
+        },
+        "c": {
+          "text": "Subscription, tenant, and policy",
+          "is_true": false,
+          "explanation": "Incorrect. While subscriptions and tenants are related, this is not the structure of an RBAC assignment."
+        },
+        "d": {
+          "text": "User, application, and tag",
+          "is_true": false,
+          "explanation": "Incorrect. Tags are metadata for resources — they are not a component of RBAC role assignments."
+        }
+      },
+      "correct_answer": ["a"]
+    },
+    {
+      "question_id": 2,
+      "question_text": "A role is assigned to a user at the subscription level. What happens to resources in resource groups within that subscription?",
+      "difficulty": "medium",
+      "topic": "RBAC",
+      "tags": ["rbac", "inheritance", "scope"],
+      "options": {
+        "a": {
+          "text": "The user has no access to resources — roles must be assigned at each resource group individually",
+          "is_true": false,
+          "explanation": "Incorrect. RBAC assignments at a higher scope are inherited by all child scopes."
+        },
+        "b": {
+          "text": "The user's role is inherited by all resource groups and resources within the subscription",
+          "is_true": true,
+          "explanation": "Correct. Azure RBAC uses inheritance. A role assigned at the subscription scope applies to all resource groups and resources within that subscription. This is a fundamental RBAC concept."
+        },
+        "c": {
+          "text": "The user can only see the subscription — not the resources within it",
+          "is_true": false,
+          "explanation": "Incorrect. Role inheritance means the assigned permissions propagate down to all child resources."
+        },
+        "d": {
+          "text": "Inheritance only works for the Owner role, not for other roles",
+          "is_true": false,
+          "explanation": "Incorrect. All RBAC roles inherit down the scope hierarchy, not just Owner."
+        }
+      },
+      "correct_answer": ["b"]
+    },
+    {
+      "question_id": 3,
+      "question_text": "What is the key difference between the Contributor and Owner built-in roles?",
+      "difficulty": "medium",
+      "topic": "RBAC",
+      "tags": ["owner", "contributor", "role-assignment"],
+      "options": {
+        "a": {
+          "text": "Owner can create resources; Contributor cannot",
+          "is_true": false,
+          "explanation": "Incorrect. Both Owner and Contributor can create and manage resources."
+        },
+        "b": {
+          "text": "Owner can assign RBAC roles to others; Contributor cannot",
+          "is_true": true,
+          "explanation": "Correct. This is the critical distinction. Owner has full access including Microsoft.Authorization/roleAssignments/write — allowing them to grant access to others. Contributor has full resource management but explicitly excludes role assignment permissions."
+        },
+        "c": {
+          "text": "Contributor can delete resources; Owner cannot",
+          "is_true": false,
+          "explanation": "Incorrect. Both roles can delete resources."
+        },
+        "d": {
+          "text": "Owner only works at the subscription level; Contributor works at any scope",
+          "is_true": false,
+          "explanation": "Incorrect. Both roles can be assigned at any scope in the hierarchy."
+        }
+      },
+      "correct_answer": ["b"]
+    },
+    {
+      "question_id": 4,
+      "question_text": "How are effective permissions calculated when a user has multiple RBAC role assignments?",
+      "difficulty": "medium",
+      "topic": "RBAC",
+      "tags": ["rbac", "effective-permissions", "additive"],
+      "options": {
+        "a": {
+          "text": "The most restrictive role wins — permissions are intersected",
+          "is_true": false,
+          "explanation": "Incorrect. RBAC is additive, not restrictive. The union of all permissions applies."
+        },
+        "b": {
+          "text": "Only the role assigned at the lowest scope applies",
+          "is_true": false,
+          "explanation": "Incorrect. Roles at all scopes contribute to effective permissions. A Reader at the subscription plus a Contributor on a resource group means both sets of permissions are active."
+        },
+        "c": {
+          "text": "Effective permissions are the union (sum) of all role assignments across all scopes",
+          "is_true": true,
+          "explanation": "Correct. RBAC is additive. If a user has Reader at the subscription level and Contributor on a specific resource group, they get Reader everywhere in the subscription plus Contributor permissions on that resource group."
+        },
+        "d": {
+          "text": "The last assigned role overrides all previous assignments",
+          "is_true": false,
+          "explanation": "Incorrect. RBAC assignments are cumulative — there is no override behaviour based on assignment order."
+        }
+      },
+      "correct_answer": ["c"]
+    },
+    {
+      "question_id": 5,
+      "question_text": "What is a deny assignment in Azure RBAC?",
+      "difficulty": "medium",
+      "topic": "RBAC",
+      "tags": ["deny-assignment", "blueprints"],
+      "options": {
+        "a": {
+          "text": "A role that denies all permissions to a user, created by any admin",
+          "is_true": false,
+          "explanation": "Incorrect. Deny assignments cannot be created directly by admins through the portal. They are created by Azure Blueprints and managed apps."
+        },
+        "b": {
+          "text": "A system-created block on specific actions that takes precedence over role assignments, created by Azure Blueprints",
+          "is_true": true,
+          "explanation": "Correct. Deny assignments explicitly block specific actions even if a role assignment grants them. They are created by Azure Blueprints (and some managed applications) to protect critical resources. Deny always wins over allow."
+        },
+        "c": {
+          "text": "A conditional access policy that blocks resource access",
+          "is_true": false,
+          "explanation": "Incorrect. Conditional Access controls sign-in conditions — deny assignments are RBAC constructs that block specific resource operations."
+        },
+        "d": {
+          "text": "An Azure Policy with the Deny effect",
+          "is_true": false,
+          "explanation": "Incorrect. Azure Policy Deny blocks non-compliant resource configurations. RBAC deny assignments block specific RBAC operations. They are different mechanisms."
+        }
+      },
+      "correct_answer": ["b"]
+    },
+    {
+      "question_id": 6,
+      "question_text": "A custom RBAC role is defined with Actions, NotActions, DataActions, and NotDataActions. What do NotActions specify?",
+      "difficulty": "medium",
+      "topic": "Custom Roles",
+      "tags": ["custom-role", "notactions", "rbac"],
+      "options": {
+        "a": {
+          "text": "Actions that are explicitly denied and cannot be overridden",
+          "is_true": false,
+          "explanation": "Incorrect. NotActions are not deny rules. They are subtracted from the Actions list to compute the effective allowed operations. Another role assignment can still grant those actions."
+        },
+        "b": {
+          "text": "Management plane operations subtracted from the Actions list to define effective permissions",
+          "is_true": true,
+          "explanation": "Correct. NotActions are exclusions from the Actions list. Effective permissions = Actions minus NotActions. Importantly, if another role assignment grants an action listed in NotActions, the user still has that permission — NotActions is not a deny."
+        },
+        "c": {
+          "text": "Data plane operations that are blocked",
+          "is_true": false,
+          "explanation": "Incorrect. Data plane exclusions use NotDataActions, not NotActions. NotActions applies to management plane operations."
+        },
+        "d": {
+          "text": "Operations that require additional approval before execution",
+          "is_true": false,
+          "explanation": "Incorrect. RBAC does not have a built-in approval workflow for individual operations — that concept belongs to PIM."
+        }
+      },
+      "correct_answer": ["b"]
+    },
+    {
+      "question_id": 7,
+      "question_text": "What is the purpose of the User Access Administrator built-in role?",
+      "difficulty": "medium",
+      "topic": "RBAC",
+      "tags": ["user-access-admin", "role-assignment"],
+      "options": {
+        "a": {
+          "text": "Manage user accounts in Entra ID (create, delete, reset passwords)",
+          "is_true": false,
+          "explanation": "Incorrect. Managing Entra ID user accounts is done via Entra ID roles (e.g., User Administrator). User Access Administrator is an Azure RBAC role."
+        },
+        "b": {
+          "text": "Manage role assignments (grant/revoke access to Azure resources) without managing the resources themselves",
+          "is_true": true,
+          "explanation": "Correct. User Access Administrator can view all resources and assign RBAC roles, but cannot create, modify, or delete Azure resources. It separates access management from resource management."
+        },
+        "c": {
+          "text": "Grant full access to all Azure resources including role assignment",
+          "is_true": false,
+          "explanation": "Incorrect. That describes the Owner role, not User Access Administrator."
+        },
+        "d": {
+          "text": "Provide read-only access to user-related Azure resources",
+          "is_true": false,
+          "explanation": "Incorrect. That describes aspects of the Reader role. User Access Administrator specifically manages RBAC role assignments."
+        }
+      },
+      "correct_answer": ["b"]
+    },
+    {
+      "question_id": 8,
+      "question_text": "A resource lock of type ReadOnly is placed on a storage account. What can a user with the Owner role do?",
+      "difficulty": "medium",
+      "topic": "Resource Locks",
+      "tags": ["resource-lock", "readonly", "owner"],
+      "options": {
+        "a": {
+          "text": "Read, modify, and delete the storage account normally — Owner overrides locks",
+          "is_true": false,
+          "explanation": "Incorrect. Resource locks apply regardless of RBAC role, including Owner. No RBAC role can bypass a lock."
+        },
+        "b": {
+          "text": "Read the storage account but cannot modify or delete it until the lock is removed",
+          "is_true": true,
+          "explanation": "Correct. A ReadOnly lock prevents all modifications and deletions regardless of the user's RBAC role. Even an Owner must first remove the lock before making changes."
+        },
+        "c": {
+          "text": "Modify the storage account but cannot delete it",
+          "is_true": false,
+          "explanation": "Incorrect. That describes a CanNotDelete lock. A ReadOnly lock is stricter — it blocks both modifications and deletions."
+        },
+        "d": {
+          "text": "Only read the lock settings — the storage account is completely inaccessible",
+          "is_true": false,
+          "explanation": "Incorrect. ReadOnly lock still allows read operations on the resource — it blocks write and delete operations."
+        }
+      },
+      "correct_answer": ["b"]
+    },
+    {
+      "question_id": 9,
+      "question_text": "Tags applied to a resource group are inherited by the resources within it. True or false?",
+      "difficulty": "medium",
+      "topic": "Tags",
+      "tags": ["tags", "inheritance", "policy"],
+      "options": {
+        "a": {
+          "text": "True — tags automatically inherit from resource group to child resources",
+          "is_true": false,
+          "explanation": "Incorrect. This is a common misconception. Tags on a resource group do NOT automatically propagate to the resources within it."
+        },
+        "b": {
+          "text": "False — tags do not inherit; use Azure Policy with the 'Inherit a tag' effect to enforce this",
+          "is_true": true,
+          "explanation": "Correct. Azure tags do not inherit from resource groups to resources. To enforce tag propagation, use Azure Policy with the 'Inherit a tag from the resource group' built-in policy (Modify effect)."
+        },
+        "c": {
+          "text": "True — but only for resources created after the tag was added",
+          "is_true": false,
+          "explanation": "Incorrect. Tags never auto-inherit, regardless of when resources are created."
+        },
+        "d": {
+          "text": "True — but only with Entra ID P1 licensing",
+          "is_true": false,
+          "explanation": "Incorrect. Tag inheritance is not a licensing issue — tags simply do not inherit by default at any tier."
+        }
+      },
+      "correct_answer": ["b"]
+    },
+    {
+      "question_id": 10,
+      "question_text": "What is the maximum depth for nesting management groups (excluding the root management group and the subscription level)?",
+      "difficulty": "medium",
+      "topic": "Management Groups",
+      "tags": ["management-groups", "hierarchy", "nesting"],
+      "options": {
+        "a": {
+          "text": "3 levels",
+          "is_true": false,
+          "explanation": "Incorrect. Management groups can be nested deeper than 3 levels."
+        },
+        "b": {
+          "text": "6 levels",
+          "is_true": true,
+          "explanation": "Correct. Management groups can be nested up to 6 levels deep, not counting the root management group or the subscription level."
+        },
+        "c": {
+          "text": "10 levels",
+          "is_true": false,
+          "explanation": "Incorrect. The limit is 6 levels of nesting."
+        },
+        "d": {
+          "text": "Unlimited",
+          "is_true": false,
+          "explanation": "Incorrect. There is a limit of 6 levels of depth for management group nesting."
+        }
+      },
+      "correct_answer": ["b"]
+    },
+    {
+      "question_id": 11,
+      "question_text": "Which Azure Policy effect blocks the creation or update of a non-compliant resource?",
+      "difficulty": "medium",
+      "topic": "Azure Policy",
+      "tags": ["policy", "deny-effect"],
+      "options": {
+        "a": {
+          "text": "Audit",
+          "is_true": false,
+          "explanation": "Incorrect. Audit logs non-compliance but does not block the operation."
+        },
+        "b": {
+          "text": "Deny",
+          "is_true": true,
+          "explanation": "Correct. The Deny effect blocks the creation or update of a resource that does not comply with the policy definition."
+        },
+        "c": {
+          "text": "Modify",
+          "is_true": false,
+          "explanation": "Incorrect. Modify adds, updates, or removes properties to make a resource compliant — it does not block the operation."
+        },
+        "d": {
+          "text": "DeployIfNotExists",
+          "is_true": false,
+          "explanation": "Incorrect. DeployIfNotExists deploys a related resource if it is missing — it does not block the original resource operation."
+        }
+      },
+      "correct_answer": ["b"]
+    },
+    {
+      "question_id": 12,
+      "question_text": "An Entra ID administrator wants to delegate password reset capabilities to a help desk team, but ONLY for users in the Marketing department. Which feature enables this scoped delegation?",
+      "difficulty": "medium",
+      "topic": "Administrative Units",
+      "tags": ["administrative-units", "delegation", "scoped-admin"],
+      "options": {
+        "a": {
+          "text": "Create a custom RBAC role at the subscription level",
+          "is_true": false,
+          "explanation": "Incorrect. Azure RBAC roles manage Azure resources — not Entra ID directory operations like password resets."
+        },
+        "b": {
+          "text": "Create an Administrative Unit for Marketing and assign the Password Administrator role scoped to that AU",
+          "is_true": true,
+          "explanation": "Correct. Administrative Units allow scoped delegation of Entra ID directory roles. By placing Marketing users in an AU and assigning the help desk team the Password Administrator role scoped to that AU, they can only reset passwords for Marketing users."
+        },
+        "c": {
+          "text": "Assign the Global Administrator role with a note to only reset Marketing passwords",
+          "is_true": false,
+          "explanation": "Incorrect. Global Administrator is the most powerful Entra ID role and cannot be scoped. Relying on verbal instructions is not a security control."
+        },
+        "d": {
+          "text": "Create a Conditional Access policy that restricts password resets by department",
+          "is_true": false,
+          "explanation": "Incorrect. Conditional Access governs sign-in conditions — it cannot scope admin role permissions to specific departments."
+        }
+      },
+      "correct_answer": ["b"]
+    },
+    {
+      "question_id": 13,
+      "question_text": "What is the relationship between an Azure Policy initiative and a policy definition?",
+      "difficulty": "medium",
+      "topic": "Azure Policy",
+      "tags": ["policy", "initiative", "policy-set"],
+      "options": {
+        "a": {
+          "text": "An initiative is a collection of policy definitions grouped together for a common compliance goal",
+          "is_true": true,
+          "explanation": "Correct. An initiative (also called a policy set) bundles multiple policy definitions so they can be assigned and tracked as a single unit. For example, a 'CIS benchmark' initiative contains dozens of individual policies."
+        },
+        "b": {
+          "text": "An initiative replaces a policy definition — you cannot use both",
+          "is_true": false,
+          "explanation": "Incorrect. Initiatives contain policy definitions. You can assign individual definitions or group them into initiatives — both are valid."
+        },
+        "c": {
+          "text": "A policy definition contains multiple initiatives",
+          "is_true": false,
+          "explanation": "Incorrect. It is the other way around — an initiative contains multiple policy definitions."
+        },
+        "d": {
+          "text": "Initiatives are for audit only; policy definitions are for enforcement",
+          "is_true": false,
+          "explanation": "Incorrect. Both initiatives and individual policies can use any effect (Audit, Deny, Modify, etc.)."
+        }
+      },
+      "correct_answer": ["a"]
+    },
+    {
+      "question_id": 14,
+      "question_text": "Which Azure tool shows cost optimisation recommendations like shutting down idle VMs or purchasing reserved instances?",
+      "difficulty": "medium",
+      "topic": "Cost Management",
+      "tags": ["azure-advisor", "cost-optimisation"],
+      "options": {
+        "a": {
+          "text": "Azure Monitor",
+          "is_true": false,
+          "explanation": "Incorrect. Azure Monitor collects and analyses telemetry — it does not provide cost optimisation recommendations."
+        },
+        "b": {
+          "text": "Azure Advisor",
+          "is_true": true,
+          "explanation": "Correct. Azure Advisor analyses your usage and provides personalised recommendations across cost, security, reliability, operational excellence, and performance — including identifying idle resources and reservation opportunities."
+        },
+        "c": {
+          "text": "Azure Policy",
+          "is_true": false,
+          "explanation": "Incorrect. Azure Policy enforces compliance rules — it does not provide cost optimisation suggestions."
+        },
+        "d": {
+          "text": "Microsoft Defender for Cloud",
+          "is_true": false,
+          "explanation": "Incorrect. Defender for Cloud focuses on security posture and threat protection — not cost optimisation."
+        }
+      },
+      "correct_answer": ["b"]
+    },
+    {
+      "question_id": 15,
+      "question_text": "A company wants to prevent anyone from accidentally deleting a production resource group while still allowing modifications to the resources inside. Which lock type should they use?",
+      "difficulty": "medium",
+      "topic": "Resource Locks",
+      "tags": ["resource-lock", "cannotdelete"],
+      "options": {
+        "a": {
+          "text": "ReadOnly lock",
+          "is_true": false,
+          "explanation": "Incorrect. ReadOnly would prevent modifications as well — it is stricter than needed."
+        },
+        "b": {
+          "text": "CanNotDelete lock",
+          "is_true": true,
+          "explanation": "Correct. CanNotDelete allows authorised users to read and modify resources but prevents deletion. This is the right balance for protecting production resources while allowing day-to-day changes."
+        },
+        "c": {
+          "text": "Azure Policy with Deny effect on delete actions",
+          "is_true": false,
+          "explanation": "Incorrect. While Azure Policy could theoretically restrict deletions, resource locks are the standard and simpler mechanism for this purpose."
+        },
+        "d": {
+          "text": "Remove the Contributor role from all users",
+          "is_true": false,
+          "explanation": "Incorrect. Removing Contributor would prevent modifications, which contradicts the requirement."
+        }
+      },
+      "correct_answer": ["b"]
+    },
+    {
+      "question_id": 16,
+      "question_text": "At which scope can custom RBAC roles be created?",
+      "difficulty": "medium",
+      "topic": "Custom Roles",
+      "tags": ["custom-role", "assignable-scopes"],
+      "options": {
+        "a": {
+          "text": "Only at the subscription level",
+          "is_true": false,
+          "explanation": "Incorrect. Custom roles can also be scoped to management groups and resource groups."
+        },
+        "b": {
+          "text": "At management group, subscription, or resource group scope",
+          "is_true": true,
+          "explanation": "Correct. Custom roles can be defined with assignable scopes at the management group, subscription, or resource group level. They cannot be scoped to an individual resource."
+        },
+        "c": {
+          "text": "At any scope including individual resources",
+          "is_true": false,
+          "explanation": "Incorrect. Custom roles cannot be scoped to individual resources — only management groups, subscriptions, and resource groups."
+        },
+        "d": {
+          "text": "Only at the management group level",
+          "is_true": false,
+          "explanation": "Incorrect. Custom roles can be created at all three scopes above the resource level."
+        }
+      },
+      "correct_answer": ["b"]
+    },
+    {
+      "question_id": 17,
+      "question_text": "SCENARIO: Contoso assigns the Reader role to user Alice at the subscription level and the Contributor role at the 'Production-RG' resource group. What are Alice's effective permissions on a VM inside Production-RG?",
+      "difficulty": "medium",
+      "topic": "RBAC",
+      "tags": ["scenario", "effective-permissions", "inheritance"],
+      "options": {
+        "a": {
+          "text": "Reader only — the subscription-level role overrides the resource group role",
+          "is_true": false,
+          "explanation": "Incorrect. RBAC is additive — higher-scope roles do not override lower-scope roles."
+        },
+        "b": {
+          "text": "Contributor — permissions are the union of all assignments, and Contributor includes Reader",
+          "is_true": true,
+          "explanation": "Correct. RBAC is additive. Alice has Reader (from the subscription) plus Contributor (from the resource group). Since Contributor already includes all Reader permissions plus write/delete, her effective permissions on the VM are Contributor-level."
+        },
+        "c": {
+          "text": "No access — conflicting roles cancel each other out",
+          "is_true": false,
+          "explanation": "Incorrect. RBAC roles never cancel each other out — they are always combined additively."
+        },
+        "d": {
+          "text": "Reader on the VM but Contributor on other resources in the resource group",
+          "is_true": false,
+          "explanation": "Incorrect. The Contributor role at the resource group scope applies to all resources within it, including the VM."
+        }
+      },
+      "correct_answer": ["b"]
+    },
+    {
+      "question_id": 18,
+      "question_text": "SCENARIO: A company wants all new storage accounts in their subscription to be created with HTTPS-only traffic enabled. Non-compliant storage accounts should be blocked at creation time. What should they configure?",
+      "difficulty": "medium",
+      "topic": "Azure Policy",
+      "tags": ["scenario", "policy", "deny", "storage"],
+      "options": {
+        "a": {
+          "text": "An Azure Policy with the Deny effect that requires HTTPS on storage accounts",
+          "is_true": true,
+          "explanation": "Correct. An Azure Policy with the Deny effect will prevent the creation of storage accounts that do not have HTTPS-only traffic enabled, enforcing compliance at deployment time."
+        },
+        "b": {
+          "text": "An Azure Policy with the Audit effect",
+          "is_true": false,
+          "explanation": "Incorrect. Audit would log the non-compliance but not block the creation. The requirement is to block non-compliant storage accounts."
+        },
+        "c": {
+          "text": "A resource lock on the subscription",
+          "is_true": false,
+          "explanation": "Incorrect. Resource locks prevent deletion or modification of existing resources — they do not evaluate compliance of new resource configurations."
+        },
+        "d": {
+          "text": "A custom RBAC role that removes the Microsoft.Storage/write permission",
+          "is_true": false,
+          "explanation": "Incorrect. Removing storage write permissions would prevent all storage account creation, not just non-compliant ones."
+        }
+      },
+      "correct_answer": ["a"]
+    },
+    {
+      "question_id": 19,
+      "question_text": "SCENARIO: Fabrikam has three departments — Engineering, Sales, and Marketing. They want to track Azure costs by department. Resources can be in any resource group. What is the most flexible approach?",
+      "difficulty": "medium",
+      "topic": "Tags",
+      "tags": ["scenario", "tags", "cost-management"],
+      "options": {
+        "a": {
+          "text": "Create one resource group per department and use resource group-level cost analysis",
+          "is_true": false,
+          "explanation": "Incorrect. While this works for simple setups, it forces a rigid 1:1 mapping between departments and resource groups, which limits flexibility."
+        },
+        "b": {
+          "text": "Apply a 'Department' tag to resources and use Azure Cost Analysis to filter by tag",
+          "is_true": true,
+          "explanation": "Correct. Tags (e.g., Department=Engineering) are the most flexible approach because resources can be in any resource group while still being tracked by department. Azure Cost Analysis supports filtering and grouping by tag values."
+        },
+        "c": {
+          "text": "Create three separate subscriptions — one per department",
+          "is_true": false,
+          "explanation": "Incorrect. Separate subscriptions per department adds significant management overhead and is not required just for cost tracking."
+        },
+        "d": {
+          "text": "Use management groups to organise by department",
+          "is_true": false,
+          "explanation": "Incorrect. Management groups organise subscriptions for governance — they are too coarse-grained for department-level cost tracking within a single subscription."
+        }
+      },
+      "correct_answer": ["b"]
+    },
+    {
+      "question_id": 20,
+      "question_text": "SCENARIO: An admin needs to view the effective RBAC permissions for a specific user on a storage account. Where in the Azure portal can they check this?",
+      "difficulty": "medium",
+      "topic": "RBAC",
+      "tags": ["scenario", "check-access", "iam"],
+      "options": {
+        "a": {
+          "text": "The storage account's Access Control (IAM) blade → Check access",
+          "is_true": true,
+          "explanation": "Correct. The 'Check access' feature on the Access Control (IAM) blade allows you to search for a user, group, or service principal and view their effective permissions on that specific resource — accounting for all role assignments across all scopes."
+        },
+        "b": {
+          "text": "The Entra ID user's profile page",
+          "is_true": false,
+          "explanation": "Incorrect. The Entra ID user profile shows directory information — not Azure resource-level RBAC effective permissions."
+        },
+        "c": {
+          "text": "Azure Monitor activity log",
+          "is_true": false,
+          "explanation": "Incorrect. The activity log records operations that have occurred — it does not show current effective permissions."
+        },
+        "d": {
+          "text": "Azure Policy compliance dashboard",
+          "is_true": false,
+          "explanation": "Incorrect. Policy compliance shows whether resources comply with policy rules — not RBAC permissions for specific users."
+        }
+      },
+      "correct_answer": ["a"]
+    }
+  ]
+}

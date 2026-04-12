@@ -1,0 +1,611 @@
+{
+  "meta": {
+    "title": "Entra ID – Easy Review (Broad Fundamentals)",
+    "subject": "Microsoft Entra ID",
+    "difficulty": "easy",
+    "version": "1.0.0",
+    "created": "2026-03-28"
+  },
+  "questions": [
+    {
+      "question_id": 1,
+      "question_text": "What is the primary purpose of Microsoft Entra ID?",
+      "difficulty": "easy",
+      "topic": "Entra ID Overview",
+      "tags": ["entra-id", "identity", "overview"],
+      "options": {
+        "a": {
+          "text": "Cloud-based identity and access management",
+          "is_true": true,
+          "explanation": "Correct. Microsoft Entra ID is a cloud-based identity and access management service used to authenticate users and control access to Azure resources, Microsoft 365, and thousands of SaaS applications."
+        },
+        "b": {
+          "text": "Virtual network routing and DNS resolution",
+          "is_true": false,
+          "explanation": "Incorrect. Network routing and DNS are handled by Azure DNS and Azure Virtual Network — not Entra ID."
+        },
+        "c": {
+          "text": "Backup and disaster recovery for Azure VMs",
+          "is_true": false,
+          "explanation": "Incorrect. Azure Backup and Azure Site Recovery handle backup and DR — not Entra ID."
+        },
+        "d": {
+          "text": "Monitoring and alerting for Azure resources",
+          "is_true": false,
+          "explanation": "Incorrect. Azure Monitor handles monitoring and alerting — not Entra ID."
+        }
+      },
+      "correct_answer": ["a"]
+    },
+    {
+      "question_id": 2,
+      "question_text": "Which of the following is the sign-in identifier for users in Microsoft Entra ID?",
+      "difficulty": "easy",
+      "topic": "User Management",
+      "tags": ["upn", "sign-in", "users"],
+      "options": {
+        "a": {
+          "text": "SAM Account Name (DOMAIN\\username)",
+          "is_true": false,
+          "explanation": "Incorrect. SAM Account Name is used in on-premises AD DS. Entra ID uses the User Principal Name for sign-in."
+        },
+        "b": {
+          "text": "User Principal Name (user@domain.com)",
+          "is_true": true,
+          "explanation": "Correct. The UPN (User Principal Name) in email format is the primary sign-in identifier in Entra ID."
+        },
+        "c": {
+          "text": "Object ID (GUID)",
+          "is_true": false,
+          "explanation": "Incorrect. The Object ID is a unique internal identifier used by the system — users do not sign in with it."
+        },
+        "d": {
+          "text": "Employee number",
+          "is_true": false,
+          "explanation": "Incorrect. Employee number is an optional HR attribute — it is not used as a sign-in identifier."
+        }
+      },
+      "correct_answer": ["b"]
+    },
+    {
+      "question_id": 3,
+      "question_text": "What are the three types of user identities in Microsoft Entra ID?",
+      "difficulty": "easy",
+      "topic": "User Types",
+      "tags": ["user-types", "cloud", "synced", "guest"],
+      "options": {
+        "a": {
+          "text": "Cloud identity, synchronized identity, and guest user",
+          "is_true": true,
+          "explanation": "Correct. Cloud identities are created directly in Entra ID. Synchronized identities are synced from on-premises AD via Entra Connect. Guest users are external identities invited through B2B collaboration."
+        },
+        "b": {
+          "text": "Admin identity, standard identity, and service identity",
+          "is_true": false,
+          "explanation": "Incorrect. These are not the official Entra ID user type classifications."
+        },
+        "c": {
+          "text": "Internal user, external user, and managed identity",
+          "is_true": false,
+          "explanation": "Incorrect. Managed identities are for Azure resources, not human users. The three user types are cloud, synchronized, and guest."
+        },
+        "d": {
+          "text": "Free user, premium user, and enterprise user",
+          "is_true": false,
+          "explanation": "Incorrect. These are not Entra ID user type classifications. User types are not tied to licensing tiers."
+        }
+      },
+      "correct_answer": ["a"]
+    },
+    {
+      "question_id": 4,
+      "question_text": "Which group type in Entra ID is used to control access to Azure resources?",
+      "difficulty": "easy",
+      "topic": "Groups",
+      "tags": ["security-group", "access-control"],
+      "options": {
+        "a": {
+          "text": "Distribution group",
+          "is_true": false,
+          "explanation": "Incorrect. Distribution groups are for email distribution only — they cannot be used for RBAC role assignments or app access."
+        },
+        "b": {
+          "text": "Security group",
+          "is_true": true,
+          "explanation": "Correct. Security groups are used to assign Azure RBAC roles, control access to applications, and manage permissions to resources."
+        },
+        "c": {
+          "text": "Microsoft 365 group",
+          "is_true": false,
+          "explanation": "Incorrect. Microsoft 365 groups are primarily for collaboration (Teams, SharePoint). While they can grant some access, security groups are the standard choice for Azure resource access control."
+        },
+        "d": {
+          "text": "Dynamic group",
+          "is_true": false,
+          "explanation": "Incorrect. Dynamic is a membership type (how members are added), not a group type. A dynamic group can be either a security group or a Microsoft 365 group."
+        }
+      },
+      "correct_answer": ["b"]
+    },
+    {
+      "question_id": 5,
+      "question_text": "What does SSPR stand for in the context of Microsoft Entra ID?",
+      "difficulty": "easy",
+      "topic": "SSPR",
+      "tags": ["sspr", "password-reset"],
+      "options": {
+        "a": {
+          "text": "Single Sign-on Password Recovery",
+          "is_true": false,
+          "explanation": "Incorrect. SSO and SSPR are separate features."
+        },
+        "b": {
+          "text": "Self-Service Password Reset",
+          "is_true": true,
+          "explanation": "Correct. SSPR allows users to reset their own passwords without contacting the help desk, using pre-registered authentication methods like phone, email, or authenticator app."
+        },
+        "c": {
+          "text": "Subscription Service Password Rotation",
+          "is_true": false,
+          "explanation": "Incorrect. SSPR is not related to subscription services or automatic password rotation."
+        },
+        "d": {
+          "text": "Secure Server Protocol Relay",
+          "is_true": false,
+          "explanation": "Incorrect. SSPR is not a network protocol."
+        }
+      },
+      "correct_answer": ["b"]
+    },
+    {
+      "question_id": 6,
+      "question_text": "What is the minimum Entra ID license required for Conditional Access?",
+      "difficulty": "easy",
+      "topic": "Licensing",
+      "tags": ["conditional-access", "p1", "licensing"],
+      "options": {
+        "a": {
+          "text": "Entra ID Free",
+          "is_true": false,
+          "explanation": "Incorrect. Conditional Access is not available in the Free tier."
+        },
+        "b": {
+          "text": "Entra ID P1",
+          "is_true": true,
+          "explanation": "Correct. Conditional Access requires Entra ID P1 or higher."
+        },
+        "c": {
+          "text": "Entra ID P2",
+          "is_true": false,
+          "explanation": "Incorrect. P2 is not the minimum — Conditional Access is available starting at P1."
+        },
+        "d": {
+          "text": "Microsoft 365 E1",
+          "is_true": false,
+          "explanation": "Incorrect. M365 E1 does not include Entra ID P1. Conditional Access requires at least P1."
+        }
+      },
+      "correct_answer": ["b"]
+    },
+    {
+      "question_id": 7,
+      "question_text": "Which Entra ID feature is exclusive to the P2 license tier?",
+      "difficulty": "easy",
+      "topic": "Licensing",
+      "tags": ["p2", "pim", "identity-protection"],
+      "options": {
+        "a": {
+          "text": "Conditional Access",
+          "is_true": false,
+          "explanation": "Incorrect. Conditional Access is available with P1."
+        },
+        "b": {
+          "text": "Self-Service Password Reset",
+          "is_true": false,
+          "explanation": "Incorrect. SSPR is available with P1."
+        },
+        "c": {
+          "text": "Privileged Identity Management (PIM)",
+          "is_true": true,
+          "explanation": "Correct. PIM is a P2-exclusive feature. It provides just-in-time, time-limited, and approval-based privileged role activation."
+        },
+        "d": {
+          "text": "Dynamic group membership",
+          "is_true": false,
+          "explanation": "Incorrect. Dynamic group membership is available with P1."
+        }
+      },
+      "correct_answer": ["c"]
+    },
+    {
+      "question_id": 8,
+      "question_text": "In Entra ID, what is a tenant?",
+      "difficulty": "easy",
+      "topic": "Tenants",
+      "tags": ["tenant", "directory", "organisation"],
+      "options": {
+        "a": {
+          "text": "A dedicated, isolated instance of the Entra ID directory for an organisation",
+          "is_true": true,
+          "explanation": "Correct. A tenant is a dedicated, isolated instance of the Entra ID service. It represents an organisation and contains its users, groups, applications, and configuration."
+        },
+        "b": {
+          "text": "A virtual machine running Active Directory in Azure",
+          "is_true": false,
+          "explanation": "Incorrect. A tenant is a cloud-native directory instance, not a virtual machine."
+        },
+        "c": {
+          "text": "A billing account used to pay for Azure services",
+          "is_true": false,
+          "explanation": "Incorrect. Billing accounts and tenants are separate concepts. Subscriptions handle billing; tenants handle identity."
+        },
+        "d": {
+          "text": "A resource group that organises identity-related resources",
+          "is_true": false,
+          "explanation": "Incorrect. Resource groups organise Azure resources. A tenant is an Entra ID directory instance — a level above subscriptions and resource groups."
+        }
+      },
+      "correct_answer": ["a"]
+    },
+    {
+      "question_id": 9,
+      "question_text": "What is the purpose of Entra Connect?",
+      "difficulty": "easy",
+      "topic": "Hybrid Identity",
+      "tags": ["entra-connect", "sync", "hybrid"],
+      "options": {
+        "a": {
+          "text": "To connect Azure VMs to an on-premises network via VPN",
+          "is_true": false,
+          "explanation": "Incorrect. VPN connections are established by Azure VPN Gateway, not Entra Connect."
+        },
+        "b": {
+          "text": "To synchronise on-premises Active Directory identities to Entra ID",
+          "is_true": true,
+          "explanation": "Correct. Entra Connect syncs users, groups, and credentials from on-premises AD DS to Entra ID, enabling hybrid identity scenarios."
+        },
+        "c": {
+          "text": "To connect multiple Azure subscriptions together",
+          "is_true": false,
+          "explanation": "Incorrect. Subscriptions are organised under management groups — Entra Connect is not involved."
+        },
+        "d": {
+          "text": "To establish peering between Azure virtual networks",
+          "is_true": false,
+          "explanation": "Incorrect. VNet peering is a networking feature, unrelated to Entra Connect."
+        }
+      },
+      "correct_answer": ["b"]
+    },
+    {
+      "question_id": 10,
+      "question_text": "Which authentication method in Entra Connect is the simplest to deploy and stores a hash of the password hash in the cloud?",
+      "difficulty": "easy",
+      "topic": "Hybrid Identity",
+      "tags": ["phs", "password-hash-sync"],
+      "options": {
+        "a": {
+          "text": "Pass-Through Authentication (PTA)",
+          "is_true": false,
+          "explanation": "Incorrect. PTA validates passwords on-premises in real time and does not store password data in the cloud."
+        },
+        "b": {
+          "text": "ADFS Federation",
+          "is_true": false,
+          "explanation": "Incorrect. ADFS is the most complex method, requiring on-premises federation servers."
+        },
+        "c": {
+          "text": "Password Hash Synchronisation (PHS)",
+          "is_true": true,
+          "explanation": "Correct. PHS is the simplest method. It syncs a double-hashed version of the password to Entra ID, enabling cloud-side authentication even when on-premises infrastructure is unavailable."
+        },
+        "d": {
+          "text": "Certificate-based authentication",
+          "is_true": false,
+          "explanation": "Incorrect. Certificate-based authentication is a separate authentication method — not one of the Entra Connect sync authentication options."
+        }
+      },
+      "correct_answer": ["c"]
+    },
+    {
+      "question_id": 11,
+      "question_text": "What does Azure RBAC stand for?",
+      "difficulty": "easy",
+      "topic": "RBAC",
+      "tags": ["rbac", "access-control"],
+      "options": {
+        "a": {
+          "text": "Resource-Based Access Credentials",
+          "is_true": false,
+          "explanation": "Incorrect. RBAC stands for Role-Based Access Control."
+        },
+        "b": {
+          "text": "Role-Based Access Control",
+          "is_true": true,
+          "explanation": "Correct. Azure RBAC is the authorisation system that manages who has access to Azure resources, what they can do, and at what scope."
+        },
+        "c": {
+          "text": "Region-Based Access Configuration",
+          "is_true": false,
+          "explanation": "Incorrect. RBAC is not related to regions."
+        },
+        "d": {
+          "text": "Remote Backup and Compliance",
+          "is_true": false,
+          "explanation": "Incorrect. RBAC is an access control system, not a backup or compliance tool."
+        }
+      },
+      "correct_answer": ["b"]
+    },
+    {
+      "question_id": 12,
+      "question_text": "Which built-in RBAC role allows full access to all Azure resources AND the ability to assign roles to others?",
+      "difficulty": "easy",
+      "topic": "RBAC",
+      "tags": ["owner", "rbac", "built-in-roles"],
+      "options": {
+        "a": {
+          "text": "Contributor",
+          "is_true": false,
+          "explanation": "Incorrect. Contributor can manage all resources but cannot assign roles or manage access."
+        },
+        "b": {
+          "text": "Owner",
+          "is_true": true,
+          "explanation": "Correct. Owner has full access to all resources including the ability to delegate access by assigning Azure RBAC roles to other users."
+        },
+        "c": {
+          "text": "Reader",
+          "is_true": false,
+          "explanation": "Incorrect. Reader can only view resources — no modifications or access management."
+        },
+        "d": {
+          "text": "User Access Administrator",
+          "is_true": false,
+          "explanation": "Incorrect. User Access Administrator can manage role assignments but cannot manage the resources themselves."
+        }
+      },
+      "correct_answer": ["b"]
+    },
+    {
+      "question_id": 13,
+      "question_text": "What property must be set on a user account before a license can be assigned?",
+      "difficulty": "easy",
+      "topic": "User Management",
+      "tags": ["usage-location", "licensing"],
+      "options": {
+        "a": {
+          "text": "Department",
+          "is_true": false,
+          "explanation": "Incorrect. Department is an optional informational attribute — it is not required for license assignment."
+        },
+        "b": {
+          "text": "Manager",
+          "is_true": false,
+          "explanation": "Incorrect. Manager is an optional attribute — not a prerequisite for licensing."
+        },
+        "c": {
+          "text": "Usage location",
+          "is_true": true,
+          "explanation": "Correct. Usage location is required before any Microsoft license can be assigned. It determines which services are available based on the user's country/region."
+        },
+        "d": {
+          "text": "Job title",
+          "is_true": false,
+          "explanation": "Incorrect. Job title is optional and not related to license assignment."
+        }
+      },
+      "correct_answer": ["c"]
+    },
+    {
+      "question_id": 14,
+      "question_text": "What is Microsoft Entra Domain Services?",
+      "difficulty": "easy",
+      "topic": "Entra Domain Services",
+      "tags": ["entra-ds", "managed-domain"],
+      "options": {
+        "a": {
+          "text": "A managed service providing Kerberos, NTLM, LDAP, and Group Policy without customer-managed domain controllers",
+          "is_true": true,
+          "explanation": "Correct. Entra Domain Services provides traditional AD DS capabilities (domain join, Group Policy, Kerberos, NTLM, LDAP) as a managed Azure service — Microsoft handles all domain controller infrastructure."
+        },
+        "b": {
+          "text": "A tool to migrate on-premises Active Directory to the cloud",
+          "is_true": false,
+          "explanation": "Incorrect. Entra DS is not a migration tool — it is a managed domain service that runs alongside Entra ID."
+        },
+        "c": {
+          "text": "A free DNS service provided by Azure",
+          "is_true": false,
+          "explanation": "Incorrect. Azure DNS is a separate service. Entra DS provides domain services, not DNS."
+        },
+        "d": {
+          "text": "The new name for Active Directory Federation Services",
+          "is_true": false,
+          "explanation": "Incorrect. ADFS and Entra DS are completely different services. ADFS is for federation; Entra DS is a managed domain service."
+        }
+      },
+      "correct_answer": ["a"]
+    },
+    {
+      "question_id": 15,
+      "question_text": "Where are Azure RBAC roles assigned?",
+      "difficulty": "easy",
+      "topic": "RBAC",
+      "tags": ["rbac", "scope", "iam"],
+      "options": {
+        "a": {
+          "text": "Only at the subscription level",
+          "is_true": false,
+          "explanation": "Incorrect. RBAC roles can be assigned at four levels: management group, subscription, resource group, and individual resource."
+        },
+        "b": {
+          "text": "At any scope in the hierarchy: management group, subscription, resource group, or resource",
+          "is_true": true,
+          "explanation": "Correct. RBAC supports role assignment at any level of the scope hierarchy. Permissions assigned at a higher scope are inherited by all child scopes."
+        },
+        "c": {
+          "text": "Only in the Entra ID admin centre",
+          "is_true": false,
+          "explanation": "Incorrect. Azure RBAC roles are assigned via the Access Control (IAM) blade on any resource, resource group, subscription, or management group."
+        },
+        "d": {
+          "text": "Only at the resource group level",
+          "is_true": false,
+          "explanation": "Incorrect. While resource group is a common scope, RBAC assignments work at all four hierarchy levels."
+        }
+      },
+      "correct_answer": ["b"]
+    },
+    {
+      "question_id": 16,
+      "question_text": "What is the difference between Entra ID roles and Azure RBAC roles?",
+      "difficulty": "easy",
+      "topic": "RBAC",
+      "tags": ["entra-roles", "rbac-roles", "comparison"],
+      "options": {
+        "a": {
+          "text": "They are the same thing with different names",
+          "is_true": false,
+          "explanation": "Incorrect. They are separate role systems that manage different resources."
+        },
+        "b": {
+          "text": "Entra ID roles manage the directory (users, groups, apps); Azure RBAC roles manage Azure resources",
+          "is_true": true,
+          "explanation": "Correct. Entra ID roles (e.g., Global Administrator, User Administrator) control the directory. Azure RBAC roles (e.g., Owner, Contributor, Reader) control Azure resources. They are separate authorisation systems."
+        },
+        "c": {
+          "text": "Azure RBAC roles are for admins; Entra ID roles are for regular users",
+          "is_true": false,
+          "explanation": "Incorrect. Both role systems can include admin-level and limited-access roles."
+        },
+        "d": {
+          "text": "Entra ID roles require P2; Azure RBAC roles are always free",
+          "is_true": false,
+          "explanation": "Incorrect. Both role systems are available at all Entra ID tiers. Licensing does not determine which role system is available."
+        }
+      },
+      "correct_answer": ["b"]
+    },
+    {
+      "question_id": 17,
+      "question_text": "SCENARIO: A new employee joins Contoso. The IT admin creates a cloud user account in Entra ID, sets a temporary password, and tells the employee to sign in. The employee cannot sign in. The admin verifies the UPN and password are correct. What is the most likely cause?",
+      "difficulty": "easy",
+      "topic": "User Management",
+      "tags": ["scenario", "sign-in", "account-enabled"],
+      "options": {
+        "a": {
+          "text": "The user account is not enabled (sign-in blocked)",
+          "is_true": true,
+          "explanation": "Correct. When creating a user, the 'Block sign in' setting may be toggled on by default or accidentally. If the account is disabled, the user cannot authenticate regardless of correct credentials."
+        },
+        "b": {
+          "text": "The user needs an Entra ID P2 license to sign in",
+          "is_true": false,
+          "explanation": "Incorrect. No premium license is needed for basic sign-in. The Free tier supports user authentication."
+        },
+        "c": {
+          "text": "The user must first register for MFA before any sign-in attempt",
+          "is_true": false,
+          "explanation": "Incorrect. MFA registration happens during or after the first sign-in — it does not prevent the initial sign-in attempt."
+        },
+        "d": {
+          "text": "Cloud users must wait 24 hours before their account is active",
+          "is_true": false,
+          "explanation": "Incorrect. Cloud user accounts are available for sign-in immediately after creation."
+        }
+      },
+      "correct_answer": ["a"]
+    },
+    {
+      "question_id": 18,
+      "question_text": "SCENARIO: Contoso wants to invite an external consultant from Fabrikam to collaborate on an Azure DevOps project. The consultant should use their own Fabrikam credentials. Which Entra ID feature should Contoso use?",
+      "difficulty": "easy",
+      "topic": "B2B",
+      "tags": ["scenario", "b2b", "guest-user"],
+      "options": {
+        "a": {
+          "text": "Create a new cloud identity for the consultant in the Contoso tenant",
+          "is_true": false,
+          "explanation": "Incorrect. Creating a cloud identity means Contoso manages the consultant's credentials — the requirement is for the consultant to use their own Fabrikam credentials."
+        },
+        "b": {
+          "text": "Invite the consultant as a B2B guest user",
+          "is_true": true,
+          "explanation": "Correct. B2B guest invitation allows the Fabrikam consultant to authenticate using their home tenant credentials. Contoso controls what resources the guest can access without managing their password."
+        },
+        "c": {
+          "text": "Set up Entra Connect to sync Fabrikam's AD to Contoso's tenant",
+          "is_true": false,
+          "explanation": "Incorrect. Entra Connect syncs an organisation's own on-premises AD — you do not sync another company's AD into your tenant."
+        },
+        "d": {
+          "text": "Give the consultant a shared admin account",
+          "is_true": false,
+          "explanation": "Incorrect. Shared accounts violate security best practices and do not provide individual accountability."
+        }
+      },
+      "correct_answer": ["b"]
+    },
+    {
+      "question_id": 19,
+      "question_text": "SCENARIO: A company has 200 users joining the Finance department. The IT admin needs to add them all to Entra ID quickly. What is the most efficient approach?",
+      "difficulty": "easy",
+      "topic": "User Management",
+      "tags": ["scenario", "bulk-operations", "csv"],
+      "options": {
+        "a": {
+          "text": "Create each user one at a time in the Azure portal",
+          "is_true": false,
+          "explanation": "Incorrect. Creating 200 users individually is time-consuming and error-prone."
+        },
+        "b": {
+          "text": "Use the bulk create feature with a CSV file upload",
+          "is_true": true,
+          "explanation": "Correct. The Azure portal supports bulk user creation via CSV upload. The admin downloads a CSV template, fills in user details, and uploads it — creating all 200 users in one operation."
+        },
+        "c": {
+          "text": "Send 200 B2B guest invitations",
+          "is_true": false,
+          "explanation": "Incorrect. B2B invitations are for external users from other organisations — not for creating internal employee accounts."
+        },
+        "d": {
+          "text": "Create a dynamic group and the users will be auto-created",
+          "is_true": false,
+          "explanation": "Incorrect. Dynamic groups automatically manage group membership based on attributes — they do not create user accounts."
+        }
+      },
+      "correct_answer": ["b"]
+    },
+    {
+      "question_id": 20,
+      "question_text": "SCENARIO: An admin assigns a Microsoft 365 E3 license to a security group called 'All Employees'. A new hire is added to the group but does not receive the license. The admin checks and sees a license assignment error. What is the most likely cause?",
+      "difficulty": "easy",
+      "topic": "Licensing",
+      "tags": ["scenario", "group-licensing", "usage-location"],
+      "options": {
+        "a": {
+          "text": "The new hire's account does not have a usage location set",
+          "is_true": true,
+          "explanation": "Correct. Group-based licensing automatically assigns licenses to group members, but the user must have a usage location configured. Without it, the license assignment fails with an error that surfaces in the portal."
+        },
+        "b": {
+          "text": "Group-based licensing only works with Microsoft 365 groups, not security groups",
+          "is_true": false,
+          "explanation": "Incorrect. Group-based licensing works with security groups (the most common approach) and Microsoft 365 groups."
+        },
+        "c": {
+          "text": "The group has exceeded the maximum number of members",
+          "is_true": false,
+          "explanation": "Incorrect. There is no practical member limit that would cause a license assignment error for a typical organisation."
+        },
+        "d": {
+          "text": "Entra ID P2 is required for group-based licensing",
+          "is_true": false,
+          "explanation": "Incorrect. Group-based licensing requires Entra ID P1, not P2."
+        }
+      },
+      "correct_answer": ["a"]
+    }
+  ]
+}

@@ -1,0 +1,222 @@
+[
+  {
+    "question_id": 1,
+    "question_text": "A company runs a Windows VM with a Premium SSD OS disk and three data disks. Azure Backup is configured with a daily backup policy at 2 AM. At 1:59 AM, a user saves a critical SQL Server transaction log file. The backup runs at 2:00 AM. Is the log file included in the 2 AM backup, and what type of consistency does the backup use?",
+    "options": {
+      "a": { "text": "No — Azure Backup freezes the disk at 2:00 AM exactly and files written in the same second may be missed", "is_true": false, "explanation": "Azure Backup does not 'freeze' at the exact second. It coordinates a VSS snapshot that quiesces all VSS-aware applications including SQL Server, ensuring all data written before the snapshot trigger is captured." },
+      "b": { "text": "Yes — Azure Backup uses VSS (Volume Shadow Copy Service) to create an application-consistent snapshot, ensuring all VSS-aware application data (including SQL Server) is in a consistent state at the point of snapshot", "is_true": true, "explanation": "Azure Backup for Windows VMs uses VSS to create application-consistent snapshots. VSS coordinates with VSS writers (SQL Server has a built-in VSS writer) to: (1) Quiesce in-flight I/O. (2) Flush in-memory data to disk. (3) Take the snapshot. The log file saved at 1:59 AM is fully captured. The resulting recovery point is application-consistent for SQL Server and all other VSS-aware applications." },
+      "c": { "text": "Yes — but only if the SQL Server VSS writer is manually registered each time before the backup", "is_true": false, "explanation": "The SQL Server VSS writer is automatically registered as a Windows service component. No manual registration per backup is required. It participates automatically in every VSS-coordinated backup." },
+      "d": { "text": "No — Azure Backup only creates crash-consistent snapshots; application consistency requires Azure Backup Server (MABS)", "is_true": false, "explanation": "Azure Backup for Azure VMs creates application-consistent snapshots on Windows using VSS directly, without requiring MABS. MABS is needed for workload-specific features like item-level restore for SQL Server and Exchange — not for basic application-consistent VM backup." }
+    },
+    "correct_answer": ["b"]
+  },
+  {
+    "question_id": 2,
+    "question_text": "A company runs Windows Server VMs that require all security updates to be installed within 48 hours of release. The company has 100 VMs across multiple resource groups and subscriptions. Which Azure service manages scheduled patching at this scale?",
+    "options": {
+      "a": { "text": "Windows Server Update Services (WSUS) — deployed on a VM to centrally distribute patches", "is_true": false, "explanation": "WSUS is a valid on-premises patching tool but requires managing WSUS infrastructure, configuring each VM to point to WSUS, and does not integrate with Azure's scheduling and compliance reporting at scale." },
+      "b": { "text": "Azure Update Manager — provides centralized patch compliance assessment, scheduling, and deployment across VMs at scale using maintenance configurations", "is_true": true, "explanation": "Azure Update Manager (formerly Update Management in Automation) is the Azure-native service for VM patching at scale. It supports: (1) Compliance assessment showing missing patches. (2) Maintenance configurations to schedule patching windows. (3) On-demand patching. (4) Cross-subscription management. (5) Integration with Azure Policy for automatic onboarding. No separate infrastructure is required." },
+      "c": { "text": "Azure Automation State Configuration (DSC) — define a DSC configuration that ensures patches are applied", "is_true": false, "explanation": "DSC manages desired state configuration, not Windows Update patching. While DSC can trigger scripts, it is not designed for coordinating Windows Update scheduling, compliance reporting, and rollout management across 100 VMs." },
+      "d": { "text": "Azure Monitor Alerts — create an alert rule that triggers a runbook when a new security bulletin is published", "is_true": false, "explanation": "Azure Monitor alerts respond to metrics and log events. There is no 'new security bulletin published' signal in Azure Monitor. Azure Update Manager is the purpose-built service for patch management." }
+    },
+    "correct_answer": ["b"]
+  },
+  {
+    "question_id": 3,
+    "question_text": "An admin configures a Windows VM Scale Set (VMSS) with Uniform orchestration and a custom Windows Server image. The VMSS uses a Load Balancer. After deployment, the admin updates the VMSS model (changes the image version). Existing instances are not updated. What must the admin do to update the running instances?",
+    "options": {
+      "a": { "text": "Delete all existing VMSS instances — they are automatically recreated with the new model", "is_true": false, "explanation": "Deleting instances would cause service interruption. The proper approach is to use the upgrade operation (manual or trigger a rolling upgrade) depending on the upgrade policy." },
+      "b": { "text": "If upgrade policy is 'Manual', run 'az vmss update-instances' to upgrade specific or all instances to the latest model", "is_true": true, "explanation": "With Manual upgrade policy, updating the VMSS model does not automatically update running instances. The admin must explicitly trigger instance upgrades using 'az vmss update-instances --instance-ids *' (or specific IDs). Instances show 'Latest model: No' until upgraded. With Rolling or Automatic upgrade policy, instances would upgrade automatically." },
+      "c": { "text": "Create a new VMSS with the updated image — VMSS models cannot be updated after deployment", "is_true": false, "explanation": "VMSS models (image, extensions, custom data) can be updated after deployment. The model update applies to new instances immediately; existing instances are updated via the upgrade policy (Manual, Automatic, or Rolling)." },
+      "d": { "text": "The Load Balancer must be reconfigured after any VMSS model update to recognize the new instances", "is_true": false, "explanation": "The Load Balancer backend pool is associated with the VMSS, not individual instances. When instances are upgraded (not replaced), they remain in the same backend pool. No Load Balancer reconfiguration is needed for model updates." }
+    },
+    "correct_answer": ["b"]
+  },
+  {
+    "question_id": 4,
+    "question_text": "A company needs to run a Windows workload that requires a dedicated physical Azure host (no other customers on the same physical server) for licensing and compliance reasons. Which Azure service provides this?",
+    "options": {
+      "a": { "text": "Azure Isolated VMs (e.g., Standard_E80ids_v4) — isolated VM sizes guarantee a single customer per physical host", "is_true": false, "explanation": "Isolated VM sizes guarantee a full physical host for that single VM, but the entire host capacity is consumed by one VM. Azure Dedicated Hosts provide more flexibility — a dedicated host can run multiple VMs of the customer's choice within the host's capacity." },
+      "b": { "text": "Azure Dedicated Hosts — a physical server dedicated to a single customer where the customer can deploy multiple VMs and apply their own Windows Server licenses (BYOL via Azure Hybrid Benefit)", "is_true": true, "explanation": "Azure Dedicated Hosts provide physical host-level isolation. A dedicated host belongs to one customer, and the customer can deploy multiple VMs on it. Benefits include: isolation for compliance/licensing, BYOL for Windows Server licenses (Azure Hybrid Benefit on dedicated hosts counts per-socket), control over maintenance window timing, and visibility into the host hardware." },
+      "c": { "text": "Azure Reserved Instances — reserving a VM for 1 or 3 years guarantees physical host isolation", "is_true": false, "explanation": "Reserved Instances are a billing commitment for cost savings — they reserve pricing (not physical hardware). Reserved VMs run on shared physical hosts alongside other customers' VMs." },
+      "d": { "text": "Azure Confidential VMs — hardware-level isolation using AMD SEV-SNP or Intel TDX", "is_true": false, "explanation": "Confidential VMs provide hardware-enforced memory encryption and attestation to protect data from the cloud provider and other VMs. They run on shared hosts but with cryptographic isolation of the memory. They are not dedicated physical hosts." }
+    },
+    "correct_answer": ["b"]
+  },
+  {
+    "question_id": 5,
+    "question_text": "A Windows VM runs a legacy application that generates 10 GB of log files daily in C:\\AppLogs. After 30 days, logs older than 30 days should be automatically deleted to manage disk space. What is the simplest way to automate this without adding infrastructure?",
+    "options": {
+      "a": { "text": "Configure Azure Lifecycle Management to delete files older than 30 days from the C: drive", "is_true": false, "explanation": "Azure Lifecycle Management is for Azure Blob Storage — it manages blob tiers and deletion based on age. It has no awareness of VM guest OS filesystems." },
+      "b": { "text": "Create a Windows Scheduled Task on the VM that runs a PowerShell script to delete log files older than 30 days using Get-ChildItem and Remove-Item", "is_true": true, "explanation": "A Windows Scheduled Task with a PowerShell script is the simplest, zero-infrastructure approach: `Get-ChildItem 'C:\\AppLogs' | Where-Object { $_.LastWriteTime -lt (Get-Date).AddDays(-30) } | Remove-Item -Force`. The task runs nightly or weekly. No Azure-specific services required beyond the VM itself." },
+      "c": { "text": "Enable Azure Backup's file exclusion feature to skip files older than 30 days from backups, which also deletes them from disk", "is_true": false, "explanation": "Azure Backup file exclusion tells the backup agent to skip certain files when taking backups — it does not delete files from the VM's disk. These are separate operations." },
+      "d": { "text": "Configure Azure Monitor to alert when disk usage exceeds 80% and trigger a runbook to delete files", "is_true": false, "explanation": "A reactive alert-based approach only cleans up when already near-full. The question asks for proactive deletion of files older than 30 days. A scheduled task is simpler and more precise. The Azure Automation runbook approach adds infrastructure (Automation Account) for something achievable natively on the VM." }
+    },
+    "correct_answer": ["b"]
+  },
+  {
+    "question_id": 6,
+    "question_text": "Azure VM Insights (formerly Azure Monitor for VMs) is enabled on a Windows VM. In addition to standard metrics, which specific capability does VM Insights add that basic Azure Monitor cannot provide?",
+    "options": {
+      "a": { "text": "VM Insights provides billing cost breakdown per process running on the VM", "is_true": false, "explanation": "VM Insights does not provide billing data. Azure Cost Management handles costs. VM Insights focuses on performance and dependency mapping." },
+      "b": { "text": "VM Insights provides a Map view that shows processes running on the VM and their network connections to other VMs, services, and external endpoints (dependency mapping)", "is_true": true, "explanation": "VM Insights includes two main views: (1) Performance — charts for CPU, memory, disk, and network with guest OS perspective (more detailed than host metrics). (2) Map — powered by the Dependency Agent, shows all processes running on the VM and their actual network connections (TCP connections) to other resources. This is unique to VM Insights and provides application topology visibility not available from basic metrics." },
+      "c": { "text": "VM Insights enables automatic VM restarts when performance thresholds are crossed", "is_true": false, "explanation": "VM Insights is a monitoring and visualization service. It does not perform automated remediation. Alerts with action groups and Automation runbooks handle automated responses." },
+      "d": { "text": "VM Insights provides live memory dump analysis to detect application crashes in real time", "is_true": false, "explanation": "VM Insights does not analyze memory dumps. It collects and visualizes performance metrics and process/network dependency data. Memory dump analysis requires separate tooling (WinDbg, Windows Error Reporting, etc.)." }
+    },
+    "correct_answer": ["b"]
+  },
+  {
+    "question_id": 7,
+    "question_text": "A company uses Azure Hybrid Benefit for Windows Server to reduce costs on Azure VMs. Which licensing condition must be met to use Azure Hybrid Benefit?",
+    "options": {
+      "a": { "text": "The Windows Server license must be purchased from the Azure Marketplace", "is_true": false, "explanation": "Azure Hybrid Benefit is specifically for bringing YOUR OWN existing Windows Server licenses to Azure — not for licenses purchased from the Marketplace. Marketplace images already include the license cost." },
+      "b": { "text": "The company must have Windows Server licenses covered by Software Assurance (SA) or Windows Server Subscriptions", "is_true": true, "explanation": "Azure Hybrid Benefit requires Windows Server Standard or Datacenter licenses with active Software Assurance (SA) coverage OR active Windows Server Subscriptions. SA provides the right to use licenses in both on-premises and cloud environments simultaneously. Without SA, the license can only be used in one environment." },
+      "c": { "text": "Azure Hybrid Benefit is automatically applied to all Windows VMs — no configuration is needed", "is_true": false, "explanation": "Azure Hybrid Benefit must be explicitly enabled per VM (during creation or by editing the VM configuration). It is not automatically applied. When enabled, the VM's billing changes from 'Windows Server included' (pay-as-you-go) to 'BYO license' (lower rate)." },
+      "d": { "text": "Azure Hybrid Benefit only applies to Windows 10/11 client licenses — Windows Server licenses use a different benefit program", "is_true": false, "explanation": "Azure Hybrid Benefit applies to both Windows Server licenses (for Azure VMs) and Windows client licenses (for Azure Virtual Desktop). Windows Server Hybrid Benefit is specifically for Azure VM workloads." }
+    },
+    "correct_answer": ["b"]
+  },
+  {
+    "question_id": 8,
+    "question_text": "A Windows VM runs IIS and hosts a critical web application. The VM is unresponsive to RDP and the application is down. Boot Diagnostics shows a black screen. The Azure Serial Console is not enabled. What immediate recovery actions are available? (Select TWO)",
+    "options": {
+      "a": { "text": "Redeploy the VM to a new host in case of a transient host failure", "is_true": true, "explanation": "Redeployment moves the VM to a new physical host. If the unresponsiveness is caused by a host hardware issue, redeployment can resolve it. The VM is briefly stopped and restarted on a new host, preserving all disks and configuration. This is a quick non-destructive recovery option." },
+      "b": { "text": "Use Azure VM Repair to attach the OS disk to a repair VM, run chkdsk and SFC, then reattach", "is_true": true, "explanation": "If the black screen indicates a disk corruption or filesystem issue, Azure VM Repair is the appropriate tool. Detach the OS disk, attach to a healthy repair VM, run 'chkdsk /f' and 'sfc /scannow' (offline), then reattach. This addresses OS-level filesystem issues that prevent boot." },
+      "c": { "text": "Enable Boot Diagnostics retroactively and refresh the screenshot to get the current console state", "is_true": false, "explanation": "Boot Diagnostics must be enabled BEFORE the issue occurs to capture boot screenshots and serial console output. If it's not enabled, enabling it now requires a VM restart — which you'd need to do anyway. It cannot retroactively capture what happened before enablement." },
+      "d": { "text": "Restore the VM from the Azure Backup recovery point taken yesterday", "is_true": false, "explanation": "Restoring from backup is valid but should be a last resort as it rolls back all data to yesterday's state. Redeployment and VM Repair are less destructive options that preserve current data." }
+    },
+    "correct_answer": ["a", "b"]
+  },
+  {
+    "question_id": 9,
+    "question_text": "An admin configures a Windows VMSS to automatically apply Windows Updates using Azure Update Manager. The company requires that updates are tested in a 'Wave 1' group (10 VMs) before deploying to 'Wave 2' (90 VMs), with a 48-hour delay between waves. Which Azure Update Manager feature enables this staged deployment?",
+    "options": {
+      "a": { "text": "VMSS upgrade policy — set to Rolling with a 10% batch size and 48-hour pause between batches", "is_true": false, "explanation": "VMSS rolling upgrade policy handles VM model updates (image, extension changes) not Windows patching. Azure Update Manager handles OS-level patching via maintenance configurations, not VMSS upgrade policies." },
+      "b": { "text": "Maintenance configurations with multiple schedules — assign Wave 1 VMs to a schedule that runs on Day 1 and Wave 2 VMs to a schedule that runs on Day 3", "is_true": true, "explanation": "Azure Update Manager maintenance configurations define when patching occurs. By creating two maintenance configurations (Wave 1: Tuesday 2 AM, Wave 2: Thursday 2 AM), and assigning VMs to their respective configurations, you achieve staged deployment with a 48-hour gap. Wave 1 completes and can be validated before Wave 2 begins." },
+      "c": { "text": "Azure Policy with a DeployIfNotExists effect that installs updates if a VM has been running for 48 hours since the last update", "is_true": false, "explanation": "Azure Policy DINE is not designed for orchestrating staged patch deployment timelines. Maintenance configurations in Update Manager provide the scheduling and grouping capabilities needed." },
+      "d": { "text": "Azure DevOps pipeline with ARM template deployments — trigger Wave 2 deployment manually after Wave 1 validation", "is_true": false, "explanation": "A DevOps pipeline is a valid option but adds pipeline infrastructure and manual trigger requirements. Azure Update Manager maintenance configurations are the purpose-built, fully-managed Azure-native solution." }
+    },
+    "correct_answer": ["b"]
+  },
+  {
+    "question_id": 10,
+    "question_text": "A Windows VM hosts a SQL Server with a 500 GB database on a Premium SSD data disk. The admin needs to create a backup that can be used to restore individual SQL Server tables and records. Which backup approach supports this?",
+    "options": {
+      "a": { "text": "Azure Backup for VMs (application-consistent) — the VSS snapshot captures SQL Server state and allows individual table recovery", "is_true": false, "explanation": "Azure VM Backup (even application-consistent with VSS) captures the disk at the volume level. It supports restoring files (using File Recovery) or the full VM, but NOT individual SQL tables or records. SQL item-level recovery requires a different approach." },
+      "b": { "text": "Azure Backup for SQL Server in VMs — workload-aware backup that captures SQL transaction logs and supports point-in-time recovery at the database level", "is_true": false, "explanation": "Azure Backup for SQL Server supports point-in-time database recovery (restoring a database to a specific second) and individual database restore. However, it still does not support individual TABLE or RECORD recovery — that would require SQL Server native backup with FILESTREAM or partial restore functionality." },
+      "c": { "text": "SQL Server native backup (.bak files) to Azure Blob Storage — SQL backup at the database or filegroup level allows item-level restore using SQL tools like SSMS with restore WITH PARTIAL or backup of specific filegroups", "is_true": true, "explanation": "For true item-level recovery (individual tables/records), SQL Server native backup provides the most granular options: (1) Full database backup to blob storage. (2) Restore to a separate environment. (3) Use SQL Server Management Studio or T-SQL to extract specific tables/records. Azure Backup solutions capture at the volume or database level — extracting individual rows requires SQL-level restore tools." },
+      "d": { "text": "Azure Site Recovery — replication provides a consistent SQL Server state that can be queried directly from the target", "is_true": false, "explanation": "ASR creates a replicated copy of the entire VM for disaster recovery purposes. The replica runs the full SQL Server and requires a failover to access — it is not an item-level backup solution." }
+    },
+    "correct_answer": ["c"]
+  },
+  {
+    "question_id": 11,
+    "question_text": "A Windows VM's performance is degraded. The admin checks Azure Monitor and sees CPU is 85% sustained. Using PerfInsights, the report shows high 'Disk Reads/sec' on the OS disk and the recommendation is to move specific application data to a data disk. The OS disk is Premium SSD P20 (512 GB). What additional action would improve read performance most cost-effectively?",
+    "options": {
+      "a": { "text": "Upgrade the OS disk to Premium SSD P50 (4 TiB) to get more IOPS", "is_true": false, "explanation": "Upgrading the OS disk size primarily increases IOPS/throughput (Premium SSD performance scales with disk size), but this is expensive if the data could be moved to a separate data disk with ReadOnly caching enabled." },
+      "b": { "text": "Move the application data causing high reads to a Premium SSD data disk with ReadOnly host caching enabled", "is_true": true, "explanation": "ReadOnly host caching on data disks provides a significant read performance boost (up to 4 GiB/s cached read bandwidth vs. ~250 MB/s uncached on Premium P20) at no additional cost. Moving read-heavy application data to a cached data disk is more cost-effective than resizing the OS disk. The OS disk should ideally only host the OS and should not have ReadWrite caching if there's intensive I/O." },
+      "c": { "text": "Enable Write Accelerator on the OS disk to speed up reads", "is_true": false, "explanation": "Write Accelerator (available only for M-series VMs) is designed to improve WRITE latency for transaction logs. It does not improve read performance." },
+      "d": { "text": "Convert the OS disk from Premium SSD to Ultra Disk for lower latency reads", "is_true": false, "explanation": "Ultra Disk does not support host caching and has a higher cost per GB than Premium SSD. Ultra Disk is designed for workloads needing very high IOPS/throughput. For read-heavy workloads, ReadOnly-cached Premium SSD is more cost-effective." }
+    },
+    "correct_answer": ["b"]
+  },
+  {
+    "question_id": 12,
+    "question_text": "A company deploys 50 Windows VMs and wants to enforce a GPO-like baseline configuration (disable USB storage, configure audit policies, set password complexity) across all VMs without joining them to an on-premises domain. Which Azure service enables domain-style GPO management for Azure VMs?",
+    "options": {
+      "a": { "text": "Azure Active Directory Domain Services (Azure AD DS / Entra Domain Services) — provides managed domain controllers in Azure that VMs can join and receive GPOs", "is_true": true, "explanation": "Entra Domain Services (formerly Azure AD DS) provides a fully managed domain in Azure including LDAP, Kerberos, NTLM, and Group Policy. VMs can join this managed domain and receive GPOs defined in the service. This enables traditional Windows administration (GPO, domain join, LDAP) without managing domain controllers on-premises or in Azure VMs." },
+      "b": { "text": "Azure Policy — deploy policies that configure Windows registry settings directly on VMs via DeployIfNotExists", "is_true": false, "explanation": "Azure Policy manages Azure resource configuration at the ARM API level. It does not configure Windows OS settings like GPOs, USB restrictions, or audit policies inside the guest OS. Azure Policy operates on the Azure management plane, not the Windows configuration plane." },
+      "c": { "text": "Azure Automation State Configuration (DSC) — push GPO-equivalent configurations to all VMs as DSC configurations", "is_true": false, "explanation": "DSC can manage many Windows OS configurations and is a valid approach, but it requires onboarding each VM to an Automation Account, writing PowerShell DSC configurations for each setting, and does not natively understand GPO format. Entra Domain Services is a closer GPO equivalent." },
+      "d": { "text": "Windows Admin Center — provides centralized GPO management for Azure VMs without domain join", "is_true": false, "explanation": "Windows Admin Center provides a web-based management interface for Windows servers (configuring features, monitoring, etc.) but does not provide Group Policy management without a domain infrastructure. It is a management tool, not a domain service." }
+    },
+    "correct_answer": ["a"]
+  },
+  {
+    "question_id": 13,
+    "question_text": "A Windows VM experiences high memory usage (95%+). The VM has 16 GB RAM and the admin notices the Windows page file is on the temporary D: disk. The VM is Standard_D4s_v3. What is the risk of having the page file on the temporary disk?",
+    "options": {
+      "a": { "text": "There is no risk — Azure recommends placing the page file on the temporary disk for performance", "is_true": false, "explanation": "Placing the page file on the temporary disk is actually what Azure does by default for some VM configurations because the temp disk is local SSD (lower latency). However, this creates a risk: if the VM is deallocated or moved hosts, the temporary disk is wiped including any paged-out memory contents — though the page file itself would be recreated on restart." },
+      "b": { "text": "If the VM is deallocated or moved to a new host, the temporary disk (including the page file) is lost — a VM reboot after deallocation may fail or behave unpredictably if Windows relies on paged memory that no longer exists", "is_true": true, "explanation": "The page file on the temporary disk works correctly during normal operation and reboots (VM stays on same host). However, if the VM is deallocated (host changes) or resized to a different cluster, the temp disk is wiped. Windows recreates an empty page file on restart, but any state that was exclusively in the page file at time of deallocation is gone. For critical workloads where the page file contains important application state, placing it on a persistent data disk is safer." },
+      "c": { "text": "The page file cannot function on NTFS volumes — it requires a FAT32 partition", "is_true": false, "explanation": "Windows page file works on NTFS volumes. The temporary disk in Azure is formatted as NTFS by default. FAT32 is not used for modern Windows system functions." },
+      "d": { "text": "Windows page file on the temporary disk causes automatic VM shutdown when memory pressure reaches 95%", "is_true": false, "explanation": "Windows does not shut down the VM when memory is exhausted. It expands the page file (if auto-managed) or kills processes (OOM). The risk of temp disk page file is data loss on deallocation, not automatic shutdown." }
+    },
+    "correct_answer": ["b"]
+  },
+  {
+    "question_id": 14,
+    "question_text": "A Windows VM is protected by Azure Backup with a 30-day retention. A user accidentally deleted a critical file 35 days ago. The backup from 35 days ago (which contained the file) has already been deleted per the retention policy. What options does the admin have?",
+    "options": {
+      "a": { "text": "Contact Microsoft Support to recover the backup data that was deleted by the retention policy", "is_true": false, "explanation": "Once recovery points are expired and deleted per the retention policy, they are permanently gone — Microsoft Support cannot recover them. This is why choosing appropriate retention periods is critical." },
+      "b": { "text": "The file is unrecoverable from Azure Backup — the admin should check other sources such as a separate file backup, shadow copies on the VM, or SharePoint/OneDrive if the file was synced", "is_true": true, "explanation": "Recovery points deleted per retention policy are permanently unrecoverable. The admin should check: (1) Volume Shadow Copies (Previous Versions) on the VM if they were enabled — these are separate from Azure Backup. (2) Any secondary backup solutions. (3) Cloud storage sync solutions (SharePoint, OneDrive) if the file was synced. This scenario illustrates why retention periods must align with the maximum acceptable recovery window." },
+      "c": { "text": "Restore the VM from the oldest available recovery point (30 days ago) and recover the file from there", "is_true": false, "explanation": "The file was deleted 35 days ago, so even the oldest available recovery point (30 days ago) would not contain the file — it was already deleted at that point. Only a recovery point from before 35 days ago would have the file, and those have all expired." },
+      "d": { "text": "Enable soft delete on the Recovery Services vault — it will recover the deleted recovery points", "is_true": false, "explanation": "Soft delete protects against INTENTIONAL deletion of backup items (e.g., 'Stop backup and delete data' operations). It does not prevent or recover recovery points that naturally expired per the retention policy." }
+    },
+    "correct_answer": ["b"]
+  },
+  {
+    "question_id": 15,
+    "question_text": "A Windows VM hosts a stateful application. The admin wants to restore the VM to a known-good state from 7 days ago using Azure Backup. The VM has been running continuously since then. What are the TWO available restore options?",
+    "options": {
+      "a": { "text": "Restore to a new VM (creates a new VM from the recovery point) and replace the existing VM", "is_true": true, "explanation": "Azure Backup offers 'Create new VM' restore — it provisions a new VM from the selected recovery point. The original VM remains running. The admin can validate the restored VM before deciding to decommission the original. This is a non-destructive, parallel restore approach." },
+      "b": { "text": "Replace the existing VM's disks with the recovery point disks (Restore disks option, then swap the OS disk)", "is_true": true, "explanation": "Azure Backup's 'Restore disks' option creates new managed disks from the recovery point. The admin can then use the OS disk swap feature to replace the running VM's OS disk with the restored disk — preserving the VM's NIC, IP, and identity while restoring the OS/data to the 7-day-old state." },
+      "c": { "text": "In-place restore — Azure Backup overwrites the running VM's disks with the recovery point in real time", "is_true": false, "explanation": "Azure Backup does not support in-place disk overwrite of a running VM. The VM must be stopped for disk replacement (OS disk swap), or a new VM must be created from the recovery point." },
+      "d": { "text": "Cross-region restore to a secondary region to test the recovery point before restoring to the original region", "is_true": false, "explanation": "Cross-region restore is a valid feature of Azure Backup (available with GRS vault), but it's not one of the TWO standard restore options. It's an additional capability, not a primary restore method for the described scenario." }
+    },
+    "correct_answer": ["a", "b"]
+  },
+  {
+    "question_id": 16,
+    "question_text": "A company's Windows VM SKU (Standard_B2s) was sufficient when deployed, but a new workload has been added and CPU is consistently at 100%. The admin wants to upgrade to Standard_D4s_v3 with minimal downtime. What is the process?",
+    "options": {
+      "a": { "text": "Resize the VM while it's running — Azure performs live migration for VM resizes within the same cluster", "is_true": false, "explanation": "VM resizing always causes a reboot. There is no live migration for VM resizes. Live migration is only for transparent host maintenance, not for changing VM SKU." },
+      "b": { "text": "Deallocate the VM, resize using 'az vm resize --size Standard_D4s_v3', then start the VM — this results in a brief downtime equal to the deallocation and start time", "is_true": true, "explanation": "VM resize requires deallocation. The process: (1) Stop-deallocate the VM. (2) Resize to Standard_D4s_v3 (if available in the same cluster — if not, Azure handles reallocation). (3) Start the VM. Downtime is typically 2-5 minutes. This is the standard resize procedure." },
+      "c": { "text": "Change the VM's pricing tier in the Azure portal without downtime — compute tier changes are hot-swappable", "is_true": false, "explanation": "There is no 'pricing tier' change separate from VM size in Azure. VM size changes are the compute specification change and always require a reboot." },
+      "d": { "text": "Deploy a new VM with Standard_D4s_v3, migrate the data using AzCopy, then delete the old VM", "is_true": false, "explanation": "This approach is unnecessarily complex and time-consuming. Azure's built-in VM resize capability handles the SKU change directly while preserving all disks, NICs, and configurations. Data migration with AzCopy is not needed." }
+    },
+    "correct_answer": ["b"]
+  },
+  {
+    "question_id": 17,
+    "question_text": "A Windows VM scale set uses a custom image stored in Azure Compute Gallery. The security team releases a patched image version (1.1.0 → 1.1.1). The VMSS has rolling upgrade policy. How does the VMSS handle the new image version?",
+    "options": {
+      "a": { "text": "The VMSS automatically detects the new Gallery image version and initiates a rolling upgrade of instances", "is_true": false, "explanation": "Automatic detection of new Gallery image versions is not the default behavior. The VMSS model must be updated to reference the new image version (or 'latest' must be configured) before instances are upgraded." },
+      "b": { "text": "If the VMSS image reference is set to 'latest', Azure automatically updates the VMSS model when a new image version is published and rolls out the upgrade per the rolling upgrade policy", "is_true": true, "explanation": "When a VMSS image reference version is set to 'latest' (in the ARM model: 'imageReference.version': 'latest'), Azure automatically detects new image versions published to the Compute Gallery and updates the VMSS model. With Rolling upgrade policy and 'automaticOSUpgrade: true', instances are upgraded automatically in batches without manual intervention." },
+      "c": { "text": "The admin must manually update each VMSS instance using 'az vmss update-instances' after updating the image", "is_true": false, "explanation": "This is the manual upgrade workflow (for Manual upgrade policy). With Rolling upgrade policy and 'latest' image reference, automatic rolling upgrades handle instance updates without manual per-instance commands." },
+      "d": { "text": "New instances added by autoscale use the new image, but existing instances always keep the original image version", "is_true": false, "explanation": "Without automatic OS upgrade, new instances from autoscale DO use the latest image, but existing instances only upgrade when explicitly triggered. With automatic OS upgrade enabled (Rolling policy + auto upgrade), existing instances are also upgraded in rolling batches." }
+    },
+    "correct_answer": ["b"]
+  },
+  {
+    "question_id": 18,
+    "question_text": "A company wants to use Azure Automanage for their Windows VMs to automatically apply Azure best practices. Which of the following is automatically configured by Azure Automanage 'Best Practices' profile?",
+    "options": {
+      "a": { "text": "VM resizing based on observed CPU usage", "is_true": false, "explanation": "Automanage does not resize VMs. It focuses on management and security configuration, not performance optimization." },
+      "b": { "text": "Azure Backup with a default retention policy, Azure Monitor agent deployment, Microsoft Antimalware, and Change Tracking/Inventory — all configured automatically based on VM classification (Dev/Test or Production)", "is_true": true, "explanation": "Azure Automanage Best Practices automatically onboards VMs to a set of Azure management services based on the environment (Dev/Test or Production). Production profile includes: Azure Backup (90-day retention), Log Analytics workspace connection, Azure Monitor agent, Change Tracking, Inventory, Microsoft Antimalware, Update Management, and more. All configuration is handled automatically without admin intervention per service." },
+      "c": { "text": "Automatic VM migration to a newer SKU when performance thresholds are exceeded", "is_true": false, "explanation": "Automanage does not perform VM migrations or resizing. It configures monitoring, backup, and security services." },
+      "d": { "text": "Automatic network isolation of VMs that fail security assessments", "is_true": false, "explanation": "Automanage does not perform automated threat response or network isolation. Security findings from Defender for Cloud require separate automated response configuration (Logic Apps, Automation)." }
+    },
+    "correct_answer": ["b"]
+  },
+  {
+    "question_id": 19,
+    "question_text": "A Windows VM has been migrated from on-premises using Azure Migrate. After migration, the VM boots correctly but has no network connectivity. Azure Migrate completed successfully and the VM shows 'Running' in the portal. What should the admin check first?",
+    "options": {
+      "a": { "text": "Whether the VM's static IP from on-premises conflicts with another VM in the Azure VNet", "is_true": true, "explanation": "When migrating from on-premises with a static IP, Azure Migrate may configure the VM's NIC with the same static IP it had on-premises. If that IP is already in use by another resource in the Azure VNet (or is outside the subnet range), there will be an IP conflict causing no network connectivity. Check the VM's NIC effective IP configuration in the portal and verify no conflict exists." },
+      "b": { "text": "Whether the Azure VM agent is installed — without it, the VM has no network connectivity", "is_true": false, "explanation": "The Azure VM agent enables Azure extensions and management features, but it is not required for basic network connectivity. Network connectivity is handled by Azure VNet infrastructure and NIC configuration, not the VM agent." },
+      "c": { "text": "Whether the migration job is still running — VMs have no network access during active migration", "is_true": false, "explanation": "Azure Migrate completed successfully per the scenario. Migration jobs don't restrict network access to the VM after completion." },
+      "d": { "text": "Whether the VM's operating system firewall needs to be reconfigured for Azure's DNS server (168.63.129.16)", "is_true": false, "explanation": "Azure DNS (168.63.129.16) is a platform IP that Azure VMs should be able to reach. While Windows Firewall could theoretically block it, this is not the first check for a post-migration network issue — IP conflict is far more common for migrated VMs that had static IPs on-premises." }
+    },
+    "correct_answer": ["a"]
+  },
+  {
+    "question_id": 20,
+    "question_text": "A Windows VMSS is behind an Azure Load Balancer. The admin needs to perform maintenance on individual VMSS instances one at a time — during maintenance, the instance should not receive production traffic, but the Load Balancer should continue routing to healthy instances. Which VMSS feature enables this?",
+    "options": {
+      "a": { "text": "Stop (deallocate) the instance in the portal — stopped instances are automatically removed from Load Balancer rotation", "is_true": false, "explanation": "Stopping/deallocating a VMSS instance does remove it from LB rotation, but it also charges for disk storage and the instance takes time to start. For temporary maintenance, Instance Protection is a more appropriate approach." },
+      "b": { "text": "Use VMSS Instance Protection (protect from scale-in) combined with manually removing the instance from the LB backend pool temporarily", "is_true": false, "explanation": "Instance Protection prevents scale-in from automatically removing the instance, but it doesn't directly control LB traffic routing. For controlled maintenance without deallocating, the correct answer involves the VMSS drain/standby capability." },
+      "c": { "text": "Place the specific VMSS instance into 'Standby' mode using the Flexible orchestration, or remove it from the Load Balancer NAT pool manually, then perform maintenance and add it back", "is_true": false, "explanation": "Standby mode is a feature of Flexible orchestration VMSS. For Uniform orchestration, the appropriate approach is different." },
+      "d": { "text": "Use the Load Balancer's connection draining (drain timeout) feature by setting the VMSS instance to 'Deallocation' — connection draining completes existing connections before routing stops, allowing graceful maintenance", "is_true": true, "explanation": "For VMSS maintenance without LB disruption: (1) Standard Load Balancer supports connection draining (TCP reset/timeout for existing connections when an instance goes unhealthy). (2) The admin can manually deallocate the specific VMSS instance — the LB health probe detects it as unhealthy and drains existing connections before stopping new ones. (3) After maintenance, the instance is started and re-joins the LB pool when health probes succeed. Connection draining ensures in-flight requests complete gracefully." }
+    },
+    "correct_answer": ["d"]
+  }
+]

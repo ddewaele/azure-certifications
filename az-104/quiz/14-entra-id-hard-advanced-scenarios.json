@@ -1,0 +1,611 @@
+{
+  "meta": {
+    "title": "Entra ID – Hard: Advanced Multi-tenant, PIM, CA & Identity Protection",
+    "subject": "Microsoft Entra ID",
+    "difficulty": "hard",
+    "version": "1.0.0",
+    "created": "2026-03-28"
+  },
+  "questions": [
+    {
+      "question_id": 1,
+      "question_text": "A Conditional Access policy requires MFA for all users accessing Exchange Online. A second policy blocks access to Exchange Online from non-compliant devices. A user on a non-compliant device attempts to access Exchange Online. What is the outcome?",
+      "difficulty": "hard",
+      "topic": "Conditional Access",
+      "tags": ["conditional-access", "policy-evaluation", "block"],
+      "options": {
+        "a": {
+          "text": "The user is prompted for MFA and then granted access",
+          "is_true": false,
+          "explanation": "Incorrect. When a Block policy matches, it takes precedence. MFA cannot override a Block."
+        },
+        "b": {
+          "text": "Access is blocked — Block takes precedence over Grant controls when both policies match",
+          "is_true": true,
+          "explanation": "Correct. Conditional Access evaluates all matching policies. When one policy grants access (with MFA) and another blocks access, Block always wins. The user is denied access regardless of whether they can complete MFA."
+        },
+        "c": {
+          "text": "The user can choose to either complete MFA or make their device compliant",
+          "is_true": false,
+          "explanation": "Incorrect. Conditional Access does not offer users a choice between conflicting policies — the most restrictive outcome (Block) applies."
+        },
+        "d": {
+          "text": "The policies conflict and neither is enforced — the user gets default access",
+          "is_true": false,
+          "explanation": "Incorrect. Conditional Access never ignores matching policies due to conflicts. All matching policies are evaluated and the most restrictive result applies."
+        }
+      },
+      "correct_answer": ["b"]
+    },
+    {
+      "question_id": 2,
+      "question_text": "An organisation configures PIM so the Global Administrator role requires approval from the Security team and a maximum activation duration of 2 hours. A user activates the role at 10:00 AM. At 12:01 PM they attempt to create a Conditional Access policy. What happens?",
+      "difficulty": "hard",
+      "topic": "PIM",
+      "tags": ["pim", "activation-duration", "time-limited"],
+      "options": {
+        "a": {
+          "text": "The action succeeds — PIM duration is a soft guideline, not enforced",
+          "is_true": false,
+          "explanation": "Incorrect. PIM activation duration is strictly enforced. The role is automatically deactivated when the window expires."
+        },
+        "b": {
+          "text": "The action fails — the role activation expired at 12:00 PM and the user no longer has Global Administrator permissions",
+          "is_true": true,
+          "explanation": "Correct. PIM time-limited activations are strictly enforced. At 12:00 PM the 2-hour window expired and the Global Administrator role was automatically deactivated. The user must re-activate the role (going through the approval workflow again) before performing admin actions."
+        },
+        "c": {
+          "text": "The action succeeds but is flagged in the audit log for post-review",
+          "is_true": false,
+          "explanation": "Incorrect. PIM does not allow actions beyond the activation window — it enforces the boundary, not just audits it."
+        },
+        "d": {
+          "text": "PIM sends a reminder notification but extends the activation by 30 minutes",
+          "is_true": false,
+          "explanation": "Incorrect. PIM does not auto-extend activations. Users can choose to request a new activation before the window closes."
+        }
+      },
+      "correct_answer": ["b"]
+    },
+    {
+      "question_id": 3,
+      "question_text": "Identity Protection detects a sign-in from an anonymous IP address (medium risk) for a user. The organisation has a sign-in risk policy that requires MFA for medium and above risk. The user successfully completes MFA. What happens to the sign-in risk?",
+      "difficulty": "hard",
+      "topic": "Identity Protection",
+      "tags": ["identity-protection", "sign-in-risk", "remediation"],
+      "options": {
+        "a": {
+          "text": "The sign-in risk is automatically dismissed after successful MFA — the user proceeds normally",
+          "is_true": true,
+          "explanation": "Correct. When a sign-in risk policy triggers and the user successfully satisfies the requirement (MFA), the individual sign-in risk is considered remediated. The user gains access. However, this does not prevent future sign-ins from being flagged again."
+        },
+        "b": {
+          "text": "The user's account is permanently flagged as risky even after MFA",
+          "is_true": false,
+          "explanation": "Incorrect. Sign-in risk is per-session, not permanent. Completing MFA remediates the sign-in risk. User risk is a separate signal."
+        },
+        "c": {
+          "text": "The user is blocked for 24 hours regardless of MFA completion",
+          "is_true": false,
+          "explanation": "Incorrect. If the policy requires MFA (not block), successfully completing MFA grants access immediately."
+        },
+        "d": {
+          "text": "An admin must manually approve the sign-in after MFA",
+          "is_true": false,
+          "explanation": "Incorrect. Sign-in risk policies are automated — no admin approval step is involved in the MFA-based remediation flow."
+        }
+      },
+      "correct_answer": ["a"]
+    },
+    {
+      "question_id": 4,
+      "question_text": "A custom RBAC role has Actions: ['Microsoft.Compute/*'] and NotActions: ['Microsoft.Compute/virtualMachines/delete']. The user also has the built-in Contributor role on the same resource group. Can the user delete VMs in that resource group?",
+      "difficulty": "hard",
+      "topic": "RBAC",
+      "tags": ["custom-role", "notactions", "additive", "effective-permissions"],
+      "options": {
+        "a": {
+          "text": "No — NotActions is a deny that blocks the action even from other roles",
+          "is_true": false,
+          "explanation": "Incorrect. NotActions is NOT a deny. It only subtracts permissions within the same role definition. Other role assignments can still grant the action."
+        },
+        "b": {
+          "text": "Yes — the Contributor role grants Microsoft.Compute/virtualMachines/delete, and RBAC is additive across role assignments",
+          "is_true": true,
+          "explanation": "Correct. NotActions only subtracts from the Actions list within the same role definition. The Contributor role is a separate assignment that independently grants Microsoft.Compute/virtualMachines/delete. RBAC is additive — effective permissions are the union of all role assignments. The user can delete VMs."
+        },
+        "c": {
+          "text": "Yes — but only if the custom role was assigned after the Contributor role",
+          "is_true": false,
+          "explanation": "Incorrect. RBAC does not use assignment order — permissions are always the additive union regardless of when roles were assigned."
+        },
+        "d": {
+          "text": "No — the custom role's more specific scope overrides the Contributor role",
+          "is_true": false,
+          "explanation": "Incorrect. If both roles are assigned at the same scope, permissions are combined. There is no 'more specific' override between roles at the same level."
+        }
+      },
+      "correct_answer": ["b"]
+    },
+    {
+      "question_id": 5,
+      "question_text": "An organisation uses PHS with Entra Connect and has SSPR with writeback enabled. A user's account is flagged as 'High risk' by Identity Protection with a user risk policy that requires password change. The user resets their password via SSPR. What happens to the user risk?",
+      "difficulty": "hard",
+      "topic": "Identity Protection",
+      "tags": ["identity-protection", "user-risk", "sspr", "writeback"],
+      "options": {
+        "a": {
+          "text": "The user risk is automatically dismissed after the SSPR password change, and the new password is written back to on-premises AD",
+          "is_true": true,
+          "explanation": "Correct. When a user risk policy requires password change and the user successfully resets via SSPR: (1) the new password is written back to on-premises AD via writeback, (2) the password hash is updated in Entra ID via PHS, and (3) the user risk is automatically dismissed because the compromised credential has been replaced."
+        },
+        "b": {
+          "text": "The user risk is dismissed but the on-premises password remains unchanged",
+          "is_true": false,
+          "explanation": "Incorrect. With writeback enabled, the new password IS written to on-premises AD."
+        },
+        "c": {
+          "text": "The user risk remains flagged until an admin manually dismisses it",
+          "is_true": false,
+          "explanation": "Incorrect. Self-service password change via SSPR is considered self-remediation and automatically dismisses user risk."
+        },
+        "d": {
+          "text": "SSPR is blocked when user risk is High — only an admin can reset the password",
+          "is_true": false,
+          "explanation": "Incorrect. The user risk policy is configured to require password change — SSPR is the mechanism through which the user self-remediates. If SSPR were not available, an admin reset would be needed."
+        }
+      },
+      "correct_answer": ["a"]
+    },
+    {
+      "question_id": 6,
+      "question_text": "What is the evaluation order when both Azure Policy (Deny effect) and RBAC (Owner role) apply to a resource creation?",
+      "difficulty": "hard",
+      "topic": "Governance",
+      "tags": ["azure-policy", "rbac", "deny", "evaluation-order"],
+      "options": {
+        "a": {
+          "text": "RBAC is evaluated first; if the user has Owner, Azure Policy is bypassed",
+          "is_true": false,
+          "explanation": "Incorrect. Owner role does not bypass Azure Policy. Policy operates independently of RBAC."
+        },
+        "b": {
+          "text": "Azure Policy Deny blocks the operation regardless of the user's RBAC role — even Owner",
+          "is_true": true,
+          "explanation": "Correct. Azure Policy and RBAC are separate systems. RBAC determines if you are allowed to attempt the operation. Azure Policy determines if the operation is compliant. Even an Owner can be blocked by a Deny policy if the resource configuration is non-compliant."
+        },
+        "c": {
+          "text": "They cancel each other out — the operation goes through but is flagged as non-compliant",
+          "is_true": false,
+          "explanation": "Incorrect. A Deny policy actively blocks the operation — it does not just flag it."
+        },
+        "d": {
+          "text": "Azure Policy only applies to users with Contributor or Reader roles",
+          "is_true": false,
+          "explanation": "Incorrect. Azure Policy applies to all operations regardless of the user's role."
+        }
+      },
+      "correct_answer": ["b"]
+    },
+    {
+      "question_id": 7,
+      "question_text": "An organisation has a Conditional Access policy requiring MFA for all users, with an exclusion for a 'Break Glass Accounts' group. Why is this exclusion considered a best practice?",
+      "difficulty": "hard",
+      "topic": "Conditional Access",
+      "tags": ["break-glass", "emergency-access", "conditional-access"],
+      "options": {
+        "a": {
+          "text": "Break glass accounts bypass MFA to ensure emergency access if the MFA service is unavailable or all admin MFA devices are lost",
+          "is_true": true,
+          "explanation": "Correct. Break glass (emergency access) accounts are highly privileged accounts excluded from Conditional Access to guarantee access during emergencies — such as MFA service outages, lost authenticator devices, or misconfigurations that lock out all admins. These accounts should have strong passwords, be rarely used, and be closely monitored."
+        },
+        "b": {
+          "text": "Break glass accounts are for testing Conditional Access policies before deployment",
+          "is_true": false,
+          "explanation": "Incorrect. Testing accounts might be excluded temporarily, but break glass accounts serve a different purpose — emergency access during outages."
+        },
+        "c": {
+          "text": "MFA is not supported for service accounts, so they must be excluded",
+          "is_true": false,
+          "explanation": "Incorrect. Break glass accounts are special human-operated accounts, not service accounts. Service principals handle automated scenarios."
+        },
+        "d": {
+          "text": "This is not a best practice — all accounts should always require MFA without exception",
+          "is_true": false,
+          "explanation": "Incorrect. Microsoft explicitly recommends maintaining at least two break glass accounts excluded from Conditional Access to prevent total lockout during emergencies."
+        }
+      },
+      "correct_answer": ["a"]
+    },
+    {
+      "question_id": 8,
+      "question_text": "A user has an eligible PIM assignment for the Exchange Administrator role. They also have a permanent assignment for the User Administrator role. What does the user need to do to manage Exchange settings?",
+      "difficulty": "hard",
+      "topic": "PIM",
+      "tags": ["pim", "eligible-vs-permanent", "activation"],
+      "options": {
+        "a": {
+          "text": "Nothing — both roles are always active",
+          "is_true": false,
+          "explanation": "Incorrect. Only the permanent assignment (User Administrator) is always active. The eligible assignment (Exchange Administrator) must be explicitly activated."
+        },
+        "b": {
+          "text": "Activate the Exchange Administrator role through PIM, providing justification and going through any required approval",
+          "is_true": true,
+          "explanation": "Correct. Eligible assignments require activation through PIM. The user must request activation, provide a justification, and potentially wait for approval (depending on role settings). The User Administrator role remains active permanently and does not require activation."
+        },
+        "c": {
+          "text": "Ask a Global Administrator to convert the eligible assignment to permanent",
+          "is_true": false,
+          "explanation": "Incorrect. Converting to permanent defeats the purpose of PIM's just-in-time model. The user should activate the role when needed."
+        },
+        "d": {
+          "text": "The User Administrator role includes Exchange Administrator permissions, so no activation is needed",
+          "is_true": false,
+          "explanation": "Incorrect. User Administrator and Exchange Administrator have different permission scopes. One does not include the other."
+        }
+      },
+      "correct_answer": ["b"]
+    },
+    {
+      "question_id": 9,
+      "question_text": "An Entra ID tenant has Security Defaults enabled. An admin tries to create a Conditional Access policy. What happens?",
+      "difficulty": "hard",
+      "topic": "Conditional Access",
+      "tags": ["security-defaults", "conditional-access", "conflict"],
+      "options": {
+        "a": {
+          "text": "Both can be active simultaneously — they complement each other",
+          "is_true": false,
+          "explanation": "Incorrect. Security Defaults and Conditional Access are mutually exclusive. They cannot be enabled at the same time."
+        },
+        "b": {
+          "text": "Security Defaults must be disabled before Conditional Access policies can be created",
+          "is_true": true,
+          "explanation": "Correct. Security Defaults and Conditional Access cannot coexist. To use Conditional Access (which requires P1), Security Defaults must be turned off first. Conditional Access provides more granular control, replacing the baseline protections of Security Defaults."
+        },
+        "c": {
+          "text": "Conditional Access automatically disables Security Defaults when the first policy is created",
+          "is_true": false,
+          "explanation": "Incorrect. The admin must manually disable Security Defaults — there is no automatic switch."
+        },
+        "d": {
+          "text": "Conditional Access policies are created but have no effect until Security Defaults expires",
+          "is_true": false,
+          "explanation": "Incorrect. Security Defaults does not expire. The admin must actively disable it."
+        }
+      },
+      "correct_answer": ["b"]
+    },
+    {
+      "question_id": 10,
+      "question_text": "An organisation has cross-tenant access settings configured to trust MFA from a partner tenant (Fabrikam). When a Fabrikam guest user signs in, are they prompted for MFA by the host tenant?",
+      "difficulty": "hard",
+      "topic": "B2B",
+      "tags": ["cross-tenant-access", "mfa-trust", "b2b"],
+      "options": {
+        "a": {
+          "text": "Yes always — MFA trust is not configurable between tenants",
+          "is_true": false,
+          "explanation": "Incorrect. Cross-tenant access settings allow trusting MFA claims from partner tenants."
+        },
+        "b": {
+          "text": "No — if cross-tenant access is configured to trust Fabrikam's MFA, the host tenant accepts the MFA claim without re-prompting",
+          "is_true": true,
+          "explanation": "Correct. Cross-tenant access settings can be configured to trust MFA, compliant device, and Entra hybrid-joined device claims from specified partner tenants. If the Fabrikam user already completed MFA in their home tenant, the host tenant accepts that claim and does not re-prompt."
+        },
+        "c": {
+          "text": "The user is always prompted for MFA twice — once by each tenant",
+          "is_true": false,
+          "explanation": "Incorrect. Double MFA is exactly the problem that cross-tenant MFA trust solves."
+        },
+        "d": {
+          "text": "MFA trust only works with ADFS federation, not with Entra ID",
+          "is_true": false,
+          "explanation": "Incorrect. Cross-tenant MFA trust is a native Entra ID feature in cross-tenant access settings."
+        }
+      },
+      "correct_answer": ["b"]
+    },
+    {
+      "question_id": 11,
+      "question_text": "An Access Review for the Global Administrator role is configured with 'auto-apply results' and 'If reviewers don't respond, remove access'. The review completes with one reviewer not responding for user Bob. What happens?",
+      "difficulty": "hard",
+      "topic": "PIM",
+      "tags": ["access-reviews", "auto-apply", "no-response"],
+      "options": {
+        "a": {
+          "text": "Bob's Global Administrator role assignment is automatically removed",
+          "is_true": true,
+          "explanation": "Correct. When auto-apply is enabled and the 'no response' action is set to 'remove access', any unreviewed assignments are automatically removed when the review period ends. Bob loses the Global Administrator role."
+        },
+        "b": {
+          "text": "Bob keeps the role — no response means approval by default",
+          "is_true": false,
+          "explanation": "Incorrect. The admin explicitly configured 'no response = remove access'. There is no default approval."
+        },
+        "c": {
+          "text": "The review is extended by 30 days to give the reviewer more time",
+          "is_true": false,
+          "explanation": "Incorrect. Reviews do not auto-extend. The configured end date and auto-apply rules are enforced."
+        },
+        "d": {
+          "text": "An alert is sent but no changes are made until an admin acts",
+          "is_true": false,
+          "explanation": "Incorrect. Auto-apply means changes are applied automatically — no additional admin action is required."
+        }
+      },
+      "correct_answer": ["a"]
+    },
+    {
+      "question_id": 12,
+      "question_text": "A Conditional Access policy uses a sign-in risk condition set to 'High'. Which Entra ID license is required for this policy to function?",
+      "difficulty": "hard",
+      "topic": "Conditional Access",
+      "tags": ["conditional-access", "sign-in-risk", "p2"],
+      "options": {
+        "a": {
+          "text": "Entra ID Free",
+          "is_true": false,
+          "explanation": "Incorrect. The Free tier includes neither Conditional Access nor Identity Protection."
+        },
+        "b": {
+          "text": "Entra ID P1",
+          "is_true": false,
+          "explanation": "Incorrect. P1 provides Conditional Access but NOT sign-in risk signals. Sign-in risk requires Identity Protection, which is P2."
+        },
+        "c": {
+          "text": "Entra ID P2",
+          "is_true": true,
+          "explanation": "Correct. Risk-based conditions in Conditional Access (sign-in risk and user risk) are signals from Identity Protection, which requires P2. You need P1 for Conditional Access itself, and P2 for the risk signals — so P2 is the minimum for risk-based CA policies."
+        },
+        "d": {
+          "text": "Microsoft Defender for Cloud Apps (no Entra license needed)",
+          "is_true": false,
+          "explanation": "Incorrect. Sign-in risk signals come from Entra Identity Protection (P2), not from Defender for Cloud Apps."
+        }
+      },
+      "correct_answer": ["c"]
+    },
+    {
+      "question_id": 13,
+      "question_text": "A dynamic group rule includes: (user.department -eq \"Engineering\") -and (user.companyName -eq \"Contoso\"). A user has department='Engineering' and companyName='Contoso Ltd'. Are they included in the group?",
+      "difficulty": "hard",
+      "topic": "Dynamic Groups",
+      "tags": ["dynamic-groups", "membership-rules", "string-matching"],
+      "options": {
+        "a": {
+          "text": "Yes — the -eq operator performs a partial/contains match",
+          "is_true": false,
+          "explanation": "Incorrect. The -eq operator performs an exact string match in dynamic group rules."
+        },
+        "b": {
+          "text": "No — 'Contoso Ltd' does not exactly match 'Contoso'; the -eq operator requires an exact match",
+          "is_true": true,
+          "explanation": "Correct. Dynamic group rules use exact string matching with the -eq operator. 'Contoso Ltd' ≠ 'Contoso', so the user does not match the rule and is not included. To match partially, use -contains or -startsWith instead."
+        },
+        "c": {
+          "text": "Yes — dynamic groups ignore case and whitespace in string comparisons",
+          "is_true": false,
+          "explanation": "Incorrect. While -eq is case-insensitive, it still requires the full string to match exactly. 'Contoso Ltd' is a different string than 'Contoso'."
+        },
+        "d": {
+          "text": "The rule throws an error because companyName is not a supported attribute",
+          "is_true": false,
+          "explanation": "Incorrect. companyName is a supported attribute for dynamic group rules."
+        }
+      },
+      "correct_answer": ["b"]
+    },
+    {
+      "question_id": 14,
+      "question_text": "An admin assigns the Contributor role to a user at the management group level. The management group contains 10 subscriptions, each with multiple resource groups. What is the blast radius of this assignment?",
+      "difficulty": "hard",
+      "topic": "RBAC",
+      "tags": ["management-group", "inheritance", "blast-radius"],
+      "options": {
+        "a": {
+          "text": "Only the management group object itself — subscriptions are not affected",
+          "is_true": false,
+          "explanation": "Incorrect. RBAC assignments at a management group inherit down to all child subscriptions and their resources."
+        },
+        "b": {
+          "text": "All 10 subscriptions, all resource groups within them, and all resources — the role inherits down the entire hierarchy",
+          "is_true": true,
+          "explanation": "Correct. A role assigned at the management group scope inherits to every subscription, resource group, and resource within the hierarchy. The user has Contributor access to all resources across all 10 subscriptions — a very large blast radius."
+        },
+        "c": {
+          "text": "Only the first subscription in the management group",
+          "is_true": false,
+          "explanation": "Incorrect. Inheritance applies to all child objects, not just the first."
+        },
+        "d": {
+          "text": "All 10 subscriptions but not the individual resources within them",
+          "is_true": false,
+          "explanation": "Incorrect. Inheritance propagates to all levels — including resources within resource groups within subscriptions."
+        }
+      },
+      "correct_answer": ["b"]
+    },
+    {
+      "question_id": 15,
+      "question_text": "What is the difference between a system-assigned and user-assigned managed identity when the Azure resource is deleted?",
+      "difficulty": "hard",
+      "topic": "Managed Identities",
+      "tags": ["managed-identity", "lifecycle", "deletion"],
+      "options": {
+        "a": {
+          "text": "Both identities are deleted when the resource is deleted",
+          "is_true": false,
+          "explanation": "Incorrect. Only the system-assigned identity is deleted with the resource."
+        },
+        "b": {
+          "text": "System-assigned is deleted with the resource; user-assigned persists independently and can be reused",
+          "is_true": true,
+          "explanation": "Correct. A system-assigned managed identity has its lifecycle tied to its resource — when the VM/App Service is deleted, the identity is also deleted. A user-assigned managed identity is an independent Entra ID resource that persists after the Azure resource is deleted and can be assigned to other resources."
+        },
+        "c": {
+          "text": "Neither is deleted — both persist in Entra ID indefinitely",
+          "is_true": false,
+          "explanation": "Incorrect. System-assigned identities are always deleted with their parent resource."
+        },
+        "d": {
+          "text": "User-assigned is deleted; system-assigned persists for 30 days in a soft-delete state",
+          "is_true": false,
+          "explanation": "Incorrect. This is the reverse. System-assigned identities are deleted immediately, and user-assigned identities persist independently."
+        }
+      },
+      "correct_answer": ["b"]
+    },
+    {
+      "question_id": 16,
+      "question_text": "A company has both an Azure Policy (Deny effect: require 'Environment' tag on all resources) and an RBAC role assignment (Owner). An Owner user tries to create a VM without the 'Environment' tag. What happens?",
+      "difficulty": "hard",
+      "topic": "Governance",
+      "tags": ["policy", "rbac", "deny", "tags"],
+      "options": {
+        "a": {
+          "text": "The VM is created — Owner overrides Azure Policy",
+          "is_true": false,
+          "explanation": "Incorrect. No RBAC role, including Owner, overrides Azure Policy."
+        },
+        "b": {
+          "text": "The VM creation is denied by Azure Policy — the user must add the 'Environment' tag",
+          "is_true": true,
+          "explanation": "Correct. Azure Policy evaluates independently of RBAC. The Owner role authorises the user to attempt the action, but Azure Policy Deny blocks it because the resource is non-compliant. The user must include the required tag."
+        },
+        "c": {
+          "text": "The VM is created but flagged as non-compliant in the policy dashboard",
+          "is_true": false,
+          "explanation": "Incorrect. That would be the behaviour with an Audit effect. A Deny effect actively blocks the operation."
+        },
+        "d": {
+          "text": "The VM is created and Azure Policy automatically adds the missing tag",
+          "is_true": false,
+          "explanation": "Incorrect. That would require a Modify or Append effect, not Deny. The Deny effect blocks the operation entirely."
+        }
+      },
+      "correct_answer": ["b"]
+    },
+    {
+      "question_id": 17,
+      "question_text": "SCENARIO: Contoso configures a Conditional Access policy that blocks access from all countries except the US and UK (using Named Locations). An admin travelling in Germany needs emergency access to the Azure portal. All other admins are in the US. What is the recommended approach?",
+      "difficulty": "hard",
+      "topic": "Conditional Access",
+      "tags": ["scenario", "break-glass", "named-locations", "emergency"],
+      "options": {
+        "a": {
+          "text": "Temporarily disable all Conditional Access policies",
+          "is_true": false,
+          "explanation": "Incorrect. Disabling all CA policies removes protection for the entire organisation — this is excessive and risky."
+        },
+        "b": {
+          "text": "Have a US-based admin sign in and use a break glass account that is excluded from CA policies",
+          "is_true": true,
+          "explanation": "Correct. This is why break glass accounts exist — they are excluded from Conditional Access policies and provide emergency access. A US-based admin can use the break glass account or modify the policy, but the break glass approach is faster and does not weaken the policy for all users."
+        },
+        "c": {
+          "text": "Use a VPN to route the admin's traffic through a US IP address",
+          "is_true": false,
+          "explanation": "Incorrect. While a VPN might technically work, it relies on the admin having VPN access from Germany, which may not be available. Break glass accounts are the designed solution."
+        },
+        "d": {
+          "text": "Add Germany to the Named Locations allow list permanently",
+          "is_true": false,
+          "explanation": "Incorrect. Adding Germany permanently would weaken the geo-restriction policy for a temporary need."
+        }
+      },
+      "correct_answer": ["b"]
+    },
+    {
+      "question_id": 18,
+      "question_text": "SCENARIO: An Identity Protection user risk policy flags user Alice as 'High risk' due to leaked credentials detected on the dark web. Alice has not changed her password. What sequence of events occurs if the policy is set to 'Require password change' for High risk?",
+      "difficulty": "hard",
+      "topic": "Identity Protection",
+      "tags": ["scenario", "user-risk", "leaked-credentials", "remediation"],
+      "options": {
+        "a": {
+          "text": "Alice is blocked from all sign-ins permanently",
+          "is_true": false,
+          "explanation": "Incorrect. 'Require password change' does not permanently block — it redirects Alice to SSPR to change her password."
+        },
+        "b": {
+          "text": "At next sign-in: Alice is required to complete MFA, then forced to change her password via SSPR; after a successful change, the user risk is dismissed",
+          "is_true": true,
+          "explanation": "Correct. The flow is: (1) Alice signs in, (2) the user risk policy triggers and requires MFA to verify her identity, (3) she is redirected to SSPR to set a new password, (4) after success the compromised credential is replaced, and (5) Identity Protection automatically dismisses the user risk."
+        },
+        "c": {
+          "text": "An admin receives an email and must manually reset Alice's password",
+          "is_true": false,
+          "explanation": "Incorrect. The 'require password change' action enables self-service remediation through SSPR — no admin intervention is needed if SSPR is configured."
+        },
+        "d": {
+          "text": "Alice's account is deleted and recreated with a new password",
+          "is_true": false,
+          "explanation": "Incorrect. Identity Protection remediates by requiring a password change, not by deleting accounts."
+        }
+      },
+      "correct_answer": ["b"]
+    },
+    {
+      "question_id": 19,
+      "question_text": "SCENARIO: Fabrikam has 3 subscriptions (Dev, Staging, Prod) under one management group. They want to ensure no one can create public IP addresses in the Prod subscription, but allow them in Dev and Staging. How should they configure this?",
+      "difficulty": "hard",
+      "topic": "Azure Policy",
+      "tags": ["scenario", "policy", "deny", "scope"],
+      "options": {
+        "a": {
+          "text": "Assign a Deny policy at the management group level for public IPs, then exempt Dev and Staging subscriptions",
+          "is_true": false,
+          "explanation": "Incorrect. While this works, it requires managing exemptions. Assigning the policy at the correct scope is simpler."
+        },
+        "b": {
+          "text": "Assign a Deny policy for public IP addresses directly to the Prod subscription only",
+          "is_true": true,
+          "explanation": "Correct. Assigning the Deny policy at the Prod subscription scope ensures it only affects Prod. Dev and Staging subscriptions are not impacted without needing exemptions. This follows the principle of least privilege in policy assignment."
+        },
+        "c": {
+          "text": "Remove the Network Contributor role from all users in the Prod subscription",
+          "is_true": false,
+          "explanation": "Incorrect. Removing Network Contributor would prevent all networking changes in Prod, not just public IPs — too broad."
+        },
+        "d": {
+          "text": "Use a resource lock on the Prod subscription to prevent public IP creation",
+          "is_true": false,
+          "explanation": "Incorrect. Resource locks prevent deletion or modification of existing resources — they do not evaluate specific resource configurations during creation."
+        }
+      },
+      "correct_answer": ["b"]
+    },
+    {
+      "question_id": 20,
+      "question_text": "SCENARIO: A company has a Conditional Access policy requiring compliant devices for accessing SharePoint Online. A user on a compliant device accesses SharePoint and downloads a sensitive document to a personal USB drive. Can Conditional Access prevent this?",
+      "difficulty": "hard",
+      "topic": "Conditional Access",
+      "tags": ["scenario", "session-controls", "dlp", "limitations"],
+      "options": {
+        "a": {
+          "text": "Yes — Conditional Access prevents all data exfiltration automatically",
+          "is_true": false,
+          "explanation": "Incorrect. Conditional Access controls access at the sign-in and session level — it does not prevent post-authentication data exfiltration to USB drives."
+        },
+        "b": {
+          "text": "Partially — Conditional Access session controls can restrict downloads in browser sessions, but USB exfiltration requires endpoint DLP (like Microsoft Purview)",
+          "is_true": true,
+          "explanation": "Correct. Conditional Access session controls (via Defender for Cloud Apps) can block downloads in browser sessions. However, once a file is on the device, preventing USB copy requires endpoint-level Data Loss Prevention (DLP) tools like Microsoft Purview — Conditional Access alone cannot control what happens on the device after access is granted."
+        },
+        "c": {
+          "text": "Yes — the 'Require compliant device' control automatically blocks USB access",
+          "is_true": false,
+          "explanation": "Incorrect. Device compliance checks whether the device meets Intune policies — it does not control USB access. USB restrictions are an endpoint management or DLP concern."
+        },
+        "d": {
+          "text": "No — Conditional Access has no impact on data protection",
+          "is_true": false,
+          "explanation": "Incorrect. Conditional Access session controls can restrict in-browser downloads. It provides partial protection, but not full DLP."
+        }
+      },
+      "correct_answer": ["b"]
+    }
+  ]
+}

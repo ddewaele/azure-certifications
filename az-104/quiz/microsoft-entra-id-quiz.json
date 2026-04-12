@@ -1,0 +1,235 @@
+{
+  "meta": {
+    "title": "Microsoft Entra ID – Plans, Features & AD DS Comparison",
+    "subject": "Microsoft Identity & Access Management",
+    "version": "1.0.0",
+    "created": "2026-03-26"
+  },
+  "questions": [
+    {
+      "question_id": 1,
+      "question_text": "Which feature is unique to the Microsoft Entra ID P2 plan and not included in the P1 plan or the free version?",
+      "difficulty": "medium",
+      "topic": "Entra ID Licensing Plans",
+      "tags": ["P2", "identity-protection", "licensing"],
+      "options": {
+        "a": {
+          "text": "Self-service group management",
+          "is_true": false,
+          "explanation": "Incorrect. Self-service group management is available in the P1 plan, not exclusive to P2."
+        },
+        "b": {
+          "text": "Microsoft Entra Identity Protection",
+          "is_true": true,
+          "explanation": "Correct. Microsoft Entra Identity Protection is a P2-exclusive feature. It provides risk-based conditional access and automated responses to detected identity risks, which are not available in P1 or the Free tier."
+        },
+        "c": {
+          "text": "Cloud App Discovery",
+          "is_true": false,
+          "explanation": "Incorrect. Cloud App Discovery (part of Microsoft Defender for Cloud Apps) is available at the P1 level and is not exclusive to P2."
+        }
+      },
+      "correct_answer": ["b"]
+    },
+    {
+      "question_id": 2,
+      "question_text": "What is a significant difference between how organizational structures are managed in Microsoft Entra ID compared to AD DS?",
+      "difficulty": "medium",
+      "topic": "Entra ID vs AD DS – Structure",
+      "tags": ["AD DS", "OU", "flat-structure", "comparison"],
+      "options": {
+        "a": {
+          "text": "Microsoft Entra ID and AD DS both use Group Policies to manage organizational structures.",
+          "is_true": false,
+          "explanation": "Incorrect. Group Policy Objects (GPOs) are an AD DS concept. Microsoft Entra ID does not use GPOs for managing organizational structures."
+        },
+        "b": {
+          "text": "Microsoft Entra ID uses a flat structure without OUs, while AD DS uses a hierarchical structure with OUs.",
+          "is_true": true,
+          "explanation": "Correct. AD DS organizes objects into a hierarchical tree using Organizational Units (OUs), which enables granular Group Policy application. Microsoft Entra ID uses a flat directory model without OUs, relying on groups and administrative units instead."
+        },
+        "c": {
+          "text": "Both Microsoft Entra ID and AD DS use hierarchical structures with Organizational Units (OUs).",
+          "is_true": false,
+          "explanation": "Incorrect. Only AD DS uses OUs in a hierarchy. Microsoft Entra ID has a flat structure and does not support OUs in the traditional AD DS sense."
+        }
+      },
+      "correct_answer": ["b"]
+    },
+    {
+      "question_id": 3,
+      "question_text": "Which Microsoft Entra ID feature, available in P2 but not in P1, allows for enhanced monitoring and protection of user accounts?",
+      "difficulty": "medium",
+      "topic": "Entra ID Licensing Plans",
+      "tags": ["P2", "identity-protection", "monitoring", "security"],
+      "options": {
+        "a": {
+          "text": "Microsoft Entra Identity Protection",
+          "is_true": true,
+          "explanation": "Correct. Microsoft Entra Identity Protection is a P2-exclusive capability. It monitors sign-in risk and user risk signals, generates risk reports, and can enforce risk-based Conditional Access policies to automatically protect accounts."
+        },
+        "b": {
+          "text": "Microsoft Entra Connect Health",
+          "is_true": false,
+          "explanation": "Incorrect. Microsoft Entra Connect Health monitors the health of your on-premises identity infrastructure and is included with Microsoft Entra ID P1, not exclusive to P2."
+        },
+        "c": {
+          "text": "Microsoft Identity Manager",
+          "is_true": false,
+          "explanation": "Incorrect. Microsoft Identity Manager (MIM) is a separate on-premises identity governance product and is not a feature tier within Microsoft Entra ID plans."
+        }
+      },
+      "correct_answer": ["a"]
+    },
+    {
+      "question_id": 4,
+      "question_text": "Which feature distinguishes Microsoft Entra ID from AD DS in terms of application management?",
+      "difficulty": "medium",
+      "topic": "Entra ID vs AD DS – Application Management",
+      "tags": ["service-principal", "application-management", "comparison"],
+      "options": {
+        "a": {
+          "text": "Service principal objects for cross-tenant application usage.",
+          "is_true": true,
+          "explanation": "Correct. Microsoft Entra ID uses service principal objects and application registrations to manage access for cloud and multi-tenant applications — a capability that does not exist in traditional AD DS."
+        },
+        "b": {
+          "text": "Use of Group Policy Objects (GPOs) for application deployment.",
+          "is_true": false,
+          "explanation": "Incorrect. GPOs are an AD DS feature used for on-premises application and policy deployment. Microsoft Entra ID does not use GPOs."
+        },
+        "c": {
+          "text": "Kerberos protocol for application authentication.",
+          "is_true": false,
+          "explanation": "Incorrect. Kerberos is used by AD DS for on-premises authentication. Microsoft Entra ID primarily uses modern protocols like OAuth 2.0 and OpenID Connect for application authentication."
+        }
+      },
+      "correct_answer": ["a"]
+    },
+    {
+      "question_id": 5,
+      "question_text": "Which of the following best describes the primary focus of Microsoft Entra ID compared to AD DS?",
+      "difficulty": "easy",
+      "topic": "Entra ID Core Purpose",
+      "tags": ["definition", "comparison", "web-applications"],
+      "options": {
+        "a": {
+          "text": "Creating organizational units for policy application.",
+          "is_true": false,
+          "explanation": "Incorrect. Creating OUs for policy application is the domain of AD DS, not Microsoft Entra ID, which has a flat directory structure."
+        },
+        "b": {
+          "text": "Providing identity management services to web-based applications.",
+          "is_true": true,
+          "explanation": "Correct. Microsoft Entra ID is designed primarily as a cloud-based identity provider for web and SaaS applications, supporting modern authentication protocols like OAuth 2.0 and SAML. This contrasts with AD DS, which focuses on managing on-premises network resources."
+        },
+        "c": {
+          "text": "Managing computer objects within a corporate network.",
+          "is_true": false,
+          "explanation": "Incorrect. Managing computer objects and network resources is the primary focus of AD DS. Microsoft Entra ID is oriented toward cloud and web-based identity management."
+        }
+      },
+      "correct_answer": ["b"]
+    },
+    {
+      "question_id": 6,
+      "question_text": "An organization using AD DS is planning to extend its on-premises infrastructure to Microsoft Entra ID. What feature of Microsoft Entra ID can help manage user authentication across both environments?",
+      "difficulty": "hard",
+      "topic": "Hybrid Identity",
+      "tags": ["federation", "hybrid", "AD DS", "scenario"],
+      "options": {
+        "a": {
+          "text": "Using Group Policy Objects (GPOs)",
+          "is_true": false,
+          "explanation": "Incorrect. GPOs are an on-premises AD DS feature and do not extend to or operate within Microsoft Entra ID for cross-environment authentication."
+        },
+        "b": {
+          "text": "Enabling federation between organizations",
+          "is_true": true,
+          "explanation": "Correct. Federation (using technologies like AD FS or Microsoft Entra ID federation) allows organizations to establish a trust relationship between AD DS and Microsoft Entra ID, enabling seamless single sign-on across both on-premises and cloud environments. Microsoft Entra Connect can also synchronize identities to support hybrid scenarios."
+        },
+        "c": {
+          "text": "Implementing Kerberos authentication",
+          "is_true": false,
+          "explanation": "Incorrect. Kerberos is an on-premises AD DS authentication protocol and is not natively used by Microsoft Entra ID for cloud authentication. It cannot bridge the two environments on its own."
+        }
+      },
+      "correct_answer": ["b"]
+    },
+    {
+      "question_id": 7,
+      "question_text": "Your organization requires advanced security reports and alerts for cloud applications. Which Microsoft Entra ID plan should you choose to meet this requirement?",
+      "difficulty": "medium",
+      "topic": "Entra ID Licensing Plans",
+      "tags": ["P2", "security-reports", "licensing", "scenario"],
+      "options": {
+        "a": {
+          "text": "Microsoft Entra ID P1",
+          "is_true": false,
+          "explanation": "Incorrect. While P1 includes several security features, advanced security reports, risk detections, and automated alerts for cloud applications are part of the P2 tier through features like Identity Protection."
+        },
+        "b": {
+          "text": "Microsoft Entra ID Free",
+          "is_true": false,
+          "explanation": "Incorrect. The Free tier provides only basic security features and does not include advanced security reporting or cloud app risk alerts."
+        },
+        "c": {
+          "text": "Microsoft Entra ID P2",
+          "is_true": true,
+          "explanation": "Correct. Microsoft Entra ID P2 includes advanced security capabilities such as Identity Protection with risk-based reports, alerts, and automated remediation policies for cloud applications — beyond what P1 or Free offer."
+        }
+      },
+      "correct_answer": ["c"]
+    },
+    {
+      "question_id": 8,
+      "question_text": "Your organization wants to ensure that only users from its Microsoft Entra tenant can access a specific Azure web application. Which configuration should be applied in the Azure portal to achieve this?",
+      "difficulty": "medium",
+      "topic": "Azure App Service Authentication",
+      "tags": ["app-service", "authentication", "tenant-restriction", "scenario"],
+      "options": {
+        "a": {
+          "text": "Use LDAP queries to restrict access",
+          "is_true": false,
+          "explanation": "Incorrect. LDAP is an on-premises AD DS protocol and is not used by Azure App Service for controlling tenant-based access to web applications."
+        },
+        "b": {
+          "text": "Implement Kerberos authentication for the web application",
+          "is_true": false,
+          "explanation": "Incorrect. Kerberos is an on-premises authentication protocol. Azure web applications use modern protocols like OAuth 2.0 and OpenID Connect, not Kerberos."
+        },
+        "c": {
+          "text": "Designate the Microsoft Entra tenant in the Authentication/Authorization blade",
+          "is_true": true,
+          "explanation": "Correct. In the Azure portal, navigating to the App Service's Authentication/Authorization blade and configuring Microsoft Entra ID as the identity provider — specifying the organization's tenant — ensures only users from that tenant can authenticate and access the application."
+        }
+      },
+      "correct_answer": ["c"]
+    },
+    {
+      "question_id": 9,
+      "question_text": "A developer needs to ensure that an Azure App Service web application only allows access to users from a specific Microsoft Entra tenant. How can this be achieved in the Azure portal?",
+      "difficulty": "medium",
+      "topic": "Azure App Service Authentication",
+      "tags": ["app-service", "authentication", "tenant-restriction", "scenario", "developer"],
+      "options": {
+        "a": {
+          "text": "Use DNS domain name restrictions",
+          "is_true": false,
+          "explanation": "Incorrect. DNS domain name restrictions are not an authentication mechanism in Azure App Service and would not enforce tenant-based identity controls."
+        },
+        "b": {
+          "text": "Configure Microsoft Entra authentication in the Authentication/Authorization blade",
+          "is_true": true,
+          "explanation": "Correct. The Authentication/Authorization blade in Azure App Service allows developers to enable Microsoft Entra ID as the identity provider and restrict access to users within a specific tenant. This is the standard and recommended approach."
+        },
+        "c": {
+          "text": "Set up Kerberos authentication for the app",
+          "is_true": false,
+          "explanation": "Incorrect. Kerberos is an on-premises Windows authentication protocol and is not applicable for tenant-level access restrictions on Azure App Service hosted in the cloud."
+        }
+      },
+      "correct_answer": ["b"]
+    }
+  ]
+}

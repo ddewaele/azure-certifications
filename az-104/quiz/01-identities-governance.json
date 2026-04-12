@@ -1,0 +1,610 @@
+{
+  "meta": {
+    "title": "AZ-104 – Identity and Governance",
+    "subject": "Azure Administration",
+    "version": "1.0.0",
+    "created": "2026-03-24"
+  },
+  "questions": [
+    {
+      "question_id": 1,
+      "question_text": "Which built-in Azure RBAC role grants full access to all Azure resources AND the ability to assign roles to other users?",
+      "difficulty": "easy",
+      "topic": "RBAC",
+      "tags": ["rbac", "az-104", "roles"],
+      "options": {
+        "a": {
+          "text": "Contributor",
+          "is_true": false,
+          "explanation": "Incorrect. Contributor grants full resource management but cannot assign roles or manage access."
+        },
+        "b": {
+          "text": "Reader",
+          "is_true": false,
+          "explanation": "Incorrect. Reader is a read-only role — no creation, modification, or access management."
+        },
+        "c": {
+          "text": "Owner",
+          "is_true": true,
+          "explanation": "Correct. Owner grants full access to all resources AND the ability to assign Azure RBAC roles to others."
+        },
+        "d": {
+          "text": "User Access Administrator",
+          "is_true": false,
+          "explanation": "Incorrect. User Access Administrator can manage access (assign roles) but cannot manage the resources themselves."
+        }
+      },
+      "correct_answer": ["c"]
+    },
+    {
+      "question_id": 2,
+      "question_text": "A company needs to ensure all new resource groups in a subscription have an 'Environment' tag. Which Azure governance feature should they use?",
+      "difficulty": "easy",
+      "topic": "Azure Policy",
+      "tags": ["policy", "tags", "az-104"],
+      "options": {
+        "a": {
+          "text": "Resource locks",
+          "is_true": false,
+          "explanation": "Incorrect. Resource locks prevent deletion or modification but do not enforce tagging requirements."
+        },
+        "b": {
+          "text": "Azure Policy",
+          "is_true": true,
+          "explanation": "Correct. Azure Policy can enforce tagging requirements using 'Require a tag on resource groups' or a custom Deny policy that blocks resource group creation without the required tag."
+        },
+        "c": {
+          "text": "Management groups",
+          "is_true": false,
+          "explanation": "Incorrect. Management groups are containers for organising subscriptions — they do not directly enforce tags by themselves."
+        },
+        "d": {
+          "text": "Azure Blueprints",
+          "is_true": false,
+          "explanation": "Incorrect. Blueprints can include policies, but the core mechanism for enforcing tags is Azure Policy, not Blueprints."
+        }
+      },
+      "correct_answer": ["b"]
+    },
+    {
+      "question_id": 3,
+      "question_text": "What is the minimum Microsoft Entra ID license required to use dynamic group membership rules?",
+      "difficulty": "easy",
+      "topic": "Entra ID",
+      "tags": ["entra-id", "groups", "licensing", "az-104"],
+      "options": {
+        "a": {
+          "text": "Entra ID Free",
+          "is_true": false,
+          "explanation": "Incorrect. Entra ID Free supports static group membership only — dynamic rules require P1 or higher."
+        },
+        "b": {
+          "text": "Entra ID P1",
+          "is_true": true,
+          "explanation": "Correct. Dynamic group membership requires Microsoft Entra ID P1 (or P2). P1 is the minimum tier that supports attribute-based dynamic membership rules."
+        },
+        "c": {
+          "text": "Entra ID P2",
+          "is_true": false,
+          "explanation": "Incorrect. P2 is not the minimum — P1 already includes dynamic group membership."
+        },
+        "d": {
+          "text": "Microsoft 365 E3",
+          "is_true": false,
+          "explanation": "Incorrect. M365 E3 includes Entra ID P1, but it is the P1 license that enables dynamic groups — not the M365 E3 designation itself."
+        }
+      },
+      "correct_answer": ["b"]
+    },
+    {
+      "question_id": 4,
+      "question_text": "An administrator applies a ReadOnly lock to a storage account. Which of the following operations will STILL be permitted?",
+      "difficulty": "easy",
+      "topic": "Resource Locks",
+      "tags": ["locks", "governance", "az-104"],
+      "options": {
+        "a": {
+          "text": "Upload a new blob to a container",
+          "is_true": false,
+          "explanation": "Incorrect. ReadOnly prevents any write operations including uploading blobs."
+        },
+        "b": {
+          "text": "Delete the storage account",
+          "is_true": false,
+          "explanation": "Incorrect. ReadOnly prevents both modification and deletion."
+        },
+        "c": {
+          "text": "List the access keys for the storage account",
+          "is_true": false,
+          "explanation": "Incorrect. Listing access keys is treated as a write operation (POST) and is blocked by a ReadOnly lock."
+        },
+        "d": {
+          "text": "View the storage account configuration and properties",
+          "is_true": true,
+          "explanation": "Correct. ReadOnly allows read operations (GET requests). Viewing properties and configuration is a read operation and remains permitted."
+        }
+      },
+      "correct_answer": ["d"]
+    },
+    {
+      "question_id": 5,
+      "question_text": "A user is assigned the Reader role at the subscription level. An administrator then assigns the Contributor role to the same user on a specific resource group. What is the user's effective access on that resource group?",
+      "difficulty": "easy",
+      "topic": "RBAC",
+      "tags": ["rbac", "effective-permissions", "az-104"],
+      "options": {
+        "a": {
+          "text": "Reader only — the subscription-level role takes precedence",
+          "is_true": false,
+          "explanation": "Incorrect. RBAC role assignments are additive — there is no precedence based on scope level (unless a Deny assignment exists)."
+        },
+        "b": {
+          "text": "Contributor — the more specific scope assignment applies",
+          "is_true": false,
+          "explanation": "Partially correct reasoning but wrong explanation. The user has BOTH Reader (inherited) AND Contributor on the resource group. The effective permission is the union, which is essentially Contributor."
+        },
+        "c": {
+          "text": "Both Reader and Contributor — effective permissions are the union of all role assignments",
+          "is_true": true,
+          "explanation": "Correct. RBAC permissions are additive. The user has Reader from subscription (inherited) plus Contributor from the resource group. The effective access is the union — essentially Contributor permissions on the resource group."
+        },
+        "d": {
+          "text": "No access — conflicting roles cancel each other out",
+          "is_true": false,
+          "explanation": "Incorrect. RBAC roles never cancel each other — they are always additive. Only Deny assignments can remove permissions."
+        }
+      },
+      "correct_answer": ["c"]
+    },
+    {
+      "question_id": 6,
+      "question_text": "Which Azure Policy effect will PREVENT non-compliant resources from being created while logging the attempted violation?",
+      "difficulty": "easy",
+      "topic": "Azure Policy",
+      "tags": ["policy", "effects", "az-104"],
+      "options": {
+        "a": {
+          "text": "Audit",
+          "is_true": false,
+          "explanation": "Incorrect. Audit allows the resource creation but logs the non-compliance — it does not block anything."
+        },
+        "b": {
+          "text": "Modify",
+          "is_true": false,
+          "explanation": "Incorrect. Modify adds or changes properties on a resource during creation or update — it does not block resource creation."
+        },
+        "c": {
+          "text": "Deny",
+          "is_true": true,
+          "explanation": "Correct. Deny blocks the resource creation/update request if it violates the policy condition. The request is rejected with a 403 error."
+        },
+        "d": {
+          "text": "DeployIfNotExists",
+          "is_true": false,
+          "explanation": "Incorrect. DeployIfNotExists deploys a remediation resource if a required related resource does not exist — it does not block creation."
+        }
+      },
+      "correct_answer": ["c"]
+    },
+    {
+      "question_id": 7,
+      "question_text": "What is the maximum number of levels a management group hierarchy can have below the Root management group?",
+      "difficulty": "easy",
+      "topic": "Management Groups",
+      "tags": ["management-groups", "governance", "az-104"],
+      "options": {
+        "a": {
+          "text": "3",
+          "is_true": false,
+          "explanation": "Incorrect. 3 levels would be too few for large enterprise hierarchies."
+        },
+        "b": {
+          "text": "6",
+          "is_true": true,
+          "explanation": "Correct. Management groups support up to 6 levels of nesting below the Root management group (not counting the Root itself or subscription level)."
+        },
+        "c": {
+          "text": "10",
+          "is_true": false,
+          "explanation": "Incorrect. The maximum is 6 levels below the Root management group."
+        },
+        "d": {
+          "text": "Unlimited",
+          "is_true": false,
+          "explanation": "Incorrect. Management group hierarchy is limited to 6 nesting levels below Root."
+        }
+      },
+      "correct_answer": ["b"]
+    },
+    {
+      "question_id": 8,
+      "question_text": "An Entra ID user must reset their own password from outside the corporate network. Which feature enables this without requiring IT helpdesk involvement?",
+      "difficulty": "easy",
+      "topic": "SSPR",
+      "tags": ["sspr", "entra-id", "az-104"],
+      "options": {
+        "a": {
+          "text": "Privileged Identity Management (PIM)",
+          "is_true": false,
+          "explanation": "Incorrect. PIM provides just-in-time privileged role activation — it is not used for password resets."
+        },
+        "b": {
+          "text": "Conditional Access",
+          "is_true": false,
+          "explanation": "Incorrect. Conditional Access controls access based on conditions — it does not provide self-service password reset functionality."
+        },
+        "c": {
+          "text": "Self-Service Password Reset (SSPR)",
+          "is_true": true,
+          "explanation": "Correct. SSPR allows users to reset their own passwords using registered authentication methods (email, phone, authenticator app) without IT helpdesk involvement. Requires Entra ID P1 for on-premises writeback."
+        },
+        "d": {
+          "text": "Identity Protection",
+          "is_true": false,
+          "explanation": "Incorrect. Identity Protection detects risky sign-ins and users — it does not provide a self-service password reset portal."
+        }
+      },
+      "correct_answer": ["c"]
+    },
+    {
+      "question_id": 9,
+      "question_text": "A company is consolidating Azure subscriptions from two acquisitions. They want to apply the same Azure Policies to all subscriptions with a single assignment. What should they use?",
+      "difficulty": "easy",
+      "topic": "Management Groups",
+      "tags": ["management-groups", "policy", "az-104"],
+      "options": {
+        "a": {
+          "text": "Assign policies to each subscription individually",
+          "is_true": false,
+          "explanation": "Incorrect. While possible, this approach does not scale and must be repeated for every new subscription added."
+        },
+        "b": {
+          "text": "Place all subscriptions under a management group and assign the policy to the management group",
+          "is_true": true,
+          "explanation": "Correct. Management groups allow policy assignments that automatically apply to all subscriptions (and resource groups and resources) within the hierarchy. This is the recommended approach for multi-subscription governance."
+        },
+        "c": {
+          "text": "Use resource groups to organise subscriptions",
+          "is_true": false,
+          "explanation": "Incorrect. Resource groups are within subscriptions, not above them — they cannot span subscriptions."
+        },
+        "d": {
+          "text": "Use Azure Blueprints to deploy policies to individual subscriptions",
+          "is_true": false,
+          "explanation": "Incorrect. Blueprints deploy resources to subscriptions, but management groups are the right tool for inheritable policy scope across many subscriptions."
+        }
+      },
+      "correct_answer": ["b"]
+    },
+    {
+      "question_id": 10,
+      "question_text": "A resource group is tagged with 'CostCenter=Marketing'. A new storage account is created in that resource group without any tags. Which of the following is true?",
+      "difficulty": "easy",
+      "topic": "Tags",
+      "tags": ["tags", "governance", "az-104"],
+      "options": {
+        "a": {
+          "text": "The storage account automatically inherits the 'CostCenter=Marketing' tag",
+          "is_true": false,
+          "explanation": "Incorrect. Tags on a resource group do NOT automatically inherit to resources within it in Azure. Tag inheritance requires an Azure Policy with the 'Inherit a tag from the resource group' effect."
+        },
+        "b": {
+          "text": "The storage account has no tags unless explicitly tagged or a policy enforces inheritance",
+          "is_true": true,
+          "explanation": "Correct. Azure tags do not automatically inherit from resource groups to resources. An Azure Policy with the 'Inherit a tag from resource group' effect or the 'Append' effect must be used to propagate tags automatically."
+        },
+        "c": {
+          "text": "Tags cannot be applied to resource groups, only to individual resources",
+          "is_true": false,
+          "explanation": "Incorrect. Tags can be applied to resource groups, subscriptions, and individual resources."
+        },
+        "d": {
+          "text": "The storage account inherits all tags but they can be overridden",
+          "is_true": false,
+          "explanation": "Incorrect. Inheritance does not happen automatically — tags must be explicitly set on each resource or enforced via policy."
+        }
+      },
+      "correct_answer": ["b"]
+    },
+    {
+      "question_id": 11,
+      "question_text": "Which hybrid identity authentication method synchronises a hash of the password hash from on-premises Active Directory to Microsoft Entra ID?",
+      "difficulty": "easy",
+      "topic": "Hybrid Identity",
+      "tags": ["hybrid-identity", "entra-connect", "az-104"],
+      "options": {
+        "a": {
+          "text": "Pass-through authentication (PTA)",
+          "is_true": false,
+          "explanation": "Incorrect. PTA validates authentication against on-premises AD in real time — no password data is stored in the cloud."
+        },
+        "b": {
+          "text": "Active Directory Federation Services (ADFS)",
+          "is_true": false,
+          "explanation": "Incorrect. ADFS is a federation solution where authentication is handled entirely by on-premises ADFS — no hash sync occurs."
+        },
+        "c": {
+          "text": "Password hash sync (PHS)",
+          "is_true": true,
+          "explanation": "Correct. Password Hash Sync synchronises a hash of the hash of the user's on-premises password to Entra ID. This enables cloud-based authentication without needing to reach the on-premises AD."
+        },
+        "d": {
+          "text": "Entra ID Connect Cloud Sync",
+          "is_true": false,
+          "explanation": "Incorrect. Entra Connect Cloud Sync is a lightweight sync agent, but it is the synchronisation tool — PHS is the authentication method. Cloud Sync can use PHS, but they are different concepts."
+        }
+      },
+      "correct_answer": ["c"]
+    },
+    {
+      "question_id": 12,
+      "question_text": "An administrator wants to prevent anyone — including Global Administrators — from deleting a production virtual machine. What is the most direct way to achieve this?",
+      "difficulty": "easy",
+      "topic": "Resource Locks",
+      "tags": ["locks", "governance", "az-104"],
+      "options": {
+        "a": {
+          "text": "Remove the Owner role from all administrators",
+          "is_true": false,
+          "explanation": "Incorrect. RBAC roles can be reassigned. Removing roles does not prevent future role reassignment by other Owners."
+        },
+        "b": {
+          "text": "Apply a CanNotDelete lock to the virtual machine",
+          "is_true": true,
+          "explanation": "Correct. A CanNotDelete resource lock prevents deletion regardless of RBAC permissions. Even users with Owner role cannot delete the resource until the lock is removed."
+        },
+        "c": {
+          "text": "Apply an Azure Policy with a Deny effect to block VM deletion",
+          "is_true": false,
+          "explanation": "Incorrect. Azure Policy Deny effect blocks creation/updates — it cannot block delete operations in the same way a resource lock can."
+        },
+        "d": {
+          "text": "Move the VM to a separate subscription",
+          "is_true": false,
+          "explanation": "Incorrect. Moving the VM to another subscription does not protect it from deletion — you would still need a lock."
+        }
+      },
+      "correct_answer": ["b"]
+    },
+    {
+      "question_id": 13,
+      "question_text": "A company wants external partners to access their Azure resources using the partners' existing corporate credentials. Which Entra ID feature should be used?",
+      "difficulty": "easy",
+      "topic": "External Identities",
+      "tags": ["b2b", "external-users", "entra-id", "az-104"],
+      "options": {
+        "a": {
+          "text": "Create new Entra ID user accounts for each partner",
+          "is_true": false,
+          "explanation": "Incorrect. Creating accounts requires managing passwords and licenses for external users — not the recommended approach."
+        },
+        "b": {
+          "text": "B2B collaboration (guest users)",
+          "is_true": true,
+          "explanation": "Correct. B2B collaboration allows external partners to be invited as guest users who sign in with their own organisation's credentials (or Microsoft/Google accounts). No password management required on the host side."
+        },
+        "c": {
+          "text": "B2C collaboration",
+          "is_true": false,
+          "explanation": "Incorrect. B2C (Azure AD B2C) is for customer identity scenarios (consumer apps) — not for partner/business collaboration."
+        },
+        "d": {
+          "text": "Federate the partner's AD with ADFS",
+          "is_true": false,
+          "explanation": "Incorrect. ADFS federation is a complex on-premises solution. B2B guest invitations are simpler and more scalable for partner access."
+        }
+      },
+      "correct_answer": ["b"]
+    },
+    {
+      "question_id": 14,
+      "question_text": "When an Azure subscription is transferred to a new billing owner, what happens to the existing RBAC role assignments?",
+      "difficulty": "easy",
+      "topic": "Subscriptions",
+      "tags": ["subscriptions", "rbac", "az-104"],
+      "options": {
+        "a": {
+          "text": "All RBAC role assignments are automatically removed",
+          "is_true": false,
+          "explanation": "Incorrect. Role assignments remain intact when billing ownership is transferred."
+        },
+        "b": {
+          "text": "RBAC role assignments are preserved",
+          "is_true": true,
+          "explanation": "Correct. Transferring a subscription changes the billing owner but does not modify RBAC role assignments. Resources and access control remain as configured."
+        },
+        "c": {
+          "text": "Only the Owner role assignments are removed",
+          "is_true": false,
+          "explanation": "Incorrect. No role assignments are removed during a billing transfer."
+        },
+        "d": {
+          "text": "The subscription must be re-created after transfer",
+          "is_true": false,
+          "explanation": "Incorrect. Transfer moves the subscription with all resources and role assignments intact to the new billing account."
+        }
+      },
+      "correct_answer": ["b"]
+    },
+    {
+      "question_id": 15,
+      "question_text": "Which Entra ID feature requires P2 licensing and provides just-in-time activation of privileged roles with approval workflows?",
+      "difficulty": "easy",
+      "topic": "PIM",
+      "tags": ["pim", "entra-id", "licensing", "az-104"],
+      "options": {
+        "a": {
+          "text": "Conditional Access",
+          "is_true": false,
+          "explanation": "Incorrect. Conditional Access is available with P1 and controls access based on conditions — it does not provide JIT role activation."
+        },
+        "b": {
+          "text": "Privileged Identity Management (PIM)",
+          "is_true": true,
+          "explanation": "Correct. PIM requires Entra ID P2 and provides just-in-time privileged access — users activate roles on demand for a limited duration, with optional approval workflows and audit trails."
+        },
+        "c": {
+          "text": "Identity Protection",
+          "is_true": false,
+          "explanation": "Incorrect. Identity Protection (also P2) detects risky sign-ins and users — it does not manage role activation workflows."
+        },
+        "d": {
+          "text": "Self-Service Password Reset (SSPR)",
+          "is_true": false,
+          "explanation": "Incorrect. SSPR requires P1 (for on-premises writeback) and allows password resets — it has nothing to do with role activation."
+        }
+      },
+      "correct_answer": ["b"]
+    },
+    {
+      "question_id": 16,
+      "question_text": "An Azure Policy assignment has the 'Audit' effect. What happens when a non-compliant resource is detected?",
+      "difficulty": "easy",
+      "topic": "Azure Policy",
+      "tags": ["policy", "compliance", "az-104"],
+      "options": {
+        "a": {
+          "text": "The resource is automatically deleted",
+          "is_true": false,
+          "explanation": "Incorrect. Azure Policy never automatically deletes resources — that is not a supported policy effect."
+        },
+        "b": {
+          "text": "The resource operation is blocked and an error is returned",
+          "is_true": false,
+          "explanation": "Incorrect. That describes the Deny effect, not Audit."
+        },
+        "c": {
+          "text": "The resource is flagged as non-compliant in the policy compliance dashboard but no action is taken",
+          "is_true": true,
+          "explanation": "Correct. The Audit effect evaluates the resource, marks it as non-compliant in the Policy Compliance dashboard, and generates an audit log entry — but allows the resource to exist and does not block any operations."
+        },
+        "d": {
+          "text": "A remediation task is automatically triggered",
+          "is_true": false,
+          "explanation": "Incorrect. Automatic remediation is triggered by the DeployIfNotExists and Modify effects, not Audit."
+        }
+      },
+      "correct_answer": ["c"]
+    },
+    {
+      "question_id": 17,
+      "question_text": "A user account must be assigned a Microsoft 365 license. The license assignment fails with an error. What is the most likely missing prerequisite?",
+      "difficulty": "easy",
+      "topic": "Entra ID",
+      "tags": ["entra-id", "licensing", "az-104"],
+      "options": {
+        "a": {
+          "text": "The user does not have MFA enabled",
+          "is_true": false,
+          "explanation": "Incorrect. MFA is not a prerequisite for license assignment."
+        },
+        "b": {
+          "text": "The user's Usage location property is not set",
+          "is_true": true,
+          "explanation": "Correct. Azure requires a Usage location to be set on the user account before a license can be assigned. This is because license availability and features vary by country/region for compliance reasons."
+        },
+        "c": {
+          "text": "The user's account is not synced from on-premises AD",
+          "is_true": false,
+          "explanation": "Incorrect. Cloud-only users can also be assigned licenses — synced identity is not a requirement."
+        },
+        "d": {
+          "text": "The user does not belong to any security group",
+          "is_true": false,
+          "explanation": "Incorrect. Group membership is not required to assign a license directly to a user."
+        }
+      },
+      "correct_answer": ["b"]
+    },
+    {
+      "question_id": 18,
+      "question_text": "Which scope is HIGHEST in the Azure management hierarchy and allows governance policies to be applied across ALL subscriptions in an organisation?",
+      "difficulty": "easy",
+      "topic": "Management Groups",
+      "tags": ["management-groups", "hierarchy", "az-104"],
+      "options": {
+        "a": {
+          "text": "Subscription",
+          "is_true": false,
+          "explanation": "Incorrect. Subscriptions are below management groups in the hierarchy."
+        },
+        "b": {
+          "text": "Resource Group",
+          "is_true": false,
+          "explanation": "Incorrect. Resource groups are within subscriptions — they are the lowest scope in the hierarchy."
+        },
+        "c": {
+          "text": "Root Management Group",
+          "is_true": true,
+          "explanation": "Correct. The Root management group is the top-level container. All subscriptions ultimately roll up to it. Policies and RBAC assigned here apply to every subscription and resource in the entire Entra tenant."
+        },
+        "d": {
+          "text": "Entra ID Tenant",
+          "is_true": false,
+          "explanation": "Incorrect. The tenant is the identity boundary, not an Azure management scope. The Root management group is the top of the Azure resource hierarchy."
+        }
+      },
+      "correct_answer": ["c"]
+    },
+    {
+      "question_id": 19,
+      "question_text": "An administrator creates a CanNotDelete lock on a resource group. A developer tries to delete one of the resources within that resource group. What happens?",
+      "difficulty": "easy",
+      "topic": "Resource Locks",
+      "tags": ["locks", "governance", "az-104"],
+      "options": {
+        "a": {
+          "text": "The deletion succeeds because the lock is on the resource group, not the individual resource",
+          "is_true": false,
+          "explanation": "Incorrect. Resource locks on a resource group are inherited by all resources within the group. The delete operation will fail."
+        },
+        "b": {
+          "text": "The deletion fails because resource group locks are inherited by child resources",
+          "is_true": true,
+          "explanation": "Correct. Locks are inherited by all resources within the locked scope. A CanNotDelete lock on a resource group prevents deletion of any resource within that group."
+        },
+        "c": {
+          "text": "The deletion succeeds if the developer has the Owner role",
+          "is_true": false,
+          "explanation": "Incorrect. Resource locks override RBAC — even users with the Owner role cannot delete a resource protected by a CanNotDelete lock."
+        },
+        "d": {
+          "text": "The developer is prompted to justify the deletion before it proceeds",
+          "is_true": false,
+          "explanation": "Incorrect. Resource locks do not present a justification prompt — they simply block the operation with an error."
+        }
+      },
+      "correct_answer": ["b"]
+    },
+    {
+      "question_id": 20,
+      "question_text": "Which Azure service provides recommendations for reducing Azure costs, including identifying idle virtual machines and suggesting reserved instances?",
+      "difficulty": "easy",
+      "topic": "Cost Management",
+      "tags": ["cost-management", "advisor", "az-104"],
+      "options": {
+        "a": {
+          "text": "Azure Monitor",
+          "is_true": false,
+          "explanation": "Incorrect. Azure Monitor provides observability (metrics, logs, alerts) — it does not provide cost optimisation recommendations."
+        },
+        "b": {
+          "text": "Azure Policy",
+          "is_true": false,
+          "explanation": "Incorrect. Azure Policy enforces governance rules — it does not analyse cost patterns."
+        },
+        "c": {
+          "text": "Azure Advisor",
+          "is_true": true,
+          "explanation": "Correct. Azure Advisor analyses your Azure usage and provides recommendations across five categories: Cost, Security, Reliability, Operational Excellence, and Performance. The Cost category includes idle VM recommendations and reserved instance suggestions."
+        },
+        "d": {
+          "text": "Azure Cost Analysis",
+          "is_true": false,
+          "explanation": "Incorrect. Cost Analysis shows spending breakdowns and trends but does not proactively generate optimisation recommendations — that is Azure Advisor's role."
+        }
+      },
+      "correct_answer": ["c"]
+    }
+  ]
+}

@@ -1,0 +1,610 @@
+{
+  "meta": {
+    "title": "Azure Storage – Advanced Scenario-Based Challenges",
+    "subject": "Microsoft Azure",
+    "version": "1.0.0",
+    "created": "2026-03-30"
+  },
+  "questions": [
+    {
+      "question_id": 1,
+      "question_text": "A global e-commerce platform stores product images in Azure Blob Storage in the East US region. During a full regional outage, the operations team discovers they cannot read images from the secondary region. The storage account uses GRS. What is the most likely cause, and what should have been configured instead?",
+      "difficulty": "hard",
+      "topic": "Storage Replication",
+      "tags": ["scenario", "GRS", "RA-GRS", "disaster-recovery", "secondary-read"],
+      "options": {
+        "a": {
+          "text": "GRS does not replicate to a secondary region. GZRS should have been used.",
+          "is_true": false,
+          "explanation": "Incorrect. GRS does replicate data asynchronously to a paired secondary region. The problem is that GRS does not expose a readable secondary endpoint — not that replication is absent."
+        },
+        "b": {
+          "text": "GRS replicates data to the secondary region but does not provide a readable secondary endpoint. RA-GRS should have been configured.",
+          "is_true": true,
+          "explanation": "Correct. GRS ensures data is replicated to the secondary region for durability, but the secondary endpoint is read-only only after a Microsoft-initiated failover. RA-GRS exposes a permanent secondary read endpoint (account.secondary.core.windows.net), enabling reads at any time without failover."
+        },
+        "c": {
+          "text": "GRS replication has a 48-hour lag and the data had not yet been replicated. LRS should have been used instead.",
+          "is_true": false,
+          "explanation": "Incorrect. GRS replication lag is typically measured in minutes (RPO is usually under 15 minutes), not 48 hours. Switching to LRS would actually reduce redundancy, not improve it."
+        },
+        "d": {
+          "text": "The operations team did not have the correct RBAC role to read from the secondary endpoint. Adding the Storage Blob Data Reader role would resolve this.",
+          "is_true": false,
+          "explanation": "Incorrect. The issue is architectural — GRS simply does not expose a secondary read endpoint before failover. RBAC roles cannot override this fundamental GRS behaviour."
+        }
+      },
+      "correct_answer": ["b"]
+    },
+    {
+      "question_id": 2,
+      "question_text": "A financial institution stores sensitive customer records in Azure Blob Storage. A security audit reveals that some blobs are publicly accessible over the internet. The administrator confirms that no Shared Access Signatures were issued and no anonymous access was intentionally enabled. Which TWO configurations should be checked and corrected to prevent this exposure?",
+      "difficulty": "hard",
+      "topic": "Storage Security",
+      "tags": ["scenario", "anonymous-access", "public-access", "security-audit"],
+      "options": {
+        "a": {
+          "text": "Check whether 'Allow Blob public access' is enabled at the storage account level and disable it",
+          "is_true": true,
+          "explanation": "Correct. If 'Allow Blob public access' is enabled at the account level, individual containers can be set to public access, exposing blobs. Disabling this at the account level overrides all container-level settings and prevents any anonymous access."
+        },
+        "b": {
+          "text": "Rotate the storage account access keys to revoke current access",
+          "is_true": false,
+          "explanation": "Incorrect. Rotating access keys revokes key-based authenticated access, not anonymous public access. Public access does not rely on storage account keys."
+        },
+        "c": {
+          "text": "Check the public access level on the affected blob containers and set them to 'Private (no anonymous access)'",
+          "is_true": true,
+          "explanation": "Correct. Container-level public access settings (Blob, Container, or Private) control anonymous access. Any container set to 'Blob' or 'Container' access allows unauthenticated reads. Setting these to 'Private' removes anonymous access at the container level."
+        },
+        "d": {
+          "text": "Enable geo-redundant storage (GRS) to isolate data to the primary region only",
+          "is_true": false,
+          "explanation": "Incorrect. GRS is a replication strategy for durability. It has no effect on whether blobs are publicly accessible or not."
+        }
+      },
+      "correct_answer": ["a", "c"]
+    },
+    {
+      "question_id": 3,
+      "question_text": "A development team generates large log files daily that must be retained for exactly 90 days for compliance, then automatically deleted. The files are written once and never accessed again after 3 days. You need the most cost-effective design. Which combination of features should you implement?",
+      "difficulty": "hard",
+      "topic": "Blob Storage Lifecycle Management",
+      "tags": ["scenario", "lifecycle-management", "access-tiers", "cost-optimisation", "compliance"],
+      "options": {
+        "a": {
+          "text": "Store blobs in the Hot tier permanently and use Azure Backup to delete files older than 90 days",
+          "is_true": false,
+          "explanation": "Incorrect. The Hot tier has the highest storage cost per GB. Azure Backup is not designed for automated deletion of live blob data based on age. This approach is both expensive and architecturally incorrect."
+        },
+        "b": {
+          "text": "Store blobs in the Cool tier and create a lifecycle policy to move them to Archive after 3 days, then delete after 90 days",
+          "is_true": false,
+          "explanation": "Partially correct in concept but suboptimal. Moving to Archive after only 3 days could incur early deletion fees if the Archive minimum retention (180 days) is exceeded on deletion at 90 days. Archive also has rehydration delays, making data access inconvenient."
+        },
+        "c": {
+          "text": "Store blobs in the Hot tier, use a lifecycle policy to tier to Archive after 3 days, and delete after 90 days — but this violates the Archive minimum retention period",
+          "is_true": false,
+          "explanation": "Incorrect. The Archive tier has a minimum recommended retention of 180 days. Deleting at 90 days would incur early deletion penalties, increasing cost rather than reducing it."
+        },
+        "d": {
+          "text": "Store blobs in the Hot tier, use a lifecycle policy to move them to Cool after 3 days, then delete at 90 days",
+          "is_true": true,
+          "explanation": "Correct. Hot tier is appropriate for the first 3 days while files are actively written and possibly accessed. After 3 days, transitioning to Cool (minimum 30 days) reduces storage cost. Deleting at 90 days satisfies the compliance requirement without incurring Archive early-deletion penalties. This balances access performance, cost, and compliance."
+        }
+      },
+      "correct_answer": ["d"]
+    },
+    {
+      "question_id": 4,
+      "question_text": "A partner company needs read access to a specific blob container in your Azure Storage account for exactly 48 hours to download a dataset. You must not share account keys or create permanent access. You also need to ensure access is automatically revoked after 48 hours. What is the most appropriate solution?",
+      "difficulty": "hard",
+      "topic": "Storage Access Control",
+      "tags": ["scenario", "SAS", "access-control", "time-limited-access"],
+      "options": {
+        "a": {
+          "text": "Create a new storage account with LRS replication and copy the dataset there, sharing the account key with the partner",
+          "is_true": false,
+          "explanation": "Incorrect. Sharing an account key grants full administrative access to all resources in the account, violating the principle of least privilege. Creating a separate account is unnecessary overhead and the key-sharing approach is a security anti-pattern."
+        },
+        "b": {
+          "text": "Assign the Storage Blob Data Reader RBAC role to the partner's Azure AD identity at the container scope with a 48-hour expiry",
+          "is_true": false,
+          "explanation": "Partially attractive but incorrect. Azure RBAC role assignments do not natively support time-based expiry on standard roles. You would need to manually remove the assignment after 48 hours, which is error-prone and not automatic revocation."
+        },
+        "c": {
+          "text": "Generate a Service SAS token with read permission scoped to the specific container, with an expiry set 48 hours from now",
+          "is_true": true,
+          "explanation": "Correct. A Service SAS token can be scoped to a single container with read-only permission and a precise expiry time. After 48 hours, the token automatically becomes invalid. This provides time-limited, least-privilege access without sharing keys or creating permanent credentials."
+        },
+        "d": {
+          "text": "Enable anonymous public access on the container for 48 hours, then disable it",
+          "is_true": false,
+          "explanation": "Incorrect. Enabling public anonymous access exposes the container to the entire internet, not just the partner. This is a significant security risk and the manual re-disabling step is error-prone."
+        }
+      },
+      "correct_answer": ["c"]
+    },
+    {
+      "question_id": 5,
+      "question_text": "A company's application uses Azure Blob Storage with a stored access policy to control SAS token permissions. A developer accidentally generates SAS tokens with write permissions on a production container. The tokens have a 7-day expiry. You need to revoke all outstanding tokens immediately without regenerating the storage account keys. What should you do?",
+      "difficulty": "hard",
+      "topic": "Storage Access Control",
+      "tags": ["scenario", "SAS", "stored-access-policy", "revocation", "security-incident"],
+      "options": {
+        "a": {
+          "text": "Delete and recreate the blob container",
+          "is_true": false,
+          "explanation": "Incorrect. Deleting the container would destroy all production data. While it would invalidate SAS tokens targeting that container, it is a catastrophically destructive approach for a production environment."
+        },
+        "b": {
+          "text": "Modify or delete the stored access policy that the SAS tokens reference",
+          "is_true": true,
+          "explanation": "Correct. SAS tokens backed by a stored access policy inherit their permissions and expiry from that policy. Modifying the policy (e.g., changing permissions or expiry to the past) or deleting it immediately invalidates all SAS tokens that reference it — without touching account keys or data."
+        },
+        "c": {
+          "text": "Wait for the 7-day expiry period to pass",
+          "is_true": false,
+          "explanation": "Incorrect. Waiting 7 days is not a valid incident response. The tokens can be used for malicious writes throughout that window, causing data corruption or loss in production."
+        },
+        "d": {
+          "text": "Enable the 'Require secure transfer' setting on the storage account",
+          "is_true": false,
+          "explanation": "Incorrect. 'Require secure transfer' enforces HTTPS for connections but does not revoke or restrict existing SAS tokens. The tokens would still function over HTTPS."
+        }
+      },
+      "correct_answer": ["b"]
+    },
+    {
+      "question_id": 6,
+      "question_text": "Your organisation migrates a legacy application to Azure. The application uses SMB file shares and requires Active Directory-based authentication for users on your on-premises domain. Which Azure Storage configuration supports this requirement?",
+      "difficulty": "hard",
+      "topic": "Azure File Storage",
+      "tags": ["scenario", "Azure-Files", "SMB", "AD-authentication", "hybrid"],
+      "options": {
+        "a": {
+          "text": "Azure Blob Storage with Azure AD authentication via managed identity",
+          "is_true": false,
+          "explanation": "Incorrect. Azure Blob Storage does not support SMB protocol or AD-based identity access for file shares. Managed identity authentication on Blob Storage is for application-level access, not user-level SMB mounting."
+        },
+        "b": {
+          "text": "Azure File Storage with on-premises Active Directory Domain Services (AD DS) identity-based access",
+          "is_true": true,
+          "explanation": "Correct. Azure Files supports identity-based authentication over SMB using on-premises AD DS. By joining the storage account to your on-premises AD domain, users can mount file shares using their domain credentials — directly replacing legacy file server functionality."
+        },
+        "c": {
+          "text": "Azure File Storage with access keys mounted via SMB",
+          "is_true": false,
+          "explanation": "Incorrect. While Azure Files can be mounted using storage account keys over SMB, this does not provide Active Directory-based user authentication. It grants full access to everyone using the key, not per-user identity control."
+        },
+        "d": {
+          "text": "Azure Queue Storage with Azure AD OAuth tokens",
+          "is_true": false,
+          "explanation": "Incorrect. Azure Queue Storage is a message queue service and has no relation to SMB file shares or AD-based authentication for file access."
+        }
+      },
+      "correct_answer": ["b"]
+    },
+    {
+      "question_id": 7,
+      "question_text": "A storage account contains blobs that are occasionally accidentally deleted by application bugs. You need to minimise recovery time and ensure deleted blobs can be restored to their state at any point within the last 14 days. Deleted containers must also be recoverable. Which TWO features should you enable?",
+      "difficulty": "hard",
+      "topic": "Blob Storage Data Protection",
+      "tags": ["scenario", "soft-delete", "data-protection", "recovery"],
+      "options": {
+        "a": {
+          "text": "Blob soft delete with a 14-day retention period",
+          "is_true": true,
+          "explanation": "Correct. Blob soft delete retains deleted blobs and snapshots for the specified retention period (up to 365 days). Within 14 days of deletion, you can undelete the blob and restore it to its previous state."
+        },
+        "b": {
+          "text": "Geo-redundant storage (GRS) replication",
+          "is_true": false,
+          "explanation": "Incorrect. GRS replicates data to a secondary region for disaster recovery. It does not allow you to restore individual blobs that were deleted in the primary region — deletions are replicated to the secondary as well."
+        },
+        "c": {
+          "text": "Container soft delete with a 14-day retention period",
+          "is_true": true,
+          "explanation": "Correct. Container soft delete retains deleted containers and all blobs within them for the retention period. This covers the requirement to recover accidentally deleted containers, complementing blob-level soft delete."
+        },
+        "d": {
+          "text": "Immutable storage with a time-based retention policy",
+          "is_true": false,
+          "explanation": "Incorrect. Immutable storage prevents deletion and modification during the retention period. While this could prevent accidental deletion, it also prevents legitimate writes and modifications, which is too restrictive for a live application."
+        }
+      },
+      "correct_answer": ["a", "c"]
+    },
+    {
+      "question_id": 8,
+      "question_text": "An application writes millions of small messages (average 2 KB each) to Azure Storage for downstream processing by multiple independent consumer services. Each consumer must process every message independently and at its own pace. Which Azure Storage service and design best meets this requirement?",
+      "difficulty": "hard",
+      "topic": "Azure Storage Services",
+      "tags": ["scenario", "queue-storage", "service-bus", "messaging", "architecture"],
+      "options": {
+        "a": {
+          "text": "Azure Queue Storage — each consumer polls the same queue and processes messages",
+          "is_true": false,
+          "explanation": "Incorrect. Azure Queue Storage uses a competing consumers pattern — once a message is consumed by one consumer, it is deleted and unavailable to others. Independent consumers cannot each process every message from a single Queue Storage queue."
+        },
+        "b": {
+          "text": "Azure Blob Storage — write each message as a blob and have consumers read and delete blobs independently",
+          "is_true": false,
+          "explanation": "Incorrect. Blob Storage is not designed as a messaging system. Managing message ordering, visibility, and deletion across multiple consumers would require significant custom coordination logic and would be unreliable at scale."
+        },
+        "c": {
+          "text": "Azure Service Bus topics with a subscription per consumer service",
+          "is_true": true,
+          "explanation": "Correct. Azure Service Bus topics support a publish-subscribe pattern where each subscriber gets its own independent copy of every message. Each consumer service creates a subscription to the topic, receives all messages independently, and processes at its own pace — precisely matching the requirement."
+        },
+        "d": {
+          "text": "Azure Table Storage — write each message as an entity and have consumers query by timestamp",
+          "is_true": false,
+          "explanation": "Incorrect. Azure Table Storage is a NoSQL key-value store, not a messaging service. It lacks native message delivery, ordering guarantees, or consumer group semantics needed for reliable multi-consumer processing."
+        }
+      },
+      "correct_answer": ["c"]
+    },
+    {
+      "question_id": 9,
+      "question_text": "A company stores regulated healthcare data in Azure Blob Storage and must use their own encryption keys to meet data sovereignty requirements. They also need the ability to revoke Azure's access to the keys at any time. Which approach satisfies both requirements?",
+      "difficulty": "hard",
+      "topic": "Storage Encryption",
+      "tags": ["scenario", "CMK", "customer-managed-keys", "Key-Vault", "compliance", "HIPAA"],
+      "options": {
+        "a": {
+          "text": "Enable Microsoft-managed keys (MMK) with double encryption infrastructure",
+          "is_true": false,
+          "explanation": "Incorrect. Microsoft-managed keys mean Microsoft controls the encryption keys. This does not satisfy data sovereignty requirements where the customer must control and be able to revoke the keys."
+        },
+        "b": {
+          "text": "Use customer-managed keys (CMK) stored in Azure Key Vault with soft-delete and purge protection enabled, assigned to the storage account",
+          "is_true": true,
+          "explanation": "Correct. CMK allows the customer to store encryption keys in their own Azure Key Vault instance. The storage account wraps its data encryption keys using the CMK. At any time, the customer can revoke Azure Storage's access to the key (by disabling the key or removing Key Vault access policies), immediately rendering data inaccessible. Soft-delete and purge protection prevent accidental key loss."
+        },
+        "c": {
+          "text": "Use a customer-provided key passed in each API request header (SSE-C equivalent) without Key Vault",
+          "is_true": false,
+          "explanation": "Incorrect. Azure Blob Storage does not natively support SSE-C (customer-provided keys per request) in the same way as AWS S3. The correct Azure pattern for customer-controlled keys uses Azure Key Vault with CMK, not per-request key headers."
+        },
+        "d": {
+          "text": "Enable Azure Defender for Storage to detect key misuse and automatically rotate keys",
+          "is_true": false,
+          "explanation": "Incorrect. Azure Defender for Storage provides threat detection and anomaly alerts for storage activity. It does not manage encryption key ownership, rotation policy, or revocation — those are handled through Azure Key Vault CMK configuration."
+        }
+      },
+      "correct_answer": ["b"]
+    },
+    {
+      "question_id": 10,
+      "question_text": "An IoT application writes telemetry data continuously to Azure Blob Storage using append blobs. A downstream analytics pipeline reads data from the same blobs while writes are ongoing. After several weeks, the pipeline starts failing with errors indicating blobs have exceeded the maximum block count. What is the root cause and correct remediation?",
+      "difficulty": "hard",
+      "topic": "Azure Blob Storage Internals",
+      "tags": ["scenario", "append-blob", "block-limit", "architecture", "IoT"],
+      "options": {
+        "a": {
+          "text": "Append blobs have a maximum of 50,000 committed blocks. The application should roll over to a new blob when approaching this limit.",
+          "is_true": true,
+          "explanation": "Correct. Each append blob supports a maximum of 50,000 append blocks. Once this limit is reached, further appends will fail. The correct pattern is to implement blob rollover — when a blob approaches the block limit (or a time/size threshold), the application starts writing to a new blob, maintaining a naming convention for the pipeline to follow."
+        },
+        "b": {
+          "text": "Append blobs cannot be read while writes are ongoing. The application should switch to block blobs.",
+          "is_true": false,
+          "explanation": "Incorrect. Append blobs are designed for concurrent append-and-read scenarios. Reads and appends can occur simultaneously. Switching to block blobs would not resolve the block count issue and would complicate concurrent write patterns."
+        },
+        "c": {
+          "text": "The storage account has reached its capacity limit. Upgrading to a premium storage account resolves the block count issue.",
+          "is_true": false,
+          "explanation": "Incorrect. The block count limit (50,000) is a per-blob architectural constraint, not a storage account capacity issue. Upgrading to a premium account does not change this limit."
+        },
+        "d": {
+          "text": "The analytics pipeline is locking the blobs during reads, preventing new blocks from being appended. Implementing blob leases would resolve the conflict.",
+          "is_true": false,
+          "explanation": "Incorrect. Read operations do not lock append blobs or prevent new appends. Blob leases are used for exclusive write control, not to resolve the block count limit."
+        }
+      },
+      "correct_answer": ["a"]
+    },
+    {
+      "question_id": 11,
+      "question_text": "A company runs a multi-region web application using Azure Blob Storage in West Europe and East US. They want users in each region to always read from the nearest storage account, but writes must be consistent — the East US account should always be the authoritative write target. What is the correct architecture?",
+      "difficulty": "hard",
+      "topic": "Storage Architecture & Design",
+      "tags": ["scenario", "multi-region", "replication", "read-access", "architecture"],
+      "options": {
+        "a": {
+          "text": "Use RA-GRS with East US as the primary. European users read from the West Europe secondary endpoint exposed by RA-GRS.",
+          "is_true": false,
+          "explanation": "Incorrect. RA-GRS pairs the primary region with a fixed Microsoft-defined secondary region (e.g., East US pairs with West US, not West Europe). You cannot choose an arbitrary secondary region. Additionally, RA-GRS secondary endpoints are read-only replicas, not independently managed accounts."
+        },
+        "b": {
+          "text": "Create two independent storage accounts (East US and West Europe), use Azure CDN to cache reads globally, and write exclusively to the East US account, syncing to West Europe via AzCopy on a schedule.",
+          "is_true": false,
+          "explanation": "Partially workable but architecturally flawed for consistency. Scheduled AzCopy sync introduces replication lag with no built-in consistency guarantee. CDN caching doesn't solve authoritative reads for non-cacheable dynamic data."
+        },
+        "c": {
+          "text": "Create two storage accounts. Use Azure Traffic Manager to route writes to East US. Use Object Replication to asynchronously replicate blobs from East US to West Europe. Route European read traffic to West Europe.",
+          "is_true": true,
+          "explanation": "Correct. Azure Blob Object Replication asynchronously copies blobs from a source account (East US) to a destination account (West Europe) based on configurable rules. All writes go to East US via Traffic Manager. European users read from the West Europe replica with lower latency. This is the correct architecture for active-passive geo-distributed blob storage."
+        },
+        "d": {
+          "text": "Enable ZRS on the East US account so that zone-level redundancy reduces latency for European users.",
+          "is_true": false,
+          "explanation": "Incorrect. ZRS replicates across availability zones within a single region. It has no effect on cross-region latency for users in Europe."
+        }
+      },
+      "correct_answer": ["c"]
+    },
+    {
+      "question_id": 12,
+      "question_text": "A security team discovers that a rogue administrator regenerated the storage account's primary access key, gaining unauthorised access to all storage services. To prevent similar incidents in future, which TWO measures should be implemented?",
+      "difficulty": "hard",
+      "topic": "Storage Security",
+      "tags": ["scenario", "access-keys", "RBAC", "security", "least-privilege"],
+      "options": {
+        "a": {
+          "text": "Migrate all applications and services to use Azure AD authentication with RBAC instead of access keys, then disable access key authentication on the account",
+          "is_true": true,
+          "explanation": "Correct. Azure AD-based authentication with RBAC provides granular, identity-based access control without shared secrets. Disabling shared key authentication entirely (using 'Allow storage account key access: Disabled') removes the attack surface of access keys altogether."
+        },
+        "b": {
+          "text": "Enable geo-redundant storage so that key regeneration in the primary region does not affect the secondary",
+          "is_true": false,
+          "explanation": "Incorrect. GRS replicates data for disaster recovery but has no relationship to access key security. A regenerated key applies globally to the storage account across all regions."
+        },
+        "c": {
+          "text": "Apply Azure Policy to restrict the 'Microsoft.Storage/storageAccounts/regenerateKey/action' permission to a limited break-glass group using RBAC",
+          "is_true": true,
+          "explanation": "Correct. The key regeneration action is a specific Azure RBAC operation. Creating a custom role that omits this action, or restricting it to a dedicated break-glass group via Azure Policy, prevents ordinary administrators from regenerating keys and limits the blast radius of privilege abuse."
+        },
+        "d": {
+          "text": "Enable storage account firewalls to restrict access to known IP ranges, preventing the rogue admin from using the regenerated key",
+          "is_true": false,
+          "explanation": "Incorrect. Firewall restrictions limit which networks can access the storage account data plane, but do not prevent a rogue admin from regenerating keys via the Azure portal or management API (control plane), which is not subject to storage firewall rules."
+        }
+      },
+      "correct_answer": ["a", "c"]
+    },
+    {
+      "question_id": 13,
+      "question_text": "A company stores 500 TB of archive data in Azure Blob Storage in the Archive tier. A regulatory request requires retrieval of specific blobs within 1 hour. The team initiates rehydration using standard priority. Two hours later, the blobs are still not accessible. What is the most likely cause?",
+      "difficulty": "hard",
+      "topic": "Blob Storage Access Tiers",
+      "tags": ["scenario", "archive-tier", "rehydration", "SLA"],
+      "options": {
+        "a": {
+          "text": "Archive tier blobs must first be copied to a ZRS account before rehydration can begin.",
+          "is_true": false,
+          "explanation": "Incorrect. Archive tier blobs can be rehydrated to Hot or Cool tier within the same account. There is no requirement to copy to a ZRS account before rehydration."
+        },
+        "b": {
+          "text": "Standard priority rehydration from the Archive tier can take up to 15 hours. The team should have used High priority rehydration for sub-1-hour retrieval of smaller blobs.",
+          "is_true": true,
+          "explanation": "Correct. Standard priority rehydration from Archive can take 1–15 hours depending on blob size and system load. For urgent retrieval within 1 hour, High priority rehydration should be used — it is prioritised and typically completes within 1 hour for blobs under 10 GB, though it costs more."
+        },
+        "c": {
+          "text": "Archive tier blobs larger than 100 GB cannot be rehydrated and must be permanently deleted and re-uploaded.",
+          "is_true": false,
+          "explanation": "Incorrect. There is no size limit preventing rehydration of Archive tier blobs. Large blobs simply take longer, especially with standard priority."
+        },
+        "d": {
+          "text": "Rehydration requires the storage account to have RA-GRS enabled before Archive blobs become accessible.",
+          "is_true": false,
+          "explanation": "Incorrect. Rehydration is independent of the replication strategy. LRS, ZRS, GRS, and RA-GRS accounts can all rehydrate Archive tier blobs. The replication type does not affect rehydration time or eligibility."
+        }
+      },
+      "correct_answer": ["b"]
+    },
+    {
+      "question_id": 14,
+      "question_text": "A DevOps team uses a CI/CD pipeline that needs to write build artefacts to Azure Blob Storage. The pipeline runs inside Azure Kubernetes Service (AKS). You must follow the principle of least privilege and avoid storing credentials in pipeline configuration or environment variables. What is the recommended approach?",
+      "difficulty": "hard",
+      "topic": "Storage Access Control",
+      "tags": ["scenario", "managed-identity", "AKS", "CI-CD", "least-privilege", "workload-identity"],
+      "options": {
+        "a": {
+          "text": "Store the storage account access key as a Kubernetes secret and mount it as an environment variable in the pipeline pod",
+          "is_true": false,
+          "explanation": "Incorrect. Storing access keys — even in Kubernetes secrets — still involves long-lived credentials that must be rotated and are at risk of exposure. This violates the principle of avoiding credential storage in pipeline configuration."
+        },
+        "b": {
+          "text": "Generate a SAS token with write permissions and store it as a Kubernetes secret",
+          "is_true": false,
+          "explanation": "Incorrect. A SAS token stored in a Kubernetes secret is still a credential that must be rotated when it expires and is at risk of exposure if secrets are not adequately protected. This does not fully meet the no-credentials-in-config requirement."
+        },
+        "c": {
+          "text": "Enable an Azure AD Workload Identity on the AKS pod, assign it the Storage Blob Data Contributor RBAC role on the storage account, and use the workload identity to obtain OAuth tokens at runtime",
+          "is_true": true,
+          "explanation": "Correct. Azure AD Workload Identity (formerly AAD Pod Identity) allows Kubernetes pods to authenticate as an Azure AD identity without any stored credentials. The pod exchanges a Kubernetes service account token for an Azure AD access token at runtime via federated identity. Assigning only Storage Blob Data Contributor limits permissions to blob write operations. No secrets or keys are stored in the pipeline."
+        },
+        "d": {
+          "text": "Create a new storage account for each pipeline run and delete it afterwards to avoid persistent credential exposure",
+          "is_true": false,
+          "explanation": "Incorrect. Creating and deleting storage accounts per pipeline run is operationally unsustainable, costly, and does not follow standard security practices. It also doesn't address the underlying credential management problem."
+        }
+      },
+      "correct_answer": ["c"]
+    },
+    {
+      "question_id": 15,
+      "question_text": "A storage account is configured with a virtual network service endpoint for a specific subnet. A new VM is deployed in a different subnet in the same VNet. The VM's application cannot connect to the storage account, even though it uses the same storage account key. What is the cause?",
+      "difficulty": "hard",
+      "topic": "Storage Networking",
+      "tags": ["scenario", "service-endpoints", "VNet", "networking", "troubleshooting"],
+      "options": {
+        "a": {
+          "text": "Service endpoints are only supported for Blob Storage. The application must be using Table or Queue Storage.",
+          "is_true": false,
+          "explanation": "Incorrect. Azure Storage service endpoints support all storage services including Blob, File, Queue, and Table. The service type is not the cause of the connectivity failure."
+        },
+        "b": {
+          "text": "The storage account firewall is configured to allow only the specific subnet with the service endpoint. The new VM's subnet is not in the allowed list.",
+          "is_true": true,
+          "explanation": "Correct. When a service endpoint is configured and the storage account firewall is set to restrict access to selected networks, only traffic from explicitly allowed subnets is permitted. The new VM's subnet has not been added to the firewall allowed list, so its traffic is blocked regardless of whether the correct access key is used."
+        },
+        "c": {
+          "text": "The storage account key is tied to the original subnet and becomes invalid when used from a different subnet.",
+          "is_true": false,
+          "explanation": "Incorrect. Storage account access keys are not bound to any network location or subnet. They authenticate the request but network firewall rules still apply independently to determine whether the connection is allowed."
+        },
+        "d": {
+          "text": "VNet service endpoints only support Azure AD authentication. Using an access key from a VM always fails.",
+          "is_true": false,
+          "explanation": "Incorrect. Service endpoints work with both shared key (access key) and Azure AD authentication. The authentication method is not the cause — the firewall subnet allowlist is."
+        }
+      },
+      "correct_answer": ["b"]
+    },
+    {
+      "question_id": 16,
+      "question_text": "A company needs to allow an external auditor to list and download all blobs from a specific container for a 30-day audit window. The auditor has no Azure AD account. After 30 days, access must be automatically revoked. You also need the ability to revoke access immediately if the audit is completed early. Which is the most appropriate and operationally safe solution?",
+      "difficulty": "hard",
+      "topic": "Storage Access Control",
+      "tags": ["scenario", "SAS", "stored-access-policy", "external-access", "revocation"],
+      "options": {
+        "a": {
+          "text": "Create a Service SAS with a 30-day expiry directly on the container without a stored access policy",
+          "is_true": false,
+          "explanation": "Incorrect. A Service SAS without a stored access policy cannot be revoked before its expiry. If the audit ends early or the token is compromised, there is no mechanism to invalidate it short of regenerating the storage account key, which would disrupt all other services."
+        },
+        "b": {
+          "text": "Create a stored access policy on the container with read and list permissions and a 30-day expiry. Generate a Service SAS that references this policy. To revoke early, delete the stored access policy.",
+          "is_true": true,
+          "explanation": "Correct. A SAS token backed by a stored access policy inherits its permissions and expiry from the policy. The token auto-expires at 30 days. For early revocation, deleting or modifying the stored access policy immediately invalidates all SAS tokens that reference it — providing both time-bounded and on-demand revocation without affecting other storage operations."
+        },
+        "c": {
+          "text": "Enable anonymous public access on the container for 30 days and then disable it",
+          "is_true": false,
+          "explanation": "Incorrect. Enabling public access exposes the container to the entire internet, not just the auditor. This is a critical security risk and provides no access tracking or audit trail per individual."
+        },
+        "d": {
+          "text": "Create a temporary Azure AD guest account for the auditor, assign Storage Blob Data Reader, and delete the account after 30 days",
+          "is_true": false,
+          "explanation": "Partially valid in concept, but the question states the auditor has no Azure AD account and the organisation must manage external identity lifecycle. While Azure AD B2B is a valid enterprise pattern, a stored-access-policy SAS is simpler, more appropriate for short-term external access with no identity management overhead."
+        }
+      },
+      "correct_answer": ["b"]
+    },
+    {
+      "question_id": 17,
+      "question_text": "An application stores user-uploaded files in Azure Blob Storage. A penetration test reveals that the application constructs SAS token URLs using user-supplied input, allowing an attacker to manipulate the blob path and access other users' files. Which TWO security controls should be implemented to prevent this attack?",
+      "difficulty": "hard",
+      "topic": "Storage Security",
+      "tags": ["scenario", "SAS", "path-traversal", "secure-coding", "application-security"],
+      "options": {
+        "a": {
+          "text": "Generate SAS tokens server-side with the exact blob name and container path hardcoded from the authenticated user's session, never accepting the blob path from user input",
+          "is_true": true,
+          "explanation": "Correct. SAS token generation must use server-side logic that derives the blob path from the authenticated user's identity (e.g., from a database lookup or session token), never from user-controlled input. This eliminates the path manipulation vector entirely."
+        },
+        "b": {
+          "text": "Enable HTTPS-only on the storage account to prevent token interception",
+          "is_true": false,
+          "explanation": "Incorrect. Enforcing HTTPS prevents token interception in transit but does not address the path manipulation vulnerability. An attacker can still manipulate the blob path in the URL even over HTTPS."
+        },
+        "c": {
+          "text": "Scope each SAS token to the specific blob the authenticated user is permitted to access, using the minimum required permissions (e.g., read-only, single blob)",
+          "is_true": true,
+          "explanation": "Correct. Scoping SAS tokens to the exact blob (not a container) and to only the required permissions (e.g., 'r' for read) means that even if the token URL is modified, the token is cryptographically bound to the originally specified blob path and will be rejected for any other path."
+        },
+        "d": {
+          "text": "Switch to LRS replication to reduce the attack surface across regions",
+          "is_true": false,
+          "explanation": "Incorrect. Replication strategy has no bearing on application-level access control vulnerabilities. LRS vs GRS vs ZRS does not protect against path manipulation in SAS token generation logic."
+        }
+      },
+      "correct_answer": ["a", "c"]
+    },
+    {
+      "question_id": 18,
+      "question_text": "A company needs to store 10 years of financial records in Azure Blob Storage. Regulatory requirements mandate that records cannot be altered or deleted during the retention period, even by global administrators. A ransomware attack must not be able to encrypt or delete the records. Which configuration satisfies ALL of these requirements?",
+      "difficulty": "hard",
+      "topic": "Blob Storage Data Protection",
+      "tags": ["scenario", "immutability", "WORM", "compliance", "ransomware", "legal-hold"],
+      "options": {
+        "a": {
+          "text": "Enable blob soft delete with a 10-year retention period",
+          "is_true": false,
+          "explanation": "Incorrect. Soft delete allows recovery of deleted blobs but does not prevent deletion by authorised administrators. A global admin or privileged attacker could disable soft delete and then delete blobs permanently. It also does not prevent overwriting blobs."
+        },
+        "b": {
+          "text": "Configure a time-based immutability policy at the container level with a 10-year retention interval and lock the policy",
+          "is_true": true,
+          "explanation": "Correct. A locked time-based immutability policy enforces WORM (Write Once, Read Many) at the container level. Once locked, the policy cannot be shortened or removed even by global admins — only extended. During the retention period, blobs cannot be deleted, overwritten, or modified by anyone, including administrators and ransomware. This is the only configuration that provides court-admissible immutability."
+        },
+        "c": {
+          "text": "Apply an Azure Policy to deny delete operations on the storage account",
+          "is_true": false,
+          "explanation": "Incorrect. Azure Policy can restrict operations at the resource level but can be modified or removed by privileged administrators. It does not enforce immutability at the data plane level and does not prevent blob overwrites."
+        },
+        "d": {
+          "text": "Enable geo-redundant storage (GRS) and configure a Resource Lock (CanNotDelete) on the storage account",
+          "is_true": false,
+          "explanation": "Incorrect. A Resource Lock prevents accidental deletion of the storage account resource itself, but it does not prevent deletion or modification of individual blobs within the account. GRS replicates data but does not prevent deletion — deletions are replicated to the secondary as well."
+        }
+      },
+      "correct_answer": ["b"]
+    },
+    {
+      "question_id": 19,
+      "question_text": "A data engineering team copies 200 TB from an on-premises NAS to Azure Blob Storage. Using AzCopy over the internet, the transfer has been running for 6 days and is only 15% complete. Network bandwidth is limited to 50 Mbps shared with production traffic. The deadline is in 4 days. Which solution should be used to meet the deadline?",
+      "difficulty": "hard",
+      "topic": "Data Migration to Azure Storage",
+      "tags": ["scenario", "Data-Box", "migration", "large-scale", "AzCopy"],
+      "options": {
+        "a": {
+          "text": "Upgrade the internet connection to 1 Gbps and resume AzCopy",
+          "is_true": false,
+          "explanation": "Incorrect. Upgrading an internet connection to 1 Gbps within 4 days is unlikely to be feasible. Even at 1 Gbps dedicated throughput, transferring 170 TB in 4 days would require ~4 Gbps sustained throughput (170 TB ÷ 4 days ÷ 86400 seconds ≈ 392 Mbps). Upgrading to 1 Gbps shared with production would still be insufficient."
+        },
+        "b": {
+          "text": "Order an Azure Data Box device, copy data to it on-premises, and ship it to Microsoft for import into Azure Blob Storage",
+          "is_true": true,
+          "explanation": "Correct. Azure Data Box devices (80 TB usable per device) allow you to copy data at local NAS speeds (up to 1 Gbps network or USB) and physically ship the device to a Microsoft datacenter for rapid ingestion. Two Data Box devices cover 200 TB. Physical transfer bypasses the internet bandwidth constraint entirely and is the recommended approach for large datasets with tight deadlines."
+        },
+        "c": {
+          "text": "Use Azure Data Factory with a self-hosted integration runtime to parallelise the AzCopy transfer",
+          "is_true": false,
+          "explanation": "Incorrect. Azure Data Factory with a self-hosted IR can parallelise transfers, but is still bound by the 50 Mbps shared internet connection. No amount of parallelisation can exceed the physical bandwidth limit, so this does not solve the deadline problem."
+        },
+        "d": {
+          "text": "Enable ExpressRoute and restart the AzCopy job",
+          "is_true": false,
+          "explanation": "Incorrect. Provisioning an ExpressRoute circuit typically takes weeks for physical circuit deployment. It cannot be set up within the 4-day deadline, and even if it could, the remaining 170 TB would require sustained multi-Gbps throughput to complete in time."
+        }
+      },
+      "correct_answer": ["b"]
+    },
+    {
+      "question_id": 20,
+      "question_text": "A company's storage account currently uses LRS. A business continuity review determines that the RPO must be less than 15 minutes and the RTO must be less than 1 hour in the event of a full regional failure. The application must also be able to read from the secondary region during normal operations. Which replication change and application update are required?",
+      "difficulty": "hard",
+      "topic": "Storage Replication & Business Continuity",
+      "tags": ["scenario", "RPO", "RTO", "RA-GZRS", "failover", "business-continuity"],
+      "options": {
+        "a": {
+          "text": "Switch to ZRS. Update the application to use the secondary endpoint for reads.",
+          "is_true": false,
+          "explanation": "Incorrect. ZRS replicates synchronously across availability zones within a single region. It does not replicate to a secondary region at all, so it provides no protection against a full regional failure and there is no secondary region endpoint."
+        },
+        "b": {
+          "text": "Switch to GRS. The secondary endpoint becomes readable automatically after a Microsoft-initiated failover.",
+          "is_true": false,
+          "explanation": "Incorrect. GRS does not expose a read endpoint before failover — it does not meet the requirement to read from the secondary during normal operations. Also, Microsoft-initiated failover RTO can exceed 1 hour. GRS also uses LRS within the primary region, not zone redundancy."
+        },
+        "c": {
+          "text": "Switch to RA-GZRS. Update the application to direct read traffic to the secondary endpoint (account.secondary.blob.core.windows.net) and implement retry logic to fall back to the primary if the secondary is stale.",
+          "is_true": true,
+          "explanation": "Correct. RA-GZRS combines zone redundancy in the primary region with asynchronous geo-replication (typically RPO < 15 minutes) to a secondary region that exposes a permanent read endpoint. Reads from the secondary work during normal operations. If a regional failure occurs, the application immediately switches writes to the primary (or initiates account failover) with RTO dependent on failover speed. This is the only option that satisfies RPO < 15 min, RTO < 1 hour, and secondary reads during normal operations."
+        },
+        "d": {
+          "text": "Switch to RA-GRS and implement Azure Traffic Manager to route read requests to the nearest region.",
+          "is_true": false,
+          "explanation": "Incorrect. RA-GRS meets the secondary read and RPO requirements, but uses LRS (not ZRS) in the primary region, providing less resilience against zone failures. RA-GZRS is the superior and correct choice. Additionally, Azure Traffic Manager routes HTTP/S traffic to endpoints — it does not natively route Azure Storage blob requests between primary and secondary storage endpoints."
+        }
+      },
+      "correct_answer": ["c"]
+    }
+  ]
+}

@@ -1,0 +1,222 @@
+[
+  {
+    "question_id": 1,
+    "question_text": "A company has VMs in VNet-A (East US) and VNet-B (West US). VNet peering is configured and shows 'Connected' on both sides. A VM in VNet-A can ping a VM in VNet-B, but an application on port 8080 cannot connect. What is the most likely cause?",
+    "options": {
+      "a": { "text": "VNet peering does not support cross-region traffic on port 8080", "is_true": false, "explanation": "Global VNet peering supports all ports. There is no port restriction imposed by peering itself." },
+      "b": { "text": "An NSG rule on the destination VM's subnet or NIC is blocking inbound traffic on port 8080", "is_true": true, "explanation": "ICMP (ping) succeeds but TCP 8080 fails. This is a classic NSG symptom — the peering is healthy (ping works), but an NSG is blocking the specific application port. Check inbound NSG rules on the destination subnet and NIC." },
+      "c": { "text": "Cross-region VNet peering requires an ExpressRoute circuit to be provisioned", "is_true": false, "explanation": "Global VNet peering works over the Microsoft backbone without ExpressRoute. ExpressRoute is a separate connectivity option." },
+      "d": { "text": "The peering connection must be re-created to add port 8080 to the allowed list", "is_true": false, "explanation": "VNet peering has no port allowlist. All traffic between the peered VNets is permitted at the network layer — restrictions come from NSGs and firewalls, not peering configuration." }
+    },
+    "correct_answer": ["b"]
+  },
+  {
+    "question_id": 2,
+    "question_text": "An admin creates a User-Defined Route (UDR) table with a route for 0.0.0.0/0 pointing to a Network Virtual Appliance (NVA) at 10.0.1.4 and associates it with a subnet. VMs in that subnet can no longer reach Azure Storage using the storage account's service endpoint. What is the most likely cause?",
+    "options": {
+      "a": { "text": "Service endpoints cannot coexist with UDR tables on the same subnet", "is_true": false, "explanation": "Service endpoints and UDRs can coexist on the same subnet. The issue is specifically with the default route overriding the service endpoint traffic." },
+      "b": { "text": "The 0.0.0.0/0 UDR overrides the service endpoint route, sending storage traffic to the NVA which may not forward it correctly", "is_true": true, "explanation": "Service endpoints inject specific routes for Azure services. However, a more specific UDR for 0.0.0.0/0 can override the optimal path. The NVA must be configured to forward traffic to Azure Storage, or a more specific route for the storage service IP range must be added pointing to 'VirtualNetworkServiceEndpoint'." },
+      "c": { "text": "The NVA must have IP forwarding enabled before service endpoint traffic can pass through it", "is_true": false, "explanation": "IP forwarding on the NVA NIC is required for the NVA to work at all. If it was working before the service endpoint issue, IP forwarding is likely already enabled. The route conflict is the primary issue." },
+      "d": { "text": "Storage service endpoints only work when no UDR is applied to the subnet", "is_true": false, "explanation": "Service endpoints work alongside UDRs. The problem is the specific 0.0.0.0/0 route pointing to an NVA that isn't routing storage traffic correctly." }
+    },
+    "correct_answer": ["b"]
+  },
+  {
+    "question_id": 3,
+    "question_text": "A company uses Azure Backup to back up 50 VMs in a Recovery Services vault. An admin changes the backup policy to reduce retention from 90 days to 30 days. Three weeks later, recovery points older than 30 days are still visible in the vault. What explains this behavior?",
+    "options": {
+      "a": { "text": "The vault has immutability enabled, which prevents policy changes from taking effect", "is_true": false, "explanation": "An immutable vault would prevent the policy from being changed in the first place. The policy was changed successfully in this scenario." },
+      "b": { "text": "Policy retention changes only apply to new backup jobs — existing recovery points expire on their original retention date", "is_true": true, "explanation": "Azure Backup does not retroactively delete existing recovery points when you reduce retention. Recovery points created before the policy change will expire on their original retention schedule. New backups will follow the 30-day policy." },
+      "c": { "text": "Recovery points older than 30 days must be manually deleted by the admin", "is_true": false, "explanation": "Manual deletion is not required. The old recovery points will expire naturally based on their original retention date. Manual deletion is an option but not the explanation for the observed behavior." },
+      "d": { "text": "Soft delete is preventing the recovery points from being deleted automatically", "is_true": false, "explanation": "Soft delete applies to deleted backup items that are deliberately removed, providing a 14-day grace period. It does not apply to recovery points that are still within their active retention period." }
+    },
+    "correct_answer": ["b"]
+  },
+  {
+    "question_id": 4,
+    "question_text": "A VM runs in an availability zone. Azure Site Recovery is enabled to replicate it to a secondary region. After a week, the admin notices the replication health shows 'Warning' with an RPO breach. The target region has sufficient compute capacity. What should the admin investigate first?",
+    "options": {
+      "a": { "text": "Whether the Recovery Services vault in the target region has soft delete enabled", "is_true": false, "explanation": "Soft delete affects backup item retention, not replication health or RPO. It has no bearing on ASR replication lag." },
+      "b": { "text": "Network bandwidth between the source VM and the ASR cache storage account", "is_true": true, "explanation": "RPO breach in ASR is almost always caused by replication lag — the delta changes are not syncing fast enough to the Azure cache/target. The most common cause is insufficient outbound network bandwidth from the source. Check the Mobility service logs and network throughput." },
+      "c": { "text": "Whether the VM disk type is compatible with ASR", "is_true": false, "explanation": "If the disk type were incompatible, replication would not have started at all. An RPO breach after a week of running replication points to a performance or bandwidth issue, not a compatibility problem." },
+      "d": { "text": "Whether the Mobility service version is current on the source VM", "is_true": false, "explanation": "An outdated Mobility service typically triggers a 'Critical' health state with an update prompt, not an RPO breach. Bandwidth/replication lag is the primary cause of RPO warnings." }
+    },
+    "correct_answer": ["b"]
+  },
+  {
+    "question_id": 5,
+    "question_text": "A team uses Azure Monitor to track CPU utilization on a Virtual Machine Scale Set (VMSS). They configured an alert with Average CPU > 80% over a 5-minute window. The alert fires frequently even when the overall workload seems normal. What should the admin check?",
+    "options": {
+      "a": { "text": "The alert threshold should be moved from 80% to 90% to reduce sensitivity", "is_true": false, "explanation": "Simply increasing the threshold may mask real performance issues. The first diagnostic step is to understand why the current average is high before tuning the threshold." },
+      "b": { "text": "Whether the alert is using 'Total' aggregation instead of 'Average', which sums CPU across all instances", "is_true": true, "explanation": "A common misconfiguration for VMSS alerts is using 'Total' aggregation, which sums CPU across all instances. With 10 instances each at 50%, Total would be 500% — far above any threshold. Switching to 'Average' or using 'Split by' instance gives per-instance or mean metrics." },
+      "c": { "text": "Whether the VMSS autoscale policy is conflicting with the alert rule", "is_true": false, "explanation": "Autoscale policies and alert rules are independent. Autoscale does not affect how metrics are evaluated by alert rules." },
+      "d": { "text": "Whether Accelerated Networking is enabled on the VMSS instances", "is_true": false, "explanation": "Accelerated Networking affects network latency and CPU offload, but it would not cause CPU alerts to fire incorrectly. The aggregation type is the most common alert misconfiguration for VMSS." }
+    },
+    "correct_answer": ["b"]
+  },
+  {
+    "question_id": 6,
+    "question_text": "A storage account with LRS redundancy is used to host Azure Files shares. The company decides they need geo-redundancy. An admin attempts to change the replication to GRS in the portal but the option is greyed out. What is the most likely reason?",
+    "options": {
+      "a": { "text": "The storage account uses the FileStorage kind which does not support GRS", "is_true": true, "explanation": "FileStorage kind accounts (premium file shares) only support LRS and ZRS — GRS and GZRS are not available. GRS is supported on StorageV2 accounts with standard file shares." },
+      "b": { "text": "LRS to GRS conversion requires creating a new storage account and copying the data", "is_true": false, "explanation": "For StorageV2 accounts, you can change replication type directly in the portal. The greyed out option indicates a deeper constraint, likely the account kind." },
+      "c": { "text": "Large file shares (>5 TiB) are enabled on the account, which prevents GRS", "is_true": false, "explanation": "Large file share support is what prevents GRS — but only for StorageV2 accounts. For FileStorage kind, GRS is unavailable regardless of share quota. The 'kind' constraint is the root cause here." },
+      "d": { "text": "The storage account has a Delete lock, preventing configuration changes", "is_true": false, "explanation": "A Delete lock only prevents the resource from being deleted. It does not block configuration changes like changing replication type." }
+    },
+    "correct_answer": ["a"]
+  },
+  {
+    "question_id": 7,
+    "question_text": "An admin configures a diagnostic setting on a storage account to send logs to a Log Analytics workspace. Two days later, a query on the 'StorageBlobLogs' table returns no results. What should the admin check first?",
+    "options": {
+      "a": { "text": "Whether the storage account has a network firewall enabled that blocks log export", "is_true": false, "explanation": "Diagnostic settings use the Azure Monitor pipeline, which is separate from data plane network rules. A firewall on the storage account would not block diagnostic log export." },
+      "b": { "text": "Whether the specific log categories (e.g., StorageRead, StorageWrite, StorageDelete) were selected in the diagnostic setting", "is_true": true, "explanation": "Diagnostic settings require you to explicitly select which log categories to capture. If 'blob' log categories were not checked, no blob logs will flow to the workspace even though the diagnostic setting exists." },
+      "c": { "text": "Whether the Log Analytics workspace is in the same region as the storage account", "is_true": false, "explanation": "Diagnostic settings support sending logs to workspaces in different regions. Cross-region log export is supported." },
+      "d": { "text": "Whether the storage account has at least one blob container before logs can be generated", "is_true": false, "explanation": "Diagnostic logs capture operations — if the category is selected, operations are logged regardless of container count. Zero containers would mean no operations and thus empty results, but the diagnostic setting would still be configured." }
+    },
+    "correct_answer": ["b"]
+  },
+  {
+    "question_id": 8,
+    "question_text": "A Linux VM is encrypted with Azure Disk Encryption (ADE). An Azure Backup job for this VM fails with an error indicating Key Vault access issues. What is the most likely cause?",
+    "options": {
+      "a": { "text": "Azure Backup does not support VMs encrypted with ADE", "is_true": false, "explanation": "Azure Backup fully supports ADE-encrypted VMs. The backup failure is a configuration issue, not a compatibility limitation." },
+      "b": { "text": "The Backup service principal does not have 'Get' permissions on Keys and Secrets in the Key Vault used for ADE", "is_true": true, "explanation": "For ADE-encrypted VM backups, the Azure Backup service needs access to the Key Vault to read the encryption key and secret. You must grant the Backup management service principal 'Get' permission on Keys and Secrets in the Key Vault access policy." },
+      "c": { "text": "The Key Vault must be in the same resource group as the VM for Backup to access it", "is_true": false, "explanation": "The Key Vault can be in a different resource group or even a different subscription (with proper configuration). The permission grant is the critical requirement." },
+      "d": { "text": "The Recovery Services vault must be in the same region as the Key Vault", "is_true": false, "explanation": "While co-location is common, the region constraint is not the cause of the access error. The missing 'Get' permission on the Key Vault is the issue." }
+    },
+    "correct_answer": ["b"]
+  },
+  {
+    "question_id": 9,
+    "question_text": "Users are connecting to Azure VMs via Azure Bastion. One user reports that the Bastion session opens but immediately disconnects after a few seconds. Other users connect to the same VM successfully. What should the admin check?",
+    "options": {
+      "a": { "text": "Whether the AzureBastionSubnet has a route table with a custom default route", "is_true": false, "explanation": "A misconfigured route on AzureBastionSubnet would affect ALL Bastion connections, not just one user. The symptom is user-specific." },
+      "b": { "text": "The user's browser — Bastion uses WebSocket over HTTPS, which some browser extensions or proxies terminate", "is_true": true, "explanation": "Azure Bastion uses WebSocket connections over HTTPS (port 443) in the browser. VPN clients, proxy settings, browser extensions (especially those that modify SSL), or restrictive corporate proxies can terminate the WebSocket connection causing an immediate disconnect. Other users without these settings connect fine." },
+      "c": { "text": "Whether the VM's NIC has a NSG rule blocking port 3389 from the Bastion subnet", "is_true": false, "explanation": "If the NSG was blocking Bastion traffic (from 10.0.0.0/27 AzureBastionSubnet), the session would never open at all — not open briefly and disconnect. The symptom of a brief open session points to a client-side WebSocket issue." },
+      "d": { "text": "Whether the VM is in a different VNet than the Bastion host (peered VNets)", "is_true": false, "explanation": "Bastion can connect to VMs in peered VNets when configured. More importantly, other users connect successfully, so the VNet topology is not the user-specific issue." }
+    },
+    "correct_answer": ["b"]
+  },
+  {
+    "question_id": 10,
+    "question_text": "An admin creates a private endpoint for an Azure SQL database. After creation, VMs in the same VNet cannot resolve the SQL server's FQDN (server.database.windows.net) to the private IP. Public access to the SQL server still works. What is missing?",
+    "options": {
+      "a": { "text": "The private endpoint NIC needs a public IP assigned to override the public DNS", "is_true": false, "explanation": "Private endpoints use private IPs only. Assigning a public IP to the endpoint NIC would defeat the purpose and is not how private endpoints work." },
+      "b": { "text": "A Private DNS Zone (privatelink.database.windows.net) linked to the VNet is needed to resolve the FQDN to the private IP", "is_true": true, "explanation": "Private endpoints require a Private DNS Zone to override the public DNS resolution. For Azure SQL, the zone is 'privatelink.database.windows.net'. This zone must be linked to the VNet where the VMs reside. Without it, the FQDN resolves to the public IP." },
+      "c": { "text": "The VNet must use Azure-provided DNS (168.63.129.16) to resolve private endpoint FQDNs", "is_true": false, "explanation": "While Azure DNS (168.63.129.16) is used to query Private DNS Zones, this is the default DNS for VNets. The missing piece is the Private DNS Zone itself, not a DNS server change." },
+      "d": { "text": "A custom host file entry must be added to each VM mapping the FQDN to the private IP", "is_true": false, "explanation": "Manual host file entries are a workaround, not the correct solution. The proper mechanism is a Private DNS Zone linked to the VNet. This approach also doesn't scale." }
+    },
+    "correct_answer": ["b"]
+  },
+  {
+    "question_id": 11,
+    "question_text": "A Windows VM was migrated between Azure regions by taking an OS disk snapshot and creating a new VM from it. The new VM fails to start with a BitLocker recovery screen requesting the recovery key. What caused this?",
+    "options": {
+      "a": { "text": "BitLocker keys cannot be transferred across regions and must be regenerated", "is_true": false, "explanation": "BitLocker keys stored in Azure Key Vault can be accessed from any region. The issue is that the TPM configuration changed, not that the keys were lost." },
+      "b": { "text": "The new VM has a different virtual TPM identity than the original VM, triggering BitLocker's TPM measurement failure", "is_true": true, "explanation": "BitLocker with TPM protection seals the key to specific TPM measurements. When a disk is moved to a new VM (which has a different virtual hardware identity/TPM), BitLocker detects the platform has changed and requires the recovery key. The key must be retrieved from wherever it was backed up (Key Vault, Active Directory, or a saved file)." },
+      "c": { "text": "BitLocker is incompatible with Azure Gen2 VMs and must be disabled before migration", "is_true": false, "explanation": "BitLocker works on both Gen1 and Gen2 Azure VMs. Gen2 VMs use UEFI which actually works well with BitLocker. The migration TPM change is the cause." },
+      "d": { "text": "The disk snapshot does not preserve the BitLocker encryption state and the disk is now unencrypted", "is_true": false, "explanation": "Disk snapshots preserve all data including encryption. The disk arrives encrypted, which is why BitLocker is asking for the recovery key — it can't auto-unlock because the TPM state changed." }
+    },
+    "correct_answer": ["b"]
+  },
+  {
+    "question_id": 12,
+    "question_text": "An organization configures an Azure Monitor Log alert to detect when any VM is deleted (using Activity Log). The KQL query looks for 'Delete Virtual Machines' operations with a 'Succeeded' status. The alert does not fire when a VM is deleted via the portal. What might be wrong with the alert?",
+    "options": {
+      "a": { "text": "Activity Log alerts cannot be created for delete operations — only metric alerts support deletion detection", "is_true": false, "explanation": "Activity Log alerts are exactly the right tool for detecting Azure resource operations like delete. They are specifically designed for this purpose." },
+      "b": { "text": "The alert evaluation window may be too short or the KQL time filter may not cover the window when the delete occurred", "is_true": true, "explanation": "Log alerts evaluate KQL queries on a rolling time window. If the evaluation window is 5 minutes but Activity Log events have a 2-5 minute latency before appearing in the workspace, the query may find nothing. Additionally, the time filter in the KQL must match or exceed the alert's lookback window. Test the query manually in Log Analytics first." },
+      "c": { "text": "VM deletion events are sent to the Resource Health blade, not the Activity Log", "is_true": false, "explanation": "Resource deletions are recorded in the Activity Log. The Activity Log is the authoritative record of all ARM operations including deletions." },
+      "d": { "text": "The alert rule must be scoped to the specific VM's resource ID to detect its deletion", "is_true": false, "explanation": "Activity Log alert rules can be scoped at the subscription or resource group level to catch deletions of any resource. Scoping to a specific VM ID would not help if the VM no longer exists after deletion." }
+    },
+    "correct_answer": ["b"]
+  },
+  {
+    "question_id": 13,
+    "question_text": "A company runs a hub-and-spoke network topology. Two spokes (VNet-B and VNet-C) are peered to a hub (VNet-A). A VM in VNet-B needs to communicate with a VM in VNet-C. The VM in VNet-B cannot reach VNet-C despite all peering connections showing 'Connected'. What is needed?",
+    "options": {
+      "a": { "text": "VNet-B and VNet-C must be directly peered to each other in addition to the hub peerings", "is_true": false, "explanation": "While direct peering would work, it's not the scalable solution for hub-spoke. The correct approach uses the NVA in the hub to route between spokes." },
+      "b": { "text": "An NVA or Azure Firewall in the hub VNet with UDRs on both spoke subnets to route inter-spoke traffic through the hub", "is_true": true, "explanation": "VNet peering is non-transitive. Traffic from VNet-B cannot pass through VNet-A to reach VNet-C without a routing device. The solution is an NVA or Azure Firewall in the hub with UDRs on VNet-B's and VNet-C's subnets pointing inter-spoke destinations via the NVA's IP." },
+      "c": { "text": "Enable 'Allow forwarded traffic' on both peering connections to allow transit routing", "is_true": false, "explanation": "'Allow forwarded traffic' allows traffic from outside the peered VNet to be forwarded, but it does NOT make peering transitive. You still need an NVA and UDRs to route between spokes." },
+      "d": { "text": "Enable 'Use remote gateways' on the spoke peering connections to the hub", "is_true": false, "explanation": "'Use remote gateways' is for using a VPN Gateway or ExpressRoute Gateway in the hub from spokes. It does not enable spoke-to-spoke routing." }
+    },
+    "correct_answer": ["b"]
+  },
+  {
+    "question_id": 14,
+    "question_text": "An Azure VM running Windows Server has a data disk with important data. An admin tries to resize the OS disk from 128 GB to 256 GB. The resize option in the portal is greyed out. What must the admin do first?",
+    "options": {
+      "a": { "text": "Convert the disk to Premium SSD before resizing", "is_true": false, "explanation": "Disk type conversion is not a prerequisite for resizing. Standard HDD, Standard SSD, and Premium SSD can all be resized. The VM state is the constraint." },
+      "b": { "text": "Deallocate (stop) the VM before resizing the disk", "is_true": true, "explanation": "Azure requires the VM to be in a deallocated (stopped) state to resize an attached disk. The OS disk cannot be resized while the VM is running because it is mounted and in use. Deallocate the VM, resize, then start it." },
+      "c": { "text": "Detach the OS disk, resize it, then reattach it to the VM", "is_true": false, "explanation": "The OS disk cannot be detached from a VM like a data disk can. You cannot detach and reattach the OS disk. The correct approach is to deallocate the VM and resize through the portal or CLI." },
+      "d": { "text": "Create a snapshot of the disk, create a new disk of the larger size from the snapshot, and swap the OS disk", "is_true": false, "explanation": "This is a valid workaround but not the required approach. The standard process is simply to deallocate the VM and use the resize option. OS disk swapping is a more complex operation." }
+    },
+    "correct_answer": ["b"]
+  },
+  {
+    "question_id": 15,
+    "question_text": "A company uses Entra Connect to sync users from on-premises AD to Entra ID. After a major AD restructuring, some users are missing from Entra ID. The sync engine shows no errors. What is the most likely cause?",
+    "options": {
+      "a": { "text": "The Entra Connect service account password expired and syncs are silently failing", "is_true": false, "explanation": "An expired service account password would cause sync errors to appear in the Entra Connect Health dashboard and event log. It would not be silent." },
+      "b": { "text": "The restructured users were moved to OUs that are excluded by the OU filtering configuration in Entra Connect", "is_true": true, "explanation": "Entra Connect OU filtering determines which OUs are synchronized. If users are moved to OUs that are not in the sync scope, Entra Connect will stop syncing them (and may remove them from Entra ID if they were previously synced). No errors are generated — it's working as configured." },
+      "c": { "text": "Entra Connect can only sync a maximum of 500,000 objects and the limit was reached", "is_true": false, "explanation": "Entra Connect has an accidental deletion prevention threshold (default 500 objects), not a hard 500,000 sync limit. The question describes specific missing users after an OU restructure, which strongly points to OU filtering." },
+      "d": { "text": "The user accounts have a conflicting proxyAddress attribute that prevents sync", "is_true": false, "explanation": "Attribute conflicts would show as sync errors in Entra Connect Health. The scenario states no errors are shown and the loss correlates with an AD restructure, indicating an OU filtering issue." }
+    },
+    "correct_answer": ["b"]
+  },
+  {
+    "question_id": 16,
+    "question_text": "A user with a guest (B2B) account in a company tenant attempts to use Azure Cloud Shell but receives an error: 'No storage account found. Create a storage account to proceed.' The admin confirms the guest user has Contributor access to the subscription. Why does this still fail?",
+    "options": {
+      "a": { "text": "Guest users cannot use Azure Cloud Shell under any circumstances", "is_true": false, "explanation": "Guest users can use Cloud Shell, but they need to configure their own Cloud Shell storage account. The error is about missing storage, not a guest account restriction." },
+      "b": { "text": "Cloud Shell requires a storage account in the user's home tenant, not the guest tenant, to persist files", "is_true": false, "explanation": "Cloud Shell storage is created in the accessed tenant's subscription, not the home tenant. This is not a home tenant requirement issue." },
+      "c": { "text": "The guest user must create a Cloud Shell storage account manually; it does not auto-create when first launched as a guest", "is_true": true, "explanation": "For guest accounts, Cloud Shell does not automatically create a storage account on first launch in the same way it does for member accounts. The guest user must manually create a storage account in a resource group they have access to and configure it for Cloud Shell, or the tenant admin must configure a managed storage account for guests." },
+      "d": { "text": "The Contributor role does not include permissions to create storage accounts for Cloud Shell", "is_true": false, "explanation": "Contributor can create storage accounts. The issue is the automatic creation flow for Cloud Shell doesn't work for guests — the Contributor permission itself is sufficient if the user manually creates the storage account." }
+    },
+    "correct_answer": ["c"]
+  },
+  {
+    "question_id": 17,
+    "question_text": "An Azure Application Gateway (WAF tier) is in front of a web application. Users report getting HTTP 502 errors occasionally but the backend VMs are healthy according to Azure Monitor metrics. What should the admin check in Application Gateway?",
+    "options": {
+      "a": { "text": "Whether the Application Gateway's public IP SKU matches the Application Gateway SKU", "is_true": false, "explanation": "SKU mismatch (Standard vs Basic IP) can cause creation failures, not intermittent 502s after deployment. This is not the cause of runtime 502 errors." },
+      "b": { "text": "The Application Gateway backend health view for unhealthy backend instances and the health probe configuration", "is_true": true, "explanation": "HTTP 502 from Application Gateway means the gateway received no valid response from the backend pool. Despite VMs appearing healthy in Azure Monitor, the Application Gateway health probe may be failing (wrong port, wrong path, expecting a specific status code). Check Application Gateway > Backend health to see which pool members are unhealthy and review the health probe settings." },
+      "c": { "text": "Whether the WAF has blocked the requests with a false positive rule", "is_true": false, "explanation": "WAF blocks return HTTP 403 (Forbidden), not 502. A 502 specifically means the gateway couldn't get a valid response from the backend — a connection or probe issue, not a WAF block." },
+      "d": { "text": "Whether the frontend listener is using HTTP instead of HTTPS", "is_true": false, "explanation": "An HTTP vs HTTPS mismatch on the listener would cause consistent errors for all users, not intermittent 502s. Backend connection issues cause intermittent 502s." }
+    },
+    "correct_answer": ["b"]
+  },
+  {
+    "question_id": 18,
+    "question_text": "An admin reviews the Entra ID Identity Protection risk report and sees several users marked as 'High' risk due to leaked credentials. The Conditional Access policy requires MFA for Medium and High risk sign-ins. However, the affected users have not been prompted for MFA and continue to sign in normally. What is likely wrong?",
+    "options": {
+      "a": { "text": "Identity Protection does not integrate with Conditional Access — it requires a separate remediation workflow", "is_true": false, "explanation": "Identity Protection risk levels are directly consumable by Conditional Access through User risk and Sign-in risk conditions. Integration is native and built-in." },
+      "b": { "text": "The Conditional Access policy is in 'Report-only' mode and is not enforcing MFA", "is_true": true, "explanation": "A CA policy in 'Report-only' mode evaluates conditions and logs what WOULD happen, but does not enforce any controls. Users continue signing in normally while the policy logs show what would have been blocked/required. The admin must switch the policy state to 'On' to enforce it." },
+      "c": { "text": "Identity Protection risk labels require Entra ID P2, but the users only have P1 licenses", "is_true": false, "explanation": "Identity Protection risk-based Conditional Access does require Entra ID P2. However, the scenario says the policy exists and the users ARE showing in the risk report — so P2 is presumably licensed. The enforcement issue points to policy state." },
+      "d": { "text": "The leaked credentials detection only triggers for cloud-only accounts, not hybrid synced accounts", "is_true": false, "explanation": "Leaked credential detection works for both cloud-only and synced accounts in Entra ID. The detection is based on email/password combinations found in breach databases." }
+    },
+    "correct_answer": ["b"]
+  },
+  {
+    "question_id": 19,
+    "question_text": "A company configures Azure File Sync between an on-premises Windows Server and an Azure Files share. After initial setup, cloud tiering is enabled with 20% free space policy. Two days later, users report that some files on the server take 30+ seconds to open and show a cloud icon overlay. What is happening and is this normal?",
+    "options": {
+      "a": { "text": "Cloud tiering is malfunctioning — all files should be instantly accessible from the server endpoint", "is_true": false, "explanation": "Cloud tiering is working as designed. Tiered files are not stored locally on the server — they exist as stubs that recall data from Azure on access." },
+      "b": { "text": "The files are tiered (stub files) and the 30-second delay is the recall time — data is being downloaded from Azure Files on demand", "is_true": true, "explanation": "This is expected cloud tiering behavior. Files that were tiered to Azure are replaced with thin stub files locally. When a user opens a tiered file, Azure File Sync recalls the full file from Azure, which takes time depending on file size and network speed. The cloud icon indicates a tiered file. This is by design." },
+      "c": { "text": "The Azure File Sync agent needs to be reinstalled — the 30-second delay indicates the sync session is broken", "is_true": false, "explanation": "A broken sync session would trigger errors and the file would fail to open, not open successfully after a delay. A delay followed by successful open is the normal tiering recall behavior." },
+      "d": { "text": "The 20% free space policy is too aggressive — increase it to 80% to ensure all files remain local", "is_true": false, "explanation": "A higher free space percentage means MORE files get tiered (less local storage is filled), which would make the problem worse. The 20% setting means 80% of the volume can be used for hot data — a reasonable setting." }
+    },
+    "correct_answer": ["b"]
+  },
+  {
+    "question_id": 20,
+    "question_text": "A Platform-as-a-Service (PaaS) resource (Azure SQL) is configured with a service endpoint for the subnet hosting an application VM. The service endpoint shows as active. However, when the Azure SQL firewall is set to 'Selected networks' with the subnet added, the application VM still cannot connect. What should the admin verify?",
+    "options": {
+      "a": { "text": "The application VM's NIC must have a static IP to use service endpoints", "is_true": false, "explanation": "Service endpoints work with both static and dynamic IP assignments. The endpoint is associated with the subnet, not a specific IP address." },
+      "b": { "text": "The service endpoint registration for 'Microsoft.Sql' must be enabled on the specific subnet in the VNet settings, not just in the SQL firewall", "is_true": true, "explanation": "Service endpoints require a two-part configuration: (1) the service endpoint must be enabled on the subnet (VNet > Subnet > Service endpoints: add Microsoft.Sql), AND (2) the subnet must be added to the PaaS resource's firewall. If only the firewall rule is added without enabling the endpoint on the subnet, traffic still routes via the public internet and the firewall rules for service endpoints don't apply correctly." },
+      "c": { "text": "Service endpoints do not work for Azure SQL — private endpoints must be used instead", "is_true": false, "explanation": "Service endpoints are fully supported for Azure SQL. They provide network-level isolation from the public internet for that subnet. Private endpoints are a different (and more secure) approach." },
+      "d": { "text": "The VM must have the Azure SQL ODBC driver installed before service endpoint traffic is allowed", "is_true": false, "explanation": "Service endpoints are network-layer constructs and have nothing to do with client-side drivers. The driver affects the application connection string, not firewall rule evaluation." }
+    },
+    "correct_answer": ["b"]
+  }
+]

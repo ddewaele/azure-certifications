@@ -1,0 +1,611 @@
+{
+  "meta": {
+    "title": "Entra ID – Medium: Hybrid Auth, Entra Connect & SSPR Deep Dive",
+    "subject": "Microsoft Entra ID",
+    "difficulty": "medium",
+    "version": "1.0.0",
+    "created": "2026-03-28"
+  },
+  "questions": [
+    {
+      "question_id": 1,
+      "question_text": "Which Entra Connect authentication method ensures that user sign-in continues to work even if all on-premises servers are offline?",
+      "difficulty": "medium",
+      "topic": "Authentication Methods",
+      "tags": ["phs", "resilience", "cloud-auth"],
+      "options": {
+        "a": {
+          "text": "Pass-Through Authentication (PTA)",
+          "is_true": false,
+          "explanation": "Incorrect. PTA requires at least one on-premises agent to be available. If all agents are offline, authentication fails."
+        },
+        "b": {
+          "text": "ADFS Federation",
+          "is_true": false,
+          "explanation": "Incorrect. ADFS is entirely on-premises dependent. If ADFS servers go down, cloud sign-in fails."
+        },
+        "c": {
+          "text": "Password Hash Synchronisation (PHS)",
+          "is_true": true,
+          "explanation": "Correct. PHS stores a hash of the password hash in Entra ID, so authentication happens entirely in the cloud. Users can sign in even during a complete on-premises outage."
+        },
+        "d": {
+          "text": "Entra Domain Services",
+          "is_true": false,
+          "explanation": "Incorrect. Entra Domain Services provides domain services in Azure — it is not an Entra Connect authentication method."
+        }
+      },
+      "correct_answer": ["c"]
+    },
+    {
+      "question_id": 2,
+      "question_text": "What does Entra Connect Seamless SSO provide?",
+      "difficulty": "medium",
+      "topic": "Hybrid Identity",
+      "tags": ["seamless-sso", "kerberos", "domain-joined"],
+      "options": {
+        "a": {
+          "text": "Automatic sign-in to cloud apps for domain-joined machines on the corporate network without prompting for credentials",
+          "is_true": true,
+          "explanation": "Correct. Seamless SSO uses Kerberos tickets from the domain-joined machine to silently authenticate the user to Entra ID. Users on the corporate network access cloud apps without seeing a sign-in prompt."
+        },
+        "b": {
+          "text": "SSO across on-premises applications using Entra ID credentials",
+          "is_true": false,
+          "explanation": "Incorrect. Seamless SSO is for cloud apps accessed from domain-joined machines — not for on-premises app SSO."
+        },
+        "c": {
+          "text": "Automatic MFA bypass for users on trusted networks",
+          "is_true": false,
+          "explanation": "Incorrect. MFA bypass is configured through Conditional Access Named Locations, not Seamless SSO."
+        },
+        "d": {
+          "text": "Synchronisation of SSO tokens between on-premises AD and Entra ID",
+          "is_true": false,
+          "explanation": "Incorrect. Seamless SSO does not sync tokens — it uses Kerberos-based silent authentication."
+        }
+      },
+      "correct_answer": ["a"]
+    },
+    {
+      "question_id": 3,
+      "question_text": "An administrator edits a synchronised user's job title directly in the Entra admin centre. What happens at the next Entra Connect sync cycle?",
+      "difficulty": "medium",
+      "topic": "Source of Authority",
+      "tags": ["synced-user", "source-of-authority", "overwrite"],
+      "options": {
+        "a": {
+          "text": "The cloud change is kept — Entra ID is always authoritative",
+          "is_true": false,
+          "explanation": "Incorrect. For synchronised users, on-premises AD is the source of authority for most attributes."
+        },
+        "b": {
+          "text": "The change is overwritten by the on-premises value at the next sync cycle",
+          "is_true": true,
+          "explanation": "Correct. For attributes mastered on-premises (like job title, department, name), the on-premises AD value overwrites any changes made directly in the cloud. To make permanent changes, update the attribute in on-premises AD."
+        },
+        "c": {
+          "text": "A sync conflict is flagged and both values are preserved until resolved",
+          "is_true": false,
+          "explanation": "Incorrect. Entra Connect uses a 'source wins' model — the on-premises value silently overwrites the cloud value with no conflict notification."
+        },
+        "d": {
+          "text": "The change is blocked — the portal does not allow editing synced attributes",
+          "is_true": false,
+          "explanation": "Incorrect. The portal allows editing synced attributes, but the changes will be overwritten at the next sync cycle."
+        }
+      },
+      "correct_answer": ["b"]
+    },
+    {
+      "question_id": 4,
+      "question_text": "How often does Entra Connect run a delta synchronisation by default?",
+      "difficulty": "medium",
+      "topic": "Entra Connect",
+      "tags": ["delta-sync", "sync-interval"],
+      "options": {
+        "a": {
+          "text": "Every 5 minutes",
+          "is_true": false,
+          "explanation": "Incorrect. 5 minutes is too frequent for the default interval."
+        },
+        "b": {
+          "text": "Every 30 minutes",
+          "is_true": true,
+          "explanation": "Correct. Entra Connect runs delta synchronisation every 30 minutes by default. Password hash changes are processed more quickly (within about 2 minutes) through a separate mechanism."
+        },
+        "c": {
+          "text": "Every 2 hours",
+          "is_true": false,
+          "explanation": "Incorrect. The default is 30 minutes, not 2 hours."
+        },
+        "d": {
+          "text": "Once per day at midnight",
+          "is_true": false,
+          "explanation": "Incorrect. Delta sync runs every 30 minutes, providing near-real-time synchronisation."
+        }
+      },
+      "correct_answer": ["b"]
+    },
+    {
+      "question_id": 5,
+      "question_text": "What is the purpose of Entra Connect staging mode?",
+      "difficulty": "medium",
+      "topic": "Entra Connect",
+      "tags": ["staging-mode", "disaster-recovery"],
+      "options": {
+        "a": {
+          "text": "A second Entra Connect server that imports and processes data but does not export changes to Entra ID",
+          "is_true": true,
+          "explanation": "Correct. Staging mode runs the full import and sync process but does not write changes to Entra ID. It can be used for testing configuration changes or as a warm standby that can be quickly promoted to active in a failover scenario."
+        },
+        "b": {
+          "text": "A mode that syncs only a subset of users for a phased rollout",
+          "is_true": false,
+          "explanation": "Incorrect. Phased rollout uses OU or group filtering, not staging mode. Staging mode processes all objects but does not export."
+        },
+        "c": {
+          "text": "A read-only mode where Entra ID can be queried but not written to",
+          "is_true": false,
+          "explanation": "Incorrect. Staging mode is an Entra Connect server configuration — not a tenant-wide read-only state."
+        },
+        "d": {
+          "text": "A mode that pauses all synchronisation until manually resumed",
+          "is_true": false,
+          "explanation": "Incorrect. Staging mode actively imports and processes — it just does not export the results."
+        }
+      },
+      "correct_answer": ["a"]
+    },
+    {
+      "question_id": 6,
+      "question_text": "What are the three SSPR scope options?",
+      "difficulty": "medium",
+      "topic": "SSPR",
+      "tags": ["sspr", "scope"],
+      "options": {
+        "a": {
+          "text": "Enabled, Disabled, and Restricted",
+          "is_true": false,
+          "explanation": "Incorrect. 'Restricted' is not a valid SSPR scope option."
+        },
+        "b": {
+          "text": "None, Selected, and All",
+          "is_true": true,
+          "explanation": "Correct. None disables SSPR. Selected enables it for a specific security group (useful for phased rollout). All enables it for every user in the tenant."
+        },
+        "c": {
+          "text": "Free, Premium, and Enterprise",
+          "is_true": false,
+          "explanation": "Incorrect. These are not SSPR scope options — they resemble license tiers."
+        },
+        "d": {
+          "text": "Users, Admins, and Guests",
+          "is_true": false,
+          "explanation": "Incorrect. These are not the SSPR scope settings. Admins always have SSPR available with two-method verification regardless of the tenant SSPR setting."
+        }
+      },
+      "correct_answer": ["b"]
+    },
+    {
+      "question_id": 7,
+      "question_text": "An admin enables SSPR with 'Number of methods required to reset' set to 2. Which statement is true?",
+      "difficulty": "medium",
+      "topic": "SSPR",
+      "tags": ["sspr", "auth-methods"],
+      "options": {
+        "a": {
+          "text": "Users must register at least 2 authentication methods and verify with both during a reset",
+          "is_true": true,
+          "explanation": "Correct. Setting the requirement to 2 means users must register at least 2 methods (e.g., mobile phone and email) and verify their identity through both methods during the reset process."
+        },
+        "b": {
+          "text": "Users must attempt the reset twice before it succeeds",
+          "is_true": false,
+          "explanation": "Incorrect. The setting refers to authentication methods, not the number of reset attempts."
+        },
+        "c": {
+          "text": "Only 2 users can reset their passwords simultaneously",
+          "is_true": false,
+          "explanation": "Incorrect. The setting has nothing to do with concurrent resets."
+        },
+        "d": {
+          "text": "Users must wait 2 hours between password resets",
+          "is_true": false,
+          "explanation": "Incorrect. There is no time-based restriction implied by this setting."
+        }
+      },
+      "correct_answer": ["a"]
+    },
+    {
+      "question_id": 8,
+      "question_text": "What two components are required for SSPR password writeback to on-premises AD?",
+      "difficulty": "medium",
+      "topic": "SSPR",
+      "tags": ["sspr", "writeback", "p1", "entra-connect"],
+      "options": {
+        "a": {
+          "text": "Entra ID P1 (or higher) and Entra Connect with password writeback enabled",
+          "is_true": true,
+          "explanation": "Correct. SSPR writeback requires: (1) Entra ID P1 license for the feature, and (2) Entra Connect installed with password writeback enabled to relay the new password to on-premises AD."
+        },
+        "b": {
+          "text": "Entra ID Free and a VPN connection to on-premises",
+          "is_true": false,
+          "explanation": "Incorrect. The Free tier does not support SSPR writeback, and a VPN is not required — Entra Connect communicates outbound over HTTPS."
+        },
+        "c": {
+          "text": "ADFS and Entra ID P2",
+          "is_true": false,
+          "explanation": "Incorrect. ADFS is not required for SSPR writeback. Entra Connect handles the communication."
+        },
+        "d": {
+          "text": "Entra Domain Services and Entra Connect Health",
+          "is_true": false,
+          "explanation": "Incorrect. Neither Entra DS nor Connect Health are required for SSPR writeback."
+        }
+      },
+      "correct_answer": ["a"]
+    },
+    {
+      "question_id": 9,
+      "question_text": "Microsoft recommends deploying multiple PTA agents for high availability. How many agents does Microsoft recommend as a minimum?",
+      "difficulty": "medium",
+      "topic": "Authentication Methods",
+      "tags": ["pta", "high-availability", "agents"],
+      "options": {
+        "a": {
+          "text": "1 agent",
+          "is_true": false,
+          "explanation": "Incorrect. A single agent is a single point of failure — if it goes offline, authentication fails."
+        },
+        "b": {
+          "text": "2–3 agents on separate servers",
+          "is_true": true,
+          "explanation": "Correct. Microsoft recommends 2–3 lightweight PTA agents deployed on separate servers for redundancy. If one server is down for maintenance, the others continue handling authentication."
+        },
+        "c": {
+          "text": "5 agents minimum",
+          "is_true": false,
+          "explanation": "Incorrect. 5 agents would be excessive for most organisations. 2–3 is the recommendation."
+        },
+        "d": {
+          "text": "PTA does not support multiple agents",
+          "is_true": false,
+          "explanation": "Incorrect. PTA supports and encourages multiple agents for high availability."
+        }
+      },
+      "correct_answer": ["b"]
+    },
+    {
+      "question_id": 10,
+      "question_text": "What is the key advantage of Entra Connect Cloud Sync over the classic Entra Connect (full sync engine)?",
+      "difficulty": "medium",
+      "topic": "Entra Connect",
+      "tags": ["cloud-sync", "lightweight", "comparison"],
+      "options": {
+        "a": {
+          "text": "It supports more features like device writeback and Exchange hybrid",
+          "is_true": false,
+          "explanation": "Incorrect. The classic full Entra Connect supports more advanced features. Cloud Sync is lighter but has fewer capabilities."
+        },
+        "b": {
+          "text": "It uses a lightweight provisioning agent with sync logic managed in the cloud, requiring less on-premises infrastructure",
+          "is_true": true,
+          "explanation": "Correct. Cloud Sync deploys a small agent on-premises while Microsoft manages the sync engine in the cloud. This reduces on-premises infrastructure requirements and simplifies multi-forest scenarios."
+        },
+        "c": {
+          "text": "It eliminates the need for any on-premises component",
+          "is_true": false,
+          "explanation": "Incorrect. Cloud Sync still requires a lightweight agent installed on-premises — but it is much simpler than the full sync engine."
+        },
+        "d": {
+          "text": "It replaces Entra Connect entirely — the classic version is deprecated",
+          "is_true": false,
+          "explanation": "Incorrect. Both products coexist. Cloud Sync is recommended for simpler scenarios, but classic Entra Connect is still needed for advanced configurations."
+        }
+      },
+      "correct_answer": ["b"]
+    },
+    {
+      "question_id": 11,
+      "question_text": "Which Entra Connect filtering option would an admin use to synchronise only users from the 'Cloud-Users' OU?",
+      "difficulty": "medium",
+      "topic": "Entra Connect",
+      "tags": ["ou-filtering", "sync-scope"],
+      "options": {
+        "a": {
+          "text": "OU-based filtering in the Entra Connect configuration wizard",
+          "is_true": true,
+          "explanation": "Correct. OU-based filtering allows the admin to select which OUs to include or exclude from synchronisation. Only objects in selected OUs are synced to Entra ID."
+        },
+        "b": {
+          "text": "Azure Policy with a Deny effect on non-Cloud-Users OUs",
+          "is_true": false,
+          "explanation": "Incorrect. Azure Policy governs Azure resources — it has no role in Entra Connect sync filtering."
+        },
+        "c": {
+          "text": "Conditional Access policy that blocks sync for certain OUs",
+          "is_true": false,
+          "explanation": "Incorrect. Conditional Access controls sign-in conditions — it does not control Entra Connect sync scope."
+        },
+        "d": {
+          "text": "Create a dynamic group that only includes Cloud-Users OU members",
+          "is_true": false,
+          "explanation": "Incorrect. Dynamic groups in Entra ID cannot filter by on-premises OU membership. OU-based filtering is done in the Entra Connect configuration."
+        }
+      },
+      "correct_answer": ["a"]
+    },
+    {
+      "question_id": 12,
+      "question_text": "What happens to on-premises password policies when a user resets their password via cloud SSPR with writeback enabled?",
+      "difficulty": "medium",
+      "topic": "SSPR",
+      "tags": ["sspr", "writeback", "password-policy"],
+      "options": {
+        "a": {
+          "text": "On-premises password policies are enforced — the reset fails if the new password does not comply",
+          "is_true": true,
+          "explanation": "Correct. When SSPR writes the new password back to on-premises AD, the on-premises password complexity, history, and age policies are enforced. If the new password violates these policies, the reset fails with an error."
+        },
+        "b": {
+          "text": "Cloud password policies override on-premises policies",
+          "is_true": false,
+          "explanation": "Incorrect. With writeback, the on-premises AD password policies are the authoritative enforcement point."
+        },
+        "c": {
+          "text": "No policies are enforced — the user can set any password",
+          "is_true": false,
+          "explanation": "Incorrect. Both cloud-side restrictions (like banned password lists) and on-premises policies are enforced."
+        },
+        "d": {
+          "text": "The password is only changed in the cloud — on-premises AD is not affected",
+          "is_true": false,
+          "explanation": "Incorrect. The entire purpose of writeback is to synchronise the new password back to on-premises AD."
+        }
+      },
+      "correct_answer": ["a"]
+    },
+    {
+      "question_id": 13,
+      "question_text": "Which type of identity is used when an Azure VM needs to authenticate to Azure Key Vault without storing credentials in code?",
+      "difficulty": "medium",
+      "topic": "Managed Identities",
+      "tags": ["managed-identity", "key-vault", "passwordless"],
+      "options": {
+        "a": {
+          "text": "Cloud identity",
+          "is_true": false,
+          "explanation": "Incorrect. Cloud identities are for human users — not for Azure resources."
+        },
+        "b": {
+          "text": "Managed identity",
+          "is_true": true,
+          "explanation": "Correct. Managed identities are Entra ID identities assigned to Azure resources (VMs, App Services, Functions). Azure manages the credentials automatically — no secrets need to be stored in code or configuration."
+        },
+        "c": {
+          "text": "Service account with a stored connection string",
+          "is_true": false,
+          "explanation": "Incorrect. Storing connection strings in code is a security anti-pattern. Managed identities eliminate this need."
+        },
+        "d": {
+          "text": "Guest user identity",
+          "is_true": false,
+          "explanation": "Incorrect. Guest users are external human identities — not applicable to Azure resource authentication."
+        }
+      },
+      "correct_answer": ["b"]
+    },
+    {
+      "question_id": 14,
+      "question_text": "What are the two types of managed identities in Entra ID?",
+      "difficulty": "medium",
+      "topic": "Managed Identities",
+      "tags": ["managed-identity", "system-assigned", "user-assigned"],
+      "options": {
+        "a": {
+          "text": "System-assigned and user-assigned",
+          "is_true": true,
+          "explanation": "Correct. System-assigned managed identities are tied to a single Azure resource (created and deleted with the resource). User-assigned managed identities are standalone Entra ID objects that can be shared across multiple resources."
+        },
+        "b": {
+          "text": "Admin-assigned and self-assigned",
+          "is_true": false,
+          "explanation": "Incorrect. These are not valid managed identity types."
+        },
+        "c": {
+          "text": "Temporary and permanent",
+          "is_true": false,
+          "explanation": "Incorrect. The distinction is not about duration but about lifecycle management (tied to a resource vs. standalone)."
+        },
+        "d": {
+          "text": "Cloud-managed and on-premises-managed",
+          "is_true": false,
+          "explanation": "Incorrect. All managed identities are cloud-native Entra ID objects — there is no on-premises variant."
+        }
+      },
+      "correct_answer": ["a"]
+    },
+    {
+      "question_id": 15,
+      "question_text": "An admin deploying AD DS on Azure VMs needs to configure storage for the AD DS database, logs, and SYSVOL. What Host Cache Preference must these data disks use?",
+      "difficulty": "medium",
+      "topic": "AD DS on Azure VMs",
+      "tags": ["ad-ds", "azure-vm", "disk-caching"],
+      "options": {
+        "a": {
+          "text": "Read/Write",
+          "is_true": false,
+          "explanation": "Incorrect. Read/Write caching risks data corruption for AD DS because the write cache can lose unflushed data during a VM crash."
+        },
+        "b": {
+          "text": "Read Only",
+          "is_true": false,
+          "explanation": "Incorrect. Even Read Only caching is not recommended for AD DS disks."
+        },
+        "c": {
+          "text": "None",
+          "is_true": true,
+          "explanation": "Correct. Microsoft requires Host Cache Preference set to None for disks storing the AD DS database, logs, and SYSVOL. This prevents data corruption by ensuring all writes go directly to disk. You should also never use the OS drive (C:) for AD DS storage."
+        },
+        "d": {
+          "text": "Automatic (Azure decides based on workload)",
+          "is_true": false,
+          "explanation": "Incorrect. There is no 'Automatic' caching option, and AD DS explicitly requires None."
+        }
+      },
+      "correct_answer": ["c"]
+    },
+    {
+      "question_id": 16,
+      "question_text": "What is Entra Connect Health used for?",
+      "difficulty": "medium",
+      "topic": "Entra Connect",
+      "tags": ["connect-health", "monitoring", "p1"],
+      "options": {
+        "a": {
+          "text": "Monitoring the health and operational status of identity sync infrastructure (Entra Connect, ADFS, AD DS)",
+          "is_true": true,
+          "explanation": "Correct. Entra Connect Health provides a dashboard with alerts, performance data, usage patterns, and configuration issues for your identity infrastructure. It requires Entra ID P1."
+        },
+        "b": {
+          "text": "Checking whether individual user passwords meet complexity requirements",
+          "is_true": false,
+          "explanation": "Incorrect. Password policy compliance is handled by the password policy engine, not Connect Health."
+        },
+        "c": {
+          "text": "Monitoring the health of Azure VMs running domain controllers",
+          "is_true": false,
+          "explanation": "Incorrect. Azure VM health monitoring is done by Azure Monitor and VM insights — not Connect Health."
+        },
+        "d": {
+          "text": "Providing cost analysis for identity-related Azure services",
+          "is_true": false,
+          "explanation": "Incorrect. Cost analysis is handled by Azure Cost Management."
+        }
+      },
+      "correct_answer": ["a"]
+    },
+    {
+      "question_id": 17,
+      "question_text": "SCENARIO: Contoso has on-premises AD with 5,000 users and wants to enable hybrid identity. Their security team requires that no password data is ever stored in the cloud. Which authentication method should they use?",
+      "difficulty": "medium",
+      "topic": "Authentication Methods",
+      "tags": ["scenario", "pta", "no-cloud-password"],
+      "options": {
+        "a": {
+          "text": "Password Hash Synchronisation (PHS)",
+          "is_true": false,
+          "explanation": "Incorrect. PHS stores a hash of the password hash in Entra ID — this violates the 'no password data in the cloud' requirement."
+        },
+        "b": {
+          "text": "Pass-Through Authentication (PTA)",
+          "is_true": true,
+          "explanation": "Correct. PTA validates passwords entirely on-premises through a lightweight agent. No password data (not even a hash) is stored in Entra ID. This meets the security team's requirement."
+        },
+        "c": {
+          "text": "Security Defaults",
+          "is_true": false,
+          "explanation": "Incorrect. Security Defaults are baseline security policies (MFA registration, block legacy auth) — not an authentication method."
+        },
+        "d": {
+          "text": "Entra Domain Services",
+          "is_true": false,
+          "explanation": "Incorrect. Entra DS provides domain services in Azure — it is not an Entra Connect authentication method and does use password hashes."
+        }
+      },
+      "correct_answer": ["b"]
+    },
+    {
+      "question_id": 18,
+      "question_text": "SCENARIO: After enabling Entra Connect with PHS, an admin notices that users from the 'Contractors' OU are being synced to Entra ID. These users should not be in the cloud. What should the admin do?",
+      "difficulty": "medium",
+      "topic": "Entra Connect",
+      "tags": ["scenario", "ou-filtering", "sync-scope"],
+      "options": {
+        "a": {
+          "text": "Delete the synced contractor accounts from Entra ID manually",
+          "is_true": false,
+          "explanation": "Incorrect. Manually deleting synced objects is not supported — Entra Connect manages them. They would reappear at the next sync cycle."
+        },
+        "b": {
+          "text": "Reconfigure OU-based filtering in Entra Connect to exclude the Contractors OU, then run a full sync",
+          "is_true": true,
+          "explanation": "Correct. The admin should update the OU filtering in the Entra Connect wizard to deselect the Contractors OU, then run a full sync. Entra Connect will remove the contractor objects from Entra ID automatically."
+        },
+        "c": {
+          "text": "Create a Conditional Access policy to block contractor sign-ins",
+          "is_true": false,
+          "explanation": "Incorrect. Blocking sign-in does not remove the objects from Entra ID. The root cause (sync scope) should be fixed."
+        },
+        "d": {
+          "text": "Disable the contractor accounts in on-premises AD",
+          "is_true": false,
+          "explanation": "Incorrect. Disabling accounts would prevent sign-in but they would still be synced to Entra ID. The correct fix is OU filtering."
+        }
+      },
+      "correct_answer": ["b"]
+    },
+    {
+      "question_id": 19,
+      "question_text": "SCENARIO: A company uses ADFS with Entra Connect. Their on-premises ADFS proxy server fails. Users on the corporate network can still sign in, but remote users cannot. Why?",
+      "difficulty": "medium",
+      "topic": "Authentication Methods",
+      "tags": ["scenario", "adfs", "wap", "remote-access"],
+      "options": {
+        "a": {
+          "text": "The ADFS proxy (WAP) handles external/remote authentication requests; internal users reach ADFS directly",
+          "is_true": true,
+          "explanation": "Correct. The Web Application Proxy (WAP) publishes the ADFS endpoint externally. Internal users on the corporate network authenticate directly against the ADFS server, bypassing the proxy. When the WAP fails, only remote/external users lose access."
+        },
+        "b": {
+          "text": "Remote users need Entra ID P2 to use ADFS",
+          "is_true": false,
+          "explanation": "Incorrect. ADFS access is not tied to Entra ID licensing tiers."
+        },
+        "c": {
+          "text": "Remote users are blocked by a Conditional Access policy",
+          "is_true": false,
+          "explanation": "Incorrect. The scenario points to an infrastructure failure (ADFS proxy), not a policy configuration."
+        },
+        "d": {
+          "text": "ADFS only supports internal authentication — remote users always use PHS",
+          "is_true": false,
+          "explanation": "Incorrect. ADFS supports both internal and external authentication — external access is served through the WAP."
+        }
+      },
+      "correct_answer": ["a"]
+    },
+    {
+      "question_id": 20,
+      "question_text": "SCENARIO: An employee resets their cloud password via SSPR. They then try to sign in to their on-premises domain-joined laptop with the new password, but it fails. The old password still works on the laptop. What is the most likely cause?",
+      "difficulty": "medium",
+      "topic": "SSPR",
+      "tags": ["scenario", "writeback", "password-sync"],
+      "options": {
+        "a": {
+          "text": "Password writeback is not enabled — the new password was only set in the cloud, not written back to on-premises AD",
+          "is_true": true,
+          "explanation": "Correct. Without password writeback enabled in Entra Connect, SSPR only changes the cloud password. The on-premises AD password remains unchanged, so the old password is still valid for domain sign-in. Enabling writeback resolves this."
+        },
+        "b": {
+          "text": "The laptop is not connected to the internet",
+          "is_true": false,
+          "explanation": "Incorrect. Domain-joined laptop sign-in uses cached credentials or the on-premises domain controller — internet connectivity is not the issue."
+        },
+        "c": {
+          "text": "SSPR only works for cloud applications, not for Windows sign-in",
+          "is_true": false,
+          "explanation": "Incorrect. With writeback enabled, SSPR changes the on-premises password as well, which affects Windows domain sign-in."
+        },
+        "d": {
+          "text": "The Entra ID P2 license is required for writeback",
+          "is_true": false,
+          "explanation": "Incorrect. Password writeback requires P1 (not P2). However, the issue here is that writeback is not enabled at all, not a licensing problem."
+        }
+      },
+      "correct_answer": ["a"]
+    }
+  ]
+}

@@ -1,0 +1,610 @@
+{
+  "meta": {
+    "title": "AZ-104 – Storage",
+    "subject": "Azure Administration",
+    "version": "1.0.0",
+    "created": "2026-03-24"
+  },
+  "questions": [
+    {
+      "question_id": 1,
+      "question_text": "Which Azure Storage redundancy option replicates data synchronously across three Availability Zones within a single region?",
+      "difficulty": "easy",
+      "topic": "Storage Redundancy",
+      "tags": ["storage", "redundancy", "az-104"],
+      "options": {
+        "a": {
+          "text": "LRS (Locally Redundant Storage)",
+          "is_true": false,
+          "explanation": "Incorrect. LRS replicates data 3 times within a single datacenter — not across Availability Zones."
+        },
+        "b": {
+          "text": "GRS (Geo-Redundant Storage)",
+          "is_true": false,
+          "explanation": "Incorrect. GRS replicates across two regions but uses LRS in each region — not zone-redundant."
+        },
+        "c": {
+          "text": "ZRS (Zone-Redundant Storage)",
+          "is_true": true,
+          "explanation": "Correct. ZRS synchronously replicates data across 3 Availability Zones within the same region. It protects against zone failures but not regional disasters."
+        },
+        "d": {
+          "text": "RA-GRS (Read-Access Geo-Redundant Storage)",
+          "is_true": false,
+          "explanation": "Incorrect. RA-GRS replicates to a secondary region and allows reads from that region — it does not specifically use Availability Zones."
+        }
+      },
+      "correct_answer": ["c"]
+    },
+    {
+      "question_id": 2,
+      "question_text": "A blob is stored in the Archive access tier. A user needs to read the blob. What must happen first?",
+      "difficulty": "easy",
+      "topic": "Blob Storage",
+      "tags": ["blob", "archive", "access-tiers", "az-104"],
+      "options": {
+        "a": {
+          "text": "The blob can be read immediately from the Archive tier",
+          "is_true": false,
+          "explanation": "Incorrect. Archive tier blobs are offline — they cannot be read directly and must be rehydrated first."
+        },
+        "b": {
+          "text": "The blob must be rehydrated to the Hot or Cool tier",
+          "is_true": true,
+          "explanation": "Correct. Archive blobs are offline and must be rehydrated (moved) to the Hot or Cool tier before they can be read. Standard rehydration can take up to 15 hours; high-priority rehydration typically completes within 1 hour."
+        },
+        "c": {
+          "text": "The storage account must be upgraded to Premium performance",
+          "is_true": false,
+          "explanation": "Incorrect. The performance tier of the storage account has nothing to do with reading Archive tier blobs."
+        },
+        "d": {
+          "text": "The blob must be copied to a new storage account",
+          "is_true": false,
+          "explanation": "Incorrect. Rehydration changes the tier in place — no copy to a new account is required."
+        }
+      },
+      "correct_answer": ["b"]
+    },
+    {
+      "question_id": 3,
+      "question_text": "Which type of SAS token is the most secure because it is signed with Microsoft Entra ID credentials instead of the storage account key?",
+      "difficulty": "easy",
+      "topic": "Storage Security",
+      "tags": ["sas", "security", "storage", "az-104"],
+      "options": {
+        "a": {
+          "text": "Account SAS",
+          "is_true": false,
+          "explanation": "Incorrect. Account SAS is signed with the storage account key — compromising the key compromises all Account SAS tokens."
+        },
+        "b": {
+          "text": "Service SAS",
+          "is_true": false,
+          "explanation": "Incorrect. Service SAS is also signed with the storage account key."
+        },
+        "c": {
+          "text": "User Delegation SAS",
+          "is_true": true,
+          "explanation": "Correct. User Delegation SAS is signed with Entra ID credentials (an OAuth 2.0 token). It is more secure because it does not expose the account key and supports short-lived credentials tied to a user's Entra ID identity."
+        },
+        "d": {
+          "text": "Stored access policy SAS",
+          "is_true": false,
+          "explanation": "Incorrect. Stored access policies are attached to Service SAS tokens — they are still signed with the account key."
+        }
+      },
+      "correct_answer": ["c"]
+    },
+    {
+      "question_id": 4,
+      "question_text": "A company needs long-term retention of infrequently accessed backups at the lowest possible storage cost. They can tolerate up to 15 hours retrieval time. Which blob access tier is most appropriate?",
+      "difficulty": "easy",
+      "topic": "Blob Storage",
+      "tags": ["blob", "access-tiers", "cost", "az-104"],
+      "options": {
+        "a": {
+          "text": "Hot",
+          "is_true": false,
+          "explanation": "Incorrect. Hot tier has the highest storage cost — not suitable for infrequent access long-term storage."
+        },
+        "b": {
+          "text": "Cool",
+          "is_true": false,
+          "explanation": "Incorrect. Cool tier reduces storage cost but still has immediate access and is designed for data accessed less than once per 30 days — not the lowest cost option."
+        },
+        "c": {
+          "text": "Cold",
+          "is_true": false,
+          "explanation": "Incorrect. Cold tier is cheaper than Cool but still has immediate access — there is a lower-cost option for data that can tolerate hours of retrieval delay."
+        },
+        "d": {
+          "text": "Archive",
+          "is_true": true,
+          "explanation": "Correct. Archive tier has the lowest storage cost and is designed for data that is rarely accessed and can tolerate retrieval latency of up to 15 hours. It is ideal for long-term backup retention."
+        }
+      },
+      "correct_answer": ["d"]
+    },
+    {
+      "question_id": 5,
+      "question_text": "A developer accidentally deletes a blob container. The storage account was configured with soft delete for containers with a 14-day retention period. What happens?",
+      "difficulty": "easy",
+      "topic": "Blob Storage",
+      "tags": ["blob", "soft-delete", "storage", "az-104"],
+      "options": {
+        "a": {
+          "text": "The container and all its blobs are permanently deleted immediately",
+          "is_true": false,
+          "explanation": "Incorrect. With soft delete enabled, the deletion is not immediate — the data is retained for the configured period."
+        },
+        "b": {
+          "text": "The container is moved to the Archive tier automatically",
+          "is_true": false,
+          "explanation": "Incorrect. Soft delete retains the container in a soft-deleted state — it does not change the access tier."
+        },
+        "c": {
+          "text": "The container and its contents are retained for 14 days and can be restored",
+          "is_true": true,
+          "explanation": "Correct. With soft delete for containers enabled, deleted containers are retained for the configured retention period (14 days in this case). They can be undeleted from the portal, CLI, or REST API during this window."
+        },
+        "d": {
+          "text": "The container is retained permanently and cannot be deleted",
+          "is_true": false,
+          "explanation": "Incorrect. Soft delete retains the data for the configured period only — after that, the data is permanently deleted."
+        }
+      },
+      "correct_answer": ["c"]
+    },
+    {
+      "question_id": 6,
+      "question_text": "Which storage account type supports SMB and NFS file share protocols and allows the shares to be mounted as network drives?",
+      "difficulty": "easy",
+      "topic": "Azure Files",
+      "tags": ["azure-files", "storage", "az-104"],
+      "options": {
+        "a": {
+          "text": "Azure Blob Storage",
+          "is_true": false,
+          "explanation": "Incorrect. Blob Storage uses REST/HTTPS and cannot be mounted as a network drive."
+        },
+        "b": {
+          "text": "Azure Files",
+          "is_true": true,
+          "explanation": "Correct. Azure Files provides fully managed file shares accessible via SMB 3.0 and NFS 4.1 protocols. They can be mounted on Windows, Linux, and macOS as network drives."
+        },
+        "c": {
+          "text": "Azure Queue Storage",
+          "is_true": false,
+          "explanation": "Incorrect. Queue Storage is for messaging between application components — it does not provide file share functionality."
+        },
+        "d": {
+          "text": "Azure Table Storage",
+          "is_true": false,
+          "explanation": "Incorrect. Table Storage is a NoSQL key-value store — not a file share protocol."
+        }
+      },
+      "correct_answer": ["b"]
+    },
+    {
+      "question_id": 7,
+      "question_text": "A storage account has the network access set to 'Enabled from selected virtual networks and IP addresses' but a specific IP address is not in the allow list. What happens when that IP tries to access the storage account?",
+      "difficulty": "easy",
+      "topic": "Storage Security",
+      "tags": ["storage", "networking", "firewall", "az-104"],
+      "options": {
+        "a": {
+          "text": "Access is granted with a warning",
+          "is_true": false,
+          "explanation": "Incorrect. Storage firewall rules are enforced without warnings — access is either allowed or denied."
+        },
+        "b": {
+          "text": "Access is denied",
+          "is_true": true,
+          "explanation": "Correct. When the storage firewall is set to 'Selected networks', only specifically allowed IP ranges and VNets can access the account. Any other source IP is denied."
+        },
+        "c": {
+          "text": "Access is granted if the user has valid credentials",
+          "is_true": false,
+          "explanation": "Incorrect. The network layer check happens before authentication — even valid credentials are rejected if the source network is not allowed."
+        },
+        "d": {
+          "text": "Access is redirected to the secondary endpoint",
+          "is_true": false,
+          "explanation": "Incorrect. The secondary endpoint is for read operations with RA-GRS — it is not a firewall bypass mechanism."
+        }
+      },
+      "correct_answer": ["b"]
+    },
+    {
+      "question_id": 8,
+      "question_text": "Which storage redundancy option provides both zone-redundant storage in the primary region AND replication to a secondary region?",
+      "difficulty": "easy",
+      "topic": "Storage Redundancy",
+      "tags": ["storage", "redundancy", "gzrs", "az-104"],
+      "options": {
+        "a": {
+          "text": "ZRS",
+          "is_true": false,
+          "explanation": "Incorrect. ZRS provides zone redundancy within a single region but does not replicate to a secondary region."
+        },
+        "b": {
+          "text": "GRS",
+          "is_true": false,
+          "explanation": "Incorrect. GRS replicates to a secondary region but uses LRS (not zone-redundant) in the primary region."
+        },
+        "c": {
+          "text": "GZRS",
+          "is_true": true,
+          "explanation": "Correct. GZRS (Geo-Zone-Redundant Storage) combines ZRS in the primary region with LRS replication to a secondary region. It provides the highest level of durability: protection from zone failure AND regional disaster."
+        },
+        "d": {
+          "text": "LRS",
+          "is_true": false,
+          "explanation": "Incorrect. LRS replicates 3 times within one datacenter — no geo-redundancy, no zone redundancy."
+        }
+      },
+      "correct_answer": ["c"]
+    },
+    {
+      "question_id": 9,
+      "question_text": "A company wants to automatically move blobs that haven't been modified in 90 days to the Archive tier to reduce costs. What feature should they configure?",
+      "difficulty": "easy",
+      "topic": "Blob Storage",
+      "tags": ["blob", "lifecycle", "cost", "az-104"],
+      "options": {
+        "a": {
+          "text": "Blob versioning",
+          "is_true": false,
+          "explanation": "Incorrect. Blob versioning keeps previous versions of blobs — it does not automate tier changes."
+        },
+        "b": {
+          "text": "Object replication",
+          "is_true": false,
+          "explanation": "Incorrect. Object replication copies blobs asynchronously to another account — it does not manage access tiers."
+        },
+        "c": {
+          "text": "Blob lifecycle management",
+          "is_true": true,
+          "explanation": "Correct. Blob lifecycle management policies allow you to define rules that automatically transition blobs between tiers (Hot → Cool → Cold → Archive) or delete them based on age (days since last modified)."
+        },
+        "d": {
+          "text": "Soft delete",
+          "is_true": false,
+          "explanation": "Incorrect. Soft delete retains deleted data for recovery — it does not automate access tier transitions."
+        }
+      },
+      "correct_answer": ["c"]
+    },
+    {
+      "question_id": 10,
+      "question_text": "How many access keys does every Azure Storage account have by default?",
+      "difficulty": "easy",
+      "topic": "Storage Security",
+      "tags": ["storage", "access-keys", "security", "az-104"],
+      "options": {
+        "a": {
+          "text": "1",
+          "is_true": false,
+          "explanation": "Incorrect. Having only one key would require downtime to rotate it."
+        },
+        "b": {
+          "text": "2",
+          "is_true": true,
+          "explanation": "Correct. Every storage account has two 512-bit access keys. This allows zero-downtime key rotation: update applications to use key2, then regenerate key1 (which is now unused)."
+        },
+        "c": {
+          "text": "4",
+          "is_true": false,
+          "explanation": "Incorrect. Storage accounts have exactly 2 keys."
+        },
+        "d": {
+          "text": "It varies by storage account type",
+          "is_true": false,
+          "explanation": "Incorrect. All storage account types have exactly 2 access keys."
+        }
+      },
+      "correct_answer": ["b"]
+    },
+    {
+      "question_id": 11,
+      "question_text": "A developer uses AzCopy to synchronise files from a local folder to an Azure Blob container. Which AzCopy command is most appropriate for this ongoing sync operation?",
+      "difficulty": "easy",
+      "topic": "Storage Tools",
+      "tags": ["azcopy", "storage", "az-104"],
+      "options": {
+        "a": {
+          "text": "azcopy copy",
+          "is_true": false,
+          "explanation": "Incorrect. azcopy copy transfers files but does not compare source and destination — it copies regardless of whether the file already exists."
+        },
+        "b": {
+          "text": "azcopy sync",
+          "is_true": true,
+          "explanation": "Correct. azcopy sync compares source and destination and only transfers files that are new or changed. It is ideal for ongoing synchronisation scenarios."
+        },
+        "c": {
+          "text": "azcopy remove",
+          "is_true": false,
+          "explanation": "Incorrect. azcopy remove deletes objects from a destination — not for upload synchronisation."
+        },
+        "d": {
+          "text": "azcopy list",
+          "is_true": false,
+          "explanation": "Incorrect. azcopy list shows the contents of a storage resource — it does not perform any transfer operations."
+        }
+      },
+      "correct_answer": ["b"]
+    },
+    {
+      "question_id": 12,
+      "question_text": "Which Azure Files feature synchronises Azure file shares to on-premises Windows Servers and allows files to be automatically tiered to the cloud when accessed infrequently?",
+      "difficulty": "easy",
+      "topic": "Azure Files",
+      "tags": ["azure-files", "file-sync", "az-104"],
+      "options": {
+        "a": {
+          "text": "Azure Blob Storage lifecycle management",
+          "is_true": false,
+          "explanation": "Incorrect. Blob lifecycle management is for blobs, not Azure Files, and does not involve on-premises servers."
+        },
+        "b": {
+          "text": "Azure File Sync",
+          "is_true": true,
+          "explanation": "Correct. Azure File Sync extends Azure Files to Windows Servers. Cloud tiering is an optional feature that replaces infrequently accessed files with stubs — the file appears locally but data is downloaded from Azure on demand."
+        },
+        "c": {
+          "text": "Azure Backup",
+          "is_true": false,
+          "explanation": "Incorrect. Azure Backup protects Azure Files by taking snapshots — it does not extend file shares to on-premises servers."
+        },
+        "d": {
+          "text": "Azure Data Box",
+          "is_true": false,
+          "explanation": "Incorrect. Azure Data Box is a physical device for bulk offline data transfers to Azure — not for ongoing sync with tiering."
+        }
+      },
+      "correct_answer": ["b"]
+    },
+    {
+      "question_id": 13,
+      "question_text": "An organisation wants to revoke a SAS token without regenerating the storage account keys. What feature allows this?",
+      "difficulty": "easy",
+      "topic": "Storage Security",
+      "tags": ["sas", "stored-access-policy", "storage", "az-104"],
+      "options": {
+        "a": {
+          "text": "Rotate the storage account keys",
+          "is_true": false,
+          "explanation": "Incorrect. Rotating keys does revoke all key-based SAS tokens but also disrupts any other applications using those keys — this is not the cleanest approach."
+        },
+        "b": {
+          "text": "Delete the blob container",
+          "is_true": false,
+          "explanation": "Incorrect. Deleting the container deletes the data — not an appropriate way to revoke access."
+        },
+        "c": {
+          "text": "Use a stored access policy and delete or modify the policy",
+          "is_true": true,
+          "explanation": "Correct. If a SAS token references a stored access policy, you can revoke access by deleting or modifying the policy on the server side — without rotating the keys or affecting other applications."
+        },
+        "d": {
+          "text": "Change the container access level to Private",
+          "is_true": false,
+          "explanation": "Incorrect. Anonymous access level changes only affect anonymous (unauthenticated) access. SAS tokens with valid permissions are not affected by the container's anonymous access setting."
+        }
+      },
+      "correct_answer": ["c"]
+    },
+    {
+      "question_id": 14,
+      "question_text": "Which storage account type should be used when the workload requires low-latency, high-IOPS storage specifically for block blobs (not files, queues, or tables)?",
+      "difficulty": "easy",
+      "topic": "Storage Accounts",
+      "tags": ["storage", "performance", "premium", "az-104"],
+      "options": {
+        "a": {
+          "text": "Standard GPv2",
+          "is_true": false,
+          "explanation": "Incorrect. Standard GPv2 uses HDD-backed storage and is not optimised for high-IOPS workloads."
+        },
+        "b": {
+          "text": "Premium File Shares",
+          "is_true": false,
+          "explanation": "Incorrect. Premium File Shares is optimised for Azure Files (SMB/NFS) — not for block blobs."
+        },
+        "c": {
+          "text": "Premium Block Blobs",
+          "is_true": true,
+          "explanation": "Correct. Premium Block Blobs provides SSD-backed, low-latency storage specifically for block blob workloads with high transaction rates. It does not support Azure Files, Queues, or Tables."
+        },
+        "d": {
+          "text": "Premium Page Blobs",
+          "is_true": false,
+          "explanation": "Incorrect. Premium Page Blobs is optimised for page blobs (unmanaged VM disks and random I/O workloads) — not for block blobs."
+        }
+      },
+      "correct_answer": ["c"]
+    },
+    {
+      "question_id": 15,
+      "question_text": "Azure Storage encrypts all data at rest by default. Which of the following statements about this default encryption is correct?",
+      "difficulty": "easy",
+      "topic": "Storage Security",
+      "tags": ["storage", "encryption", "security", "az-104"],
+      "options": {
+        "a": {
+          "text": "Default encryption can be disabled for improved performance",
+          "is_true": false,
+          "explanation": "Incorrect. Storage Service Encryption (SSE) cannot be disabled — all data is always encrypted at rest."
+        },
+        "b": {
+          "text": "Data is encrypted using AES-256 and encryption is always on",
+          "is_true": true,
+          "explanation": "Correct. Azure Storage uses 256-bit AES encryption (same strength as BitLocker) for all data at rest. This is always enabled and cannot be disabled. By default, Microsoft manages the keys."
+        },
+        "c": {
+          "text": "Only Premium performance storage accounts are encrypted by default",
+          "is_true": false,
+          "explanation": "Incorrect. Both Standard and Premium storage accounts have encryption enabled by default."
+        },
+        "d": {
+          "text": "Customer-managed keys (CMK) are required for encryption to be active",
+          "is_true": false,
+          "explanation": "Incorrect. Encryption is active by default using Microsoft-managed keys. CMK is an optional configuration that gives customers control over key management."
+        }
+      },
+      "correct_answer": ["b"]
+    },
+    {
+      "question_id": 16,
+      "question_text": "An administrator needs to copy large amounts of data from on-premises to Azure Storage when the internet connection is too slow for the transfer. What should they use?",
+      "difficulty": "easy",
+      "topic": "Storage Tools",
+      "tags": ["storage", "data-transfer", "az-104"],
+      "options": {
+        "a": {
+          "text": "AzCopy over a slow internet connection",
+          "is_true": false,
+          "explanation": "Incorrect. The scenario explicitly states the internet connection is too slow — AzCopy still uses the internet."
+        },
+        "b": {
+          "text": "Azure Data Factory",
+          "is_true": false,
+          "explanation": "Incorrect. Azure Data Factory orchestrates data pipelines but still uses network connectivity — it does not solve the bandwidth problem."
+        },
+        "c": {
+          "text": "Azure Import/Export service (shipping disks)",
+          "is_true": true,
+          "explanation": "Correct. The Azure Import/Export service allows customers to ship physical drives to an Azure datacenter for large-scale offline data transfers. This is ideal when internet bandwidth is insufficient for the data volume."
+        },
+        "d": {
+          "text": "Azure Backup",
+          "is_true": false,
+          "explanation": "Incorrect. Azure Backup is for backup and recovery scenarios — not for general bulk data migration to storage."
+        }
+      },
+      "correct_answer": ["c"]
+    },
+    {
+      "question_id": 17,
+      "question_text": "Which blob type is optimised for append operations and cannot have existing data modified or deleted — only new data appended?",
+      "difficulty": "easy",
+      "topic": "Blob Storage",
+      "tags": ["blob", "append-blob", "az-104"],
+      "options": {
+        "a": {
+          "text": "Block blob",
+          "is_true": false,
+          "explanation": "Incorrect. Block blobs are for general-purpose binary data and support create, update, and delete operations."
+        },
+        "b": {
+          "text": "Page blob",
+          "is_true": false,
+          "explanation": "Incorrect. Page blobs support random read/write access in 512-byte pages — used for VM disks."
+        },
+        "c": {
+          "text": "Append blob",
+          "is_true": true,
+          "explanation": "Correct. Append blobs are optimised for append operations only. They are ideal for log files, audit records, and diagnostic data where you need to add data to the end but never modify or delete existing content."
+        },
+        "d": {
+          "text": "Immutable blob",
+          "is_true": false,
+          "explanation": "Incorrect. Immutable storage (WORM) is a policy applied to block blobs — it is not a blob type in itself."
+        }
+      },
+      "correct_answer": ["c"]
+    },
+    {
+      "question_id": 18,
+      "question_text": "An RA-GRS storage account experiences a primary region outage. How can applications read data during the outage?",
+      "difficulty": "easy",
+      "topic": "Storage Redundancy",
+      "tags": ["storage", "redundancy", "ra-grs", "az-104"],
+      "options": {
+        "a": {
+          "text": "Applications must wait for the primary region to recover",
+          "is_true": false,
+          "explanation": "Incorrect. The whole point of RA-GRS is that applications can read from the secondary region during a primary region outage."
+        },
+        "b": {
+          "text": "Read from the secondary endpoint (URL with -secondary suffix)",
+          "is_true": true,
+          "explanation": "Correct. With RA-GRS, applications can read from the secondary endpoint by appending '-secondary' to the account name in the URL (e.g., myaccount-secondary.blob.core.windows.net). This allows read access even during a primary region outage."
+        },
+        "c": {
+          "text": "Azure automatically fails over reads to the secondary region",
+          "is_true": false,
+          "explanation": "Incorrect. RA-GRS does not automatically redirect requests — applications must explicitly target the secondary endpoint. Automatic failover requires initiating a customer-managed failover."
+        },
+        "d": {
+          "text": "Request a support ticket to access the secondary endpoint",
+          "is_true": false,
+          "explanation": "Incorrect. The secondary read endpoint is always available in RA-GRS without any support action — just target the -secondary URL."
+        }
+      },
+      "correct_answer": ["b"]
+    },
+    {
+      "question_id": 19,
+      "question_text": "When configuring an Azure Files share for identity-based access control with NTFS permissions, which method allows hybrid Azure AD-joined devices to authenticate using Kerberos?",
+      "difficulty": "easy",
+      "topic": "Azure Files",
+      "tags": ["azure-files", "identity", "kerberos", "az-104"],
+      "options": {
+        "a": {
+          "text": "Storage account key",
+          "is_true": false,
+          "explanation": "Incorrect. Storage account keys provide full access and are not user-specific — they do not support NTFS-level access control."
+        },
+        "b": {
+          "text": "SAS tokens",
+          "is_true": false,
+          "explanation": "Incorrect. SAS tokens are for REST access and do not support Kerberos or NTFS permissions."
+        },
+        "c": {
+          "text": "Microsoft Entra Kerberos",
+          "is_true": true,
+          "explanation": "Correct. Microsoft Entra Kerberos enables identity-based authentication for Azure Files for hybrid Azure AD-joined or Azure AD-registered devices. Users authenticate with their Entra ID credentials using Kerberos tickets."
+        },
+        "d": {
+          "text": "Azure RBAC Reader role on the storage account",
+          "is_true": false,
+          "explanation": "Incorrect. The Reader RBAC role controls management-plane access (configure the storage account) but not data-plane access to file share content and NTFS permissions."
+        }
+      },
+      "correct_answer": ["c"]
+    },
+    {
+      "question_id": 20,
+      "question_text": "Which storage account tier and replication combination is MOST cost-effective for storing rarely accessed compliance archives that must survive regional disasters?",
+      "difficulty": "easy",
+      "topic": "Storage Redundancy",
+      "tags": ["storage", "redundancy", "cost", "az-104"],
+      "options": {
+        "a": {
+          "text": "Standard GPv2 with LRS and Hot tier",
+          "is_true": false,
+          "explanation": "Incorrect. Hot tier is expensive for rarely accessed data, and LRS does not protect against regional disasters."
+        },
+        "b": {
+          "text": "Standard GPv2 with GRS and Archive tier",
+          "is_true": true,
+          "explanation": "Correct. Standard GPv2 with GRS provides geo-redundancy (protects against regional disasters) and the Archive tier provides the lowest storage cost for rarely accessed compliance data. This combination maximises durability at minimum cost."
+        },
+        "c": {
+          "text": "Premium Block Blobs with ZRS",
+          "is_true": false,
+          "explanation": "Incorrect. Premium Block Blobs are SSD-backed and expensive — not suitable for low-cost archive scenarios. ZRS also doesn't provide geo-redundancy."
+        },
+        "d": {
+          "text": "Standard GPv2 with LRS and Cool tier",
+          "is_true": false,
+          "explanation": "Incorrect. Cool tier is not the lowest cost, and LRS does not survive regional disasters."
+        }
+      },
+      "correct_answer": ["b"]
+    }
+  ]
+}
