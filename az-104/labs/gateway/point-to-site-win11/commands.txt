@@ -1,0 +1,715 @@
+Windows PowerShell
+Copyright (C) Microsoft Corporation. All rights reserved.
+
+Install the latest PowerShell for new features and improvements! https://aka.ms/PSWindows
+
+PS C:\Windows\system32> cd Cert:\CurrentUser\My
+>>
+
+PS Cert:\CurrentUser\My> cd c:
+PS C:\Windows\system32> $rootCert = New-SelfSignedCertificate `
+>>     -Type Custom `
+>>     -KeySpec Signature `
+>>     -Subject "CN=LabVPNRootCA" `
+>>     -KeyExportPolicy Exportable `
+>>     -HashAlgorithm sha256 `
+>>     -KeyLength 2048 `
+>>     -CertStoreLocation "Cert:\CurrentUser\My" `
+>>     -KeyUsageProperty Sign `
+>>     -KeyUsage CertSign
+PS C:\Windows\system32> echo $rootCert
+
+
+   PSParentPath: Microsoft.PowerShell.Security\Certificate::CurrentUser\My
+
+Thumbprint                                Subject
+----------                                -------
+5D4B7C32F0C749F6FAF7E5B0D66BC658F2209182  CN=LabVPNRootCA
+
+
+PS C:\Windows\system32> $clientCert = New-SelfSignedCertificate `
+>>     -Type Custom `
+>>     -DnsName "LabVPNClient" `
+>>     -KeySpec Signature `
+>>     -Subject "CN=LabVPNClientCert" `
+>>     -KeyExportPolicy Exportable `
+>>     -HashAlgorithm sha256 `
+>>     -KeyLength 2048 `
+>>     -CertStoreLocation "Cert:\CurrentUser\My" `
+>>     -Signer $rootCert `
+>>     -TextExtension @("2.5.29.37={text}1.3.6.1.5.5.7.3.2")
+PS C:\Windows\system32> $rootCertBase64 = [Convert]::ToBase64String($rootCert.RawData)
+>>
+PS C:\Windows\system32> $rootCertBase64 | Set-Clipboard
+>>
+PS C:\Windows\system32> $rootCertBase64 | Out-File -FilePath "C:\Certs\rootcert-base64.txt"
+>>
+Out-File : Could not find a part of the path 'C:\Certs\rootcert-base64.txt'.
+At line:1 char:19
++ $rootCertBase64 | Out-File -FilePath "C:\Certs\rootcert-base64.txt"
++                   ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    + CategoryInfo          : OpenError: (:) [Out-File], DirectoryNotFoundException
+    + FullyQualifiedErrorId : FileOpenFailure,Microsoft.PowerShell.Commands.OutFileCommand
+
+PS C:\Windows\system32> md c:\certs
+
+
+    Directory: C:\
+
+
+Mode                 LastWriteTime         Length Name
+----                 -------------         ------ ----
+d-----         4/15/2026   9:08 PM                certs
+
+
+PS C:\Windows\system32> $rootCertBase64 | Out-File -FilePath "C:\Certs\rootcert-base64.txt"
+>>
+PS C:\Windows\system32> Get-ChildItem -Path "Cert:\CurrentUser\My" | Where-Object {
+>>     $_.Subject -match "LabVPN"
+>> } | Format-Table Subject, Thumbprint, NotAfter
+
+Subject             Thumbprint                               NotAfter
+-------             ----------                               --------
+CN=LabVPNClientCert 65A5937FD9EA176305C97472014E51229F8E89DA 4/15/2027 9:17:13 PM
+CN=LabVPNRootCA     5D4B7C32F0C749F6FAF7E5B0D66BC658F2209182 4/15/2027 9:17:13 PM
+
+
+PS C:\Windows\system32> $pfxPassword = ConvertTo-SecureString -String "ExportP@ss123!" -Force -AsPlainText
+>>
+PS C:\Windows\system32> Export-PfxCertificate `
+>>     -Cert $clientCert `
+>>     -FilePath "C:\Certs\LabVPNClientCert.pfx" `
+>>     -Password $pfxPassword `
+>>     -ChainOption BuildChain
+
+
+    Directory: C:\Certs
+
+
+Mode                 LastWriteTime         Length Name
+----                 -------------         ------ ----
+-a----         4/15/2026   9:08 PM           3486 LabVPNClientCert.pfx
+
+
+PS C:\Windows\system32> echo $rootCertBase64
+MIIC6TCCAdGgAwIBAgIQKIJtfHZRxYRDSyERmb6s2TANBgkqhkiG9w0BAQsFADAXMRUwEwYDVQQDDAxMYWJWUE5Sb290Q0EwHhcNMjYwNDE1MTg1NzEzWhcNMjcwNDE1MTkxNzEzWjAXMRUwEwYDVQQDDAxMYWJWUE5Sb290Q0EwggEiMA0GCSqGSIb3DQEBAQUAA4IBDwAwggEKAoIBAQC7H5GfYqQYD8XLnwGHUuKlnqmLfYXz3r5ME1DWUR+KpfDwMwm6EZCohTsu3pKDpCNyMhsEb1zRk0e7opJQLLgpO8EWlpyXd4fq/7q9Ue8vamVzekoW/XucQgy7w+dSBg4421rhJi+4AoNrdAXOozxIg4SRUr9pNlloc2KoUCQsFN0gEHdRrayyQtKF+772VNknaxggxt4P0QCqwBUnZb+1srmyLXlVTyU+EQjZbTUvlq7m7WgfIYJ4PQ32v+e//a4uFgnoD+u9jnws/vBB+SAeTuX7oEXDZPQmNnKjt5w8InhM/+AS7WSHc4awdT34/lh3qUk7ilPU1WDdDAH9Y929AgMBAAGjMTAvMA4GA1UdDwEB/wQEAwICBDAdBgNVHQ4EFgQU7rlcObKZNZMv7/Gkt6mptsmXTucwDQYJKoZIhvcNAQELBQADggEBAIcsiyojsEJuJWv6cBfA4AyPcqkvb+PtPXJec0SDpvxy/Bf6LJuZUJt4LxesdT98AJBtO+2AakWjibniVfLvfm6RhhFOsJtHbhrr3Im7JLLUJmgngmMK08Zpr/ru8MpyYgeT/ZEMYkk7F1speywXJS4KjqhA4Kw+cfKBdG78kyqEfxucWIGFvu/p9PNIIExBXlHJ8rhx88th7e5QJ8wDV4KiCL2crtgE3rIF5j8SeHrp91Rx0tONMvigchLdk1PSfrdHPin0cLx1ObG3Koyi3U+L3kpQngpUCv8YQQfr1Joo/hrGmLYGYzPQsxiqFhEpPgvZeaCcZeZryYckalldhO8=
+PS C:\Windows\system32> $rootCert = Get-ChildItem Cert:\CurrentUser\My | Where-Object { $_.Subject -eq "CN=LabVPNRootCA" }
+>>
+PS C:\Windows\system32> $cleanBase64 = [Convert]::ToBase64String($rootCert.RawData)
+>>
+PS C:\Windows\system32> $cleanBase64
+>>
+MIIC6TCCAdGgAwIBAgIQKIJtfHZRxYRDSyERmb6s2TANBgkqhkiG9w0BAQsFADAXMRUwEwYDVQQDDAxMYWJWUE5Sb290Q0EwHhcNMjYwNDE1MTg1NzEzWhcNMjcwNDE1MTkxNzEzWjAXMRUwEwYDVQQDDAxMYWJWUE5Sb290Q0EwggEiMA0GCSqGSIb3DQEBAQUAA4IBDwAwggEKAoIBAQC7H5GfYqQYD8XLnwGHUuKlnqmLfYXz3r5ME1DWUR+KpfDwMwm6EZCohTsu3pKDpCNyMhsEb1zRk0e7opJQLLgpO8EWlpyXd4fq/7q9Ue8vamVzekoW/XucQgy7w+dSBg4421rhJi+4AoNrdAXOozxIg4SRUr9pNlloc2KoUCQsFN0gEHdRrayyQtKF+772VNknaxggxt4P0QCqwBUnZb+1srmyLXlVTyU+EQjZbTUvlq7m7WgfIYJ4PQ32v+e//a4uFgnoD+u9jnws/vBB+SAeTuX7oEXDZPQmNnKjt5w8InhM/+AS7WSHc4awdT34/lh3qUk7ilPU1WDdDAH9Y929AgMBAAGjMTAvMA4GA1UdDwEB/wQEAwICBDAdBgNVHQ4EFgQU7rlcObKZNZMv7/Gkt6mptsmXTucwDQYJKoZIhvcNAQELBQADggEBAIcsiyojsEJuJWv6cBfA4AyPcqkvb+PtPXJec0SDpvxy/Bf6LJuZUJt4LxesdT98AJBtO+2AakWjibniVfLvfm6RhhFOsJtHbhrr3Im7JLLUJmgngmMK08Zpr/ru8MpyYgeT/ZEMYkk7F1speywXJS4KjqhA4Kw+cfKBdG78kyqEfxucWIGFvu/p9PNIIExBXlHJ8rhx88th7e5QJ8wDV4KiCL2crtgE3rIF5j8SeHrp91Rx0tONMvigchLdk1PSfrdHPin0cLx1ObG3Koyi3U+L3kpQngpUCv8YQQfr1Joo/hrGmLYGYzPQsxiqFhEpPgvZeaCcZeZryYckalldhO8=
+PS C:\Windows\system32> Get-ChildItem Cert:\CurrentUser\My | Where-Object { $_.Subject -eq "CN=LabVPNClientCert" }
+>>
+
+
+   PSParentPath: Microsoft.PowerShell.Security\Certificate::CurrentUser\My
+
+Thumbprint                                Subject
+----------                                -------
+65A5937FD9EA176305C97472014E51229F8E89DA  CN=LabVPNClientCert
+
+
+PS C:\Windows\system32> $rootCert = Get-ChildItem Cert:\CurrentUser\My | Where-Object { $_.Subject -eq "CN=LabVPNRootCA" }
+>>
+PS C:\Windows\system32> $clientCert = Get-ChildItem Cert:\CurrentUser\My | Where-Object { $_.Subject -eq "CN=LabVPNClientCert" }
+>>
+PS C:\Windows\system32> Write-Host "Root Subject:      $($rootCert.Subject)"
+>> Write-Host "Root Thumbprint:   $($rootCert.Thumbprint)"
+>> Write-Host "Client Issuer:     $($clientCert.Issuer)"
+>> Write-Host "Client HasPrivKey: $($clientCert.HasPrivateKey)"
+>> Write-Host "Client EKU:        $($clientCert.EnhancedKeyUsageList)"
+>>
+Root Subject:      CN=LabVPNRootCA
+Root Thumbprint:   5D4B7C32F0C749F6FAF7E5B0D66BC658F2209182
+Client Issuer:     CN=LabVPNRootCA
+Client HasPrivKey: True
+Client EKU:        Client Authentication (1.3.6.1.5.5.7.3.2)
+PS C:\Windows\system32> Write-Host "`nAll certs with LabVPN in subject:"
+>> Get-ChildItem Cert:\CurrentUser\My | Where-Object { $_.Subject -match "LabVPN" } | Format-Table Subject, Thumbprint, NotBefore
+
+All certs with LabVPN in subject:
+
+Subject             Thumbprint                               NotBefore
+-------             ----------                               ---------
+CN=LabVPNClientCert 65A5937FD9EA176305C97472014E51229F8E89DA 4/15/2026 8:57:29 PM
+CN=LabVPNRootCA     5D4B7C32F0C749F6FAF7E5B0D66BC658F2209182 4/15/2026 8:57:13 PM
+
+
+PS C:\Windows\system32> Get-VpnConnection -Name "Azure Lab VPN" | Format-List Name, ServerAddress, TunnelType, AuthenticationMethod
+Get-VpnConnection :  VPN connection Azure Lab VPN was not found. : The system could not find the phone book entry for
+this connection.
+At line:1 char:1
++ Get-VpnConnection -Name "Azure Lab VPN" | Format-List Name, ServerAdd ...
++ ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    + CategoryInfo          : ObjectNotFound: (Azure Lab VPN:root/Microsoft/...S_VpnConnection) [Get-VpnConnection], C
+   imException
+    + FullyQualifiedErrorId : VPN 623,Get-VpnConnection
+
+PS C:\Windows\system32>
+PS C:\Windows\system32> Get-VpnConnection -Name "Azure Lab VPN" | Format-List Name, ServerAddress, TunnelType, AuthenticationMethod
+Get-VpnConnection :  VPN connection Azure Lab VPN was not found. : The system could not find the phone book entry for
+this connection.
+At line:1 char:1
++ Get-VpnConnection -Name "Azure Lab VPN" | Format-List Name, ServerAdd ...
++ ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    + CategoryInfo          : ObjectNotFound: (Azure Lab VPN:root/Microsoft/...S_VpnConnection) [Get-VpnConnection], C
+   imException
+    + FullyQualifiedErrorId : VPN 623,Get-VpnConnection
+
+PS C:\Windows\system32> Get-VpnConnection -AllUserConnection
+PS C:\Windows\system32> Get-VpnConnection -Name "Azure Lab VPN" | Format-List Name, ServerAddress, TunnelType, AuthenticationMethod
+Get-VpnConnection :  VPN connection Azure Lab VPN was not found. : The system could not find the phone book entry for
+this connection.
+At line:1 char:1
++ Get-VpnConnection -Name "Azure Lab VPN" | Format-List Name, ServerAdd ...
++ ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    + CategoryInfo          : ObjectNotFound: (Azure Lab VPN:root/Microsoft/...S_VpnConnection) [Get-VpnConnection], C
+   imException
+    + FullyQualifiedErrorId : VPN 623,Get-VpnConnection
+
+PS C:\Windows\system32> $pfxPassword
+System.Security.SecureString
+PS C:\Windows\system32> echo $pfxPassword
+System.Security.SecureString
+PS C:\Windows\system32> Write-Host "Root Subject:      $($rootCert.Subject)"
+>> Write-Host "Root Thumbprint:   $($rootCert.Thumbprint)"
+>> Write-Host "Client Issuer:     $($clientCert.Issuer)"
+>> Write-Host "Client HasPrivKey: $($clientCert.HasPrivateKey)"
+>> Write-Host "Client EKU:        $($clientCert.EnhancedKeyUsageList)"
+>> ^C
+PS C:\Windows\system32> $($pfxPassword)
+System.Security.SecureString
+PS C:\Windows\system32>
+
+
+
+Windows PowerShell
+Copyright (C) Microsoft Corporation. All rights reserved.
+
+Install the latest PowerShell for new features and improvements! https://aka.ms/PSWindows
+
+PS C:\Users\davy> Get-VpnConnection -Name "Azure Lab VPN" | Format-List Name, ServerAddress, TunnelType, AuthenticationMethod
+
+
+Name                 : Azure Lab VPN
+ServerAddress        : 20.103.209.44
+TunnelType           : Ikev2
+AuthenticationMethod : {Eap}
+
+
+
+PS C:\Users\davy> Get-VpnConnection -Name "Azure Lab VPN" | Format-List Name, ServerAddress, TunnelType, AuthenticationMethod
+
+
+Name                 : Azure Lab VPN
+ServerAddress        : 20.103.209.44
+TunnelType           : Automatic
+AuthenticationMethod : {Eap}
+
+
+
+PS C:\Users\davy> Remove-VpnConnection -Name "Azure Lab VPN" -Force
+PS C:\Users\davy> Add-VpnConnection `
+>>     -Name "Azure Lab VPN" `
+>>     -ServerAddress "20.103.209.44" `
+>>     -TunnelType Ikev2 `
+>>     -AuthenticationMethod MachineCertificate `
+>>     -SplitTunneling
+PS C:\Users\davy> Get-VpnConnection -Name "Azure Lab VPN" | Format-List Name, ServerAddress, TunnelType, AuthenticationMethod
+
+
+Name                 : Azure Lab VPN
+ServerAddress        : 20.103.209.44
+TunnelType           : Ikev2
+AuthenticationMethod : {MachineCertificate}
+
+
+
+PS C:\Users\davy> Get-ChildItem Cert:\LocalMachine\My | Where-Object { $_.Subject -match "LabVPN" } | Format-List Subject, Issuer, Thumbprint, HasPrivateKey, NotAfter
+
+
+Subject       : CN=LabVPNClientCert
+Issuer        : CN=LabVPNRootCA
+Thumbprint    : 65A5937FD9EA176305C97472014E51229F8E89DA
+HasPrivateKey : True
+NotAfter      : 4/15/2027 9:17:13 PM
+
+
+
+PS C:\Users\davy> Get-ChildItem Cert:\LocalMachine\Root | Where-Object { $_.Subject -match "LabVPN" } | Format-List Subject, Thumbprint
+
+
+Subject    : CN=LabVPNRootCA
+Thumbprint : 5D4B7C32F0C749F6FAF7E5B0D66BC658F2209182
+
+
+
+PS C:\Users\davy> Get-ChildItem Cert:\LocalMachine\My | Where-Object { $_.Subject -match "LabVPN" } | Format-List Subject, Issuer, Thumbprint, HasPrivateKey
+
+
+Subject       : CN=LabVPNClientCert
+Issuer        : CN=LabVPNRootCA
+Thumbprint    : 65A5937FD9EA176305C97472014E51229F8E89DA
+HasPrivateKey : True
+
+
+
+PS C:\Users\davy> Get-ChildItem Cert:\LocalMachine\Root | Where-Object { $_.Subject -match "LabVPN" } | Format-List Subject, Thumbprint
+
+
+Subject    : CN=LabVPNRootCA
+Thumbprint : 5D4B7C32F0C749F6FAF7E5B0D66BC658F2209182
+
+
+
+PS C:\Users\davy> Get-WinEvent -LogName "Application" -MaxEvents 20 | Where-Object {
+     $_.ProviderName -match "Ras" -or $_.Message -match "VPN" -or $_.Message -match "IKE"
+} | Format-List TimeCreated, ProviderName, Message
+
+
+TimeCreated  : 4/15/2026 11:06:15 PM
+ProviderName : RasClient
+Message      : CoId={25D8F5A4-CB8C-0000-D4BE-E7258CCBDC01}: The user ECOMMIT\davy dialed a connection named Azure Lab
+               VPN which has failed. The error code returned on failure is 13801.
+
+TimeCreated  : 4/15/2026 11:06:15 PM
+ProviderName : RasClient
+Message      : Azure Lab VPN requires attention.
+
+TimeCreated  : 4/15/2026 11:06:15 PM
+ProviderName : RasClient
+Message      : CoId={25D8F5A4-CB8C-0000-D4BE-E7258CCBDC01}: The link to the Remote Access Server has been established
+               by user ECOMMIT\davy.
+
+TimeCreated  : 4/15/2026 11:06:15 PM
+ProviderName : RasClient
+Message      : CoId={25D8F5A4-CB8C-0000-D4BE-E7258CCBDC01}: The user ECOMMIT\davy has successfully established a link
+               to the Remote Access Server using the following device:
+               Server address/Phone Number = 20.103.209.44
+               Device = WAN Miniport (IKEv2)
+               Port = VPN2-1
+               MediaType = VPN.
+
+TimeCreated  : 4/15/2026 11:06:15 PM
+ProviderName : RasClient
+Message      : CoId={25D8F5A4-CB8C-0000-D4BE-E7258CCBDC01}: The user ECOMMIT\davy is trying to establish a link to the
+               Remote Access Server for the connection named Azure Lab VPN using the following device:
+               Server address/Phone Number = 20.103.209.44
+               Device = WAN Miniport (IKEv2)
+               Port = VPN2-1
+               MediaType = VPN.
+
+TimeCreated  : 4/15/2026 11:06:15 PM
+ProviderName : RasClient
+Message      : CoId={25D8F5A4-CB8C-0000-D4BE-E7258CCBDC01}: The user ECOMMIT\davy has started dialing a VPN connection
+               using a per-user connection profile named Azure Lab VPN. The connection settings are:
+               Dial-in User =
+               VpnStrategy = IKEv2
+               DataEncryption = Requested
+               PrerequisiteEntry =
+               AutoLogon = No
+               UseRasCredentials = Yes
+               Authentication Type = Machine Certificate
+               Ipv4DefaultGateway = No
+               Ipv4AddressAssignment = By Server
+               Ipv4DNSServerAssignment = By Server
+               Ipv6DefaultGateway = No
+               Ipv6AddressAssignment = By Server
+               Ipv6DNSServerAssignment = By Server
+               IpDnsFlags =
+               IpNBTEnabled = Yes
+               UseFlags = Private Connection
+               ConnectOnWinlogon = No
+               Mobility enabled for IKEv2 = Yes.
+
+TimeCreated  : 4/15/2026 11:06:02 PM
+ProviderName : RasClient
+Message      : CoId={25D8F5A4-CB8C-0000-DABC-E7258CCBDC01}: The user ECOMMIT\davy dialed a connection named Azure Lab
+               VPN which has failed. The error code returned on failure is 13801.
+
+TimeCreated  : 4/15/2026 11:06:02 PM
+ProviderName : RasClient
+Message      : Azure Lab VPN requires attention.
+
+TimeCreated  : 4/15/2026 11:06:02 PM
+ProviderName : RasClient
+Message      : CoId={25D8F5A4-CB8C-0000-DABC-E7258CCBDC01}: The link to the Remote Access Server has been established
+               by user ECOMMIT\davy.
+
+TimeCreated  : 4/15/2026 11:06:02 PM
+ProviderName : RasClient
+Message      : CoId={25D8F5A4-CB8C-0000-DABC-E7258CCBDC01}: The user ECOMMIT\davy has successfully established a link
+               to the Remote Access Server using the following device:
+               Server address/Phone Number = 20.103.209.44
+               Device = WAN Miniport (IKEv2)
+               Port = VPN2-1
+               MediaType = VPN.
+
+TimeCreated  : 4/15/2026 11:06:02 PM
+ProviderName : RasClient
+Message      : CoId={25D8F5A4-CB8C-0000-DABC-E7258CCBDC01}: The user ECOMMIT\davy is trying to establish a link to the
+               Remote Access Server for the connection named Azure Lab VPN using the following device:
+               Server address/Phone Number = 20.103.209.44
+               Device = WAN Miniport (IKEv2)
+               Port = VPN2-1
+               MediaType = VPN.
+
+TimeCreated  : 4/15/2026 11:06:02 PM
+ProviderName : RasClient
+Message      : CoId={25D8F5A4-CB8C-0000-DABC-E7258CCBDC01}: The user ECOMMIT\davy has started dialing a VPN connection
+               using a per-user connection profile named Azure Lab VPN. The connection settings are:
+               Dial-in User =
+               VpnStrategy = IKEv2
+               DataEncryption = Requested
+               PrerequisiteEntry =
+               AutoLogon = No
+               UseRasCredentials = Yes
+               Authentication Type = Machine Certificate
+               Ipv4DefaultGateway = No
+               Ipv4AddressAssignment = By Server
+               Ipv4DNSServerAssignment = By Server
+               Ipv6DefaultGateway = No
+               Ipv6AddressAssignment = By Server
+               Ipv6DNSServerAssignment = By Server
+               IpDnsFlags =
+               IpNBTEnabled = Yes
+               UseFlags = Private Connection
+               ConnectOnWinlogon = No
+               Mobility enabled for IKEv2 = Yes.
+
+TimeCreated  : 4/15/2026 11:02:34 PM
+ProviderName : RasClient
+Message      : CoId={25D8F5A4-CB8C-0001-89C2-E5258CCBDC01}: The user ECOMMIT\davy dialed a connection named Azure Lab
+               VPN which has failed. The error code returned on failure is 13801.
+
+TimeCreated  : 4/15/2026 11:02:34 PM
+ProviderName : RasClient
+Message      : Azure Lab VPN requires attention.
+
+TimeCreated  : 4/15/2026 11:02:34 PM
+ProviderName : RasClient
+Message      : CoId={25D8F5A4-CB8C-0001-89C2-E5258CCBDC01}: The link to the Remote Access Server has been established
+               by user ECOMMIT\davy.
+
+TimeCreated  : 4/15/2026 11:02:34 PM
+ProviderName : RasClient
+Message      : CoId={25D8F5A4-CB8C-0001-89C2-E5258CCBDC01}: The user ECOMMIT\davy has successfully established a link
+               to the Remote Access Server using the following device:
+               Server address/Phone Number = 20.103.209.44
+               Device = WAN Miniport (IKEv2)
+               Port = VPN2-1
+               MediaType = VPN.
+
+TimeCreated  : 4/15/2026 11:02:34 PM
+ProviderName : RasClient
+Message      : CoId={25D8F5A4-CB8C-0001-89C2-E5258CCBDC01}: The user ECOMMIT\davy is trying to establish a link to the
+               Remote Access Server for the connection named Azure Lab VPN using the following device:
+               Server address/Phone Number = 20.103.209.44
+               Device = WAN Miniport (IKEv2)
+               Port = VPN2-1
+               MediaType = VPN.
+
+TimeCreated  : 4/15/2026 11:02:34 PM
+ProviderName : RasClient
+Message      : CoId={25D8F5A4-CB8C-0001-89C2-E5258CCBDC01}: The user ECOMMIT\davy has started dialing a VPN connection
+               using a per-user connection profile named Azure Lab VPN. The connection settings are:
+               Dial-in User =
+               VpnStrategy = IKEv2
+               DataEncryption = Requested
+               PrerequisiteEntry =
+               AutoLogon = No
+               UseRasCredentials = Yes
+               Authentication Type = Machine Certificate
+               Ipv4DefaultGateway = No
+               Ipv4AddressAssignment = By Server
+               Ipv4DNSServerAssignment = By Server
+               Ipv6DefaultGateway = No
+               Ipv6AddressAssignment = By Server
+               Ipv6DNSServerAssignment = By Server
+               IpDnsFlags =
+               IpNBTEnabled = Yes
+               UseFlags = Private Connection
+               ConnectOnWinlogon = No
+               Mobility enabled for IKEv2 = Yes.
+
+
+
+PS C:\Users\davy> Import-Certificate -FilePath "Y:\vpnclientconfiguration\Generic\VpnServerRoot.cer_0" -CertStoreLocation "Cert:\LocalMachine\Root"
+
+
+   PSParentPath: Microsoft.PowerShell.Security\Certificate::LocalMachine\Root
+
+Thumbprint                                Subject
+----------                                -------
+DF3C24F9BFD666761B268073FE06D1CC8D4F82A4  CN=DigiCert Global Root G2, OU=www.digicert.com, O=DigiCert Inc, C=US
+
+
+PS C:\Users\davy> Remove-VpnConnection -Name "Azure Lab VPN" -Force
+PS C:\Users\davy> Add-VpnConnection `
+>>     -Name "Azure Lab VPN" `
+>>     -ServerAddress "20.103.209.44" `
+>>     -TunnelType Ikev2 `
+>>     -AuthenticationMethod MachineCertificate `
+>>     -MachineCertificateIssuerFilter "CN=LabVPNRootCA" `
+>>     -SplitTunneling
+Add-VpnConnection : Cannot process argument transformation on parameter 'MachineCertificateIssuerFilter'. Cannot
+convert value "CN=LabVPNRootCA" to type "System.Security.Cryptography.X509Certificates.X509Certificate2". Error: "The
+system cannot find the file specified.
+"
+At line:6 char:37
++     -MachineCertificateIssuerFilter "CN=LabVPNRootCA" `
++                                     ~~~~~~~~~~~~~~~~~
+    + CategoryInfo          : InvalidData: (:) [Add-VpnConnection], ParameterBindingArgumentTransformationException
+    + FullyQualifiedErrorId : ParameterArgumentTransformationError,Add-VpnConnection
+
+PS C:\Users\davy>
+PS C:\Users\davy> $rootCert = Get-ChildItem Cert:\LocalMachine\Root | Where-Object { $_.Subject -eq "CN=LabVPNRootCA" }
+PS C:\Users\davy> $rootCert | Format-List Subject, Thumbprint
+
+
+Subject    : CN=LabVPNRootCA
+Thumbprint : 5D4B7C32F0C749F6FAF7E5B0D66BC658F2209182
+
+
+
+PS C:\Users\davy> Add-VpnConnection `
+>>     -Name "Azure Lab VPN" `
+>>     -ServerAddress "20.103.209.44" `
+>>     -TunnelType Ikev2 `
+>>     -AuthenticationMethod MachineCertificate `
+>>     -MachineCertificateIssuerFilter $rootCert `
+>>     -SplitTunneling
+PS C:\Users\davy> "Y:\vpnclientconfiguration\WindowsPowershell\VpnProfileSetup.ps1"
+Y:\vpnclientconfiguration\WindowsPowershell\VpnProfileSetup.ps1
+PS C:\Users\davy>
+PS C:\Users\davy> & "Y:\vpnclientconfiguration\WindowsPowershell\VpnProfileSetup.ps1"
+& : File Y:\vpnclientconfiguration\WindowsPowershell\VpnProfileSetup.ps1 cannot be loaded because running scripts is
+disabled on this system. For more information, see about_Execution_Policies at
+https:/go.microsoft.com/fwlink/?LinkID=135170.
+At line:1 char:3
++ & "Y:\vpnclientconfiguration\WindowsPowershell\VpnProfileSetup.ps1"
++   ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    + CategoryInfo          : SecurityError: (:) [], PSSecurityException
+    + FullyQualifiedErrorId : UnauthorizedAccess
+PS C:\Users\davy> powershell -ExecutionPolicy Bypass -File "Y:\vpnclientconfiguration\WindowsPowershell\VpnProfileSetup.ps1"
+Get-VpnConnection :  VPN connection vnet-hybrid was not found. : The system could not find the phone book entry for
+this connection.
+At Y:\vpnclientconfiguration\WindowsPowershell\VpnProfileSetup.ps1:61 char:15
++ $Connection = Get-VpnConnection -Name vnet-hybrid
++               ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    + CategoryInfo          : ObjectNotFound: (vnet-hybrid:root/Microsoft/...S_VpnConnection) [Get-VpnConnection], Cim
+   Exception
+    + FullyQualifiedErrorId : VPN 623,Get-VpnConnection
+
+
+
+Name                  : vnet-hybrid
+ServerAddress         : azuregateway-066c0069-4bfc-4d75-adf0-52af8849d3e0-ad32183dd10c.vpn.azure.com
+AllUserConnection     : False
+Guid                  : {4D7EA078-3FFF-43C2-B6D6-55B526A156D5}
+TunnelType            : Ikev2
+AuthenticationMethod  : {Eap}
+EncryptionLevel       : Optional
+L2tpIPsecAuth         :
+UseWinlogonCredential : False
+EapConfigXmlStream    : #document
+ConnectionStatus      : Disconnected
+RememberCredential    : True
+SplitTunneling        : True
+DnsSuffix             :
+IdleDisconnectSeconds : 0
+
+Edited pbk file with required changes
+
+
+PS C:\Users\davy> Get-VpnConnection -Name "vnet-hybrid" | Format-List *
+
+
+EapConfigXmlStream             : #document
+VpnConfigurationXml            : #document
+IPSecCustomPolicy              :
+MachineCertificateIssuerFilter :
+MachineCertificateEKUFilter    :
+ConnectionStatus               : Connected
+DnsSuffix                      :
+Guid                           : {4D7EA078-3FFF-43C2-B6D6-55B526A156D5}
+IdleDisconnectSeconds          : 0
+IsAutoTriggerEnabled           : False
+Name                           : vnet-hybrid
+ProfileType                    : Inbox
+ProvisioningAuthority          :
+Proxy                          :
+RememberCredential             : True
+Routes                         : {MSFT_NetRoute (InstanceID), MSFT_NetRoute (InstanceID)}
+ServerAddress                  : azuregateway-066c0069-4bfc-4d75-adf0-52af8849d3e0-ad32183dd10c.vpn.azure.com
+ServerList                     : {}
+SplitTunneling                 : True
+VpnTrigger                     : VpnConnectionTrigger
+AllUserConnection              : False
+AuthenticationMethod           : {Eap}
+EncryptionLevel                : Optional
+L2tpIPsecAuth                  :
+NapState                       : NotNapCapable
+TunnelType                     : Ikev2
+UseWinlogonCredential          : False
+PSComputerName                 :
+CimClass                       : root/Microsoft/Windows/RemoteAccess/Client:VpnConnection
+CimInstanceProperties          : {ConnectionStatus, DnsSuffix, Guid, IdleDisconnectSeconds...}
+CimSystemProperties            : Microsoft.Management.Infrastructure.CimSystemProperties
+
+
+
+PS C:\Users\davy> Get-VpnConnection -Name "Azure Lab VPN" | Format-List *
+
+
+EapConfigXmlStream             :
+VpnConfigurationXml            : #document
+IPSecCustomPolicy              :
+MachineCertificateIssuerFilter : [Subject]
+                                   CN=LabVPNRootCA
+
+                                 [Issuer]
+                                   CN=LabVPNRootCA
+
+                                 [Serial Number]
+                                   28826D7C7651C584434B211199BEACD9
+
+                                 [Not Before]
+                                   4/15/2026 8:57:13 PM
+
+                                 [Not After]
+                                   4/15/2027 9:17:13 PM
+
+                                 [Thumbprint]
+                                   5D4B7C32F0C749F6FAF7E5B0D66BC658F2209182
+
+MachineCertificateEKUFilter    :
+ConnectionStatus               : Disconnected
+DnsSuffix                      :
+Guid                           : {6169DFB1-979F-4C64-A882-2083785BAE9E}
+IdleDisconnectSeconds          : 0
+IsAutoTriggerEnabled           : False
+Name                           : Azure Lab VPN
+ProfileType                    : Inbox
+ProvisioningAuthority          :
+Proxy                          :
+RememberCredential             : False
+Routes                         : {}
+ServerAddress                  : 20.103.209.44
+ServerList                     : {}
+SplitTunneling                 : True
+VpnTrigger                     : VpnConnectionTrigger
+AllUserConnection              : False
+AuthenticationMethod           : {MachineCertificate}
+EncryptionLevel                : Optional
+L2tpIPsecAuth                  :
+NapState                       : NotConnected
+TunnelType                     : Ikev2
+UseWinlogonCredential          : False
+PSComputerName                 :
+CimClass                       : root/Microsoft/Windows/RemoteAccess/Client:VpnConnection
+CimInstanceProperties          : {ConnectionStatus, DnsSuffix, Guid, IdleDisconnectSeconds...}
+CimSystemProperties            : Microsoft.Management.Infrastructure.CimSystemProperties
+
+
+
+PS C:\Users\davy> ping 10.0.1.4
+
+Pinging 10.0.1.4 with 32 bytes of data:
+Request timed out.
+Request timed out.
+Request timed out.
+Request timed out.
+
+Ping statistics for 10.0.1.4:
+    Packets: Sent = 4, Received = 0, Lost = 4 (100% loss),
+PS C:\Users\davy> Get-NetRoute | Where-Object { $_.DestinationPrefix -match "10.0" }
+PS C:\Users\davy> Get-VpnConnection -Name "vnet-hybrid" | Select-Object -ExpandProperty Routes
+
+
+DestinationPrefix : 10.0.0.0/16
+InterfaceIndex    :
+InterfaceAlias    : vnet-hybrid
+AddressFamily     : IPv4
+NextHop           : 0.0.0.0
+Publish           : 0
+RouteMetric       : 1
+PolicyStore       :
+
+DestinationPrefix : 172.16.0.0/24
+InterfaceIndex    :
+InterfaceAlias    : vnet-hybrid
+AddressFamily     : IPv4
+NextHop           : 0.0.0.0
+Publish           : 0
+RouteMetric       : 1
+PolicyStore       :
+
+
+
+PS C:\Users\davy> ping 10.0.1.4
+
+Pinging 10.0.1.4 with 32 bytes of data:
+Reply from 10.0.1.4: bytes=32 time=25ms TTL=64
+Reply from 10.0.1.4: bytes=32 time=37ms TTL=64
+
+Ping statistics for 10.0.1.4:
+    Packets: Sent = 2, Received = 2, Lost = 0 (0% loss),
+Approximate round trip times in milli-seconds:
+    Minimum = 25ms, Maximum = 37ms, Average = 31ms
+Control-C
+PS C:\Users\davy> Get-VpnConnection -Name "vnet-hybrid" | Select-Object -ExpandProperty Routes
+
+
+DestinationPrefix : 10.0.0.0/16
+InterfaceIndex    :
+InterfaceAlias    : vnet-hybrid
+AddressFamily     : IPv4
+NextHop           : 0.0.0.0
+Publish           : 0
+RouteMetric       : 1
+PolicyStore       :
+
+DestinationPrefix : 172.16.0.0/24
+InterfaceIndex    :
+InterfaceAlias    : vnet-hybrid
+AddressFamily     : IPv4
+NextHop           : 0.0.0.0
+Publish           : 0
+RouteMetric       : 1
+PolicyStore       :
+
+
+
+PS C:\Users\davy> Get-VpnConnection -Name "Azure Lab VPN" | Select-Object -ExpandProperty Routes
+PS C:\Users\davy> Test-NetConnection -ComputerName 10.0.1.4 -Port 22
+
+
+ComputerName     : 10.0.1.4
+RemoteAddress    : 10.0.1.4
+RemotePort       : 22
+InterfaceAlias   : vnet-hybrid
+SourceAddress    : 172.16.0.2
+TcpTestSucceeded : True
+
+
+
+PS C:\Users\davy> Test-NetConnection -ComputerName 10.0.1.4 -Port 22
+WARNING: TCP connect to (10.0.1.4 : 22) failed
+PS C:\Users\davy> ^C
+PS C:\Users\davy> ping google.com
+
+Pinging google.com [74.125.206.113] with 32 bytes of data:
+Reply from 74.125.206.113: bytes=32 time=18ms TTL=128
+Reply from 74.125.206.113: bytes=32 time=19ms TTL=128
+Reply from 74.125.206.113: bytes=32 time=15ms TTL=128
+
+Ping statistics for 74.125.206.113:
+    Packets: Sent = 3, Received = 3, Lost = 0 (0% loss),
+Approximate round trip times in milli-seconds:
+    Minimum = 15ms, Maximum = 19ms, Average = 17ms
+Control-C
+
+

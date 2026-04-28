@@ -1,0 +1,30 @@
+PS C:\WINDOWS\system32> history
+
+  Id CommandLine
+  -- -----------
+   1 Get-ChildItem -Path "Cert:\LocalMachine\My" | Where-Object { $_.Subject -like "*LabVPN*" }
+   2 Get-WinEvent -FilterHashtable @{LogName='System'; ProviderName='RasClient'} -MaxEvents 5 | Format-List TimeCreated, Message
+   3 et-WinEvent -LogName "Application" -MaxEvents 20 | Where-Object {...
+   4 Get-WinEvent -LogName "Application" -MaxEvents 20 | Where-Object {...
+   5 Get-WinEvent -LogName "Application" -MaxEvents 20 | Where-Object {...
+   6 Get-ChildItem -Path "Cert:\LocalMachine\Root" | Where-Object { $_.Subject -like "*DigiCert Global Root G2*" }
+   7 Get-ChildItem -Path "Cert:\LocalMachine\Root" | Where-Object { $_.Subject -like "*LabVPNRootCA*" }
+   8 Get-ChildItem -Path "Cert:\CurrentUser\My" | Where-Object { $_.Subject -like "*LabVPN*" } | Format-List Subject, Issuer, NotAfter, HasPrivateKey
+   9 Get-WinEvent -LogName "Application" -MaxEvents 20 | Where-Object {...
+  10 Write-Host "=== CLIENT CERT ===" -ForegroundColor Green
+  11 Get-ChildItem -Path "Cert:\CurrentUser\My" | Where-Object { $_.Subject -like "*LabVPN*" } | Format-List Subject, Issuer, Thumbprint, NotBefore, NotAfter, HasPrivateKey
+  12 Write-Host "=== LOCAL MACHINE CLIENT CERT ===" -ForegroundColor Green
+  13 Get-ChildItem -Path "Cert:\LocalMachine\My" | Where-Object { $_.Subject -like "*LabVPN*" } | Format-List Subject, Issuer, Thumbprint, NotBefore, NotAfter, HasPrivateKey
+  14 Write-Host "=== TRUSTED ROOT CA ===" -ForegroundColor Green
+  15 Get-ChildItem -Path "Cert:\LocalMachine\Root" | Where-Object { $_.Subject -like "*LabVPNRootCA*" } | Format-List Subject, Thumbprint, NotBefore, NotAfter
+  16 Write-Host "=== DIGICERT ROOT ===" -ForegroundColor Green
+  17 Get-ChildItem -Path "Cert:\LocalMachine\Root" | Where-Object { $_.Subject -like "*DigiCert Global Root G2*" } | Format-List Subject, Thumbprint
+  18 Write-Host "=== CERTIFICATE CHAIN VALIDATION ===" -ForegroundColor Green
+  19 $clientCert = Get-ChildItem -Path "Cert:\CurrentUser\My" | Where-Object { $_.Subject -like "*LabVPNClientCert*" }
+  20 $chain = New-Object System.Security.Cryptography.X509Certificates.X509Chain
+  21 $chain.Build($clientCert)
+  22 $chain.ChainStatus | Format-List Status, StatusInformation
+  23 $chain.ChainElements | ForEach-Object { Write-Host $_.Certificate.Subject " -> " $_.Certificate.Issuer }
+  24 REG ADD "HKLM\SYSTEM\CurrentControlSet\Services\RasMan\Parameters" /v "DisableIKENameEkuCheck" /t REG_DWORD /d 1 /f
+  25 Get-WinEvent -LogName "Application" -MaxEvents 20 | Where-Object {...
+  26 powershell -ExecutionPolicy Bypass -File "C:\certs\new_config\vpnclientconfiguration\WindowsPowershell\VpnProfileSetup.ps1"

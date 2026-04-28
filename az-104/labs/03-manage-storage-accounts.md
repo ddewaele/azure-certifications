@@ -39,6 +39,10 @@ echo "Storage account name: $SA_NAME"
 az group create --name $RG --location $LOCATION
 
 # Create storage account (Standard GPv2, LRS)
+# --allow-blob-public-access true is required if you want to create containers
+# with --public-access blob/container later. New storage accounts disable this
+# by default (secure-by-default since 2022); the --public-access flag on
+# az storage container create is silently ignored when the account blocks it.
 az storage account create \
   --name $SA_NAME \
   --resource-group $RG \
@@ -47,7 +51,8 @@ az storage account create \
   --kind StorageV2 \
   --access-tier Hot \
   --min-tls-version TLS1_2 \
-  --https-only true
+  --https-only true \
+  --allow-blob-public-access true
 
 # Get the connection string
 CONN_STR=$(az storage account show-connection-string \
@@ -132,6 +137,14 @@ az storage container create \
   --name "private-data" \
   --account-name $SA_NAME \
   --account-key $ACCOUNT_KEY
+
+# If the storage account was created without --allow-blob-public-access true,
+# update it now — otherwise the next command silently creates the container
+# as Private and returns {"created": false} on reruns.
+az storage account update \
+  --name $SA_NAME \
+  --resource-group $RG \
+  --allow-blob-public-access true
 
 # Create a container with blob-level public access
 az storage container create \
@@ -302,6 +315,7 @@ echo "Resource group deletion initiated"
 | Stored access policies | Attach to container for server-side revocability of SAS tokens |
 | Network rules | Default deny = all public blocked; add specific IP/VNet rules for exceptions |
 | AzCopy | Faster than portal for bulk uploads; supports copy, sync, and remove |
+| Anonymous blob access | Disabled by default on new storage accounts — `--allow-blob-public-access true` on the account is required before `--public-access blob/container` on a container has any effect |
 
 ## References
 

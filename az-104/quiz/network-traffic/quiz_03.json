@@ -1,0 +1,362 @@
+{
+  "meta": {
+    "title": "AZ-104 \u2013 Azure Network Watcher",
+    "subject": "Azure Administration",
+    "version": "1.0.0",
+    "created": "2026-04-17"
+  },
+  "questions": [
+    {
+      "question_id": 1,
+      "question_text": "Which Azure Network Watcher feature provides an interactive visual map of your networking resources within a region?",
+      "difficulty": "easy",
+      "topic": "Network Watcher Topology",
+      "tags": [
+        "definition",
+        "topology"
+      ],
+      "options": {
+        "a": {
+          "text": "IP Flow Verify",
+          "is_true": false,
+          "explanation": "IP Flow Verify tests whether NSG rules allow or deny traffic between two endpoints. It does not display a visual map of resources."
+        },
+        "b": {
+          "text": "Next Hop",
+          "is_true": false,
+          "explanation": "Next Hop identifies the routing path for traffic from a source to a destination. It does not visualise resource relationships."
+        },
+        "c": {
+          "text": "Topology",
+          "is_true": true,
+          "explanation": "The Topology view provides an interactive visual map showing virtual networks, subnets, VMs, NSGs, NICs, and peering connections \u2014 letting you understand your network layout at a glance."
+        },
+        "d": {
+          "text": "Connection Monitor",
+          "is_true": false,
+          "explanation": "Connection Monitor is another Network Watcher tool for ongoing connectivity monitoring. It was not covered in this module \u2014 Topology is the visual mapping tool."
+        }
+      },
+      "correct_answer": [
+        "c"
+      ]
+    },
+    {
+      "question_id": 2,
+      "question_text": "You are troubleshooting why HTTPS traffic (port 443) is not reaching a virtual machine. Which Network Watcher tool lets you test this directly?",
+      "difficulty": "easy",
+      "topic": "IP Flow Verify",
+      "tags": [
+        "definition",
+        "troubleshooting"
+      ],
+      "options": {
+        "a": {
+          "text": "Topology",
+          "is_true": false,
+          "explanation": "Topology shows a visual map of resources. It does not test whether specific traffic is allowed or denied by NSG rules."
+        },
+        "b": {
+          "text": "IP Flow Verify",
+          "is_true": true,
+          "explanation": "IP Flow Verify tests whether a specific combination of protocol, port, source IP, and destination IP is allowed or denied by the relevant NSG rules. It also identifies which specific rule is responsible."
+        },
+        "c": {
+          "text": "Next Hop",
+          "is_true": false,
+          "explanation": "Next Hop shows the routing path for traffic but does not test NSG rule behaviour. It tells you where traffic is going, not whether NSGs allow it."
+        },
+        "d": {
+          "text": "Network Performance Monitor",
+          "is_true": false,
+          "explanation": "Network Performance Monitor tracks latency and packet loss over time. It does not verify NSG rule behaviour for specific traffic flows."
+        }
+      },
+      "correct_answer": [
+        "b"
+      ]
+    },
+    {
+      "question_id": 3,
+      "question_text": "What information does IP Flow Verify return when it tests a traffic flow?",
+      "difficulty": "medium",
+      "topic": "IP Flow Verify",
+      "tags": [
+        "output",
+        "nsg"
+      ],
+      "options": {
+        "a": {
+          "text": "The routing table entry for the traffic flow",
+          "is_true": false,
+          "explanation": "Routing table information is returned by Next Hop, not IP Flow Verify. IP Flow Verify is specifically about NSG rule evaluation."
+        },
+        "b": {
+          "text": "Whether the traffic is Allowed or Denied, and which NSG rule matched",
+          "is_true": true,
+          "explanation": "IP Flow Verify returns the access result (Allowed/Denied) and identifies the specific NSG rule that permitted or blocked the traffic \u2014 making it easy to pinpoint configuration issues."
+        },
+        "c": {
+          "text": "The latency between the source and destination",
+          "is_true": false,
+          "explanation": "Latency measurement is a function of other tools like Connection Monitor or Network Performance Monitor. IP Flow Verify tests NSG rule outcomes only."
+        },
+        "d": {
+          "text": "The number of packets dropped in the last 24 hours",
+          "is_true": false,
+          "explanation": "Packet drop metrics are captured by monitoring/diagnostics tools. IP Flow Verify is a point-in-time NSG rule test."
+        }
+      },
+      "correct_answer": [
+        "b"
+      ]
+    },
+    {
+      "question_id": 4,
+      "question_text": "You use IP Flow Verify to test inbound TCP port 443 traffic to a VM. The result shows the traffic is blocked by the '65500 DenyAllInBound' rule. What does this indicate?",
+      "difficulty": "medium",
+      "topic": "IP Flow Verify",
+      "tags": [
+        "nsg",
+        "scenario",
+        "65500"
+      ],
+      "options": {
+        "a": {
+          "text": "The VM's NSG has a custom deny rule for port 443",
+          "is_true": false,
+          "explanation": "If a custom deny rule existed, it would appear as that specific rule in the results \u2014 not the 65500 default. The 65500 result means the traffic fell through all rules without finding a match."
+        },
+        "b": {
+          "text": "No custom allow rule exists for port 443 on that NSG, so the catch-all deny rule applies",
+          "is_true": true,
+          "explanation": "NSG rules are evaluated in priority order. The 65500 DenyAllInBound rule is the last rule \u2014 it only applies when no earlier rule matched. This means you need to add an explicit allow rule for port 443."
+        },
+        "c": {
+          "text": "The VM is in a different region and cannot receive inbound traffic",
+          "is_true": false,
+          "explanation": "Region has no bearing on NSG rule evaluation. The 65500 rule result indicates a missing custom allow rule, not a region mismatch."
+        },
+        "d": {
+          "text": "The load balancer is blocking the traffic before it reaches the NSG",
+          "is_true": false,
+          "explanation": "Load balancer behaviour is separate from NSG evaluation. The 65500 result is specifically an NSG rule outcome \u2014 no custom allow rule was found."
+        }
+      },
+      "correct_answer": [
+        "b"
+      ]
+    },
+    {
+      "question_id": 5,
+      "question_text": "When using IP Flow Verify to test inbound TCP port 443 between two VMs in peered virtual networks, the result shows 'Allowed' via the 65000 rule. Why?",
+      "difficulty": "medium",
+      "topic": "IP Flow Verify",
+      "tags": [
+        "nsg",
+        "vnet-peering",
+        "65000"
+      ],
+      "options": {
+        "a": {
+          "text": "Port 443 is always allowed by default in all Azure NSGs",
+          "is_true": false,
+          "explanation": "Port 443 is not inherently allowed. The 65000 result here is explained by the AllowVnetInBound rule that applies to peered VNets."
+        },
+        "b": {
+          "text": "The 65000 AllowVnetInBound rule permits all traffic between resources in the same VNet and peered VNets by default",
+          "is_true": true,
+          "explanation": "NSG rule 65000 (AllowVnetInBound) is a default rule that allows inbound traffic from within the virtual network \u2014 including peered VNets. Since no custom deny rule for 443 exists, this default allow rule applies."
+        },
+        "c": {
+          "text": "Application Gateway is allowing the traffic upstream",
+          "is_true": false,
+          "explanation": "Application Gateway is not involved here. This is a direct VM-to-VM test through NSG rules. The 65000 rule is a default NSG rule."
+        },
+        "d": {
+          "text": "Traffic Manager has resolved the DNS to allow the connection",
+          "is_true": false,
+          "explanation": "Traffic Manager handles DNS routing and is not involved in NSG rule evaluation. The 65000 result is purely an NSG default rule outcome."
+        }
+      },
+      "correct_answer": [
+        "b"
+      ]
+    },
+    {
+      "question_id": 6,
+      "question_text": "You created a user-defined route (UDR) to route traffic from Spoke 1 to Spoke 2 via an NVA in the hub. Which Network Watcher tool can verify this routing is working correctly?",
+      "difficulty": "medium",
+      "topic": "Next Hop",
+      "tags": [
+        "udr",
+        "troubleshooting"
+      ],
+      "options": {
+        "a": {
+          "text": "IP Flow Verify",
+          "is_true": false,
+          "explanation": "IP Flow Verify tests NSG rule outcomes (allow/deny). It does not show routing paths or validate UDRs."
+        },
+        "b": {
+          "text": "Topology",
+          "is_true": false,
+          "explanation": "Topology provides a visual map of resources. While it shows peering connections, it does not validate the specific routing path taken by traffic."
+        },
+        "c": {
+          "text": "Next Hop",
+          "is_true": true,
+          "explanation": "Next Hop verifies the actual routing path from a source VM to a destination IP. It returns the next hop type (e.g., Virtual Appliance), the next hop IP address, and the route table that governs it \u2014 confirming whether a UDR is functioning."
+        },
+        "d": {
+          "text": "Azure Monitor Logs",
+          "is_true": false,
+          "explanation": "Azure Monitor Logs capture historical telemetry. To test a specific routing path right now, Next Hop is the appropriate tool."
+        }
+      },
+      "correct_answer": [
+        "c"
+      ]
+    },
+    {
+      "question_id": 7,
+      "question_text": "What inputs does the Next Hop tool require to test a routing path?",
+      "difficulty": "medium",
+      "topic": "Next Hop",
+      "tags": [
+        "configuration",
+        "inputs"
+      ],
+      "options": {
+        "a": {
+          "text": "The NSG name and the traffic port number",
+          "is_true": false,
+          "explanation": "NSG names and ports are inputs for IP Flow Verify, not Next Hop. Next Hop tests routing, not NSG behaviour."
+        },
+        "b": {
+          "text": "The source virtual machine, its network interface, and the destination IP address",
+          "is_true": true,
+          "explanation": "Next Hop needs to know where traffic originates (VM and NIC) and where it is headed (destination IP) to determine the routing path from that specific source."
+        },
+        "c": {
+          "text": "The public IP of the load balancer and the destination hostname",
+          "is_true": false,
+          "explanation": "Next Hop works at the VM/NIC level and uses IP addresses, not hostnames. The load balancer's public IP is not a required input."
+        },
+        "d": {
+          "text": "The VNet peering name and the source subnet CIDR",
+          "is_true": false,
+          "explanation": "VNet peering names and subnet CIDRs are not direct inputs to Next Hop. The tool works from a specific VM's NIC to a destination IP."
+        }
+      },
+      "correct_answer": [
+        "b"
+      ]
+    },
+    {
+      "question_id": 8,
+      "question_text": "In the Topology view, a peering connection between two VNets displays a '2'. What does this indicate?",
+      "difficulty": "medium",
+      "topic": "Network Watcher Topology",
+      "tags": [
+        "vnet-peering",
+        "topology"
+      ],
+      "options": {
+        "a": {
+          "text": "There are 2 virtual machines in the peered VNet",
+          "is_true": false,
+          "explanation": "The number of VMs in a VNet would be shown differently. The '2' on a peering connection refers to the direction of the peering link."
+        },
+        "b": {
+          "text": "The peering is bidirectional \u2014 traffic can flow in both directions between the VNets",
+          "is_true": true,
+          "explanation": "In the Topology view, a '2' on a peering connection indicates a two-way (bidirectional) peering link, meaning traffic can flow from VNet A to VNet B and from VNet B to VNet A."
+        },
+        "c": {
+          "text": "The peering link has 2 bandwidth limits configured",
+          "is_true": false,
+          "explanation": "VNet peering in Azure does not have configurable bandwidth limits shown in Topology. The '2' indicates directionality."
+        },
+        "d": {
+          "text": "The VNets are in 2 different subscriptions",
+          "is_true": false,
+          "explanation": "Cross-subscription peering is possible but the '2' indicator in Topology refers to bidirectional traffic flow, not subscription count."
+        }
+      },
+      "correct_answer": [
+        "b"
+      ]
+    },
+    {
+      "question_id": 9,
+      "question_text": "What is a practical benefit of using IP Flow Verify instead of asking a user to test connectivity after an NSG change?",
+      "difficulty": "medium",
+      "topic": "IP Flow Verify",
+      "tags": [
+        "best-practice",
+        "scenario"
+      ],
+      "options": {
+        "a": {
+          "text": "IP Flow Verify automatically fixes NSG rules that are incorrect",
+          "is_true": false,
+          "explanation": "IP Flow Verify is a read-only diagnostic tool. It tests and reports outcomes but does not modify NSG rules."
+        },
+        "b": {
+          "text": "It allows an administrator to validate whether a traffic flow will be allowed before making users test it, saving time and back-and-forth",
+          "is_true": true,
+          "explanation": "Rather than applying NSG changes and repeatedly asking users to test, an administrator can use IP Flow Verify to instantly confirm whether the new rule will allow or deny the specific traffic \u2014 a faster and more reliable approach."
+        },
+        "c": {
+          "text": "It measures the network latency introduced by the NSG rule",
+          "is_true": false,
+          "explanation": "IP Flow Verify does not measure latency. It only evaluates whether traffic is allowed or denied by NSG rules."
+        },
+        "d": {
+          "text": "It generates NSG rule recommendations automatically",
+          "is_true": false,
+          "explanation": "IP Flow Verify is a test tool. It tells you what is blocked and which rule is responsible, but it does not generate rule suggestions."
+        }
+      },
+      "correct_answer": [
+        "b"
+      ]
+    },
+    {
+      "question_id": 10,
+      "question_text": "In the Network Watcher Topology view, how can you identify the hub network in a hub-and-spoke topology?",
+      "difficulty": "medium",
+      "topic": "Network Watcher Topology",
+      "tags": [
+        "hub-spoke",
+        "topology"
+      ],
+      "options": {
+        "a": {
+          "text": "The hub is always shown in the centre of the diagram by Azure automatically",
+          "is_true": false,
+          "explanation": "While the hub may visually appear central, the reliable indicator is the number of spoke connections. Azure does not label it 'hub' automatically."
+        },
+        "b": {
+          "text": "The hub is identifiable because it has multiple peering connections to spoke VNets",
+          "is_true": true,
+          "explanation": "In the Topology view, the hub VNet is identifiable because multiple spoke VNets are connected to it via peering. Spoke VNets typically have only one peering connection (to the hub)."
+        },
+        "c": {
+          "text": "The hub always has the largest number of virtual machines",
+          "is_true": false,
+          "explanation": "The hub may host NVAs or gateway resources but does not necessarily have the most VMs. Its defining characteristic is multiple peering connections to spokes."
+        },
+        "d": {
+          "text": "The hub VNet is shown with a red border in the Topology view",
+          "is_true": false,
+          "explanation": "There is no colour-coded hub indicator in Network Watcher Topology. The hub is identified by its multiple peering connections."
+        }
+      },
+      "correct_answer": [
+        "b"
+      ]
+    }
+  ]
+}

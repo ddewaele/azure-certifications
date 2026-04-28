@@ -207,7 +207,7 @@ az network vnet peering list \
 az vm create \
   --name vm-hub \
   --resource-group $RG \
-  --image Ubuntu2204 \
+  --image Canonical:0001-com-ubuntu-server-jammy:22_04-lts-gen2:latest \
   --size Standard_B1s \
   --admin-username azureuser \
   --generate-ssh-keys \
@@ -219,7 +219,7 @@ az vm create \
 az vm create \
   --name vm-spoke \
   --resource-group $RG \
-  --image Ubuntu2204 \
+  --image Canonical:0001-com-ubuntu-server-jammy:22_04-lts-gen2:latest \
   --size Standard_B1s \
   --admin-username azureuser \
   --generate-ssh-keys \
@@ -292,35 +292,220 @@ az network private-dns record-set list \
 
 ---
 
-### 5. Configure User-Defined Routes
+### 5. Configure User-Defined Routes and Hub-Spoke Transit
+
+#### Why UDRs are needed
+
+By default, Azure automatically creates system routes that allow all subnets within a VNet to communicate, and also allows peered VNets to reach each other. However, **VNet peering is non-transitive**: if Spoke A is peered to the hub and Spoke B is peered to the hub, Spoke A and Spoke B **cannot reach each other** through the hub — traffic simply has no path.
+
+```
+vnet-spoke (10.2.0.0/16)  ←——peering——→  vnet-hub (10.1.0.0/16)  ←——peering——→  vnet-spoke2 (10.3.0.0/16)
+                                                     ↑
+                              VMs here see both spokes but spokes CANNOT see each other
+```
+
+To allow spoke-to-spoke communication, you need:
+
+1. A **Network Virtual Appliance (NVA)** in the hub — a VM that forwards packets between spokes. Azure Firewall is the managed NVA option; a Linux VM with IP forwarding enabled is the DIY option.
+2. **UDRs on both spoke subnets** pointing the other spoke's address range at the NVA's private IP.
+3. **IP forwarding enabled** on the NVA — at both the Azure NIC level and the OS level.
+
+#### Step 5a: Add a second spoke and peer it to the hub
 
 ```bash
-# Create a route table
+# Second spoke VNet
+az network vnet create \
+  --name vnet-spoke2 \
+  --resource-group $RG \
+  --location $LOCATION \
+  --address-prefix 10.3.0.0/16
+
+az network vnet subnet create \
+  --name subnet-app2 \
+  --vnet-name vnet-spoke2 \
+  --resource-group $RG \
+  --address-prefix 10.3.1.0/24
+
+# Peer hub ↔ spoke2
+az network vnet peering create \
+  --name hub-to-spoke2 \
+  --vnet-name vnet-hub \
+  --resource-group $RG \
+  --remote-vnet vnet-spoke2 \
+  --allow-vnet-access true \
+  --allow-forwarded-traffic true
+
+az network vnet peering create \
+  --name spoke2-to-hub \
+  --vnet-name vnet-spoke2 \
+  --resource-group $RG \
+  --remote-vnet vnet-hub \
+  --allow-vnet-access true \
+  --allow-forwarded-traffic true
+
+# Deploy a test VM in spoke2
+az vm create \
+  --name vm-spoke2 \
+  --resource-group $RG \
+  --image Ubuntu2204 \
+  --size Standard_B1s \
+  --admin-username azureuser \
+  --generate-ssh-keys \
+  --vnet-name vnet-spoke2 \
+  --subnet subnet-app2 \
+  --public-ip-address "" \
+  --nsg ""
+```
+
+At this point, `vm-spoke` (10.2.x.x) **cannot reach** `vm-spoke2` (10.3.x.x) even though both are peered to the hub. Traffic has no route.
+
+#### Step 5b: Deploy and configure an NVA in the hub
+
+The NVA sits in the hub and forwards packets between the two spokes. Here we use a Linux VM as a simple NVA. In production this would typically be Azure Firewall or a third-party appliance.
+
+```bash
+# Deploy the NVA VM into the hub (subnet-app, 10.1.2.0/24)
+# Using a static private IP so UDRs can reference it reliably
+az vm create \
+  --name vm-nva \
+  --resource-group $RG \
+  --image Ubuntu2204 \
+  --size Standard_B1s \
+  --admin-username azureuser \
+  --generate-ssh-keys \
+  --vnet-name vnet-hub \
+  --subnet subnet-app \
+  --private-ip-address 10.1.2.4 \
+  --public-ip-address "" \
+  --nsg ""
+```
+
+**IP forwarding — two layers are required:**
+
+| Layer | What it does | How to enable |
+|-------|-------------|---------------|
+| **Azure NIC level** | Allows the NIC to receive packets not addressed to its own IP | `az network nic update --enable-ip-forwarding true` |
+| **OS level (Linux)** | Allows the Linux kernel to route packets between interfaces | `sysctl -w net.ipv4.ip_forward=1` |
+
+Both must be enabled. If only the Azure NIC level is enabled, Azure will accept the packets from the wire but the Linux kernel will drop them (it only processes packets addressed to itself). If only the OS level is enabled, Azure's NIC will silently drop packets not addressed to the NIC's own IP before they even reach the VM.
+
+```bash
+# 1. Enable IP forwarding at the Azure NIC level
+NVA_NIC=$(az vm nic list --vm-name vm-nva --resource-group $RG --query '[0].id' -o tsv)
+
+az network nic update \
+  --ids $NVA_NIC \
+  --ip-forwarding true
+
+# Verify
+az network nic show --ids $NVA_NIC --query "enableIpForwarding"
+# Expected: true
+
+# 2. Enable IP forwarding at the Linux OS level (inside the VM)
+az vm run-command invoke \
+  --name vm-nva \
+  --resource-group $RG \
+  --command-id RunShellScript \
+  --scripts "
+    # Enable immediately
+    sysctl -w net.ipv4.ip_forward=1
+
+    # Persist across reboots
+    echo 'net.ipv4.ip_forward=1' >> /etc/sysctl.conf
+
+    # Confirm
+    sysctl net.ipv4.ip_forward
+  "
+```
+
+#### Step 5c: Create UDRs on both spoke subnets
+
+This is the critical step. For spoke-to-spoke transit via the NVA, **both spoke subnets need a UDR** — one to reach the other spoke going forward, and one to route the return traffic back. Without the return route, packets travel one way but responses never arrive (asymmetric routing).
+
+```
+vm-spoke (10.2.1.x) → [UDR: 10.3.0.0/16 → NVA 10.1.2.4] → vm-nva → vm-spoke2 (10.3.1.x)
+vm-spoke2 (10.3.1.x) → [UDR: 10.2.0.0/16 → NVA 10.1.2.4] → vm-nva → vm-spoke (10.2.1.x)
+```
+
+```bash
+# --- Route table for spoke1 (vnet-spoke, 10.2.0.0/16) ---
 az network route-table create \
-  --name rt-web \
+  --name rt-spoke1 \
   --resource-group $RG
 
-# Add a custom route to direct traffic to 0.0.0.0/0 through an NVA (simulated here as a VM IP)
-# In production, this would be an NVA or Azure Firewall private IP
+# Route: traffic destined for spoke2 (10.3.0.0/16) → NVA
 az network route-table route create \
-  --route-table-name rt-web \
+  --route-table-name rt-spoke1 \
   --resource-group $RG \
-  --name route-to-internet-via-nva \
-  --address-prefix 0.0.0.0/0 \
+  --name route-to-spoke2 \
+  --address-prefix 10.3.0.0/16 \
   --next-hop-type VirtualAppliance \
   --next-hop-ip-address 10.1.2.4
 
-# Associate route table with subnet-web
+# Associate with spoke1's subnet
 az network vnet subnet update \
-  --name subnet-web \
-  --vnet-name vnet-hub \
+  --name subnet-db \
+  --vnet-name vnet-spoke \
   --resource-group $RG \
-  --route-table rt-web
+  --route-table rt-spoke1
 
-# View effective routes on a NIC
-VM_NIC=$(az vm nic list --vm-name vm-hub --resource-group $RG --query '[0].id' -o tsv)
-az network nic show-effective-route-table --ids $VM_NIC --output table
+
+# --- Route table for spoke2 (vnet-spoke2, 10.3.0.0/16) ---
+az network route-table create \
+  --name rt-spoke2 \
+  --resource-group $RG
+
+# Route: traffic destined for spoke1 (10.2.0.0/16) → NVA
+az network route-table route create \
+  --route-table-name rt-spoke2 \
+  --resource-group $RG \
+  --name route-to-spoke1 \
+  --address-prefix 10.2.0.0/16 \
+  --next-hop-type VirtualAppliance \
+  --next-hop-ip-address 10.1.2.4
+
+# Associate with spoke2's subnet
+az network vnet subnet update \
+  --name subnet-app2 \
+  --vnet-name vnet-spoke2 \
+  --resource-group $RG \
+  --route-table rt-spoke2
 ```
+
+> **Are UDRs needed in both directions?**
+> Yes. Each UDR only affects traffic leaving that subnet. A UDR on spoke1 routes *outbound* traffic toward spoke2 via the NVA. Without a matching UDR on spoke2, the *return* packets (spoke2 → spoke1) take Azure's default direct peering path back — but the NVA is sitting in the middle on the forward path. This **asymmetric routing** breaks stateful connections. Both spokes must point at the NVA for the round-trip to work correctly.
+
+#### Step 5d: Verify effective routes and test connectivity
+
+```bash
+# Check effective routes on spoke1 VM — should show 10.3.0.0/16 → VirtualAppliance
+SPOKE1_NIC=$(az vm nic list --vm-name vm-spoke --resource-group $RG --query '[0].id' -o tsv)
+az network nic show-effective-route-table --ids $SPOKE1_NIC --output table
+
+# Check effective routes on spoke2 VM — should show 10.2.0.0/16 → VirtualAppliance
+SPOKE2_NIC=$(az vm nic list --vm-name vm-spoke2 --resource-group $RG --query '[0].id' -o tsv)
+az network nic show-effective-route-table --ids $SPOKE2_NIC --output table
+
+# Test connectivity: spoke1 → spoke2 via NVA
+SPOKE2_IP=$(az vm show -d --name vm-spoke2 --resource-group $RG --query privateIps -o tsv)
+
+az vm run-command invoke \
+  --name vm-spoke \
+  --resource-group $RG \
+  --command-id RunShellScript \
+  --scripts "ping -c 4 $SPOKE2_IP"
+```
+
+**What to look for in effective routes:**
+
+| Destination | Next Hop Type | Source | Meaning |
+|-------------|--------------|--------|---------|
+| 10.2.0.0/16 | VNetLocal | Default | Direct VNet range |
+| 10.1.0.0/16 | VNetPeering | Default | Hub via peering |
+| 10.3.0.0/16 | VirtualAppliance (10.1.2.4) | **User** | UDR — spoke2 via NVA |
+| 0.0.0.0/0 | Internet | Default | Default internet route |
+
+The `User` source in the last column confirms your UDR is active and overriding system routes.
 
 ---
 
@@ -370,10 +555,14 @@ echo "Resource group deletion initiated"
 | Topic | Key Point |
 |-------|-----------|
 | NSG rules | Lower priority number = evaluated first; first match wins; default rules cannot be deleted |
-| VNet peering | Must create peering in both directions; non-transitive (A-B-C ≠ A-C) |
+| VNet peering | Must create peering in both directions; non-transitive — Spoke A and Spoke B cannot reach each other through the hub without UDRs + NVA |
 | Private DNS zone | VNet link with registration-enabled=true enables auto-registration of VMs |
-| UDR | Overrides default Azure routing; used to route through NVA or Firewall |
-| Network Watcher | IP flow verify answers NSG allow/deny; connection troubleshoot tests end-to-end |
+| UDR | Overrides default Azure routing; `VirtualAppliance` next-hop type sends traffic to an NVA IP |
+| Hub-spoke transit | Requires UDRs on **both** spoke subnets pointing at the NVA — asymmetric routing breaks stateful connections |
+| IP forwarding (NIC) | Must enable `--ip-forwarding true` on the NVA's Azure NIC or Azure drops non-self-addressed packets at the wire |
+| IP forwarding (OS) | Must also enable `net.ipv4.ip_forward=1` in the Linux kernel or the OS drops forwarded packets; persist in `/etc/sysctl.conf` |
+| Effective routes | `az network nic show-effective-route-table` shows active routes; `User` source confirms a UDR is applied |
+| Network Watcher | IP flow verify answers NSG allow/deny; connection troubleshoot tests end-to-end path |
 | Subnet reserved IPs | First 4 + last 1 = 5 reserved; /29 = only 3 usable hosts |
 
 ## References
@@ -383,4 +572,7 @@ echo "Resource group deletion initiated"
 - [VNet peering](https://learn.microsoft.com/en-us/azure/virtual-network/virtual-network-peering-overview)
 - [Azure private DNS](https://learn.microsoft.com/en-us/azure/dns/private-dns-overview)
 - [User-defined routes](https://learn.microsoft.com/en-us/azure/virtual-network/virtual-networks-udr-overview)
+- [Network virtual appliances](https://learn.microsoft.com/en-us/azure/virtual-network/virtual-network-scenario-udr-gw-nva)
+- [IP forwarding for NVAs](https://learn.microsoft.com/en-us/azure/virtual-network/virtual-network-network-interface#enable-or-disable-ip-forwarding)
+- [Hub-spoke topology in Azure](https://learn.microsoft.com/en-us/azure/architecture/networking/architecture/hub-spoke)
 - [Network Watcher](https://learn.microsoft.com/en-us/azure/network-watcher/)

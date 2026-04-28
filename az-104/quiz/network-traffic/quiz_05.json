@@ -1,0 +1,372 @@
+{
+  "meta": {
+    "title": "AZ-104 \u2013 Network Traffic Scenarios & Gotchas",
+    "subject": "Azure Administration",
+    "version": "1.0.0",
+    "created": "2026-04-17"
+  },
+  "questions": [
+    {
+      "question_id": 1,
+      "question_text": "You configure an Azure Load Balancer with a backend pool containing 4 VMs. You do NOT configure a health probe. One VM crashes and stops responding. What will happen to traffic destined for that VM?",
+      "difficulty": "medium",
+      "topic": "Health Probes",
+      "tags": [
+        "gotcha",
+        "scenario",
+        "misconfiguration"
+      ],
+      "options": {
+        "a": {
+          "text": "The load balancer immediately detects the failure and stops sending traffic to the crashed VM",
+          "is_true": false,
+          "explanation": "Without a health probe, the load balancer has no mechanism to detect backend failures. It will continue sending traffic to all pool members regardless of their health."
+        },
+        "b": {
+          "text": "Traffic continues to be sent to the crashed VM, causing those requests to time out on the client side",
+          "is_true": true,
+          "explanation": "Without a health probe, the load balancer cannot distinguish healthy from unhealthy resources. Requests sent to the crashed VM will never receive a response, causing client-side timeouts."
+        },
+        "c": {
+          "text": "Azure automatically removes the crashed VM from the backend pool",
+          "is_true": false,
+          "explanation": "Azure does not automatically remove VMs from a load balancer backend pool when they fail unless a health probe is configured to detect and act on the failure."
+        },
+        "d": {
+          "text": "The load balancer generates an alert and emails the subscription owner",
+          "is_true": false,
+          "explanation": "Without a health probe and alerting rules, the load balancer takes no automatic action. The health probe is the mechanism that detects and reacts to backend failures."
+        }
+      },
+      "correct_answer": [
+        "b"
+      ]
+    },
+    {
+      "question_id": 2,
+      "question_text": "You are testing with IP Flow Verify: inbound TCP port 80 from a remote VM at 10.7.0.4 to a backend VM at 10.6.0.4. Both VMs are in different VNets that are peered. The result shows: Access = Allowed, Rule = 'AllowAnyHTTPInbound'. What does this tell you?",
+      "difficulty": "medium",
+      "topic": "IP Flow Verify",
+      "tags": [
+        "scenario",
+        "nsg",
+        "troubleshooting"
+      ],
+      "options": {
+        "a": {
+          "text": "The default NSG rule is allowing the traffic, and no custom rule exists",
+          "is_true": false,
+          "explanation": "'AllowAnyHTTPInbound' is a named custom rule, not a default NSG rule. Default rules have fixed names like 'AllowVnetInBound' (65000). A custom rule was explicitly created to allow HTTP."
+        },
+        "b": {
+          "text": "A custom NSG rule named 'AllowAnyHTTPInbound' was explicitly created on the backend VM's NSG and is permitting the traffic",
+          "is_true": true,
+          "explanation": "The rule name 'AllowAnyHTTPInbound' is a custom NSG rule configured on the backend server's NSG. IP Flow Verify confirms this rule is what permits the inbound HTTP traffic from the peered VNet."
+        },
+        "c": {
+          "text": "VNet peering is not correctly configured \u2014 the allow is coincidental",
+          "is_true": false,
+          "explanation": "If VNet peering were misconfigured, the traffic would likely be blocked. The explicit 'AllowAnyHTTPInbound' rule on the NSG is the reason the traffic is allowed \u2014 peering provides connectivity, the NSG provides permission."
+        },
+        "d": {
+          "text": "The load balancer's health probe is causing the allowed result",
+          "is_true": false,
+          "explanation": "Health probes are a load balancer function and do not appear as IP Flow Verify results. The allowed result is from an NSG rule on the VM."
+        }
+      },
+      "correct_answer": [
+        "b"
+      ]
+    },
+    {
+      "question_id": 3,
+      "question_text": "An administrator creates a Regional Azure Load Balancer and attempts to add a VM from a different Azure region to the backend pool. The VM does not appear as an available option. Why?",
+      "difficulty": "medium",
+      "topic": "Backend Pool Scope",
+      "tags": [
+        "scenario",
+        "gotcha",
+        "regional"
+      ],
+      "options": {
+        "a": {
+          "text": "The VM must be running before it can be added to any backend pool",
+          "is_true": false,
+          "explanation": "VM running state is not the reason it is unavailable. The issue is the regional scope of the load balancer's backend pool."
+        },
+        "b": {
+          "text": "A Regional Load Balancer backend pool can only include resources within the same virtual network, which is region-bound",
+          "is_true": true,
+          "explanation": "Regional Load Balancers are scoped to a VNet, and VNets are region-bound. You cannot add VMs from a different region because they belong to a different VNet in a different Azure region."
+        },
+        "c": {
+          "text": "The VM must use a Standard SKU public IP to be added to a backend pool",
+          "is_true": false,
+          "explanation": "Backend pool VMs do not require a public IP. The issue is the regional/VNet scope boundary, not IP SKU."
+        },
+        "d": {
+          "text": "Cross-region VMs can only be added after enabling VNet peering",
+          "is_true": false,
+          "explanation": "Even with global VNet peering, a Regional Load Balancer backend pool cannot span regions. A Global tier or Traffic Manager is needed for cross-region scenarios."
+        }
+      },
+      "correct_answer": [
+        "b"
+      ]
+    },
+    {
+      "question_id": 4,
+      "question_text": "You are setting up a hub-and-spoke network. Spoke 1 and Spoke 2 are NOT directly peered to each other, but both are peered with the Hub. You want traffic from Spoke 1 VMs to reach Spoke 2 VMs via an NVA in the Hub. After creating the UDR, you use Network Watcher Next Hop to verify. The result shows: Next hop type = 'Virtual Appliance', Next hop IP = 10.1.0.4. What does this confirm?",
+      "difficulty": "hard",
+      "topic": "Next Hop / UDR",
+      "tags": [
+        "scenario",
+        "udr",
+        "hub-spoke",
+        "validation"
+      ],
+      "options": {
+        "a": {
+          "text": "The traffic is being sent directly from Spoke 1 to Spoke 2 via VNet peering",
+          "is_true": false,
+          "explanation": "If traffic went directly via peering, the next hop type would be 'VNet peering', not 'Virtual Appliance'. The result confirms it is transiting via the NVA."
+        },
+        "b": {
+          "text": "The UDR is working correctly \u2014 traffic from Spoke 1 is being forwarded to the NVA (10.1.0.4) in the Hub before reaching Spoke 2",
+          "is_true": true,
+          "explanation": "A next hop type of 'Virtual Appliance' with the NVA's IP address confirms the UDR is functioning. Traffic is being routed through the NVA in the Hub as intended, enabling transitive routing between spokes."
+        },
+        "c": {
+          "text": "The UDR is misconfigured \u2014 traffic should go directly to Spoke 2 without transiting the Hub",
+          "is_true": false,
+          "explanation": "The entire purpose of the UDR in this scenario is to force traffic via the NVA hub. 'Virtual Appliance' as next hop is the expected, correct result."
+        },
+        "d": {
+          "text": "NSG rules are blocking the traffic at the NVA",
+          "is_true": false,
+          "explanation": "Next Hop shows the routing path, not NSG behaviour. If NSG rules were the issue, IP Flow Verify would be the tool to investigate \u2014 and the Next Hop result here shows routing is correct."
+        }
+      },
+      "correct_answer": [
+        "b"
+      ]
+    },
+    {
+      "question_id": 5,
+      "question_text": "You configure an Application Gateway with path-based routing. Users access contoso.com/videos, but they are landing on the image-processing backend pool instead of the video backend pool. What is the most likely cause?",
+      "difficulty": "hard",
+      "topic": "Path-Based Routing",
+      "tags": [
+        "scenario",
+        "misconfiguration",
+        "troubleshooting"
+      ],
+      "options": {
+        "a": {
+          "text": "Application Gateway does not support the /videos path",
+          "is_true": false,
+          "explanation": "Application Gateway supports any URL path in routing rules. The issue is in the rule configuration, not a product limitation."
+        },
+        "b": {
+          "text": "The path-based routing rules are incorrectly configured \u2014 the /videos path rule is either missing or points to the wrong backend pool",
+          "is_true": true,
+          "explanation": "If the /videos path rule is missing or misconfigured, the gateway will fall through to the default rule, which may point to the image backend pool. Reviewing and correcting the path rule configuration resolves this."
+        },
+        "c": {
+          "text": "The listener is not configured to handle HTTPS traffic",
+          "is_true": false,
+          "explanation": "The listener's protocol configuration would affect whether traffic is received at all, not which backend pool it is sent to. The routing issue points to path rule misconfiguration."
+        },
+        "d": {
+          "text": "The health probe for the video backend pool has failed, so the gateway failed over to the image pool",
+          "is_true": false,
+          "explanation": "Health probe failures cause traffic to stop going to the affected pool, not to reroute to a different pool. The symptom described is a routing rule issue."
+        }
+      },
+      "correct_answer": [
+        "b"
+      ]
+    },
+    {
+      "question_id": 6,
+      "question_text": "You test TCP port 443 inbound using IP Flow Verify between two VMs in VNets that are NOT peered. The result shows: Access = Denied, Rule = '65500 DenyAllInBound'. What should you do to allow this traffic?",
+      "difficulty": "medium",
+      "topic": "NSG Rules",
+      "tags": [
+        "scenario",
+        "65500",
+        "fix"
+      ],
+      "options": {
+        "a": {
+          "text": "Delete the 65500 DenyAllInBound rule from the NSG",
+          "is_true": false,
+          "explanation": "You cannot delete the default NSG rules (65000, 65001, 65500). They are system rules. The correct approach is to add a higher-priority allow rule."
+        },
+        "b": {
+          "text": "Add a custom NSG inbound allow rule for TCP port 443 at a priority higher than 65500",
+          "is_true": true,
+          "explanation": "NSG rules are evaluated in priority order (lower number = higher priority). Adding an explicit allow rule for TCP 443 at, say, priority 200 will match before the 65500 catch-all deny, allowing the traffic."
+        },
+        "c": {
+          "text": "Enable VNet peering between the two VNets",
+          "is_true": false,
+          "explanation": "VNet peering provides network-level connectivity but does not automatically create NSG allow rules. You still need to explicitly allow the traffic in the NSG."
+        },
+        "d": {
+          "text": "Change the Load Balancer health probe to port 443",
+          "is_true": false,
+          "explanation": "The health probe is unrelated to NSG rules. The 65500 deny result requires an NSG rule change, not a health probe change."
+        }
+      },
+      "correct_answer": [
+        "b"
+      ]
+    },
+    {
+      "question_id": 7,
+      "question_text": "A load balancer health probe is configured for TCP port 80, but the backend VMs are running a web application on port 8080. The health probe is reporting all VMs as unhealthy. What is the most likely cause?",
+      "difficulty": "medium",
+      "topic": "Health Probes",
+      "tags": [
+        "gotcha",
+        "misconfiguration",
+        "ports"
+      ],
+      "options": {
+        "a": {
+          "text": "The VMs are not in a running state",
+          "is_true": false,
+          "explanation": "If the VMs were not running, this would be a possibility \u2014 but the specific cause here is the port mismatch between the probe and the actual listening port."
+        },
+        "b": {
+          "text": "The health probe port (80) does not match the port the application is listening on (8080)",
+          "is_true": true,
+          "explanation": "Health probes test connectivity to a specific port. If the application listens on port 8080 but the probe checks port 80, the probe will time out (no service on port 80), and the VMs will be marked unhealthy."
+        },
+        "c": {
+          "text": "TCP health probes are not supported \u2014 you must use HTTP probes",
+          "is_true": false,
+          "explanation": "TCP health probes are fully supported in Azure Load Balancer. The issue is the port configuration mismatch, not the probe protocol."
+        },
+        "d": {
+          "text": "The backend pool VMs are in a different region from the load balancer",
+          "is_true": false,
+          "explanation": "Cross-region resources cannot be added to a regional load balancer's backend pool in the first place. The issue described is a port mismatch."
+        }
+      },
+      "correct_answer": [
+        "b"
+      ]
+    },
+    {
+      "question_id": 8,
+      "question_text": "An administrator uses Network Watcher Topology and notices that a VNet shows no peering connections, even though a peering was recently created. What is a possible explanation?",
+      "difficulty": "medium",
+      "topic": "Network Watcher Topology",
+      "tags": [
+        "scenario",
+        "vnet-peering",
+        "gotcha"
+      ],
+      "options": {
+        "a": {
+          "text": "Network Watcher Topology only shows resources in the same resource group",
+          "is_true": false,
+          "explanation": "Topology shows all networking resources in a selected region/subscription scope, not just resources in one resource group."
+        },
+        "b": {
+          "text": "The peering may be in a disconnected state \u2014 peering requires both sides to be configured and in a 'Connected' status",
+          "is_true": true,
+          "explanation": "VNet peering in Azure requires that BOTH sides of the peering are created and in a 'Connected' state. If only one side is configured, the peering is in an 'Initiated' or 'Disconnected' state and may not appear as active in Topology."
+        },
+        "c": {
+          "text": "Topology does not support peered VNets in different subscriptions",
+          "is_true": false,
+          "explanation": "Topology can show cross-subscription peerings if you have access. The more likely issue is an incomplete peering configuration."
+        },
+        "d": {
+          "text": "The Topology view only refreshes once per day",
+          "is_true": false,
+          "explanation": "Topology is a live view of your current network configuration. It does not have a once-per-day refresh limitation."
+        }
+      },
+      "correct_answer": [
+        "b"
+      ]
+    },
+    {
+      "question_id": 9,
+      "question_text": "You need to host contoso.com and fabricam.com on the same Application Gateway public IP. The sites serve completely different content to different departments. Both use HTTPS. Which Application Gateway components are required?",
+      "difficulty": "hard",
+      "topic": "Application Gateway",
+      "tags": [
+        "multiple-select",
+        "multi-site",
+        "architecture"
+      ],
+      "options": {
+        "a": {
+          "text": "Two listeners \u2014 one per hostname",
+          "is_true": true,
+          "explanation": "Multi-site routing requires a separate listener per hostname. Each listener is configured with a specific hostname (contoso.com or fabricam.com) so the gateway can distinguish incoming requests."
+        },
+        "b": {
+          "text": "Two backend pools \u2014 one per site's content",
+          "is_true": true,
+          "explanation": "Each site serves different content from different resources. Separate backend pools are needed so contoso.com traffic goes to its VMs and fabricam.com traffic goes to its own VMs."
+        },
+        "c": {
+          "text": "Two separate Application Gateways",
+          "is_true": false,
+          "explanation": "A single Application Gateway handles multi-site routing. Deploying two gateways is unnecessary and more expensive."
+        },
+        "d": {
+          "text": "Two frontend public IP addresses \u2014 one per domain",
+          "is_true": false,
+          "explanation": "The entire purpose of multi-site routing is that both domains resolve to the SAME public IP. The listener uses the HTTP Host header to differentiate them."
+        }
+      },
+      "correct_answer": [
+        "a",
+        "b"
+      ]
+    },
+    {
+      "question_id": 10,
+      "question_text": "When validating a user-defined route using Next Hop in Network Watcher, the tool returns: Next hop type = 'Internet'. You expected it to show 'Virtual Appliance'. What does this most likely indicate?",
+      "difficulty": "hard",
+      "topic": "Next Hop / UDR",
+      "tags": [
+        "scenario",
+        "gotcha",
+        "udr-validation"
+      ],
+      "options": {
+        "a": {
+          "text": "The NVA is working correctly and is routing traffic to the internet",
+          "is_true": false,
+          "explanation": "If the expected next hop was the NVA, getting 'Internet' means the UDR is not in effect. The traffic is defaulting to Azure system routing."
+        },
+        "b": {
+          "text": "The UDR is not correctly applied to the source subnet, or the UDR destination prefix does not match the traffic being tested",
+          "is_true": true,
+          "explanation": "Next Hop returns 'Internet' when no matching UDR is found and the traffic falls back to Azure's default system routes. This usually means the UDR either isn't associated with the correct subnet, or the address prefix in the route doesn't cover the destination IP being tested."
+        },
+        "c": {
+          "text": "The NVA VM has been deallocated",
+          "is_true": false,
+          "explanation": "Next Hop evaluates route tables, not whether the next hop VM is running. A deallocated NVA would cause connectivity failure, but Next Hop would still show 'Virtual Appliance' if the UDR is correctly applied."
+        },
+        "d": {
+          "text": "VNet peering between Hub and Spoke needs to be recreated",
+          "is_true": false,
+          "explanation": "Peering issues would affect connectivity but would result in a different next hop type (e.g., None or VNet Peering). 'Internet' as next hop specifically indicates the traffic is not matching any UDR."
+        }
+      },
+      "correct_answer": [
+        "b"
+      ]
+    }
+  ]
+}
