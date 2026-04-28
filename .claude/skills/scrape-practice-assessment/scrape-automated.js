@@ -81,29 +81,57 @@ async function extractCurrentQuestion(page) {
   return page.evaluate(() => {
     const skipPatterns = /^(select only one|select all that apply|choose the|check your|sign in|trying to sign|face, fingerprint|enter your|pick an account|skip to main|practice assessment|question \d)/i;
 
-    const quizChoices = document.querySelectorAll('label.quiz-choice');
-    if (!quizChoices || quizChoices.length < 2) return null;
+    const debug = { reason: '', choiceCount: 0, preTextLen: 0, preTextSample: '' };
 
-    // Question text
-    let questionText = '';
-    const mainEl = document.querySelector('main') || document.body;
-    const allText = mainEl.innerText;
-    const firstChoiceText = quizChoices[0].innerText.trim();
-    const idx = allText.indexOf(firstChoiceText);
-    if (idx > 0) {
-      const paragraphs = allText.substring(0, idx).trim()
-        .split(/\n/)
-        .map(p => p.trim())
-        .filter(p =>
-          p.length > 10 &&
-          !skipPatterns.test(p) &&
-          !p.match(/^(practice assessment|question \d+ of|previous|next|check)/i) &&
-          !p.match(/^\d+\/\d+$/) &&
-          !p.match(/^Q\d+/)
-        );
-      if (paragraphs.length > 0) questionText = paragraphs.join('\n');
+    const quizChoices = document.querySelectorAll('label.quiz-choice');
+    debug.choiceCount = quizChoices.length;
+    if (!quizChoices || quizChoices.length < 2) {
+      debug.reason = 'fewer than 2 quiz-choice elements';
+      return { __debug: debug };
     }
-    if (!questionText || questionText.length < 10) return null;
+
+    const mainEl = document.querySelector('main') || document.body;
+    const firstChoice = quizChoices[0];
+
+    // Collect all text-bearing elements that precede the first choice in document order.
+    // Avoids the earlier bug where allText.indexOf(firstChoiceText) matched inside
+    // the question body for short choice text like "1" (matching inside "VNet1").
+    const textSelectors = 'p, li, h1, h2, h3, h4, h5, h6, span, div';
+    const candidates = mainEl.querySelectorAll(textSelectors);
+    const preceding = [];
+    const seen = new Set();
+    for (const el of candidates) {
+      if (el.contains(firstChoice) || firstChoice.contains(el)) continue;
+      const pos = firstChoice.compareDocumentPosition(el);
+      if (!(pos & Node.DOCUMENT_POSITION_PRECEDING)) continue;
+      // Skip if this element contains another text element we'll also capture
+      // (prefer the leaf with the text, not the wrapper)
+      const hasTextChild = el.querySelector(textSelectors);
+      if (hasTextChild) continue;
+      const t = el.innerText.trim();
+      if (!t || t.length < 3) continue;
+      if (seen.has(t)) continue;
+      seen.add(t);
+      preceding.push(t);
+    }
+
+    const filtered = preceding.filter(p =>
+      p.length > 3 &&
+      !skipPatterns.test(p) &&
+      !p.match(/^(practice assessment|question \d+ of|previous|next|check)/i) &&
+      !p.match(/^\d+\/\d+$/) &&
+      !p.match(/^Q\d+/) &&
+      !p.match(/^\d+$/)
+    );
+
+    debug.preTextLen = filtered.join('\n').length;
+    debug.preTextSample = filtered.slice(0, 3).join(' | ').substring(0, 200);
+
+    const questionText = filtered.join('\n');
+    if (!questionText || questionText.length < 10) {
+      debug.reason = `question text too short (${questionText.length} chars after filtering ${preceding.length} candidates)`;
+      return { __debug: debug };
+    }
 
     // Options with correct/incorrect markers
     const options = [];
@@ -124,26 +152,48 @@ async function extractCurrentQuestion(page) {
       }
     });
 
-    // Explanation
+    // Explanation — try class-based selectors first, then positional fallback
     let explanation = '';
     const explanationSelectors = [
       '[class*="explanation"]', '[class*="Explanation"]',
       '[class*="feedback"]', '[class*="Feedback"]',
       '[class*="rationale"]', '.alert', '.quiz-answer-feedback',
+      '[role="alert"]',
     ];
     for (const sel of explanationSelectors) {
       const el = document.querySelector(sel);
       if (el && el.innerText.trim().length > 10) { explanation = el.innerText.trim(); break; }
     }
+
+    // Positional fallback: any substantial text element that appears AFTER the
+    // last quiz-choice is almost always the explanation shown by Microsoft Learn
+    // after clicking "Check Your Answer" (shown for both correct and incorrect).
     if (!explanation) {
-      const els = document.querySelectorAll('[class*="correct"], [class*="incorrect"], [class*="result"], [class*="feedback"]');
-      for (const el of els) {
+      const lastChoice = quizChoices[quizChoices.length - 1];
+      const candidates2 = mainEl.querySelectorAll('p, div, li, span');
+      const parts = [];
+      const seen2 = new Set();
+      for (const el of candidates2) {
+        if (el.contains(lastChoice) || lastChoice.contains(el)) continue;
+        if (el.closest('label.quiz-choice')) continue;
+        const pos = lastChoice.compareDocumentPosition(el);
+        if (!(pos & Node.DOCUMENT_POSITION_FOLLOWING)) continue;
+        const hasTextChild = el.querySelector('p, div, li, span');
+        if (hasTextChild) continue;
         const t = el.innerText.trim();
-        if (t.length > 20 && !el.closest('label.quiz-choice')) { explanation = t; break; }
+        if (t.length < 20) continue;
+        if (/^(check|next|previous|submit|finish|question \d+ of|view results)/i.test(t)) continue;
+        if (seen2.has(t)) continue;
+        seen2.add(t);
+        parts.push(t);
       }
+      if (parts.length) explanation = parts.join('\n\n');
     }
 
-    return { text: questionText, options, correctAnswer, explanation };
+    debug.explanationLen = explanation.length;
+    debug.reason = 'ok';
+
+    return { text: questionText, options, correctAnswer, explanation, __debug: debug };
   });
 }
 
@@ -262,6 +312,8 @@ async function main() {
   // Main loop: answer questions
   let questionNumber = 0;
   let consecutiveFailures = 0;
+  let consecutiveExtractFails = 0;
+  const MAX_EXTRACT_FAILS = 5;
 
   while (consecutiveFailures < 10) {
     // Check if we're on the results screen
@@ -274,7 +326,7 @@ async function main() {
     const hasChoices = await waitForChoices(page, 10000);
     if (!hasChoices) {
       consecutiveFailures++;
-      console.log(`  No choices found (attempt ${consecutiveFailures}/5), waiting...`);
+      console.log(`  No choices found (attempt ${consecutiveFailures}/10), URL=${page.url()}`);
       await sleep(2000);
       continue;
     }
@@ -282,10 +334,26 @@ async function main() {
 
     // Capture question before checking (to get the text)
     const before = await extractCurrentQuestion(page);
-    if (!before) {
-      await sleep(1000);
+    if (!before || !before.text) {
+      consecutiveExtractFails++;
+      const dbg = before && before.__debug ? before.__debug : { reason: 'null return' };
+      console.log(`  [extract-fail ${consecutiveExtractFails}/${MAX_EXTRACT_FAILS}] ${dbg.reason} | choices=${dbg.choiceCount || 0} | preText="${dbg.preTextSample || ''}"`);
+      if (consecutiveExtractFails >= MAX_EXTRACT_FAILS) {
+        console.log('  Too many extraction failures — trying to advance past this question');
+        // Try to click first choice blindly and move on
+        try { await page.locator('label.quiz-choice').first().click({ timeout: 3000 }); } catch {}
+        await sleep(500);
+        await clickCheckAnswer(page);
+        await sleep(2000);
+        await clickNext(page);
+        await sleep(2000);
+        consecutiveExtractFails = 0;
+      } else {
+        await sleep(1500);
+      }
       continue;
     }
+    consecutiveExtractFails = 0;
 
     questionNumber++;
     console.log(`Q${questionNumber}: ${before.text.substring(0, 70)}...`);
@@ -312,14 +380,19 @@ async function main() {
     const after = await extractCurrentQuestion(page);
     const q = after || before;
 
+    // Strip debug field before saving/deduping
+    const cleanQ = { text: q.text, options: q.options, correctAnswer: q.correctAnswer, explanation: q.explanation };
+
     // Deduplicate by question text
     const exists = questions.some(existing =>
-      existing.text.substring(0, 80) === q.text.substring(0, 80)
+      existing.text.substring(0, 80) === cleanQ.text.substring(0, 80)
     );
     if (!exists) {
-      questions.push(q);
-      const correctText = q.correctAnswer ? ` → ${q.correctAnswer.substring(0, 40)}` : '';
-      console.log(`  Captured.${correctText}`);
+      questions.push(cleanQ);
+      const correctText = cleanQ.correctAnswer ? ` → ${cleanQ.correctAnswer.substring(0, 40)}` : '';
+      const explLen = cleanQ.explanation ? cleanQ.explanation.length : 0;
+      const explNote = explLen > 0 ? ` [expl: ${explLen} chars]` : ' [NO explanation]';
+      console.log(`  Captured.${correctText}${explNote}`);
       saveQuestions();
     } else {
       console.log('  Duplicate, skipping.');

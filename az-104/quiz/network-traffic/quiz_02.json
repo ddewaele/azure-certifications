@@ -1,0 +1,361 @@
+{
+  "meta": {
+    "title": "AZ-104 \u2013 Azure Application Gateway",
+    "subject": "Azure Administration",
+    "version": "1.0.0",
+    "created": "2026-04-17"
+  },
+  "questions": [
+    {
+      "question_id": 1,
+      "question_text": "At which OSI layer does Azure Application Gateway operate?",
+      "difficulty": "easy",
+      "topic": "Application Gateway",
+      "tags": [
+        "definition",
+        "osi-layer"
+      ],
+      "options": {
+        "a": {
+          "text": "Layer 3 (Network)",
+          "is_true": false,
+          "explanation": "Layer 3 handles IP routing. Application Gateway operates at a higher layer, using HTTP/HTTPS content for routing decisions."
+        },
+        "b": {
+          "text": "Layer 4 (Transport)",
+          "is_true": false,
+          "explanation": "Layer 4 (TCP/UDP) is where Azure Load Balancer operates. Application Gateway goes higher to leverage application-layer content."
+        },
+        "c": {
+          "text": "Layer 7 (Application)",
+          "is_true": true,
+          "explanation": "Application Gateway is a Layer 7 load balancer. It can inspect HTTP/HTTPS request content \u2014 including the URL path and hostname \u2014 to make intelligent routing decisions."
+        },
+        "d": {
+          "text": "Layer 2 (Data Link)",
+          "is_true": false,
+          "explanation": "Layer 2 is the switching/MAC address layer. Application Gateway operates far above this at the application layer."
+        }
+      },
+      "correct_answer": [
+        "c"
+      ]
+    },
+    {
+      "question_id": 2,
+      "question_text": "What is the role of the 'listener' in Azure Application Gateway?",
+      "difficulty": "medium",
+      "topic": "Listener",
+      "tags": [
+        "definition",
+        "listener"
+      ],
+      "options": {
+        "a": {
+          "text": "It probes backend pool resources to check their health",
+          "is_true": false,
+          "explanation": "Health checking is done by health probes, which are a separate component. The listener handles incoming traffic inspection."
+        },
+        "b": {
+          "text": "It inspects incoming HTTP/HTTPS traffic and matches it to a routing rule",
+          "is_true": true,
+          "explanation": "The listener receives incoming requests and reads the HTTP hostname, path, and protocol. It then matches the request to a configured rule that determines which backend pool receives the traffic."
+        },
+        "c": {
+          "text": "It assigns SSL certificates to backend virtual machines",
+          "is_true": false,
+          "explanation": "SSL certificate management (termination) is a feature of Application Gateway, but the listener's role is traffic inspection and rule matching, not certificate assignment to VMs."
+        },
+        "d": {
+          "text": "It replaces the need for a public IP address on the Application Gateway",
+          "is_true": false,
+          "explanation": "Application Gateway still requires a frontend IP configuration (public or private). The listener operates above the IP layer."
+        }
+      },
+      "correct_answer": [
+        "b"
+      ]
+    },
+    {
+      "question_id": 3,
+      "question_text": "A company wants to route requests to contoso.com/images to one backend pool and contoso.com/videos to a different backend pool. Which Application Gateway feature enables this?",
+      "difficulty": "medium",
+      "topic": "Path-Based Routing",
+      "tags": [
+        "scenario",
+        "routing"
+      ],
+      "options": {
+        "a": {
+          "text": "Multi-site routing",
+          "is_true": false,
+          "explanation": "Multi-site routing differentiates traffic based on the hostname (e.g., contoso.com vs fabricam.com), not the URL path. This scenario requires path-based routing."
+        },
+        "b": {
+          "text": "Path-based routing",
+          "is_true": true,
+          "explanation": "Path-based routing allows Application Gateway to direct traffic to different backend pools based on the URL path. /images routes to one pool; /videos routes to another \u2014 enabling right-sized resource allocation."
+        },
+        "c": {
+          "text": "Load balancing rules (TCP port-based)",
+          "is_true": false,
+          "explanation": "Port-based rules are a Load Balancer concept operating at Layer 4. Routing by URL path requires Layer 7 Application Gateway with path-based routing."
+        },
+        "d": {
+          "text": "DNS-based routing via Traffic Manager",
+          "is_true": false,
+          "explanation": "Traffic Manager routes by DNS resolution to different endpoints, not by URL path. Path inspection is done by Application Gateway."
+        }
+      },
+      "correct_answer": [
+        "b"
+      ]
+    },
+    {
+      "question_id": 4,
+      "question_text": "A company hosts two separate internal portals \u2014 contoso.com and fabricam.com \u2014 and wants both to resolve to the same public IP address while serving completely different content. Which Application Gateway feature enables this?",
+      "difficulty": "medium",
+      "topic": "Multi-Site Routing",
+      "tags": [
+        "scenario",
+        "routing"
+      ],
+      "options": {
+        "a": {
+          "text": "Path-based routing",
+          "is_true": false,
+          "explanation": "Path-based routing differentiates by URL path on the same hostname. This scenario requires differentiation by hostname, which is multi-site routing."
+        },
+        "b": {
+          "text": "Multi-site routing",
+          "is_true": true,
+          "explanation": "Multi-site routing allows Application Gateway to inspect the HTTP Host header and route contoso.com traffic to one backend pool and fabricam.com traffic to a different pool \u2014 all on the same public IP."
+        },
+        "c": {
+          "text": "Health probes per hostname",
+          "is_true": false,
+          "explanation": "Health probes check backend resource availability. They do not route traffic based on hostname. Multi-site routing is the correct feature."
+        },
+        "d": {
+          "text": "Two separate Application Gateways \u2014 one per domain",
+          "is_true": false,
+          "explanation": "A single Application Gateway can host multiple sites using multi-site routing. Deploying two gateways would be wasteful and unnecessary."
+        }
+      },
+      "correct_answer": [
+        "b"
+      ]
+    },
+    {
+      "question_id": 5,
+      "question_text": "Which component is present in Application Gateway but NOT in standard Azure Load Balancer?",
+      "difficulty": "medium",
+      "topic": "Listener",
+      "tags": [
+        "comparison",
+        "app-gateway-vs-lb"
+      ],
+      "options": {
+        "a": {
+          "text": "Backend pool",
+          "is_true": false,
+          "explanation": "Both Application Gateway and Load Balancer use backend pools. The backend pool is not a differentiating component."
+        },
+        "b": {
+          "text": "Health probe",
+          "is_true": false,
+          "explanation": "Both services use health probes to check backend resource availability. This is not unique to Application Gateway."
+        },
+        "c": {
+          "text": "Listener",
+          "is_true": true,
+          "explanation": "The listener is unique to Application Gateway. It inspects HTTP/HTTPS content (host, path, protocol) to make Layer 7 routing decisions \u2014 a capability Load Balancer does not have."
+        },
+        "d": {
+          "text": "Frontend IP configuration",
+          "is_true": false,
+          "explanation": "Both Load Balancer and Application Gateway require a frontend IP configuration. This is not a differentiating component."
+        }
+      },
+      "correct_answer": [
+        "c"
+      ]
+    },
+    {
+      "question_id": 6,
+      "question_text": "What is the minimum number of routing rules required on an Application Gateway to function?",
+      "difficulty": "easy",
+      "topic": "Application Gateway",
+      "tags": [
+        "configuration",
+        "rules"
+      ],
+      "options": {
+        "a": {
+          "text": "Zero \u2014 rules are optional",
+          "is_true": false,
+          "explanation": "At least one rule is required to define what the Application Gateway does with incoming traffic. Without a rule, the gateway cannot route traffic."
+        },
+        "b": {
+          "text": "One",
+          "is_true": true,
+          "explanation": "At minimum, one rule must be configured. This rule links the listener (frontend conditions) to a backend pool and HTTP settings so traffic can flow."
+        },
+        "c": {
+          "text": "Two \u2014 one for HTTP and one for HTTPS",
+          "is_true": false,
+          "explanation": "You can operate with a single rule for just one protocol. A second rule is optional and added only if you need to handle a second protocol or path/host."
+        },
+        "d": {
+          "text": "Five \u2014 one per backend pool member",
+          "is_true": false,
+          "explanation": "Rules map listeners to backend pools, not individual VMs. One rule can serve an entire backend pool."
+        }
+      },
+      "correct_answer": [
+        "b"
+      ]
+    },
+    {
+      "question_id": 7,
+      "question_text": "A video streaming company wants to route users globally to the nearest edge location for faster content delivery, using Microsoft's backbone network. Which Azure load balancing solution is most appropriate?",
+      "difficulty": "medium",
+      "topic": "Front Door",
+      "tags": [
+        "scenario",
+        "comparison"
+      ],
+      "options": {
+        "a": {
+          "text": "Azure Load Balancer",
+          "is_true": false,
+          "explanation": "Azure Load Balancer is a regional, Layer 4 service. It does not use a CDN or Microsoft's backbone network for global content delivery."
+        },
+        "b": {
+          "text": "Azure Application Gateway",
+          "is_true": false,
+          "explanation": "Application Gateway is regional, not global. It does not provide CDN capabilities or edge-based content delivery."
+        },
+        "c": {
+          "text": "Azure Front Door",
+          "is_true": true,
+          "explanation": "Front Door is a global CDN and Layer 7 load balancing service that uses Microsoft's backbone network to bring content closer to users worldwide \u2014 ideal for media streaming."
+        },
+        "d": {
+          "text": "Azure Traffic Manager",
+          "is_true": false,
+          "explanation": "Traffic Manager provides global DNS-based routing, but it does not accelerate content delivery via CDN. Front Door is the appropriate choice for content delivery scenarios."
+        }
+      },
+      "correct_answer": [
+        "c"
+      ]
+    },
+    {
+      "question_id": 8,
+      "question_text": "What protocols does Azure Application Gateway handle? (Select all that apply)",
+      "difficulty": "easy",
+      "topic": "Application Gateway",
+      "tags": [
+        "protocols",
+        "multiple-select"
+      ],
+      "options": {
+        "a": {
+          "text": "HTTP",
+          "is_true": true,
+          "explanation": "Application Gateway is designed for HTTP/HTTPS traffic. HTTP is a core supported protocol."
+        },
+        "b": {
+          "text": "HTTPS",
+          "is_true": true,
+          "explanation": "HTTPS is fully supported. Application Gateway can also perform SSL termination for HTTPS traffic."
+        },
+        "c": {
+          "text": "TCP (non-HTTP)",
+          "is_true": false,
+          "explanation": "Raw TCP traffic (non-HTTP) is handled by Azure Load Balancer, not Application Gateway. App Gateway requires HTTP/HTTPS for its Layer 7 features."
+        },
+        "d": {
+          "text": "UDP",
+          "is_true": false,
+          "explanation": "UDP is handled by Azure Load Balancer at Layer 4. Application Gateway only processes HTTP and HTTPS."
+        }
+      },
+      "correct_answer": [
+        "a",
+        "b"
+      ]
+    },
+    {
+      "question_id": 9,
+      "question_text": "An image-editing service and a video-editing service need very different compute resources. Both are accessed via the same Application Gateway. Which architecture best supports this using path-based routing?",
+      "difficulty": "hard",
+      "topic": "Path-Based Routing",
+      "tags": [
+        "scenario",
+        "architecture"
+      ],
+      "options": {
+        "a": {
+          "text": "One shared backend pool with all VMs mixed together",
+          "is_true": false,
+          "explanation": "A mixed pool defeats the purpose of path-based routing. You want separate pools so the right resources serve the right workload."
+        },
+        "b": {
+          "text": "Two separate backend pools \u2014 one for image editing, one for video editing \u2014 with path rules directing traffic to each",
+          "is_true": true,
+          "explanation": "Path-based routing sends /images traffic to a pool of lighter VMs for image editing, and /videos traffic to a pool of high-compute VMs for video editing. This optimises both cost and performance."
+        },
+        "c": {
+          "text": "Two separate Application Gateways \u2014 one for each service",
+          "is_true": false,
+          "explanation": "Multiple backend pools on a single Application Gateway handle this scenario efficiently. Two separate gateways would be more expensive and harder to manage."
+        },
+        "d": {
+          "text": "A Traffic Manager profile pointing to two separate Load Balancers",
+          "is_true": false,
+          "explanation": "Traffic Manager routes by DNS and does not understand URL paths. It cannot route /images vs /videos to different resources."
+        }
+      },
+      "correct_answer": [
+        "b"
+      ]
+    },
+    {
+      "question_id": 10,
+      "question_text": "Is Azure Application Gateway a regional or global service?",
+      "difficulty": "easy",
+      "topic": "Application Gateway",
+      "tags": [
+        "regional",
+        "scope"
+      ],
+      "options": {
+        "a": {
+          "text": "Global \u2014 it can balance traffic across multiple Azure regions",
+          "is_true": false,
+          "explanation": "Application Gateway is a regional service. For global Layer 7 load balancing, Azure Front Door is the appropriate service."
+        },
+        "b": {
+          "text": "Regional \u2014 it operates within a single Azure region",
+          "is_true": true,
+          "explanation": "Application Gateway is regional in scope. It manages HTTP/HTTPS traffic within one region. Front Door covers global scenarios."
+        },
+        "c": {
+          "text": "It depends on the SKU \u2014 Standard is regional, WAF is global",
+          "is_true": false,
+          "explanation": "Both Standard and WAF SKUs of Application Gateway are regional. The global vs regional distinction is not tied to the WAF SKU."
+        },
+        "d": {
+          "text": "It can be either \u2014 you choose during creation like Load Balancer",
+          "is_true": false,
+          "explanation": "Unlike Azure Load Balancer (which does have a limited global tier option), Application Gateway is strictly regional."
+        }
+      },
+      "correct_answer": [
+        "b"
+      ]
+    }
+  ]
+}

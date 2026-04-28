@@ -1,0 +1,366 @@
+{
+  "meta": {
+    "title": "AZ-104 \u2013 Load Balancing Solution Comparisons",
+    "subject": "Azure Administration",
+    "version": "1.0.0",
+    "created": "2026-04-17"
+  },
+  "questions": [
+    {
+      "question_id": 1,
+      "question_text": "Which Azure load balancing solution should you choose if you need to route traffic to a multi-region backend and your routing decision is based on DNS resolution?",
+      "difficulty": "easy",
+      "topic": "Traffic Manager",
+      "tags": [
+        "definition",
+        "dns",
+        "global"
+      ],
+      "options": {
+        "a": {
+          "text": "Azure Load Balancer",
+          "is_true": false,
+          "explanation": "Azure Load Balancer is a regional, Layer 4 service. It does not route globally or make DNS-based routing decisions."
+        },
+        "b": {
+          "text": "Azure Application Gateway",
+          "is_true": false,
+          "explanation": "Application Gateway is a regional Layer 7 service focused on HTTP/HTTPS path and hostname routing. It does not use DNS for traffic direction."
+        },
+        "c": {
+          "text": "Azure Traffic Manager",
+          "is_true": true,
+          "explanation": "Traffic Manager is a DNS-based global routing service. It resolves domain names to the best available endpoint across regions based on routing policies such as performance, geographic location, or failover."
+        },
+        "d": {
+          "text": "Azure Front Door",
+          "is_true": false,
+          "explanation": "Front Door is a global CDN and HTTP/HTTPS load balancer. It routes based on application-layer content, not DNS resolution."
+        }
+      },
+      "correct_answer": [
+        "c"
+      ]
+    },
+    {
+      "question_id": 2,
+      "question_text": "An architect needs a load balancing solution for a non-HTTP application that receives TCP traffic from the internet and distributes it to a pool of VMs in a single region. Which solution is most appropriate?",
+      "difficulty": "easy",
+      "topic": "Azure Load Balancer",
+      "tags": [
+        "scenario",
+        "selection"
+      ],
+      "options": {
+        "a": {
+          "text": "Azure Front Door",
+          "is_true": false,
+          "explanation": "Front Door handles global HTTP/HTTPS traffic with CDN capability. It is not appropriate for raw TCP traffic within a single region."
+        },
+        "b": {
+          "text": "Azure Application Gateway",
+          "is_true": false,
+          "explanation": "Application Gateway is designed for HTTP/HTTPS (Layer 7). For raw TCP traffic, it is not the right fit \u2014 Azure Load Balancer handles Layer 4 protocols."
+        },
+        "c": {
+          "text": "Azure Load Balancer (Public)",
+          "is_true": true,
+          "explanation": "A Public Azure Load Balancer handles TCP and UDP traffic at Layer 4. It distributes internet-facing traffic across a regional backend pool of VMs \u2014 the ideal fit for this scenario."
+        },
+        "d": {
+          "text": "Azure Traffic Manager",
+          "is_true": false,
+          "explanation": "Traffic Manager only routes at the DNS level \u2014 it does not actually proxy or balance traffic. It does not fit a single-region TCP load balancing requirement."
+        }
+      },
+      "correct_answer": [
+        "c"
+      ]
+    },
+    {
+      "question_id": 3,
+      "question_text": "Which TWO Azure load balancing solutions operate at Layer 7 (Application layer)? (Select all that apply)",
+      "difficulty": "medium",
+      "topic": "Layer 7 Solutions",
+      "tags": [
+        "comparison",
+        "multiple-select"
+      ],
+      "options": {
+        "a": {
+          "text": "Azure Load Balancer",
+          "is_true": false,
+          "explanation": "Azure Load Balancer operates at Layer 4 (TCP/UDP). It does not inspect HTTP/HTTPS content."
+        },
+        "b": {
+          "text": "Azure Application Gateway",
+          "is_true": true,
+          "explanation": "Application Gateway is a Layer 7 service. It inspects HTTP/HTTPS request content \u2014 including URL paths and hostnames \u2014 to make routing decisions."
+        },
+        "c": {
+          "text": "Azure Front Door",
+          "is_true": true,
+          "explanation": "Front Door is also a Layer 7 service. It processes HTTP/HTTPS traffic globally using Microsoft's backbone network, including CDN and WAF capabilities."
+        },
+        "d": {
+          "text": "Azure Traffic Manager",
+          "is_true": false,
+          "explanation": "Traffic Manager operates at the DNS layer. It does not proxy or inspect HTTP/HTTPS content \u2014 it resolves domain names to endpoints."
+        }
+      },
+      "correct_answer": [
+        "b",
+        "c"
+      ]
+    },
+    {
+      "question_id": 4,
+      "question_text": "A public-facing e-commerce website receives HTTP/HTTPS traffic from global users and requires fast content delivery with low latency. Traffic does NOT need to be routed differently based on URL path. Which solution best fits?",
+      "difficulty": "medium",
+      "topic": "Front Door",
+      "tags": [
+        "scenario",
+        "cdn",
+        "global"
+      ],
+      "options": {
+        "a": {
+          "text": "Azure Load Balancer (Global tier)",
+          "is_true": false,
+          "explanation": "The Global tier of Azure Load Balancer has limited regional availability and operates at Layer 4. For global HTTP/HTTPS content delivery, Front Door is the correct choice."
+        },
+        "b": {
+          "text": "Azure Application Gateway",
+          "is_true": false,
+          "explanation": "Application Gateway is regional. While it handles HTTP/HTTPS, it does not provide global CDN capability or Microsoft backbone acceleration."
+        },
+        "c": {
+          "text": "Azure Front Door",
+          "is_true": true,
+          "explanation": "Front Door is the ideal solution for global HTTP/HTTPS delivery. It uses Microsoft's backbone network to bring content closer to users, minimising latency for a global audience."
+        },
+        "d": {
+          "text": "Azure Traffic Manager with a regional Load Balancer",
+          "is_true": false,
+          "explanation": "Traffic Manager + Load Balancer handles multi-region TCP routing but does not provide CDN acceleration. Front Door is the better fit for low-latency HTTP/HTTPS content delivery."
+        }
+      },
+      "correct_answer": [
+        "c"
+      ]
+    },
+    {
+      "question_id": 5,
+      "question_text": "You have a multi-tier application: a web tier served by VMs that receive internet HTTP traffic, and a database tier accessed only by the web tier VMs. How should you configure load balancing?",
+      "difficulty": "hard",
+      "topic": "Architecture",
+      "tags": [
+        "multi-tier",
+        "scenario",
+        "architecture"
+      ],
+      "options": {
+        "a": {
+          "text": "One public Load Balancer fronting all tiers",
+          "is_true": false,
+          "explanation": "Exposing database servers to internet traffic via a public load balancer is a security risk. The database tier should remain internal."
+        },
+        "b": {
+          "text": "A Public Load Balancer for the web tier, and an Internal Load Balancer for the database tier",
+          "is_true": true,
+          "explanation": "This is the standard multi-tier architecture. The Public LB distributes internet traffic to web VMs. The Internal LB distributes requests from web VMs to database VMs \u2014 keeping the database tier off the public internet."
+        },
+        "c": {
+          "text": "An Internal Load Balancer for all tiers",
+          "is_true": false,
+          "explanation": "An Internal LB cannot receive traffic from the public internet. The web tier needs a Public LB to be accessible to external users."
+        },
+        "d": {
+          "text": "Azure Traffic Manager for the web tier and a Public Load Balancer for the database tier",
+          "is_true": false,
+          "explanation": "Traffic Manager operates at DNS level and would not serve as a direct load balancer for the web tier. The database tier should never be on a public load balancer."
+        }
+      },
+      "correct_answer": [
+        "b"
+      ]
+    },
+    {
+      "question_id": 6,
+      "question_text": "A company wants to direct global users to the closest available Azure region based on network latency. Which solution should they use?",
+      "difficulty": "medium",
+      "topic": "Traffic Manager",
+      "tags": [
+        "global",
+        "scenario",
+        "routing-policy"
+      ],
+      "options": {
+        "a": {
+          "text": "Azure Application Gateway with multi-site routing",
+          "is_true": false,
+          "explanation": "Application Gateway is a regional service and cannot route traffic across Azure regions. Multi-site routing is about hostnames, not geographic distribution."
+        },
+        "b": {
+          "text": "Azure Traffic Manager with Performance routing policy",
+          "is_true": true,
+          "explanation": "Traffic Manager supports a Performance routing policy that directs DNS queries to the Azure region with the lowest network latency for the requesting user. This is a global, DNS-based traffic direction capability."
+        },
+        "c": {
+          "text": "Azure Load Balancer (Regional) per region, independently",
+          "is_true": false,
+          "explanation": "Individual regional load balancers do not coordinate with each other to direct users globally. A global routing layer like Traffic Manager is needed on top."
+        },
+        "d": {
+          "text": "Azure VNet peering across regions",
+          "is_true": false,
+          "explanation": "VNet peering provides network connectivity between VNets but does not provide traffic routing or load balancing decisions."
+        }
+      },
+      "correct_answer": [
+        "b"
+      ]
+    },
+    {
+      "question_id": 7,
+      "question_text": "Which load balancing solution was described in the module as having an option to select 'Regional' or 'Global' tier during creation, even though the global option has limited regional availability?",
+      "difficulty": "medium",
+      "topic": "Azure Load Balancer",
+      "tags": [
+        "global-tier",
+        "regional"
+      ],
+      "options": {
+        "a": {
+          "text": "Azure Application Gateway",
+          "is_true": false,
+          "explanation": "Application Gateway is strictly regional. There is no Regional/Global tier selection during its creation."
+        },
+        "b": {
+          "text": "Azure Load Balancer",
+          "is_true": true,
+          "explanation": "When creating an Azure Load Balancer, you can choose Regional or Global tier. The Global tier was noted in the module as having limited availability \u2014 not available in all regions."
+        },
+        "c": {
+          "text": "Azure Traffic Manager",
+          "is_true": false,
+          "explanation": "Traffic Manager is inherently a global service. There is no regional/global tier toggle during creation."
+        },
+        "d": {
+          "text": "Azure Front Door",
+          "is_true": false,
+          "explanation": "Front Door is inherently a global service. There is no regional/global tier selection."
+        }
+      },
+      "correct_answer": [
+        "b"
+      ]
+    },
+    {
+      "question_id": 8,
+      "question_text": "An organisation needs both URL path-based routing AND global HTTP/HTTPS delivery with CDN acceleration. Which two Azure services would they combine?",
+      "difficulty": "hard",
+      "topic": "Front Door",
+      "tags": [
+        "architecture",
+        "combination"
+      ],
+      "options": {
+        "a": {
+          "text": "Azure Traffic Manager + Azure Load Balancer",
+          "is_true": false,
+          "explanation": "This combination provides global DNS routing and regional TCP balancing. It does not offer URL path routing or CDN acceleration."
+        },
+        "b": {
+          "text": "Azure Front Door + Azure Application Gateway",
+          "is_true": true,
+          "explanation": "Front Door provides global CDN and HTTP/HTTPS delivery; Application Gateway (behind Front Door, regionally) provides path-based routing to right-sized backend pools. This is a valid production architecture."
+        },
+        "c": {
+          "text": "Azure Load Balancer + Azure Application Gateway",
+          "is_true": false,
+          "explanation": "This combination provides regional TCP and HTTP routing, but no global CDN acceleration. For global delivery, Front Door is needed."
+        },
+        "d": {
+          "text": "Azure Traffic Manager + Azure Application Gateway",
+          "is_true": false,
+          "explanation": "This gives global DNS routing + regional HTTP/HTTPS routing, but lacks the CDN acceleration and performance benefits of Front Door's backbone network."
+        }
+      },
+      "correct_answer": [
+        "b"
+      ]
+    },
+    {
+      "question_id": 9,
+      "question_text": "Azure Load Balancer distributes traffic based on which TWO factors at Layer 4? (Select all that apply)",
+      "difficulty": "medium",
+      "topic": "Azure Load Balancer",
+      "tags": [
+        "layer-4",
+        "multiple-select"
+      ],
+      "options": {
+        "a": {
+          "text": "TCP / UDP protocol",
+          "is_true": true,
+          "explanation": "Azure Load Balancer operates at Layer 4 and distributes traffic based on protocol (TCP or UDP), among other Layer 4 attributes defined in load balancing rules."
+        },
+        "b": {
+          "text": "Port number",
+          "is_true": true,
+          "explanation": "Port numbers are a key Layer 4 attribute. Load balancing rules specify which frontend port receives traffic and which backend port it is forwarded to."
+        },
+        "c": {
+          "text": "HTTP URL path",
+          "is_true": false,
+          "explanation": "URL paths are a Layer 7 attribute inspected by Application Gateway, not Azure Load Balancer."
+        },
+        "d": {
+          "text": "HTTP hostname header",
+          "is_true": false,
+          "explanation": "HTTP hostname headers are also Layer 7 attributes, handled by Application Gateway's listener, not Azure Load Balancer."
+        }
+      },
+      "correct_answer": [
+        "a",
+        "b"
+      ]
+    },
+    {
+      "question_id": 10,
+      "question_text": "Which Azure load balancing solution is best described as 'DNS-based global traffic distribution'?",
+      "difficulty": "easy",
+      "topic": "Traffic Manager",
+      "tags": [
+        "definition",
+        "dns"
+      ],
+      "options": {
+        "a": {
+          "text": "Azure Load Balancer",
+          "is_true": false,
+          "explanation": "Azure Load Balancer operates at Layer 4 using TCP/UDP. It is regional and does not use DNS for traffic distribution."
+        },
+        "b": {
+          "text": "Azure Application Gateway",
+          "is_true": false,
+          "explanation": "Application Gateway is a regional Layer 7 service. It routes HTTP/HTTPS traffic, not DNS queries."
+        },
+        "c": {
+          "text": "Azure Front Door",
+          "is_true": false,
+          "explanation": "Front Door is a global HTTP/HTTPS CDN and load balancer. It does not route based on DNS resolution \u2014 it proxies traffic using Microsoft's backbone."
+        },
+        "d": {
+          "text": "Azure Traffic Manager",
+          "is_true": true,
+          "explanation": "Traffic Manager works purely at the DNS level. It returns DNS responses pointing users to the best-available endpoint. It does not proxy traffic \u2014 it only directs where users send their requests via DNS."
+        }
+      },
+      "correct_answer": [
+        "d"
+      ]
+    }
+  ]
+}

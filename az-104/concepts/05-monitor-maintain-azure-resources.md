@@ -89,6 +89,26 @@ AzureActivity
 - Supports Windows and Linux
 - Required for VM Insights in new deployments
 
+### Data Collection Endpoint (DCE)
+
+A DCE is the HTTPS ingestion endpoint that AMA sends data to. It is **only required** when:
+- Using Azure Monitor Agent (AMA) to collect data
+- Using Azure Monitor Private Link Scope (AMPLS) for private network connectivity
+- Sending custom logs via the Logs Ingestion API
+
+> **Exam rule — creation order:** DCE must be created **before** the DCR that references it. The full pipeline order is:
+>
+> `Log Analytics Workspace → Data Collection Endpoint (DCE) → Data Collection Rule (DCR) → DCR Association (on VM)`
+
+| Component | Role |
+|-----------|------|
+| **Log Analytics Workspace** | Destination — stores and queries collected data |
+| **Data Collection Endpoint (DCE)** | Network ingestion point — AMA sends data here over HTTPS |
+| **Data Collection Rule (DCR)** | Policy — defines what to collect, transform, and where to send |
+| **DCR Association** | Links a DCR to a specific VM or resource |
+
+DCE is **not** required for diagnostic settings (resource → Log Analytics) — only for AMA-based collection.
+
 ---
 
 ## Diagnostic Settings
@@ -178,6 +198,42 @@ Pre-built monitoring experiences for specific Azure services.
 | **Packet capture** | Capture packets from a VM (max 5 hours, stored in storage account) |
 | **VPN troubleshoot** | Diagnose VPN gateway connectivity |
 | **Flow logs** | Record all IP flows through an NSG (stored in storage account) |
+
+### Network Watcher — Tool Selection Guide
+
+This is a classic exam trap area. Each tool answers a different question:
+
+| Symptom / Question | Tool to use | What it tells you |
+|--------------------|-------------|-------------------|
+| "Is this NSG blocking this specific packet?" | **IP Flow Verify** | Allow or Deny + which rule matched |
+| "Traffic is allowed by NSG but still not arriving" | **Next Hop** | Where the packet is actually being routed (UDR, VPN, black hole) |
+| "Show me all traffic that passed through an NSG" | **NSG Flow Logs** | Raw allow/deny log for every flow through the NSG |
+| "Visualise and analyse flow patterns over time" | **Traffic Analytics** | Heatmaps, top talkers, threat detection — built on flow logs |
+| "Is there ongoing latency or packet loss?" | **Connection Monitor** | Continuous probe — latency, % packet loss, reachability |
+| "I need to see the exact bytes sent between two VMs" | **Packet Capture** | Full packet recording (max 5 hours), saved as .cap for Wireshark |
+
+> **Key distinction — IP Flow Verify vs Next Hop:**
+> IP Flow Verify only checks NSG rules. If it returns **Allow** but traffic still fails, the problem is routing — use **Next Hop** to find the misrouted path (bad UDR, BGP leak, VPN gateway).
+
+### Traffic Analytics Prerequisites
+
+Traffic Analytics requires **all three** of the following to be in place:
+
+1. **NSG Flow Logs v2** enabled on the NSG(s) you want to analyse
+2. **Log Analytics workspace** — where the processed data is stored and queried
+3. **Network Watcher** registered in the region
+
+> Flow logs v1 only writes raw blobs to storage — it does **not** feed Traffic Analytics. Version 2 is required.
+
+### Connection Monitor — Agent Requirements
+
+| Source type | Required agent |
+|-------------|---------------|
+| Azure VM | Azure Monitor Agent (AMA) |
+| On-premises machine | Azure Monitor Agent (AMA) via Azure Arc |
+| **Not** supported | Recovery Services (MARS) agent — this is for backup only |
+
+> **Exam trap:** Connection Monitor needs **Azure Monitor Agent**, not the MARS/Recovery Services agent. These are completely different agents with different purposes.
 
 ---
 
@@ -271,6 +327,48 @@ Azure Update Manager (successor to Update Management in Automation) manages OS u
 
 ---
 
+## Region Constraints
+
+Understanding what is region-bound vs global is tested in scenario questions.
+
+### Region-bound resources
+
+| Resource | Region constraint | Why it matters |
+|----------|------------------|----------------|
+| **Recovery Services Vault** | Same region as the protected resource | A VM in East Asia needs an RSV in East Asia — you cannot back it up with a vault in West Europe |
+| **Backup Vault** | Same region as the protected resource | Same constraint as RSV |
+| **Log Analytics Workspace** | Data stored in the workspace's region | Workspace in West Europe stores data in West Europe — relevant for data residency |
+| **Data Collection Endpoint (DCE)** | Must be in the same region as the VMs sending data | AMA on a VM sends to a DCE in the same region |
+| **Data Collection Rule (DCR)** | Region-scoped resource | Create in the same region as the VMs and DCE |
+| **Network Watcher** | One instance per region, per subscription | Auto-created in `NetworkWatcherRG`; tools only work against resources in their region |
+| **NSG** | Same region as the subnet or NIC it is associated with | Cannot associate a West Europe NSG with an East US subnet |
+| **VPN Gateway / Local Network Gateway** | Region-bound | Must be in the same region as the VNet |
+| **Azure Backup (VM)** | Same region as VM | No cross-region backup for standard VM backup |
+
+### Cross-region capable resources
+
+| Resource | Cross-region capability |
+|----------|------------------------|
+| **Azure Site Recovery (ASR)** | Designed for cross-region replication — source region → target region |
+| **Connection Monitor** | Can monitor cross-region and cross-subscription connectivity |
+| **Traffic Manager** | Global DNS-based load balancer — routes across regions |
+| **Azure Front Door** | Global Layer 7 — routes across regions |
+| **Azure Monitor (control plane)** | Global service; data stays in workspace region |
+| **Action Groups** | Global service — can notify/trigger across regions |
+| **RA-GRS Storage** | Replicates to a paired region; secondary is readable without failover |
+| **Geo-redundant RSV backup** | Cross-Region Restore (CRR) must be explicitly enabled on the vault |
+
+### Cross-Region Restore for Recovery Services Vault
+
+By default, RSV backup data stays in the vault's region. Cross-Region Restore (CRR) is an opt-in feature:
+
+- Must be enabled on the vault at creation or in vault settings
+- Allows restoring a VM backup to the **paired region** (e.g., West Europe → North Europe)
+- Uses geo-redundant storage (GRS) — not available with LRS vaults
+- There is a **lag** of up to 48 hours before data is available in the secondary region
+
+---
+
 ## Exam Tips
 
 - **Azure Monitor collects metrics AND logs** — metrics go to the time-series store, logs go to Log Analytics workspace.
@@ -283,6 +381,14 @@ Azure Update Manager (successor to Update Management in Automation) manages OS u
 - **File recovery** allows mounting a recovery point as a drive to restore individual files without restoring the entire VM.
 - **Connection Monitor** is the modern tool for continuous connectivity testing, replacing the older Network Performance Monitor.
 - **VM Insights** requires the Azure Monitor Agent — it cannot collect performance data without an agent.
+- **DCE creation order** — when Azure Monitor Agent is involved: Log Analytics Workspace first, then DCE, then DCR. DCE must exist before the DCR that references it.
+- **DCE is not needed for diagnostic settings** — only needed for AMA-based collection and AMPLS private link scenarios.
+- **IP Flow Verify returns Allow but traffic still fails** — this means the problem is routing, not NSG. Use **Next Hop** to find the bad route.
+- **Traffic Analytics needs flow logs v2** — v1 only writes raw blobs; it does not feed the Traffic Analytics workspace.
+- **Connection Monitor agent is AMA** — not the MARS/Recovery Services agent. This distinction appears in on-premises monitoring scenarios.
+- **RSV is region-bound** — a vault in West Europe cannot back up a VM in East Asia. Each region needs its own vault.
+- **Cross-Region Restore** must be explicitly enabled on the RSV and requires GRS storage — it is not on by default.
+- **GRS ≠ readable secondary** — GRS replicates data but the secondary is not readable without a failover. Only **RA-GRS** provides read access to the secondary region without failover.
 
 ---
 

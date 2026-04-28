@@ -1,0 +1,361 @@
+{
+  "meta": {
+    "title": "AZ-104 \u2013 Azure Load Balancer Fundamentals",
+    "subject": "Azure Administration",
+    "version": "1.0.0",
+    "created": "2026-04-17"
+  },
+  "questions": [
+    {
+      "question_id": 1,
+      "question_text": "Which OSI layer does Azure Load Balancer (Standard SKU) operate at?",
+      "difficulty": "easy",
+      "topic": "Azure Load Balancer",
+      "tags": [
+        "definition",
+        "osi-layer"
+      ],
+      "options": {
+        "a": {
+          "text": "Layer 3 (Network)",
+          "is_true": false,
+          "explanation": "Layer 3 is the IP routing layer. Azure Load Balancer operates above this, at Layer 4."
+        },
+        "b": {
+          "text": "Layer 4 (Transport)",
+          "is_true": true,
+          "explanation": "Azure Load Balancer works at Layer 4, distributing TCP and UDP traffic based on port and protocol \u2014 not application-level content."
+        },
+        "c": {
+          "text": "Layer 7 (Application)",
+          "is_true": false,
+          "explanation": "Layer 7 is where Application Gateway and Front Door operate, using HTTP/HTTPS content for routing decisions."
+        },
+        "d": {
+          "text": "Layer 2 (Data Link)",
+          "is_true": false,
+          "explanation": "Layer 2 relates to MAC addresses and switching. Azure Load Balancer does not operate at this layer."
+        }
+      },
+      "correct_answer": [
+        "b"
+      ]
+    },
+    {
+      "question_id": 2,
+      "question_text": "What is the purpose of a health probe in Azure Load Balancer?",
+      "difficulty": "easy",
+      "topic": "Health Probes",
+      "tags": [
+        "definition",
+        "health-probe"
+      ],
+      "options": {
+        "a": {
+          "text": "To encrypt traffic between the load balancer and backend pool resources",
+          "is_true": false,
+          "explanation": "Health probes have nothing to do with encryption. SSL/TLS termination is a feature of Application Gateway, not Load Balancer health probes."
+        },
+        "b": {
+          "text": "To monitor and remove unhealthy backend resources from the active pool",
+          "is_true": true,
+          "explanation": "The health probe periodically checks backend resources. After 2 consecutive failures, the resource is removed from the pool so no traffic is sent to it."
+        },
+        "c": {
+          "text": "To balance traffic evenly across all backend resources",
+          "is_true": false,
+          "explanation": "Traffic distribution is the job of the load balancing rule, not the health probe. The probe only checks availability."
+        },
+        "d": {
+          "text": "To assign public IP addresses to backend virtual machines",
+          "is_true": false,
+          "explanation": "Public IP assignment is a separate networking configuration unrelated to health probes."
+        }
+      },
+      "correct_answer": [
+        "b"
+      ]
+    },
+    {
+      "question_id": 3,
+      "question_text": "By default, how often does an Azure Load Balancer health probe check each backend resource?",
+      "difficulty": "easy",
+      "topic": "Health Probes",
+      "tags": [
+        "health-probe",
+        "configuration"
+      ],
+      "options": {
+        "a": {
+          "text": "Every 1 second",
+          "is_true": false,
+          "explanation": "The default interval is 5 seconds, not 1 second. The interval can be customised."
+        },
+        "b": {
+          "text": "Every 5 seconds",
+          "is_true": true,
+          "explanation": "The default health probe interval is 5 seconds. This means the load balancer sends a check to each backend resource every 5 seconds to verify it is responding."
+        },
+        "c": {
+          "text": "Every 30 seconds",
+          "is_true": false,
+          "explanation": "30 seconds is too long. The default is 5 seconds, though this can be adjusted to suit your environment."
+        },
+        "d": {
+          "text": "Every 60 seconds",
+          "is_true": false,
+          "explanation": "60 seconds is not the default. The default probe interval is 5 seconds."
+        }
+      },
+      "correct_answer": [
+        "b"
+      ]
+    },
+    {
+      "question_id": 4,
+      "question_text": "After a backend resource fails health probe checks and is removed from the active pool, what must happen for it to be re-added?",
+      "difficulty": "medium",
+      "topic": "Health Probes",
+      "tags": [
+        "health-probe",
+        "recovery"
+      ],
+      "options": {
+        "a": {
+          "text": "An administrator must manually re-add it via the Azure portal",
+          "is_true": false,
+          "explanation": "Recovery is automatic. The load balancer continues probing removed resources and re-adds them automatically upon recovery."
+        },
+        "b": {
+          "text": "It must respond successfully to 2 consecutive probes",
+          "is_true": true,
+          "explanation": "The load balancer continues probing unhealthy resources. After 2 successful consecutive responses, the resource is automatically re-added to the active pool."
+        },
+        "c": {
+          "text": "It must respond successfully to 5 consecutive probes",
+          "is_true": false,
+          "explanation": "The threshold for re-admission is 2 successful responses, not 5. The same 2-failure threshold applies to both removal and re-admission."
+        },
+        "d": {
+          "text": "The load balancer must be restarted",
+          "is_true": false,
+          "explanation": "No restart is needed. Health probe monitoring is continuous and automatic; the load balancer handles recovery without intervention."
+        }
+      },
+      "correct_answer": [
+        "b"
+      ]
+    },
+    {
+      "question_id": 5,
+      "question_text": "What type of IP address must a Public Load Balancer have?",
+      "difficulty": "easy",
+      "topic": "Public Load Balancer",
+      "tags": [
+        "definition",
+        "ip-address"
+      ],
+      "options": {
+        "a": {
+          "text": "A private IP address within the VNet",
+          "is_true": false,
+          "explanation": "A private IP is used for Internal Load Balancers, which do not face the internet. Public Load Balancers require a public IP."
+        },
+        "b": {
+          "text": "A public IP address",
+          "is_true": true,
+          "explanation": "A Public Load Balancer receives traffic from the internet via its public IP address, then distributes it to backend pool resources."
+        },
+        "c": {
+          "text": "No IP address \u2014 traffic is routed by DNS only",
+          "is_true": false,
+          "explanation": "DNS-based routing is the role of Traffic Manager, not Load Balancer. A Public Load Balancer requires a publicly routable IP address."
+        },
+        "d": {
+          "text": "An IP address prefix (range)",
+          "is_true": false,
+          "explanation": "An IP prefix (sequential range of IPs) is an optional feature for scenarios requiring multiple sequential public IPs. A single public IP is the standard requirement."
+        }
+      },
+      "correct_answer": [
+        "b"
+      ]
+    },
+    {
+      "question_id": 6,
+      "question_text": "You are creating a Regional Azure Load Balancer. You want to add virtual machines from two different Azure regions to the same backend pool. Is this supported?",
+      "difficulty": "medium",
+      "topic": "Backend Pool Scope",
+      "tags": [
+        "regional",
+        "backend-pool",
+        "scenario"
+      ],
+      "options": {
+        "a": {
+          "text": "Yes \u2014 regional load balancers can include VMs from any region",
+          "is_true": false,
+          "explanation": "Regional load balancers are scoped to a single region. Cross-region backend pools require the Global tier or a different solution such as Traffic Manager."
+        },
+        "b": {
+          "text": "No \u2014 a Regional Load Balancer can only include resources within the same virtual network",
+          "is_true": true,
+          "explanation": "The Regional tier is scoped to one region. To include resources across regions you would need the Global tier (limited availability) or combine Traffic Manager with regional load balancers."
+        },
+        "c": {
+          "text": "Yes, but only if both regions are in the same Azure geography",
+          "is_true": false,
+          "explanation": "Geography is not a relevant boundary here. Regional load balancers are limited by virtual network scope, not geography."
+        },
+        "d": {
+          "text": "Yes \u2014 as long as the VMs are in peered VNets",
+          "is_true": false,
+          "explanation": "VNet peering helps with connectivity, but a Regional Load Balancer backend pool still cannot span resources across different Azure regions."
+        }
+      },
+      "correct_answer": [
+        "b"
+      ]
+    },
+    {
+      "question_id": 7,
+      "question_text": "What is the key difference between a Public Load Balancer and an Internal Load Balancer?",
+      "difficulty": "medium",
+      "topic": "Public vs Internal LB",
+      "tags": [
+        "comparison",
+        "architecture"
+      ],
+      "options": {
+        "a": {
+          "text": "An Internal Load Balancer can only handle UDP traffic",
+          "is_true": false,
+          "explanation": "Both Public and Internal Load Balancers support TCP and UDP. The difference is their IP address type and traffic source, not protocol support."
+        },
+        "b": {
+          "text": "A Public Load Balancer handles internet-facing traffic via a public IP; an Internal Load Balancer handles traffic between internal Azure resources only",
+          "is_true": true,
+          "explanation": "Public LB has a public IP and faces the internet. Internal LB has no public IP and is used for traffic between resources inside Azure, such as between app servers and database servers."
+        },
+        "c": {
+          "text": "An Internal Load Balancer requires a separate subscription",
+          "is_true": false,
+          "explanation": "No separate subscription is needed. Both load balancer types are created in the same subscription and resource group."
+        },
+        "d": {
+          "text": "A Public Load Balancer only works with HTTP traffic",
+          "is_true": false,
+          "explanation": "Azure Load Balancer (both public and internal) works at Layer 4 with TCP and UDP. HTTP is an application-layer protocol handled by Application Gateway."
+        }
+      },
+      "correct_answer": [
+        "b"
+      ]
+    },
+    {
+      "question_id": 8,
+      "question_text": "In a load balancing rule, what does the 'backend port' setting define?",
+      "difficulty": "medium",
+      "topic": "Load Balancing Rules",
+      "tags": [
+        "configuration",
+        "ports"
+      ],
+      "options": {
+        "a": {
+          "text": "The port on which the load balancer's public IP receives incoming traffic",
+          "is_true": false,
+          "explanation": "That is the 'frontend port'. The backend port is where the load balancer forwards traffic to on the backend resources."
+        },
+        "b": {
+          "text": "The port on which traffic is forwarded to backend pool resources",
+          "is_true": true,
+          "explanation": "The backend port defines where traffic lands on the backend VMs after the load balancer forwards it. It can match the frontend port or be different, depending on your architecture."
+        },
+        "c": {
+          "text": "The port used by the health probe",
+          "is_true": false,
+          "explanation": "Health probe port is configured separately in the health probe settings, not in the load balancing rule's backend port field."
+        },
+        "d": {
+          "text": "The outbound NAT port for backend resources",
+          "is_true": false,
+          "explanation": "Outbound NAT is configured through outbound rules, which are separate from load balancing rules."
+        }
+      },
+      "correct_answer": [
+        "b"
+      ]
+    },
+    {
+      "question_id": 9,
+      "question_text": "Which Azure Load Balancer SKU is recommended for production workloads?",
+      "difficulty": "easy",
+      "topic": "Load Balancer SKU",
+      "tags": [
+        "sku",
+        "best-practice"
+      ],
+      "options": {
+        "a": {
+          "text": "Basic SKU",
+          "is_true": false,
+          "explanation": "The Basic SKU has limitations (smaller backend pool, no availability zone support). Standard SKU is recommended for production."
+        },
+        "b": {
+          "text": "Standard SKU",
+          "is_true": true,
+          "explanation": "The Standard SKU supports larger backend pools, availability zones, and more advanced features. It is the recommended tier for production use."
+        },
+        "c": {
+          "text": "Gateway SKU",
+          "is_true": false,
+          "explanation": "The Gateway SKU is a special tier for third-party network virtual appliances. It is not the general-purpose production SKU."
+        },
+        "d": {
+          "text": "Global SKU",
+          "is_true": false,
+          "explanation": "There is no standalone 'Global SKU' for Load Balancer. Global is a tier option for cross-region scenarios with limited regional availability."
+        }
+      },
+      "correct_answer": [
+        "b"
+      ]
+    },
+    {
+      "question_id": 10,
+      "question_text": "What is the purpose of the load balancing rule in Azure Load Balancer?",
+      "difficulty": "medium",
+      "topic": "Load Balancing Rules",
+      "tags": [
+        "configuration",
+        "definition"
+      ],
+      "options": {
+        "a": {
+          "text": "To define the interval at which health probes are sent to backend resources",
+          "is_true": false,
+          "explanation": "Probe interval is configured in the health probe settings, not the load balancing rule."
+        },
+        "b": {
+          "text": "To map incoming frontend traffic (IP + port) to a backend pool and port",
+          "is_true": true,
+          "explanation": "A load balancing rule ties together the frontend IP/port, backend pool, backend port, protocol, and health probe \u2014 defining how traffic flows through the load balancer."
+        },
+        "c": {
+          "text": "To assign a public IP address to the load balancer",
+          "is_true": false,
+          "explanation": "Public IP assignment is done in the Frontend IP configuration step, not in the load balancing rule."
+        },
+        "d": {
+          "text": "To configure NSG rules that allow traffic into backend VMs",
+          "is_true": false,
+          "explanation": "NSG rules are configured separately on the VNet or NIC level. The load balancing rule only defines traffic distribution, not network security."
+        }
+      },
+      "correct_answer": [
+        "b"
+      ]
+    }
+  ]
+}
